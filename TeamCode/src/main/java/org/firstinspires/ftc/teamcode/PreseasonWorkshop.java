@@ -19,7 +19,13 @@ public class PreseasonWorkshop extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         TrajectorySequence ts = drive.trajectorySequenceBuilder(new Pose2d(0,0,0))
+                // ##########  WRITE YOUR CODE BELOW THIS LINE  ##########
 
+
+
+
+
+                // ##########  WRITE YOUR CODE ABOVE THIS LINE  ##########
                 .build();
 
         waitForStart();
