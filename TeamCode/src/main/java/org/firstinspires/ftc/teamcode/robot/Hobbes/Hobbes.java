@@ -44,6 +44,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 import com.qualcomm.robotcore.hardware.ServoImpl;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -63,10 +64,9 @@ public class Hobbes extends Meccanum implements Robot {
 
     public MotorSlideThread slidesController = new MotorSlideThread();
     public ServosThread servosController = new ServosThread();
-    public Servo slidesWrist;
     // public SampleMecanumDrive rr = null;
     DcMotor slides;
-    private Servo extendoLeft, extendoRight, extendoArm, extendoWrist, slidesArm, claw;
+    private ServoImplEx extendoLeft, extendoRight, extendoArm, extendoWrist, slidesWrist, slidesArm, claw;
     private CRServo intakeRight, intakeLeft;
 
     // all relative to robot's reference frame with deposit as front
@@ -102,26 +102,21 @@ public class Hobbes extends Meccanum implements Robot {
         // define slides
         slides = (DcMotorEx) hardwareMap.dcMotor.get("slides"); // EH3
         // define limited servos
-        claw = hardwareMap.servo.get("claw");
-        extendoLeft = hardwareMap.servo.get("extendoLeft");
-        extendoRight = hardwareMap.servo.get("extendoRight");
-        extendoArm = hardwareMap.servo.get("extendoArm");
-        extendoWrist = hardwareMap.servo.get("extendoWrist");
-        slidesArm = hardwareMap.servo.get("slidesArm");
-        slidesWrist = hardwareMap.servo.get("slidesWrist");
+        claw = hardwareMap.get(ServoImplEx.class, "claw");
+        extendoLeft = hardwareMap.get(ServoImplEx.class,"extendoLeft");
+        extendoRight = hardwareMap.get(ServoImplEx.class,"extendoRight");
+        extendoArm = hardwareMap.get(ServoImplEx.class,"extendoArm");
+        extendoWrist = hardwareMap.get(ServoImplEx.class,"extendoWrist");
+        slidesArm = hardwareMap.get(ServoImplEx.class,"slidesArm");
+        slidesWrist = hardwareMap.get(ServoImplEx.class,"slidesWrist");
         // define servos
         intakeLeft = hardwareMap.crservo.get("intakeLeft");
         intakeRight = hardwareMap.crservo.get("intakeRight");
 
-
-        // Set the rotation servo for extended PWM range
-        if (slidesWrist.getController() instanceof ServoControllerEx) {
-            // Confirm its an extended range servo controller before we try to set to avoid crash
-            PwmControl.PwmRange range = new PwmControl.PwmRange(553, 2500);
-            ServoControllerEx control = (ServoControllerEx) slidesWrist.getController();
-            int port = slidesWrist.getPortNumber();
-            control.setServoPwmRange(port, range);
-        }
+        slidesWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        slidesArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        extendoWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        extendoArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
         // configure slides
         slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
