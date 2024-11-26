@@ -40,7 +40,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoControllerEx;
+import com.qualcomm.robotcore.hardware.ServoImpl;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -57,12 +60,13 @@ import java.util.Objects;
 public class Hobbes extends Meccanum implements Robot {
     protected HardwareMap hw = null;
 
+
     public MotorSlideThread slidesController = new MotorSlideThread();
     public ServosThread servosController = new ServosThread();
-
+    public Servo slidesWrist;
     // public SampleMecanumDrive rr = null;
     DcMotor slides;
-    private Servo extendoLeft, extendoRight, extendoArm, extendoWrist, slidesArm, slidesWrist, claw;
+    private Servo extendoLeft, extendoRight, extendoArm, extendoWrist, slidesArm, claw;
     private CRServo intakeRight, intakeLeft;
 
     // all relative to robot's reference frame with deposit as front
@@ -72,10 +76,12 @@ public class Hobbes extends Meccanum implements Robot {
     public void resetImu() {
         this.offset = -imu.getAngularOrientation().firstAngle;
     }
+    public Servo rotateServo = null;
 
     @Override
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
+
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
         // imu.initialize(parameters);
@@ -106,6 +112,16 @@ public class Hobbes extends Meccanum implements Robot {
         // define servos
         intakeLeft = hardwareMap.crservo.get("intakeLeft");
         intakeRight = hardwareMap.crservo.get("intakeRight");
+
+
+        // Set the rotation servo for extended PWM range
+        if (slidesWrist.getController() instanceof ServoControllerEx) {
+            // Confirm its an extended range servo controller before we try to set to avoid crash
+            PwmControl.PwmRange range = new PwmControl.PwmRange(553, 2500);
+            ServoControllerEx control = (ServoControllerEx) slidesWrist.getController();
+            int port = slidesWrist.getPortNumber();
+            control.setServoPwmRange(port, range);
+        }
 
         // configure slides
         slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
