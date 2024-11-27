@@ -113,6 +113,7 @@ public class Hobbes extends Meccanum implements Robot {
         intakeLeft = hardwareMap.crservo.get("intakeLeft");
         intakeRight = hardwareMap.crservo.get("intakeRight");
 
+        // give servos good range of motion
         slidesWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         slidesArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendoWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
