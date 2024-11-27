@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -26,103 +27,92 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import javax.crypto.Mac;
+
 @Autonomous
-public class DanielSickAuto extends OpMode {
+public class DanielSickAuto extends LinearOpMode {
 
     Hobbes hob = null;
     PinpointDrive drive;
     @Override
     // runs on init press
-    public void init() {
+    public void runOpMode() {
         // define and init robot
         hob = new Hobbes();
         hob.init(hardwareMap);
         drive = new PinpointDrive(hardwareMap, new Pose2d(0, 0, 0));
-    }
 
-    @Override
-    // runs on start press
-    public void start() {
-        // run everything to start positions
+        waitForStart();
+
         hob.servosController.setup();
-    }
-
-    @Override
-    // loops after start press
-    public void loop() {
         Actions.runBlocking(
-                new SequentialAction(
-                        drive.actionBuilder(new Pose2d(-9,63,-PI/2))
+                new ParallelAction(
+                        new SequentialAction(
+                                // run to preload specimen
+                                hob.actionMacro(SPECIMEN_BEFORE_DEPOSIT),
+                                drive.actionBuilder(new Pose2d(-9,63,-PI/2)).setTangent(-PI/2).splineTo(new Vector2d(-12, 32), -PI/2).build(),
                                 // place preload specimen
-                                .setTangent(-PI/2)
-                                .splineTo(new Vector2d(-12, 32), -PI/2)
+                                hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
-                                // position bot and swipe first sample into observation zone
-                                // MACRO: do extendo stuff to make it hit the sample
-                                .setTangent(PI/2)
-                                .splineTo(new Vector2d(-34, 40), 11*PI/8)
-                                .turnTo(-PI/4)
+                                // run to before sweepage
+                                hob.actionMacro(SAMPLE_SWEEP_UP),
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineTo(new Vector2d(-34, 40), 11*PI/8).build(),
+                                // run sweepage for first sample
+                                hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                drive.actionBuilder(drive.pose).turnTo(-PI/4).build(),
+                                hob.actionMacro(SAMPLE_SWEEP_UP),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/4 + PI).splineTo(new Vector2d(-42, 40), 11*PI/8).build(),
+                                // run sweepage for second sample
+                                hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                drive.actionBuilder(drive.pose).turnTo(-PI/4).build(),
+                                hob.actionMacro(SAMPLE_SWEEP_UP),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/4 + PI).splineTo(new Vector2d(-50, 40), 11*PI/8).build(),
+                                // run sweepage for third sample
+                                hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                drive.actionBuilder(drive.pose).turnTo(-PI/4).build(),
+                                // retract sweeper
+                                hob.actionMacro(EXTENDO_FULL_IN),
 
-                                // position bot and swipe second sample into observation zone
-                                // MACRO: do extendo stuff to make it hit the sample
-                                .setTangent(-PI/4 + PI)
-                                .splineTo(new Vector2d(-42, 40), 11*PI/8)
-                                .turnTo(-PI/4)
+                                // go to wall specimen 1
+                                hob.actionMacro(SPECIMEN_BEFORE_PICKUP),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/4).splineTo(new Vector2d(-36,63), PI/2).build(),
+                                // pick up wall specimen 1
+                                hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2).build(),
+                                // deposit wall specimen 1
 
-                                // position bot and swipe third sample into observation zone
-                                // MACRO: do extendo stuff to make it hit the sample
-                                .setTangent(-PI/4 + PI)
-                                .splineTo(new Vector2d(-50, 40), 11*PI/8)
-                                .turnTo(-PI/4)
+                                hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
+                                // go to wall specimen 2
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2).build(),
+                                // pick up wall specimen 2
+                                hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2).build(),
+                                // deposit wall specimen 2
+                                hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
-                                // pickup specimen 2 and cycle
-                                // MACRO: pickup/deposit specimen
-                                .setTangent(-PI/4)
-                                .splineTo(new Vector2d(-36,63), PI/2)
-                                .setTangent(-PI/2)
-                                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2)
+                                // go to wall specimen 3
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2).build(),
+                                // pick up wall specimen 3
+                                hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.0001), -PI/2).build(),
+                                // deposit wall specimen 3
+                                hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
-                                // pickup specimen 3 and cycle
-                                // MACRO: pickup/deposit specimen
-                                .setTangent(PI/2)
-                                .splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2)
-                                .setTangent(-PI/2)
-                                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2)
+                                // go to wall specimen 4
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, PI/2-0.0002), PI/2).build(),
+                                // pick up wall specimen 4
+                                hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.003), -PI/2).build(),
+                                // deposit wall specimen 4
+                                hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
-                                // pickup specimen 4 and cycle
-                                // MACRO: pickup/deposit specimen
-                                // NOTE: TINY DECIMALs ARE TO ENCOURAGE RR TO CHOOSE THE RIGHT DIRECTION TO TURN
-                                .setTangent(PI/2)
-                                .splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2)
-                                .setTangent(-PI/2)
-                                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.0001), -PI/2)
-
-                                // pickup specimen 5 and cycle
-                                // MACRO: pickup/deposit specimen
-                                // NOTE: TINY DECIMALs ARE TO ENCOURAGE RR TO CHOOSE THE RIGHT DIRECTION TO TURN
-                                .setTangent(PI/2)
-                                .splineToLinearHeading(new Pose2d(-36,63, PI/2-0.0002), PI/2)
-                                .setTangent(-PI/2)
-                                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.003), -PI/2)
-
-                                // go park in observation zone
-                                // MACRO: put all servos/slides in good place for starting teleop
-                                // NOTE: we could end auto with picking up a yellow sample in the observation zone, hmmm
-                                .setTangent(PI/2)
-                                .splineToLinearHeading(new Pose2d(-36,63, 0), PI/2)
-
-                                .build()
+                                // park and make bot ready for tele
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, 0), PI/2).build(),
+                                hob.actionMacro(FULL_IN)
+                        ),
+                        hob.actionTick()
                 )
         );
-        // tick robot
-        hob.tick();
-
-    }
-
-    @Override
-    // runs on stop press or automatic stop
-    public void stop() {
-
     }
 
 }

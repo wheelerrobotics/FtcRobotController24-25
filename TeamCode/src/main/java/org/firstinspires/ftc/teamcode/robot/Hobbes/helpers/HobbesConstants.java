@@ -66,6 +66,18 @@ public class HobbesConstants {
     public static int INFINITY =  2000000000;
     public static double EXTENDO_OFFSET = 1;
 
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 0;
+    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0;
+    public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0;
+
+    public static int SLIDES_SPECIMEN_DEPOSITED = 0;
+    public static double SLIDES_ARM_SPECIMEN_DEPOSITED = 0;
+    public static double SLIDES_WRIST_SPECIMEN_DEPOSITED = 0;
+
+    public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
+    public static int SLIDES_SPECIMEN_PICKED_UP = 0;
+    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0;
+    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0;
 
 
 

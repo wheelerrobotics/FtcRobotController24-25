@@ -32,8 +32,12 @@ import static java.lang.Math.abs;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -140,6 +144,36 @@ public class Hobbes extends Meccanum implements Robot {
     public ElapsedTime macroTimer = new ElapsedTime();
     public int macroTimeout = INFINITY;
 
+    public class TickingAction implements Action {
+        Hobbes bot = null;
+        public TickingAction(Hobbes h) {
+            bot = h;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            bot.tick();
+            return true;
+        }
+    }
+    public class MacroAction implements Action {
+        Hobbes bot = null;
+        HobbesState macro = null;
+        public MacroAction(Hobbes h, HobbesState s) {
+            bot = h;
+            macro = s;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            bot.runMacro(macro);
+            return false;
+        }
+    }
+    public Action actionTick() {
+        return new TickingAction(this);
+    }
+    public Action actionMacro(HobbesState macro) {
+        return new MacroAction(this, macro);
+    }
     public void runMacro(HobbesState m) {
         if (macroTimer.milliseconds() < macroTimeout)
             macroTimeout = INFINITY; // cancel ongoing macro
