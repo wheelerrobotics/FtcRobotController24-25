@@ -44,7 +44,7 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_SPEED = 0.01;
     public static double EXTENDO_WRIST_SPEED = 0.003;
 
-    public static double SLIDES_ARM_TRANSFER = .87;
+    public static double SLIDES_ARM_TRANSFER = .9;
     public static double SLIDES_ARM_ABOVE_TRANSFER = 0.75;
     public static double SLIDES_ARM_DEPOSIT = 0.4;
     // NOT TUNED
@@ -53,6 +53,7 @@ public class HobbesConstants {
 
     public static double SLIDES_WRIST_TRANSFER = 0.05;
     public static double SLIDES_WRIST_DEPOSIT = 0.65;
+    public static double SLIDES_WRIST_HALF = 0.3;
     // NOT TUNED
     public static double SLIDES_WRIST_SPECIMEN_PICK = 0.07;
     public static double SLIDES_WRIST_SPECIMEN_DEPOSIT = 0;
