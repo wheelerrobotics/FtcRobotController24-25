@@ -168,11 +168,60 @@ public class Hobbes extends Meccanum implements Robot {
             return false;
         }
     }
+    public class MacroActionTimeout implements Action {
+        Hobbes bot = null;
+        HobbesState macro = null;
+        ElapsedTime et = null;
+        int timeout;
+        boolean TIMER_RUNNING = false;
+        public MacroActionTimeout(Hobbes h, HobbesState s, int millis) {
+            bot = h;
+            macro = s;
+            et = new ElapsedTime();
+            timeout = millis;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (!TIMER_RUNNING) {
+                et.reset();
+                TIMER_RUNNING = true;
+            }
+            if (et.milliseconds() < timeout) {
+                return true;
+            } else {
+                bot.runMacro(macro);
+                return false;
+            }
+        }
+    }
+    public class WaitAction implements Action {
+        ElapsedTime et = null;
+        int timeout;
+        boolean TIMER_RUNNING = false;
+        public WaitAction(int millis) {
+            et = new ElapsedTime();
+            timeout = millis;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (!TIMER_RUNNING) {
+                et.reset();
+                TIMER_RUNNING = true;
+            }
+            return et.milliseconds() < timeout;
+        }
+    }
     public Action actionTick() {
         return new TickingAction(this);
     }
     public Action actionMacro(HobbesState macro) {
         return new MacroAction(this, macro);
+    }
+    public Action actionMacroTimeout(HobbesState macro, int millis) {
+        return new MacroActionTimeout(this, macro, millis);
+    }
+    public Action actionWait(int millis) {
+        return new WaitAction(millis);
     }
     public void runMacro(HobbesState m) {
         if (macroTimer.milliseconds() < macroTimeout)

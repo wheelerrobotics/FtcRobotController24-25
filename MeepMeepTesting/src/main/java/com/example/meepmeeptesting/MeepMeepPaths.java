@@ -22,55 +22,29 @@ public class MeepMeepPaths {
                 .setConstraints(60, 60, Math.toRadians(600), Math.toRadians(380), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-9,63,-PI/2))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(35,63,PI))
                 // place preload specimen
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(50, 60), 0)
                 .setTangent(-PI/2)
-                .splineTo(new Vector2d(-12, 32), -PI/2)
-
-                // position bot and swipe first sample into observation zone
+                .splineToLinearHeading(new Pose2d(48, 44, -PI/2), -PI/2)
                 .setTangent(PI/2)
-                .splineTo(new Vector2d(-34, 40), 11*PI/8)
-                .turnTo(-PI/4)
+                .splineToLinearHeading(new Pose2d(58, 56, 5*PI/4), PI/4)
 
-                // position bot and swipe second sample into observation zone
-                .setTangent(-PI/4 + PI)
-                .splineTo(new Vector2d(-42, 40), 11*PI/8)
-                .turnTo(-PI/4)
-
-                // position bot and swipe third sample into observation zone
-                .setTangent(-PI/4 + PI)
-                .splineTo(new Vector2d(-50, 40), 11*PI/8)
-                .turnTo(-PI/4)
-
-                // pickup specimen 2 and cycle
-                .setTangent(-PI/4)
-                .splineTo(new Vector2d(-36,63), PI/2)
                 .setTangent(-PI/2)
-                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2)
-
-                // pickup specimen 3 and cycle
+                .splineToLinearHeading(new Pose2d(58.1, 44, -PI/2), -PI/2)
                 .setTangent(PI/2)
-                .splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2)
+                .splineToLinearHeading(new Pose2d(58, 56, 5*PI/4), PI/4)
+
                 .setTangent(-PI/2)
-                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2)
-
-                // pickup specimen 4 and cycle
-                // NOTE: TINY DECIMALs ARE TO ENCOURAGE RR TO CHOOSE THE RIGHT DIRECTION TO TURN
+                .splineToLinearHeading(new Pose2d(62, 44, -PI/2 + 0.4), -PI/2+0.4)
                 .setTangent(PI/2)
-                .splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2)
+                .splineToLinearHeading(new Pose2d(58, 56, 5*PI/4), PI/4)
+
+
                 .setTangent(-PI/2)
-                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.0001), -PI/2)
+                .splineToSplineHeading(new Pose2d(22, 11, PI), PI)
 
-                // pickup specimen 5 and cycle
-                // NOTE: TINY DECIMALs ARE TO ENCOURAGE RR TO CHOOSE THE RIGHT DIRECTION TO TURN
-                .setTangent(PI/2)
-                .splineToLinearHeading(new Pose2d(-36,63, PI/2-0.0002), PI/2)
-                .setTangent(-PI/2)
-                .splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.003), -PI/2)
-
-                // go park in observation zone
-                .setTangent(PI/2)
-                .splineToLinearHeading(new Pose2d(-36,63, 0), PI/2)
 
                 .build()
         );
