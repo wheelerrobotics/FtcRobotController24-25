@@ -50,7 +50,7 @@ public class DanielSickAuto extends LinearOpMode {
                         new SequentialAction(
                                 // run to preload specimen
                                 hob.actionMacro(SPECIMEN_BEFORE_DEPOSIT),
-                                drive.actionBuilder(new Pose2d(-9,63,-PI/2)).setTangent(-PI/2).splineTo(new Vector2d(-12, 32), -PI/2).build(),
+                                drive.actionBuilder(new Pose2d(-9,63,PI/2)).setTangent(-PI/2).splineTo(new Vector2d(-12, 32), -PI/2).build(),
                                 // place preload specimen
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
@@ -59,17 +59,17 @@ public class DanielSickAuto extends LinearOpMode {
                                 drive.actionBuilder(drive.pose).setTangent(PI/2).splineTo(new Vector2d(-34, 40), 11*PI/8).build(),
                                 // run sweepage for first sample
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                drive.actionBuilder(drive.pose).turnTo(-PI/4).build(),
+                                drive.actionBuilder(drive.pose).turnTo(3*PI/4).build(),
                                 hob.actionMacro(SAMPLE_SWEEP_UP),
                                 drive.actionBuilder(drive.pose).setTangent(-PI/4 + PI).splineTo(new Vector2d(-42, 40), 11*PI/8).build(),
                                 // run sweepage for second sample
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                drive.actionBuilder(drive.pose).turnTo(-PI/4).build(),
+                                drive.actionBuilder(drive.pose).turnTo(3*PI/4).build(),
                                 hob.actionMacro(SAMPLE_SWEEP_UP),
                                 drive.actionBuilder(drive.pose).setTangent(-PI/4 + PI).splineTo(new Vector2d(-50, 40), 11*PI/8).build(),
                                 // run sweepage for third sample
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                drive.actionBuilder(drive.pose).turnTo(-PI/4).build(),
+                                drive.actionBuilder(drive.pose).turnTo(3*PI/4).build(),
                                 // retract sweeper
                                 hob.actionMacro(EXTENDO_FULL_IN),
 
@@ -78,36 +78,36 @@ public class DanielSickAuto extends LinearOpMode {
                                 drive.actionBuilder(drive.pose).setTangent(-PI/4).splineTo(new Vector2d(-36,63), PI/2).build(),
                                 // pick up wall specimen 1
                                 hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
-                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.0001), -PI/2).build(),
                                 // deposit wall specimen 1
 
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
                                 // go to wall specimen 2
-                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, -PI/2-0.0002), PI/2).build(),
                                 // pick up wall specimen 2
                                 hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
-                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2), -PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.0003), -PI/2).build(),
                                 // deposit wall specimen 2
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
                                 // go to wall specimen 3
-                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, PI/2), PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, -PI/2-0.0004), PI/2).build(),
                                 // pick up wall specimen 3
                                 hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
-                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.0001), -PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.0005), -PI/2).build(),
                                 // deposit wall specimen 3
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
                                 // go to wall specimen 4
-                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, PI/2-0.0002), PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, -PI/2-0.0006), PI/2).build(),
                                 // pick up wall specimen 4
                                 hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
-                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, -PI/2-0.003), -PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(-PI/2).splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.007), -PI/2).build(),
                                 // deposit wall specimen 4
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
 
                                 // park and make bot ready for tele
-                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, 0), PI/2).build(),
+                                drive.actionBuilder(drive.pose).setTangent(PI/2).splineToLinearHeading(new Pose2d(-36,63, PI), PI/2).build(),
                                 hob.actionMacro(FULL_IN)
                         ),
                         hob.actionTick()
