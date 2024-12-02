@@ -2,6 +2,11 @@ package org.firstinspires.ftc.teamcode.opmodes.autonomous;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import static java.lang.Math.PI;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.AUTO;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.AUTO4;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.AUTO6;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.AUTO8;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.CLOSE_CLAW;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.EXTENDO_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.EXTENDO_FULL_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.EXTENDO_PICKING_UP;
@@ -12,7 +17,9 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_DOWN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_DOWN1;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.TRANSFER_CLOSED;
+
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -74,14 +81,9 @@ public class HouseAuto3 extends LinearOpMode {
         hob.init(hardwareMap);
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
 
-        while (!isStarted() && !isStopRequested()) {
-            telemetry.addLine(" we ready as hell boyyyy");
-            telemetry.update();
-            sleep(20);
-        }
 
         while (!isStopRequested()) {
-            hob.servosController.setup();
+
             TrajectoryActionBuilder b1 = drive.actionBuilder(beginPose)
                     .setTangent(PI)
                     //  .splineToConstantHeading(new Vector2d(50, 60), 0)
@@ -91,20 +93,20 @@ public class HouseAuto3 extends LinearOpMode {
 
             TrajectoryActionBuilder s1 = b1.endTrajectory().fresh()
                     .setTangent(0)
-                    .splineToLinearHeading(new Pose2d(-13, 21, PI/2), 0);
+                    .splineToLinearHeading(new Pose2d(-13, 19, PI/2), 0);
 
             TrajectoryActionBuilder b2 = s1.endTrajectory().fresh()
                     .setTangent(PI/2)
                     .splineToLinearHeading(new Pose2d(-23, 7, PI/4), PI/2);
             TrajectoryActionBuilder s2 = b2.endTrajectory().fresh()
                     .setTangent(PI/2)
-                    .splineToLinearHeading(new Pose2d(-23.1, 21, PI/2), PI/2);
+                    .splineToLinearHeading(new Pose2d(-23.1, 19, PI/2), PI/2);
             TrajectoryActionBuilder b3 = s2.endTrajectory().fresh()
                     .setTangent(-PI/2)
                     .splineToLinearHeading(new Pose2d(-23, 7, PI/4), PI/2);
             TrajectoryActionBuilder s3 = b3.endTrajectory().fresh()
                     .setTangent(PI/2)
-                    .splineToLinearHeading(new Pose2d(-27, 21, PI/2 + 0.4), PI/2+0.4);
+                    .splineToLinearHeading(new Pose2d(-27, 19, PI/2 + 0.4), PI/2+0.4);
             TrajectoryActionBuilder b4 = s3.endTrajectory().fresh()
                     .setTangent(-PI/2)
                     .splineToLinearHeading(new Pose2d(-23, 7, PI/4), PI/2);
@@ -122,7 +124,8 @@ public class HouseAuto3 extends LinearOpMode {
 
             // actions that need to happen on init; for instance, a claw tightening.
 
-
+            hob.servosController.setup();
+            hob.tick();
             waitForStart();
 
             if (isStopRequested()) return;
@@ -143,45 +146,44 @@ public class HouseAuto3 extends LinearOpMode {
             sample3 = s3.build();
             basket4 = b4.build();
 
-
-
-
             Actions.runBlocking(
                     new ParallelAction(
                     new SequentialAction(
-                            hob.actionMacro(FULL_TRANSFER),
-                            hob.actionWait(500),
+                           // hob.actionMacro(AUTO6),
                             basket1,
-                            hob.actionMacroTimeout(SLIDES_DEPOSIT, 1500),
-                            hob.actionWait(3000),
-                            hob.actionMacro(OPEN_CLAW),
-                            hob.actionWait(400),
-                            hob.actionMacroTimeout(SLIDES_DOWN, 300),
-                            hob.actionMacroTimeout(EXTENDO_BEFORE_PICKUP, 500),
+                         //   hob.actionMacro(SLIDES_DEPOSIT),
+                         //   hob.actionWait(500),
+                        //    hob.actionMacro(OPEN_CLAW),
+                        //    hob.actionWait(400),
+                      //      hob.actionMacroTimeout(SLIDES_DOWN1, 300),
+                        //    hob.actionWait(300),
+                            hob.actionMacroTimeout(AUTO, 2000),
                             sample1,
-                            hob.actionMacroTimeout(EXTENDO_PICKING_UP, 1500),
                             hob.actionWait(1000),
                             basket2,
-                            hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
-                            hob.actionWait(1000),
-                            hob.actionMacro(OPEN_CLAW),
-                            hob.actionWait(400),
-                            hob.actionMacroTimeout(SLIDES_DOWN, 300),
-                            hob.actionMacroTimeout(EXTENDO_BEFORE_PICKUP, 500),
+                       //     hob.actionMacro(SLIDES_DEPOSIT),
+                          //  hob.actionWait(1500),
+                         //   hob.actionMacro(OPEN_CLAW),
+                        //    hob.actionWait(400),
+                        //    hob.actionMacroTimeout(SLIDES_DOWN, 300),
+                        //    hob.actionWait(300),
+                            hob.actionMacroTimeout(AUTO, 2000),
                             sample2,
-                            hob.actionMacroTimeout(EXTENDO_PICKING_UP, 1500),
-                            basket3,
-                            hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
                             hob.actionWait(1000),
-                            hob.actionMacro(OPEN_CLAW),
-                            hob.actionWait(400),
-                            hob.actionMacroTimeout(SLIDES_DOWN, 300),
-                            hob.actionMacroTimeout(EXTENDO_BEFORE_PICKUP, 500),
+                            basket3,
+                           // hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
+                          //  hob.actionWait(1500),
+                        //    hob.actionMacro(OPEN_CLAW),
+                       //     hob.actionWait(400),
+                          //  hob.actionMacroTimeout(SLIDES_DOWN, 300),
+                        //    hob.actionWait(300),
+                            hob.actionMacroTimeout(AUTO, 2000),
+                         //   hob.actionWait(3000),
                             sample3,
-                            hob.actionMacroTimeout(EXTENDO_PICKING_UP, 1500),
+                            hob.actionWait(1000),
                             basket4,
                             hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
-                            hob.actionWait(1000),
+                            hob.actionWait(1500),
                             hob.actionMacro(OPEN_CLAW),
 
                             finish

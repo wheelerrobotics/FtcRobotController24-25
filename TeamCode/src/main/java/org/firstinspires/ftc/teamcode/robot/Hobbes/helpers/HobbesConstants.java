@@ -26,7 +26,7 @@ public class HobbesConstants {
 
     public static double EXTENDO_IN = 0.1;
     public static double EXTENDO_OUT_FULL = 0.58;
-    public static double EXTENDO_OUT_SOME = 0.1;
+    public static double EXTENDO_OUT_SOME = 0.3;
 
     public static double EXTENDO_SPEED = 0.01;
 
@@ -39,7 +39,7 @@ public class HobbesConstants {
     public static double EXTENDO_WRIST_UP = 0.61;
     public static double EXTENDO_WRIST_INTAKE_FLAT = 0.75;
     public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
-
+ //   public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
 
     public static double EXTENDO_ARM_SPEED = 0.01;
     public static double EXTENDO_WRIST_SPEED = 0.003;

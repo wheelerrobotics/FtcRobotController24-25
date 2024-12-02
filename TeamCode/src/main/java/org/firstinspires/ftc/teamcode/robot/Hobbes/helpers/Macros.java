@@ -3,7 +3,8 @@ package org.firstinspires.ftc.teamcode.robot.Hobbes.helpers;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.*;
 
 public class Macros {
-    public static HobbesState EXTENDO_BEFORE_PICKUP = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
+    public static HobbesState EXTENDO_BEFORE_PICKUP2 = new HobbesState(EXTENDO_IN+.07, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
+    public static HobbesState EXTENDO_BEFORE_PICKUP = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, new LinkedState(EXTENDO_BEFORE_PICKUP2,1000));
 
 
     public static HobbesState EXTENDO_ARM_WRIST_FLAT = new HobbesState(null, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
@@ -21,13 +22,16 @@ public class Macros {
     public static HobbesState TRANSFER_WRIST_UP =  new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_OPEN, SLIDES_IN, new LinkedState(TRANSFER_ON, 200));
     public static HobbesState FULL_TRANSFER = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_UP, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_OPEN, SLIDES_IN, new LinkedState(TRANSFER_WRIST_UP, 600));
 
-    public static HobbesState EXTENDO_PICKING_UP2 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_POWER, CLAW_OPEN, SLIDES_IN, new LinkedState(TRANSFER_ON, 600));
-    public static HobbesState EXTENDO_PICKING_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, INTAKE_POWER, null, null, new LinkedState(EXTENDO_PICKING_UP2,600));
+    public static HobbesState EXTENDO_PICKING_UP2 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_POWER, CLAW_OPEN, SLIDES_IN, new LinkedState(FULL_TRANSFER, 600));
+    public static HobbesState EXTENDO_PICKING_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, INTAKE_POWER, null, null, new LinkedState(EXTENDO_PICKING_UP2,1000));
 
     public static HobbesState SLIDES_DOWN = new HobbesState(null, null, null, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, null, CLAW_OPEN, SLIDES_IN, null);
 
-    public static HobbesState SLIDES_DEPOSIT2 = new HobbesState(null, null, null, SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, null, null);
-    public static HobbesState SLIDES_DEPOSIT =  new HobbesState(null, null, null, null, SLIDES_WRIST_HALF, null, null, SLIDES_OUT_TOP_SAMPLE, new LinkedState(SLIDES_DEPOSIT2, 1200));
+    public static HobbesState SLIDES_DOWN2 =  new HobbesState(null, null, null, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_HALF, null, CLAW_OPEN, SLIDES_IN,null );
+    public static HobbesState SLIDES_DOWN1 = new HobbesState(null, null, null, SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, null, new LinkedState(SLIDES_DOWN2, 100));
+
+    public static HobbesState SLIDES_DEPOSIT2 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT, SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, SLIDES_OUT_TOP_SAMPLE, null);
+    public static HobbesState SLIDES_DEPOSIT =  new HobbesState(null, null, null, null, SLIDES_WRIST_HALF, null, null, null, new LinkedState(SLIDES_DEPOSIT2, 500));
 
     public static HobbesState OPEN_CLAW = new HobbesState(null, null, null, null, null, null, CLAW_OPEN, null, null);
 
@@ -55,4 +59,17 @@ public class Macros {
 
     public static HobbesState SAMPLE_SWEEP_DOWN = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
     public static HobbesState SAMPLE_SWEEP_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE_ANGLED, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
+
+    public static HobbesState AUTO9 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_INTAKE_ANGLED, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_CLOSED, SLIDES_IN, null);
+    public static HobbesState AUTO8 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_INTAKE_ANGLED, SLIDES_ARM_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_CLOSED, SLIDES_IN, new LinkedState(AUTO9,100));
+    public static HobbesState AUTO7 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER, SLIDES_ARM_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_CLOSED, SLIDES_IN, new LinkedState(AUTO8,1000));
+    public static HobbesState AUTO6 =  new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER, SLIDES_ARM_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_OPEN, SLIDES_IN, new LinkedState(AUTO7,1000));
+    public static HobbesState AUTO5 =  new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_POWER, CLAW_OPEN, SLIDES_IN, new LinkedState(AUTO6,200));
+    public static HobbesState AUTO4 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_UP, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_POWER, CLAW_OPEN, SLIDES_IN, new LinkedState(AUTO5,100));
+    public static HobbesState AUTO3 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_INTAKE_FLAT, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_POWER, CLAW_OPEN, SLIDES_IN, new LinkedState(AUTO4,1000));
+    public static HobbesState AUTO2 = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, INTAKE_POWER, null, null, new LinkedState(AUTO3,1500));
+    public static HobbesState AUTO1 = new HobbesState(EXTENDO_IN+.07, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, new LinkedState(AUTO2,2000));
+    public static HobbesState AUTO = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, new LinkedState(AUTO1,1000));
+
+
 }
