@@ -5,13 +5,13 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class HobbesConstants {
     /*
-    EXTENDO/SLIDES: Intake and deposit respectively
-    IN/OUT: Relative to robot, for slides/extendo
-    INTAKE & DEPOSIT vs TRANSFER: for arms/wrists
-
-    ARM: pivots arm
-    WRIST: pivots end of an arm
-
+     * EXTENDO/SLIDES: Intake and deposit respectively
+     * IN/OUT: Relative to robot, for slides/extendo
+     * INTAKE & DEPOSIT vs TRANSFER: for arms/wrists
+     * 
+     * ARM: pivots arm
+     * WRIST: pivots end of an arm
+     * 
      */
     public static int SLIDES_MAX = 1600;
     public static int SLIDES_MIN = 0;
@@ -39,7 +39,7 @@ public class HobbesConstants {
     public static double EXTENDO_WRIST_UP = 0.61;
     public static double EXTENDO_WRIST_INTAKE_FLAT = 0.75;
     public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
- //   public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
+    // public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
 
     public static double EXTENDO_ARM_SPEED = 0.01;
     public static double EXTENDO_WRIST_SPEED = 0.003;
@@ -50,14 +50,9 @@ public class HobbesConstants {
     // NOT TUNED
     public static double SLIDES_ARM_SPECIMEN = 0.02;
 
-
     public static double SLIDES_WRIST_TRANSFER = 0.05;
     public static double SLIDES_WRIST_DEPOSIT = 0.65;
     public static double SLIDES_WRIST_HALF = 0.3;
-    // NOT TUNED
-    public static double SLIDES_WRIST_SPECIMEN_PICK = 0.07;
-    public static double SLIDES_WRIST_SPECIMEN_DEPOSIT = 0;
-
 
     public static double CLAW_OPEN = 0.2;
     public static double CLAW_CLOSED = 0.8;
@@ -66,24 +61,21 @@ public class HobbesConstants {
     public static double INTAKE_OFF = 0;
     public static double INTAKE_REVERSE = -1;
 
-    public static int INFINITY =  2000000000;
+    public static int INFINITY = 2000000000;
     public static double EXTENDO_OFFSET = 1;
 
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 0;
-    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0;
-    public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 900;
+    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.18;
+    public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.83;
 
-    public static int SLIDES_SPECIMEN_DEPOSITED = 0;
-    public static double SLIDES_ARM_SPECIMEN_DEPOSITED = 0;
-    public static double SLIDES_WRIST_SPECIMEN_DEPOSITED = 0;
+    public static int SLIDES_SPECIMEN_DEPOSITED = 830;
+    public static double SLIDES_ARM_SPECIMEN_DEPOSITED = 0.18;
+    public static double SLIDES_WRIST_SPECIMEN_DEPOSITED = 0.74;
 
     public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
-    public static int SLIDES_SPECIMEN_PICKED_UP = 0;
-    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0;
-    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0;
+    public static int SLIDES_SPECIMEN_PICKED_UP = 200;
 
-
-
-
+    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.02;
+    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.74;
 
 }

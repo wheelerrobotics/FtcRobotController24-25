@@ -65,7 +65,6 @@ import java.util.Objects;
 public class Hobbes extends Meccanum implements Robot {
     protected HardwareMap hw = null;
 
-
     public MotorSlideThread slidesController = new MotorSlideThread();
     public ServosThread servosController = new ServosThread();
     // public SampleMecanumDrive rr = null;
@@ -80,6 +79,7 @@ public class Hobbes extends Meccanum implements Robot {
     public void resetImu() {
         this.offset = -imu.getAngularOrientation().firstAngle;
     }
+
     public Servo rotateServo = null;
 
     @Override
@@ -107,12 +107,12 @@ public class Hobbes extends Meccanum implements Robot {
         slides = (DcMotorEx) hardwareMap.dcMotor.get("slides"); // EH3
         // define limited servos
         claw = hardwareMap.get(ServoImplEx.class, "claw");
-        extendoLeft = hardwareMap.get(ServoImplEx.class,"extendoLeft");
-        extendoRight = hardwareMap.get(ServoImplEx.class,"extendoRight");
-        extendoArm = hardwareMap.get(ServoImplEx.class,"extendoArm");
-        extendoWrist = hardwareMap.get(ServoImplEx.class,"extendoWrist");
-        slidesArm = hardwareMap.get(ServoImplEx.class,"slidesArm");
-        slidesWrist = hardwareMap.get(ServoImplEx.class,"slidesWrist");
+        extendoLeft = hardwareMap.get(ServoImplEx.class, "extendoLeft");
+        extendoRight = hardwareMap.get(ServoImplEx.class, "extendoRight");
+        extendoArm = hardwareMap.get(ServoImplEx.class, "extendoArm");
+        extendoWrist = hardwareMap.get(ServoImplEx.class, "extendoWrist");
+        slidesArm = hardwareMap.get(ServoImplEx.class, "slidesArm");
+        slidesWrist = hardwareMap.get(ServoImplEx.class, "slidesWrist");
         // define servos
         intakeLeft = hardwareMap.crservo.get("intakeLeft");
         intakeRight = hardwareMap.crservo.get("intakeRight");
@@ -137,7 +137,6 @@ public class Hobbes extends Meccanum implements Robot {
         runtime.reset();
     }
 
-
     // macros running
     public HobbesState macroState = null;
     public boolean MACROING = false;
@@ -146,40 +145,48 @@ public class Hobbes extends Meccanum implements Robot {
 
     public class TickingAction implements Action {
         Hobbes bot = null;
+
         public TickingAction(Hobbes h) {
             bot = h;
         }
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             bot.tick();
             return true;
         }
     }
+
     public class MacroAction implements Action {
         Hobbes bot = null;
         HobbesState macro = null;
+
         public MacroAction(Hobbes h, HobbesState s) {
             bot = h;
             macro = s;
         }
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             bot.runMacro(macro);
             return false;
         }
     }
+
     public class MacroActionTimeout implements Action {
         Hobbes bot = null;
         HobbesState macro = null;
         ElapsedTime et = null;
         int timeout;
         boolean TIMER_RUNNING = false;
+
         public MacroActionTimeout(Hobbes h, HobbesState s, int millis) {
             bot = h;
             macro = s;
             et = new ElapsedTime();
             timeout = millis;
         }
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (!TIMER_RUNNING) {
@@ -194,14 +201,17 @@ public class Hobbes extends Meccanum implements Robot {
             }
         }
     }
+
     public class WaitAction implements Action {
         ElapsedTime et = null;
         int timeout;
         boolean TIMER_RUNNING = false;
+
         public WaitAction(int millis) {
             et = new ElapsedTime();
             timeout = millis;
         }
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (!TIMER_RUNNING) {
@@ -211,18 +221,23 @@ public class Hobbes extends Meccanum implements Robot {
             return et.milliseconds() < timeout;
         }
     }
+
     public Action actionTick() {
         return new TickingAction(this);
     }
+
     public Action actionMacro(HobbesState macro) {
-        return new MacroAction(this, macro);
+        return new SequentialAction(new MacroAction(this, macro));
     }
+
     public Action actionMacroTimeout(HobbesState macro, int millis) {
-        return new MacroActionTimeout(this, macro, millis);
+        return new SequentialAction(new MacroActionTimeout(this, macro, millis));
     }
+
     public Action actionWait(int millis) {
-        return new WaitAction(millis);
+        return new SequentialAction(new WaitAction(millis));
     }
+
     public void runMacro(HobbesState m) {
         if (macroTimer.milliseconds() < macroTimeout)
             macroTimeout = INFINITY; // cancel ongoing macro
@@ -302,6 +317,7 @@ public class Hobbes extends Meccanum implements Robot {
             slidesArm.setPosition(SLIDES_ARM_ABOVE_TRANSFER);
             slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
         }
+
         public void autoSetup() {
             slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
             claw.setPosition(CLAW_OPEN);

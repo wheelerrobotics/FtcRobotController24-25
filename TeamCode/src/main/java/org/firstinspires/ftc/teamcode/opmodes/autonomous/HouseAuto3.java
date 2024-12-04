@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes.autonomous;
+
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import static java.lang.Math.PI;
@@ -19,7 +20,6 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_DOWN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_DOWN1;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.TRANSFER_CLOSED;
-
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -73,124 +73,117 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
 @Autonomous(name = "HOUSE AUTO 3")
 public class HouseAuto3 extends LinearOpMode {
-    Hobbes hob = null;
-    @Override
-    public void runOpMode() {
-        Pose2d beginPose = new Pose2d(0,0,0);
-        hob = new Hobbes();
-        hob.init(hardwareMap);
-        PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
+        Hobbes hob = null;
 
+        @Override
+        public void runOpMode() {
+                Pose2d beginPose = new Pose2d(0, 0, 0);
+                hob = new Hobbes();
+                hob.init(hardwareMap);
+                PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
 
-        while (!isStopRequested()) {
+                while (!isStopRequested()) {
 
-            TrajectoryActionBuilder b1 = drive.actionBuilder(beginPose)
-                    .setTangent(PI)
-                    //  .splineToConstantHeading(new Vector2d(50, 60), 0)
-                    .splineToConstantHeading(new Vector2d(-22, 1), 0);
+                        TrajectoryActionBuilder b1 = drive.actionBuilder(beginPose)
+                                        .setTangent(PI)
+                                        // .splineToConstantHeading(new Vector2d(50, 60), 0)
+                                        .splineToConstantHeading(new Vector2d(-22, 1), 0);
 
+                        TrajectoryActionBuilder s1 = b1.endTrajectory().fresh()
+                                        .setTangent(0)
+                                        .splineToLinearHeading(new Pose2d(-13, 19, PI / 2), 0);
 
+                        TrajectoryActionBuilder b2 = s1.endTrajectory().fresh()
+                                        .setTangent(PI / 2)
+                                        .splineToLinearHeading(new Pose2d(-23, 7, PI / 4), PI / 2);
+                        TrajectoryActionBuilder s2 = b2.endTrajectory().fresh()
+                                        .setTangent(PI / 2)
+                                        .splineToLinearHeading(new Pose2d(-23.1, 19, PI / 2), PI / 2);
+                        TrajectoryActionBuilder b3 = s2.endTrajectory().fresh()
+                                        .setTangent(-PI / 2)
+                                        .splineToLinearHeading(new Pose2d(-23, 7, PI / 4), PI / 2);
+                        TrajectoryActionBuilder s3 = b3.endTrajectory().fresh()
+                                        .setTangent(PI / 2)
+                                        .splineToLinearHeading(new Pose2d(-27, 19, PI / 2 + 0.4), PI / 2 + 0.4);
+                        TrajectoryActionBuilder b4 = s3.endTrajectory().fresh()
+                                        .setTangent(-PI / 2)
+                                        .splineToLinearHeading(new Pose2d(-23, 7, PI / 4), PI / 2);
+                        // .setTangent(PI/2)
+                        // .splineToSplineHeading(new Pose2d(13, -52, 0), 0)
 
-            TrajectoryActionBuilder s1 = b1.endTrajectory().fresh()
-                    .setTangent(0)
-                    .splineToLinearHeading(new Pose2d(-13, 19, PI/2), 0);
+                        Action finish = b4.endTrajectory().fresh()
+                                        .waitSeconds(10000000)
+                                        .strafeTo(new Vector2d(0, 0))
+                                        .waitSeconds(10000000)
+                                        .build();
 
-            TrajectoryActionBuilder b2 = s1.endTrajectory().fresh()
-                    .setTangent(PI/2)
-                    .splineToLinearHeading(new Pose2d(-23, 7, PI/4), PI/2);
-            TrajectoryActionBuilder s2 = b2.endTrajectory().fresh()
-                    .setTangent(PI/2)
-                    .splineToLinearHeading(new Pose2d(-23.1, 19, PI/2), PI/2);
-            TrajectoryActionBuilder b3 = s2.endTrajectory().fresh()
-                    .setTangent(-PI/2)
-                    .splineToLinearHeading(new Pose2d(-23, 7, PI/4), PI/2);
-            TrajectoryActionBuilder s3 = b3.endTrajectory().fresh()
-                    .setTangent(PI/2)
-                    .splineToLinearHeading(new Pose2d(-27, 19, PI/2 + 0.4), PI/2+0.4);
-            TrajectoryActionBuilder b4 = s3.endTrajectory().fresh()
-                    .setTangent(-PI/2)
-                    .splineToLinearHeading(new Pose2d(-23, 7, PI/4), PI/2);
-//                    .setTangent(PI/2)
-//                    .splineToSplineHeading(new Pose2d(13, -52, 0), 0)
+                        // actions that need to happen on init; for instance, a claw tightening.
 
+                        hob.servosController.setup();
+                        hob.tick();
+                        waitForStart();
 
+                        if (isStopRequested())
+                                return;
 
+                        Action basket1;
+                        Action sample1;
+                        Action basket2;
+                        Action sample2;
+                        Action basket3;
+                        Action sample3;
+                        Action basket4;
 
-            Action finish = b4.endTrajectory().fresh()
-                    .waitSeconds(10000000)
-                    .strafeTo(new Vector2d(0, 0))
-                    .waitSeconds(10000000)
-                    .build();
+                        basket1 = b1.build();
+                        sample1 = s1.build();
+                        basket2 = b2.build();
+                        sample2 = s2.build();
+                        basket3 = b3.build();
+                        sample3 = s3.build();
+                        basket4 = b4.build();
 
-            // actions that need to happen on init; for instance, a claw tightening.
+                        Actions.runBlocking(
+                                        new ParallelAction(
+                                                        new SequentialAction(
+                                                                        // hob.actionMacro(AUTO6),
+                                                                        basket1,
+                                                                        // hob.actionMacro(SLIDES_DEPOSIT),
+                                                                        // hob.actionWait(500),
+                                                                        // hob.actionMacro(OPEN_CLAW),
+                                                                        // hob.actionWait(400),
+                                                                        // hob.actionMacroTimeout(SLIDES_DOWN1, 300),
+                                                                        // hob.actionWait(300),
+                                                                        hob.actionMacroTimeout(AUTO, 2000),
+                                                                        sample1,
+                                                                        hob.actionWait(1000),
+                                                                        basket2,
+                                                                        // hob.actionMacro(SLIDES_DEPOSIT),
+                                                                        // hob.actionWait(1500),
+                                                                        // hob.actionMacro(OPEN_CLAW),
+                                                                        // hob.actionWait(400),
+                                                                        // hob.actionMacroTimeout(SLIDES_DOWN, 300),
+                                                                        // hob.actionWait(300),
+                                                                        hob.actionMacroTimeout(AUTO, 2000),
+                                                                        sample2,
+                                                                        hob.actionWait(1000),
+                                                                        basket3,
+                                                                        // hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
+                                                                        // hob.actionWait(1500),
+                                                                        // hob.actionMacro(OPEN_CLAW),
+                                                                        // hob.actionWait(400),
+                                                                        // hob.actionMacroTimeout(SLIDES_DOWN, 300),
+                                                                        // hob.actionWait(300),
+                                                                        hob.actionMacroTimeout(AUTO, 2000),
+                                                                        // hob.actionWait(3000),
+                                                                        sample3,
+                                                                        hob.actionWait(1000),
+                                                                        basket4,
+                                                                        hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
+                                                                        hob.actionWait(1500),
+                                                                        hob.actionMacro(OPEN_CLAW),
 
-            hob.servosController.setup();
-            hob.tick();
-            waitForStart();
-
-            if (isStopRequested()) return;
-
-            Action basket1;
-            Action sample1;
-            Action basket2;
-            Action sample2;
-            Action basket3;
-            Action sample3;
-            Action basket4;
-
-            basket1 = b1.build();
-            sample1 = s1.build();
-            basket2 = b2.build();
-            sample2 = s2.build();
-            basket3 = b3.build();
-            sample3 = s3.build();
-            basket4 = b4.build();
-
-            Actions.runBlocking(
-                    new ParallelAction(
-                    new SequentialAction(
-                           // hob.actionMacro(AUTO6),
-                            basket1,
-                         //   hob.actionMacro(SLIDES_DEPOSIT),
-                         //   hob.actionWait(500),
-                        //    hob.actionMacro(OPEN_CLAW),
-                        //    hob.actionWait(400),
-                      //      hob.actionMacroTimeout(SLIDES_DOWN1, 300),
-                        //    hob.actionWait(300),
-                            hob.actionMacroTimeout(AUTO, 2000),
-                            sample1,
-                            hob.actionWait(1000),
-                            basket2,
-                       //     hob.actionMacro(SLIDES_DEPOSIT),
-                          //  hob.actionWait(1500),
-                         //   hob.actionMacro(OPEN_CLAW),
-                        //    hob.actionWait(400),
-                        //    hob.actionMacroTimeout(SLIDES_DOWN, 300),
-                        //    hob.actionWait(300),
-                            hob.actionMacroTimeout(AUTO, 2000),
-                            sample2,
-                            hob.actionWait(1000),
-                            basket3,
-                           // hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
-                          //  hob.actionWait(1500),
-                        //    hob.actionMacro(OPEN_CLAW),
-                       //     hob.actionWait(400),
-                          //  hob.actionMacroTimeout(SLIDES_DOWN, 300),
-                        //    hob.actionWait(300),
-                            hob.actionMacroTimeout(AUTO, 2000),
-                         //   hob.actionWait(3000),
-                            sample3,
-                            hob.actionWait(1000),
-                            basket4,
-                            hob.actionMacroTimeout(SLIDES_DEPOSIT, 200),
-                            hob.actionWait(1500),
-                            hob.actionMacro(OPEN_CLAW),
-
-                            finish
-                    ),
-                            hob.actionTick()
-                    )
-            );
+                                                                        finish),
+                                                        hob.actionTick()));
+                }
         }
-    }
 }

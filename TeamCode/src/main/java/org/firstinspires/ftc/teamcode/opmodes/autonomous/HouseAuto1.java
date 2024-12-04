@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmodes.autonomous;
 
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
@@ -46,8 +44,8 @@ public final class HouseAuto1 extends LinearOpMode {
 
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .lineToXLinearHeading(60,Math.toRadians(90))
-                            //.splineTo(new Vector2d(30, 30), Math.PI / 2)
+                            .lineToXLinearHeading(60, Math.toRadians(90))
+                            // .splineTo(new Vector2d(30, 30), Math.PI / 2)
 
                             .build());
         } else {
@@ -55,5 +53,3 @@ public final class HouseAuto1 extends LinearOpMode {
         }
     }
 }
-
-
