@@ -44,6 +44,7 @@ import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PwmControl;
@@ -74,7 +75,7 @@ public class Hobbes extends Meccanum implements Robot {
     public MotorSlideThread slidesController = new MotorSlideThread();
     public ServosThread servosController = new ServosThread();
     // public SampleMecanumDrive rr = null;
-    DcMotor slides;
+    public DcMotorImplEx slides;
     private ServoImplEx extendoLeft, extendoRight, extendoArm, extendoWrist, slidesWrist, slidesArm, claw;
     private CRServo intakeRight, intakeLeft;
 
@@ -110,7 +111,7 @@ public class Hobbes extends Meccanum implements Robot {
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // define slides
-        slides = (DcMotorEx) hardwareMap.dcMotor.get("slides"); // EH3
+        slides = (DcMotorImplEx) hardwareMap.dcMotor.get("slides"); // EH3
         // define limited servos
         claw = hardwareMap.get(ServoImplEx.class, "claw");
         extendoLeft = hardwareMap.get(ServoImplEx.class, "extendoLeft");
