@@ -51,8 +51,8 @@ public class MacroTester extends OpMode {
         if (gamepad1.dpad_left) hob.runMacro(SPECIMEN_START);
         if (gamepad1.dpad_right) hob.runMacro(OPEN_CLAW);
         if (gamepad1.back) hob.runMacro(CLOSE_CLAW);
-        if (gamepad2.a) hob.runMacro(CLOSE_CLAW);
-        if (gamepad2.b) hob.runMacro(CLOSE_CLAW);
+        if (gamepad2.a) hob.runMacro(STUPID_SPECIMEN_TO_DEPOSIT);
+        if (gamepad2.b) hob.runMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET);
         // tick robot
         hob.tick();
 

@@ -82,7 +82,7 @@ public class Macros {
             SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_CLOSED, SLIDES_SPECIMEN_PICKED_UP, null);
     public static HobbesState SPECIMEN_PICKUP = new HobbesState(null, null, null, SLIDES_ARM_SPECIMEN_PICKUP,
             SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_CLOSED, SLIDES_SPECIMEN_TO_PICKUP,
-            new LinkedState(SPECIMEN_PICKUP2, 100));
+            new LinkedState(SPECIMEN_PICKUP2, 200));
 
     public static HobbesState SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT2 = new HobbesState(null, null, null,
             SLIDES_ARM_SPECIMEN_PICKUP, SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_CLOSED, SLIDES_SPECIMEN_PICKED_UP,
@@ -102,10 +102,10 @@ public class Macros {
             STUPID_SLIDES_SPECIMEN_TO_DEPOSITED, null);
 
     public static HobbesState STUPID_SPECIMEN_DEPOSIT2 = new HobbesState(null, null, null, null, null, null, CLAW_OPEN, null,
-            new LinkedState(SPECIMEN_BEFORE_PICKUP, 2000));
+            new LinkedState(SPECIMEN_BEFORE_PICKUP, 200));
     public static HobbesState STUPID_SPECIMEN_DEPOSIT_AND_RESET = new HobbesState(null, null, null,
             STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT, STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
-            STUPID_SLIDES_SPECIMEN_DEPOSITED, new LinkedState(STUPID_SPECIMEN_DEPOSIT2, 1500));
+            STUPID_SLIDES_SPECIMEN_DEPOSITED, new LinkedState(STUPID_SPECIMEN_DEPOSIT2, 200));
 
 
 

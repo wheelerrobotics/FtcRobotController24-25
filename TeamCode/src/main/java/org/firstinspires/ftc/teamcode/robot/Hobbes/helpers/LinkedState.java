@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot.Hobbes.helpers;
 
-public class LinkedState {
-    public HobbesState nextState;
-    public int timeout;
-    public LinkedState(HobbesState nextStateMacroName, int nextStateTimeoutMS) {
-        nextState = nextStateMacroName;
-        timeout = nextStateTimeoutMS;
+public class LinkedState extends Link {
+    public LinkedState(HobbesState state, int timeout) {
+        nextState = state;
+        trigger = timeout;
+        type = LinkType.WAIT;
     }
 }

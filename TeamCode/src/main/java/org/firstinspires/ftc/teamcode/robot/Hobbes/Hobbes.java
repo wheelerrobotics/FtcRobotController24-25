@@ -38,6 +38,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -54,6 +55,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
+import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Link;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.LinkedState;
 import org.firstinspires.ftc.teamcode.robot.Meccanum.Meccanum;
 import org.firstinspires.ftc.teamcode.helpers.PID;
@@ -61,6 +63,9 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 @Config
 public class Hobbes extends Meccanum implements Robot {
@@ -143,6 +148,8 @@ public class Hobbes extends Meccanum implements Robot {
     public boolean MACROING = false;
     public ElapsedTime macroTimer = new ElapsedTime();
     public int macroTimeout = INFINITY;
+    public int slidesTrigger = INFINITY;
+    public int slidesTriggerThreshold = 10;
 
     public class TickingAction implements Action {
         Hobbes bot = null;
@@ -228,6 +235,7 @@ public class Hobbes extends Meccanum implements Robot {
     }
 
     public Action actionMacro(HobbesState macro) {
+        Logger.getLogger("FUCK").log(new LogRecord(Level.INFO, "action macro :)"));
         return new SequentialAction(new MacroAction(this, macro));
     }
 
@@ -257,6 +265,10 @@ public class Hobbes extends Meccanum implements Robot {
             macroTimeout = INFINITY;
             MACROING = true;
         }
+        if (abs(slidesTrigger-slidesController.pos) < slidesTriggerThreshold) {
+            slidesTrigger = INFINITY;
+            MACROING = true;
+        }
         if (MACROING) {
             HobbesState m = macroState;
             if (m.slidesPos != null)
@@ -276,9 +288,16 @@ public class Hobbes extends Meccanum implements Robot {
             if (m.clawPos != null)
                 servosController.clawPos = m.clawPos;
             if (m.linkedState != null) {
-                macroTimer.reset();
-                macroTimeout = m.linkedState.timeout;
-                macroState = m.linkedState.nextState;
+                if (m.linkedState.type == Link.LinkType.WAIT) {
+                    macroTimer.reset();
+                    macroTimeout = m.linkedState.trigger;
+                    macroState = m.linkedState.nextState;
+                } else if (m.linkedState.type == Link.LinkType.SLIDES) {
+                    // possible for this to stay untriggered for a while (forever in fact) if slides dont move after its invoked
+                    slidesTrigger = m.linkedState.trigger;
+                    macroState = m.linkedState.nextState;
+                }
+
             }
             MACROING = false;
         }
