@@ -17,7 +17,7 @@ public class MeepMeepPaths {
         public static void main(String[] args) {
                 // Declare a MeepMeep instance
                 // With a field size of 800 pixels
-                MeepMeep meepMeep = new MeepMeep(800);
+                MeepMeep meepMeep = new MeepMeep(750);
 
                 RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                                 .setDimensions(12, 15)
@@ -30,90 +30,35 @@ public class MeepMeepPaths {
                                 // hob.actionMacro(SPECIMEN_BEFORE_DEPOSIT),
                                 // specimen sweep pos 1 - X: -23, Y: 29, R: 5pi/4
                                 drive.actionBuilder(new Pose2d(0, 0, 0))
+
                                         .setTangent(PI)
-                                                .splineTo(new Vector2d(-27, 0), PI)
-
-                                // place preload specimen
-                                // hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
-
-                                // run to before sweepage
-                                // hob.actionMacro(SAMPLE_SWEEP_UP),
+                                        .splineTo(new Vector2d(-27.6, 5), PI)
+                                        // first sample
                                         .setTangent(0)
-                                        .splineTo(new Vector2d(-23, 29), PI*3/4)
-                                        .turnTo(PI/4)
+                                       // .splineToConstantHeading(new Vector2d(-7, -20), 0)
+                                        .splineToSplineHeading(new Pose2d(-7, -19, -PI), -PI/2)
+                                        .setTangent(-PI/2)
+                                        .splineToSplineHeading(new Pose2d(-15.6, -41, PI), -PI/2)
 
-                                        .splineTo(new Vector2d(-23, 37), PI*3/4)
-                                        .turnTo(PI/4)
 
-                                        .splineTo(new Vector2d(-23, 45), PI*3/4)
-                                        .turnTo(PI/4)
-                                        .setTangent(0)
 
-                                                .splineToSplineHeading(new Pose2d(-5, 33, PI), 0)
-                                // pick up wall specimen 1
-                                // hob.actionMacro(SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT),
-                                .setTangent(PI)
-                                                .splineToLinearHeading(new Pose2d(-27, 1, 0 - 0.0001), PI)
 
-                                // deposit wall specimen 1
 
-                                // park and make bot ready for tele
-                                .setTangent(0)
-                                        .splineToLinearHeading(new Pose2d(0, 33, PI/2), 0).build()
 
-                        // hob.actionMacro(FULL_IN)
-                ));
-                /*
-                 * myBot.runAction(drive.actionBuilder(new Pose2d(-9,63,PI/2))
-                 * .setTangent(-PI/2)
-                 * .splineTo(new Vector2d(-12, 32), -PI/2)
-                 * 
-                 * .setTangent(PI/2)
-                 * .splineTo(new Vector2d(-34, 40), 11*PI/8)
-                 * 
-                 * .turnTo(3*PI/4)
-                 * 
-                 * .setTangent(-PI/4 + PI)
-                 * .splineTo(new Vector2d(-42, 40), 11*PI/8)
-                 * 
-                 * .turnTo(3*PI/4)
-                 * 
-                 * .setTangent(-PI/4 + PI)
-                 * .splineTo(new Vector2d(-50, 40), 11*PI/8)
-                 * 
-                 * .turnTo(3*PI/4)
-                 * 
-                 * .setTangent(-PI/4)
-                 * .splineTo(new Vector2d(-36,63), PI/2)
-                 * 
-                 * // pick up wall specimen 1
-                 * .setTangent(-PI/2)
-                 * .splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.0001), -PI/2)
-                 * 
-                 * .setTangent(PI/2)
-                 * .splineToLinearHeading(new Pose2d(-36,63, -PI/2-0.0002), PI/2)
-                 * 
-                 * .setTangent(-PI/2)
-                 * .splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.0003), -PI/2)
-                 * 
-                 * .setTangent(PI/2)
-                 * .splineToLinearHeading(new Pose2d(-36,63, -PI/2-0.0004), PI/2)
-                 * 
-                 * .setTangent(-PI/2)
-                 * .splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.0005), -PI/2)
-                 * 
-                 * .setTangent(PI/2)
-                 * .splineToLinearHeading(new Pose2d(-36,63, -PI/2-0.0006), PI/2)
-                 * 
-                 * .setTangent(-PI/2)
-                 * .splineToLinearHeading(new Pose2d(-12, 32, PI/2-0.007), -PI/2)
-                 * 
-                 * .setTangent(PI/2)
-                 * .splineToLinearHeading(new Pose2d(-36,63, PI), PI/2)
-                 * .build()
-                 * 
-                 * );
-                 */
+                                        // basket 1
+//                                        .setTangent(PI)
+//                                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
+//                                        // second sample
+//                                        .setTangent(0)
+//                                        .splineToLinearHeading(new Pose2d(-15.6, -50, PI), 0)
+//                                        // basket 2
+//                                        .setTangent(PI)
+//                                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
+//
+//                                        // third sample
+//                                        .setTangent(0)
+//                                        .splineToLinearHeading(new Pose2d(-15.6, -50, 5*PI/4), 0)
+                                                        .build()));
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                                 .setDarkMode(true)

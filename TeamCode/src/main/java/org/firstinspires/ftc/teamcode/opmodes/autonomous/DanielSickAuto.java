@@ -66,20 +66,20 @@ public class DanielSickAuto extends LinearOpMode {
 
 
                 TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, -3, 0 - 0.0001), PI)
-                        .splineToSplineHeading(new Pose2d(-28, -3, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
+                        .splineToSplineHeading(new Pose2d(-28, -1, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                         .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0).splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
                 TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0002), PI)
-                        .splineToSplineHeading(new Pose2d(-28, -1, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-20, -9, 0 - 0.0002), PI)
+                        .splineToSplineHeading(new Pose2d(-28, -9, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
                         .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0).splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
                 TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, 1, 0 - 0.0003), PI)
-                        .splineToSplineHeading(new Pose2d(-28, 1, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-20, -12, 0 - 0.0003), PI)
+                        .splineToSplineHeading(new Pose2d(-28, -12, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
                         .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0).splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
@@ -112,14 +112,14 @@ public class DanielSickAuto extends LinearOpMode {
 
                 waitForStart();
 
-                if (isStopRequested())
+                if (isStopRequested()) {
                         return;
-
+                }
                         Actions.runBlocking(
                                 new ParallelAction(
                                         new SequentialAction(
                                                 hob.actionMacro(SPECIMEN_START),
-                                                hob.actionWait(100),
+
                                                 hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT),
                                                 t1,
                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
