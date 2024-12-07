@@ -74,8 +74,11 @@ public class BasketAuto1_0 extends LinearOpMode {
                 .setTangent(PI)
                 .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0);
         TrajectoryActionBuilder p1 =  b3.endTrajectory().fresh()
+                .splineToSplineHeading(new Pose2d(-50, -33, -PI/2), PI)
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-60, -13, Math.toRadians(-90)), 0);
+                .splineToSplineHeading(new Pose2d(-60, -15, -PI/2), PI);
+
+
 
 
 
@@ -93,9 +96,9 @@ public class BasketAuto1_0 extends LinearOpMode {
 
         waitForStart();
 
-        if (isStopRequested())
+        if (isStopRequested()) {
             return;
-
+        }
         Actions.runBlocking(
                 new ParallelAction(
                         new SequentialAction(
@@ -139,6 +142,8 @@ public class BasketAuto1_0 extends LinearOpMode {
                                 hob.actionWait(1000),
                                 park,
                                 hob.actionMacro(PARK)
+
+
 
                         ),
                         hob.actionTick()));
