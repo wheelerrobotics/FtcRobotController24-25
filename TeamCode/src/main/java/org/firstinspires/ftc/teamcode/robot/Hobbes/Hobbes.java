@@ -84,10 +84,8 @@ public class Hobbes extends Meccanum implements Robot {
     Telemetry tele = FtcDashboard.getInstance().getTelemetry();
 
     public void resetImu() {
-        this.offset = -imu.getAngularOrientation().firstAngle;
-    }
 
-    public Servo rotateServo = null;
+    }
 
     @Override
     public void init(HardwareMap hardwareMap) {
@@ -258,6 +256,7 @@ public class Hobbes extends Meccanum implements Robot {
     public void cancelMacros() {
         MACROING = false;
         macroTimeout = INFINITY;
+        slidesTrigger = INFINITY;
         // slidesController.setTargeting(false);
     }
 
@@ -298,7 +297,6 @@ public class Hobbes extends Meccanum implements Robot {
                     slidesTrigger = m.linkedState.trigger;
                     macroState = m.linkedState.nextState;
                 }
-
             }
             MACROING = false;
         }
