@@ -49,48 +49,50 @@ public class DanielSickAuto extends LinearOpMode {
                 // define and init robot
                 hob = new Hobbes();
                 hob.init(hardwareMap);
-                drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
+                drive = new PinpointDrive(hardwareMap, new Pose2d(0, 0, 0));
 
                 TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0)).setTangent(PI)
-                        .splineTo(new Vector2d(-27.6, -5), PI);
+                                .splineTo(new Vector2d(-27.6, -5), PI);
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                        .splineTo(new Vector2d(-23, 29), PI*3/4);
-                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(PI/4);
+                                .splineTo(new Vector2d(-23, 29), PI * 3 / 4);
+                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(PI / 4);
                 TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
-                                        .splineTo(new Vector2d(-23, 37), PI*3/4);
-                TrajectoryActionBuilder s3 =  s2.endTrajectory().fresh()       .turnTo(PI/4);
+                                .splineTo(new Vector2d(-23, 37), PI * 3 / 4);
+                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh().turnTo(PI / 4);
                 TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
-                        .splineTo(new Vector2d(-23, 45), PI*3/4);
-                TrajectoryActionBuilder s5 =  s4.endTrajectory().fresh()       .turnTo(PI/4);
-                TrajectoryActionBuilder a4 = s5.endTrajectory().fresh().setTangent(-PI/4)
-                        .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0).splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
-
+                                .splineTo(new Vector2d(-23, 45), PI * 3 / 4);
+                TrajectoryActionBuilder s5 = s4.endTrajectory().fresh().turnTo(PI / 4);
+                TrajectoryActionBuilder a4 = s5.endTrajectory().fresh().setTangent(-PI / 4)
+                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
+                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
 
                 TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, -3, 0 - 0.0001), PI)
-                        .splineToSplineHeading(new Pose2d(-28, -3, 0 - 0.0004), PI);
+                                .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
+                                .splineToSplineHeading(new Pose2d(-28, -1, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
-                        .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0).splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
+                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
+                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
                 TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0002), PI)
-                        .splineToSplineHeading(new Pose2d(-28, -1, 0 - 0.0004), PI);
+                                .splineToSplineHeading(new Pose2d(-20, -9, 0 - 0.0002), PI)
+                                .splineToSplineHeading(new Pose2d(-28, -9, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
-                        .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0).splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
+                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
+                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
                 TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, 1, 0 - 0.0003), PI)
-                        .splineToSplineHeading(new Pose2d(-28, 1, 0 - 0.0004), PI);
+                                .splineToSplineHeading(new Pose2d(-20, -12, 0 - 0.0003), PI)
+                                .splineToSplineHeading(new Pose2d(-28, -12, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
-                        .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0).splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
+                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
+                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
                 TrajectoryActionBuilder a11 = a10.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, 3, 0 - 0.0004), PI)
-                        .splineToSplineHeading(new Pose2d(-28, 3, 0 - 0.0003), PI);
-
+                                .splineToSplineHeading(new Pose2d(-20, 3, 0 - 0.0004), PI)
+                                .splineToSplineHeading(new Pose2d(-28, 3, 0 - 0.0003), PI);
 
                 TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
-                        .splineToLinearHeading(new Pose2d(0, 33, PI/2), 0);
+                                .splineToLinearHeading(new Pose2d(0, 33, PI / 2), 0);
 
                 Action t1 = a1.build();
                 Action t2 = a2.build();
@@ -109,87 +111,88 @@ public class DanielSickAuto extends LinearOpMode {
                 Action t11 = a11.build();
                 Action t12 = a12.build();
 
-                //hob.servosController.setup();
+                // hob.servosController.setup();
 
                 waitForStart();
 
-
                 Actions.runBlocking(
                                 new ParallelAction(
-                                        new SequentialAction(
-                                                hob.actionMacro(SPECIMEN_START),
-                                                hob.actionWait(100),
-                                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT),
-                                                t1,
-                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
-                                                // place preload specimen
-                                                // hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
-                                                hob.actionWait(300),
-                                                // run to before sweepage
-                                                //hob.actionMacro(SAMPLE_SWEEP_UP),
-                                                t2,
-                                                // run sweepage for first sample
-                                                //hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                                t3,
-                                                //hob.actionMacro(SAMPLE_SWEEP_UP),
-                                                st2,
-                                                //hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                                st3,
-                                                //hob.actionMacro(SAMPLE_SWEEP_UP),
-                                                st4,
-                                                //hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                                st5,
-                                                hob.actionMacro(EXTENDO_FULL_IN),
-                                                hob.actionWait(50),
-                                                // go to wall specimen 1
-                                                hob.actionMacro(SPECIMEN_BEFORE_PICKUP),
-                                                t4,
-                                                hob.actionMacro(SPECIMEN_PICKUP),
-                                                hob.actionWait(300),
-                                                new ParallelAction(
-                                                        t5,
-                                                        // pick up wall specimen 1
-                                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)
-                                                ),
-                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
+                                                new SequentialAction(
+                                                                hob.actionMacro(SPECIMEN_START),
 
-                                                t6,
-                                                hob.actionMacro(SPECIMEN_PICKUP),
-                                                hob.actionWait(300),
-                                                new ParallelAction(
-                                                        t7,
-                                                        // pick up wall specimen 1
-                                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)
-                                                ),
-                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
+                                                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT),
+                                                                t1,
+                                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
+                                                                // place preload specimen
+                                                                // hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
+                                                                hob.actionWait(300),
+                                                                // run to before sweepage
+                                                                // hob.actionMacro(SAMPLE_SWEEP_UP),
+                                                                t2,
+                                                                // run sweepage for first sample
+                                                                // hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                                                t3,
+                                                                // hob.actionMacro(SAMPLE_SWEEP_UP),
+                                                                st2,
+                                                                // hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                                                st3,
+                                                                // hob.actionMacro(SAMPLE_SWEEP_UP),
+                                                                st4,
+                                                                // hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                                                st5,
+                                                                hob.actionMacro(EXTENDO_FULL_IN),
+                                                                hob.actionWait(50),
+                                                                // go to wall specimen 1
+                                                                hob.actionMacro(SPECIMEN_BEFORE_PICKUP),
+                                                                t4,
+                                                                hob.actionMacro(SPECIMEN_PICKUP),
+                                                                hob.actionWait(300),
+                                                                new ParallelAction(
+                                                                                t5,
+                                                                                // pick up wall specimen 1
+                                                                                hob.actionMacroTimeout(
+                                                                                                STUPID_SPECIMEN_TO_DEPOSIT,
+                                                                                                500)),
+                                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
-                                                t8,
-                                                hob.actionMacro(SPECIMEN_PICKUP),
-                                                hob.actionWait(300),
-                                                new ParallelAction(
-                                                        t9,
-                                                        // pick up wall specimen 1
-                                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)
-                                                ),
-                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
+                                                                t6,
+                                                                hob.actionMacro(SPECIMEN_PICKUP),
+                                                                hob.actionWait(300),
+                                                                new ParallelAction(
+                                                                                t7,
+                                                                                // pick up wall specimen 1
+                                                                                hob.actionMacroTimeout(
+                                                                                                STUPID_SPECIMEN_TO_DEPOSIT,
+                                                                                                500)),
+                                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
-                                                t10,
-                                                hob.actionMacro(SPECIMEN_PICKUP),
-                                                hob.actionWait(300),
-                                                new ParallelAction(
-                                                        t11,
-                                                        // pick up wall specimen 1
-                                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)
-                                                ),
-                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
+                                                                t8,
+                                                                hob.actionMacro(SPECIMEN_PICKUP),
+                                                                hob.actionWait(300),
+                                                                new ParallelAction(
+                                                                                t9,
+                                                                                // pick up wall specimen 1
+                                                                                hob.actionMacroTimeout(
+                                                                                                STUPID_SPECIMEN_TO_DEPOSIT,
+                                                                                                500)),
+                                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
-                                                // deposit wall specimen 1
+                                                                t10,
+                                                                hob.actionMacro(SPECIMEN_PICKUP),
+                                                                hob.actionWait(300),
+                                                                new ParallelAction(
+                                                                                t11,
+                                                                                // pick up wall specimen 1
+                                                                                hob.actionMacroTimeout(
+                                                                                                STUPID_SPECIMEN_TO_DEPOSIT,
+                                                                                                500)),
+                                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
-                                                // park and make bot ready for tele
-                                                t12
-                                        ),
-                                        hob.actionTick()));
-                }
+                                                                // deposit wall specimen 1
 
+                                                                // park and make bot ready for tele
+                                                                t12),
+                                                hob.actionTick()));
+        }
 
 }
