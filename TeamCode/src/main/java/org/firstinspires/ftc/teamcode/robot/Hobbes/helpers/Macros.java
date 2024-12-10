@@ -129,9 +129,9 @@ public class Macros {
 
 
 
-    public static HobbesState SAMPLE_SWEEP_DOWN = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE,
+    public static HobbesState SAMPLE_SWEEP_DOWN = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_PUSH_DOWN,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
-    public static HobbesState SAMPLE_SWEEP_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE_ANGLED,
+    public static HobbesState SAMPLE_SWEEP_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_PUSH_UP,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
 
     public static HobbesState AUTO9 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_INTAKE_ANGLED,

@@ -24,28 +24,31 @@ public class HobbesConstants {
     public static int SLIDES_OUT_TOP_SPECIMEN = 870;
     public static int SLIDES_OUT_TOP_SPECIMEN_DOWN = 530;
 
-    public static double EXTENDO_IN = 0.1;
+    public static double EXTENDO_IN = 0.2;
     public static double EXTENDO_OUT_FULL = 0.58;
     public static double EXTENDO_OUT_SOME = 0.3;
 
     public static double EXTENDO_SPEED = 0.01;
 
-    public static double EXTENDO_ARM_TRANSFER = 0.89;
+    public static double EXTENDO_ARM_TRANSFER = 0.9;
     public static double EXTENDO_ARM_UP = 1;
-    public static double EXTENDO_ARM_INTAKE = 0.06;
-    public static double EXTENDO_ARM_INTAKE_ANGLED = .22;
+    public static double EXTENDO_ARM_INTAKE = 0.08;
+    public static double EXTENDO_ARM_INTAKE_ANGLED = .3;
+    public static double EXTENDO_ARM_PUSH_UP = .32;
+    public static double EXTENDO_ARM_PUSH_DOWN = .1;
 
-    public static double EXTENDO_WRIST_TRANSFER = 0.65;
-    public static double EXTENDO_WRIST_UP = 0.61;
-    public static double EXTENDO_WRIST_INTAKE_FLAT = 0.75;
-    public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
+    public static double EXTENDO_WRIST_TRANSFER = 0.7;
+    public static double EXTENDO_WRIST_UP = 0.73;
+    public static double EXTENDO_WRIST_INTAKE_FLAT = 0.72;
+    public static double EXTENDO_WRIST_INTAKE_ANGLED = 0.83;
+
     // public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
 
     public static double EXTENDO_ARM_SPEED = 0.01;
     public static double EXTENDO_WRIST_SPEED = 0.003;
 
-    public static double SLIDES_ARM_TRANSFER = .9;
-    public static double SLIDES_ARM_ABOVE_TRANSFER = 0.75;
+    public static double SLIDES_ARM_TRANSFER = .85;
+    public static double SLIDES_ARM_ABOVE_TRANSFER = 0.77;
     public static double SLIDES_ARM_DEPOSIT = 0.4;
     // NOT TUNED
     public static double SLIDES_ARM_SPECIMEN = 0.02;
@@ -56,6 +59,7 @@ public class HobbesConstants {
 
     public static double CLAW_OPEN = 0.45;
     public static double CLAW_CLOSED = 0.87;
+    public static double CLAW_MOSTLY_CLOSED = 0.83;
 
     public static double INTAKE_POWER = 1;
     public static double INTAKE_OFF = 0;

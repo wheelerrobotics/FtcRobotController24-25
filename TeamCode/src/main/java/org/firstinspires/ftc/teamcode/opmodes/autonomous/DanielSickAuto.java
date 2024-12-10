@@ -39,7 +39,7 @@ import javax.crypto.Mac;
 
 @Autonomous
 public class DanielSickAuto extends LinearOpMode {
-
+        // 1+3 specimen, some vals need to be adjusted.
         Hobbes hob = null;
         PinpointDrive drive;
 
@@ -53,16 +53,14 @@ public class DanielSickAuto extends LinearOpMode {
 
                 TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0)).setTangent(PI)
                                 .splineTo(new Vector2d(-27.6, -5), PI);
+
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                                .splineTo(new Vector2d(-23, 29), PI * 3 / 4);
+                                .splineTo(new Vector2d(-20, 21), PI * 3 / 4);
                 TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(PI / 4);
                 TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
-                                .splineTo(new Vector2d(-23, 37), PI * 3 / 4);
+                                .splineTo(new Vector2d(-23, 29), PI * 3 / 4);
                 TrajectoryActionBuilder s3 = s2.endTrajectory().fresh().turnTo(PI / 4);
-                TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
-                                .splineTo(new Vector2d(-23, 45), PI * 3 / 4);
-                TrajectoryActionBuilder s5 = s4.endTrajectory().fresh().turnTo(PI / 4);
-                TrajectoryActionBuilder a4 = s5.endTrajectory().fresh().setTangent(-PI / 4)
+                TrajectoryActionBuilder a4 = s3.endTrajectory().fresh().setTangent(-PI / 4)
                                 .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
                                 .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
 
@@ -84,14 +82,7 @@ public class DanielSickAuto extends LinearOpMode {
                                 .splineToSplineHeading(new Pose2d(-20, -12, 0 - 0.0003), PI)
                                 .splineToSplineHeading(new Pose2d(-28, -12, 0 - 0.0004), PI);
 
-                TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
-                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
-                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
-                TrajectoryActionBuilder a11 = a10.endTrajectory().fresh().setTangent(PI)
-                                .splineToSplineHeading(new Pose2d(-20, 3, 0 - 0.0004), PI)
-                                .splineToSplineHeading(new Pose2d(-28, 3, 0 - 0.0003), PI);
-
-                TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
+                TrajectoryActionBuilder a12 = a9.endTrajectory().fresh().setTangent(0)
                                 .splineToLinearHeading(new Pose2d(0, 33, PI / 2), 0);
 
                 Action t1 = a1.build();
@@ -99,16 +90,12 @@ public class DanielSickAuto extends LinearOpMode {
                 Action t3 = a3.build();
                 Action st2 = s2.build();
                 Action st3 = s3.build();
-                Action st4 = s4.build();
-                Action st5 = s5.build();
                 Action t4 = a4.build();
                 Action t5 = a5.build();
                 Action t6 = a6.build();
                 Action t7 = a7.build();
                 Action t8 = a8.build();
                 Action t9 = a9.build();
-                Action t10 = a10.build();
-                Action t11 = a11.build();
                 Action t12 = a12.build();
 
                 // hob.servosController.setup();
@@ -118,6 +105,7 @@ public class DanielSickAuto extends LinearOpMode {
                 Actions.runBlocking(
                                 new ParallelAction(
                                                 new SequentialAction(
+                                                                hob.actionWait(500),
                                                                 hob.actionMacro(SPECIMEN_START),
 
                                                                 hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT),
@@ -127,19 +115,19 @@ public class DanielSickAuto extends LinearOpMode {
                                                                 // hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
                                                                 hob.actionWait(300),
                                                                 // run to before sweepage
-                                                                // hob.actionMacro(SAMPLE_SWEEP_UP),
-                                                                t2,
+                                                        new ParallelAction(
+                                                                hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 500),
+                                                                t2
+                                                        ),
                                                                 // run sweepage for first sample
-                                                                // hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                                                hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                                                hob.actionWait(100),
                                                                 t3,
-                                                                // hob.actionMacro(SAMPLE_SWEEP_UP),
+                                                                hob.actionMacro(SAMPLE_SWEEP_UP),
                                                                 st2,
-                                                                // hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                                                hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                                                hob.actionWait(100),
                                                                 st3,
-                                                                // hob.actionMacro(SAMPLE_SWEEP_UP),
-                                                                st4,
-                                                                // hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                                                st5,
                                                                 hob.actionMacro(EXTENDO_FULL_IN),
                                                                 hob.actionWait(50),
                                                                 // go to wall specimen 1
@@ -175,17 +163,7 @@ public class DanielSickAuto extends LinearOpMode {
                                                                                 hob.actionMacroTimeout(
                                                                                                 STUPID_SPECIMEN_TO_DEPOSIT,
                                                                                                 500)),
-                                                                hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
-                                                                t10,
-                                                                hob.actionMacro(SPECIMEN_PICKUP),
-                                                                hob.actionWait(300),
-                                                                new ParallelAction(
-                                                                                t11,
-                                                                                // pick up wall specimen 1
-                                                                                hob.actionMacroTimeout(
-                                                                                                STUPID_SPECIMEN_TO_DEPOSIT,
-                                                                                                500)),
                                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
                                                                 // deposit wall specimen 1
