@@ -3,8 +3,11 @@ package org.firstinspires.ftc.teamcode.opmodes.autonomous;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 
 import static java.lang.Math.PI;
+import static java.lang.Math.toDegrees;
 
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.AngularVelConstraint;
+import com.acmerobotics.roadrunner.CompositeAccelConstraint;
 import com.acmerobotics.roadrunner.CompositeVelConstraint;
 import com.acmerobotics.roadrunner.MecanumKinematics;
 import com.acmerobotics.roadrunner.MinVelConstraint;
@@ -15,6 +18,7 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Trajectory;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
+import com.acmerobotics.roadrunner.TurnConstraints;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -56,13 +60,13 @@ public class DanielSickAuto extends LinearOpMode {
 
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
                                 .splineTo(new Vector2d(-20, 21), PI * 3 / 4);
-                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(PI / 4);
+                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(5*PI/16);
                 TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                                 .splineTo(new Vector2d(-23, 29), PI * 3 / 4);
-                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh().turnTo(PI / 4);
+                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh().turnTo(PI/4);
                 TrajectoryActionBuilder a4 = s3.endTrajectory().fresh().setTangent(-PI / 4)
                                 .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
-                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
+                                .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
 
                 TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
                                 .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
@@ -70,14 +74,14 @@ public class DanielSickAuto extends LinearOpMode {
 
                 TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                                 .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
-                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
+                        .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
                 TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                                 .splineToSplineHeading(new Pose2d(-20, -9, 0 - 0.0002), PI)
                                 .splineToSplineHeading(new Pose2d(-28, -9, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
                                 .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
-                                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0);
+                        .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
                 TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
                                 .splineToSplineHeading(new Pose2d(-20, -12, 0 - 0.0003), PI)
                                 .splineToSplineHeading(new Pose2d(-28, -12, 0 - 0.0004), PI);

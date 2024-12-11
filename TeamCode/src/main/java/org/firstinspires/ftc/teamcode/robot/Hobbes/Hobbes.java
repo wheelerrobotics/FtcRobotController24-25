@@ -52,6 +52,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 import com.qualcomm.robotcore.hardware.ServoImpl;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -76,8 +77,10 @@ public class Hobbes extends Meccanum implements Robot {
     public ServosThread servosController = new ServosThread();
     // public SampleMecanumDrive rr = null;
     public DcMotorImplEx slides;
-    private ServoImplEx extendoLeft, extendoRight, extendoArm, extendoWrist, slidesWrist, slidesArm, claw;
+    public ServoImplEx slidesWrist;
+    private ServoImplEx extendoLeft, extendoRight, extendoArm, extendoWrist, slidesArm, claw;
     private CRServo intakeRight, intakeLeft;
+    private VoltageSensor vs;
 
     // all relative to robot's reference frame with deposit as front
 
@@ -96,7 +99,7 @@ public class Hobbes extends Meccanum implements Robot {
         // imu.initialize(parameters);
         // angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX,
         // AngleUnit.RADIANS);
-
+        vs = hardwareMap.voltageSensor.get("Control Hub");
         // define motors
         motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("motorFrontLeft"); // EH1
         motorBackLeft = (DcMotorEx) hardwareMap.dcMotor.get("motorBackLeft"); // EH4
@@ -307,6 +310,9 @@ public class Hobbes extends Meccanum implements Robot {
         tickMacros();
         slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
+        tele.addData("voltage", vs.getVoltage());
+        tele.update();
+
     }
 
     public void failsafeCheck() {

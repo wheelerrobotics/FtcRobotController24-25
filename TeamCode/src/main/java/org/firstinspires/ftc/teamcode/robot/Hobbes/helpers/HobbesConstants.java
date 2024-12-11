@@ -49,7 +49,7 @@ public class HobbesConstants {
 
     public static double SLIDES_ARM_TRANSFER = .85;
     public static double SLIDES_ARM_ABOVE_TRANSFER = 0.77;
-    public static double SLIDES_ARM_DEPOSIT = 0.4;
+    public static double SLIDES_ARM_DEPOSIT = 0.3;
     // NOT TUNED
     public static double SLIDES_ARM_SPECIMEN = 0.02;
 
@@ -83,10 +83,10 @@ public class HobbesConstants {
     public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.74;
 
     public static double STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.3;
-    public static double STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT_FIRST = 0.2;
-    public static double STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.74;
+    public static double STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT_FIRST = 0.2; // unnecessary
+    public static double STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.7;
     public static int STUPID_SLIDES_SPECIMEN_DEPOSITED = 200;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED = 590;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED = 500;
 
 
     public static int SLIDES_PARK = 400;
