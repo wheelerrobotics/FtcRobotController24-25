@@ -30,16 +30,24 @@ public class HobbesConstants {
 
     public static double EXTENDO_SPEED = 0.01;
 
-    public static double EXTENDO_ARM_TRANSFER = 0.9;
+    public static double EXTENDO_ARM_TRANSFER = .9;
+    // .9
     public static double EXTENDO_ARM_UP = 1;
-    public static double EXTENDO_ARM_INTAKE = 0.08;
+ public static double EXTENDO_ARM_INTAKE = 0.10;
+    //public static double EXTENDO_ARM_INTAKE = 0.22;
+
+
     public static double EXTENDO_ARM_INTAKE_ANGLED = .3;
     public static double EXTENDO_ARM_PUSH_UP = .32;
     public static double EXTENDO_ARM_PUSH_DOWN = .1;
 
-    public static double EXTENDO_WRIST_TRANSFER = 0.7;
+    public static double EXTENDO_WRIST_TRANSFER = .7;
+    // .7
     public static double EXTENDO_WRIST_UP = 0.73;
-    public static double EXTENDO_WRIST_INTAKE_FLAT = 0.72;
+
+public static double EXTENDO_WRIST_INTAKE_FLAT = 0.74;
+  //  public static double EXTENDO_WRIST_INTAKE_FLAT = 0.80;
+
     public static double EXTENDO_WRIST_INTAKE_ANGLED = 0.83;
 
     // public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
@@ -48,6 +56,7 @@ public class HobbesConstants {
     public static double EXTENDO_WRIST_SPEED = 0.003;
 
     public static double SLIDES_ARM_TRANSFER = .85;
+    // past value: .85
     public static double SLIDES_ARM_ABOVE_TRANSFER = 0.77;
     public static double SLIDES_ARM_DEPOSIT = 0.3;
     // NOT TUNED
@@ -61,9 +70,9 @@ public class HobbesConstants {
     public static double CLAW_CLOSED = 0.87;
     public static double CLAW_MOSTLY_CLOSED = 0.83;
 
-    public static double INTAKE_POWER = 1;
+    public static double INTAKE_POWER = -1;
     public static double INTAKE_OFF = 0;
-    public static double INTAKE_REVERSE = -1;
+    public static double INTAKE_REVERSE = 1;
 
     public static int INFINITY = 2000000000;
     public static double EXTENDO_OFFSET = 1;
