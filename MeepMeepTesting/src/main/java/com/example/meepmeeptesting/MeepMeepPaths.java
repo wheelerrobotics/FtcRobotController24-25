@@ -49,6 +49,7 @@ public class MeepMeepPaths {
                         .splineToLinearHeading(new Pose2d(-15.6, -50, PI+PI/6), 0)
                         .setTangent(PI)
                         .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
+                                        .setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-50, -43, -PI/2), PI)
                         .setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-60, -15, -PI/2), PI)
