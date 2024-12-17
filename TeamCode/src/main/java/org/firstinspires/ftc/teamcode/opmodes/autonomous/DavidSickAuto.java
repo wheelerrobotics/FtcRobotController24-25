@@ -47,7 +47,7 @@ public class DavidSickAuto extends LinearOpMode {
 
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0);
+                .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(140)), 0);
 
         TrajectoryActionBuilder s2 = b1.endTrajectory().fresh()
                 .setTangent(0)
@@ -55,7 +55,7 @@ public class DavidSickAuto extends LinearOpMode {
 
         TrajectoryActionBuilder b2 =  s2.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0);
+                .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(140)), 0);
 
         TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
                 .setTangent(0)
@@ -68,7 +68,7 @@ public class DavidSickAuto extends LinearOpMode {
 //                .lineToX(-18, null, new ProfileAccelConstraint(-10, 10));
         TrajectoryActionBuilder b3 =  s3.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0);
+                .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(140)), 0);
         TrajectoryActionBuilder p1 =  b3.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-50, -43, -PI/2), PI)
