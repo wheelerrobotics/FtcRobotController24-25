@@ -152,7 +152,7 @@ public class DanielSickAuto extends LinearOpMode {
                                                                 hob.actionWait(300),
                                                                 new ParallelAction(
                                                                                 t7,
-                                                                                // pick up wall specimen 1
+                                                                                // pick up wall specimen 2
                                                                                 hob.actionMacroTimeout(
                                                                                                 STUPID_SPECIMEN_TO_DEPOSIT,
                                                                                                 500)),
@@ -163,14 +163,14 @@ public class DanielSickAuto extends LinearOpMode {
                                                                 hob.actionWait(300),
                                                                 new ParallelAction(
                                                                                 t9,
-                                                                                // pick up wall specimen 1
+                                                                                // pick up wall specimen 3
                                                                                 hob.actionMacroTimeout(
                                                                                                 STUPID_SPECIMEN_TO_DEPOSIT,
                                                                                                 500)),
 
                                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
-                                                                // deposit wall specimen 1
+                                                                // deposit wall specimen 3
 
                                                                 // park and make bot ready for tele
                                                                 t12,

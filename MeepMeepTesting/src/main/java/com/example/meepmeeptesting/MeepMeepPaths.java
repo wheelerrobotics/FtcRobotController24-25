@@ -19,7 +19,7 @@ public class MeepMeepPaths {
         public static void main(String[] args) {
                 // Declare a MeepMeep instance
                 // With a field size of 800 pixels
-                MeepMeep meepMeep = new MeepMeep(750);
+                MeepMeep meepMeep = new MeepMeep(600);
 
                 RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                                 .setDimensions(12, 15)
