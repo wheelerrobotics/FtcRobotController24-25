@@ -5,6 +5,7 @@ import static java.lang.Math.PI;
 import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TurnConstraints;
@@ -34,27 +35,23 @@ public class MeepMeepPaths {
                                 drive.actionBuilder(new Pose2d(0, 0, 0))
                                         .setTangent(PI)
                                         .splineTo(new Vector2d(-27.6, 5), PI)
+                        .setTangent(0)
+                        .splineToSplineHeading(new Pose2d(-12, -19, -PI), -PI/2)
+                        .setTangent(-PI/2)
+                        .splineToSplineHeading(new Pose2d(-11, -42, PI), -PI/2)
+                                        .setTangent(PI)
+                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
+                        .setTangent(0)
+                        .splineToLinearHeading(new Pose2d(-13, -52.5, PI), 0)
+                                        .setTangent(PI)
+                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
                                         .setTangent(0)
-                                        .splineToSplineHeading(new Pose2d(-12, -19, -PI), -PI/2)
-                                        .setTangent(-PI/2)
-                                        .splineToSplineHeading(new Pose2d(-15.6, -41, PI), -PI/2)
-                                        .setTangent(PI)
-                                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
-                                        .setTangent(0)
-                                        .splineToLinearHeading(new Pose2d(-17.6, -50, PI), 0)
-                                        .setTangent(PI)
-                                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
-                                        .setTangent(0)
-                                        .splineToLinearHeading(new Pose2d(-15.6, -50, PI+PI/6), 0)
-                                        .setTangent(PI)
-                                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
-
-                                        // parking
-
-                                        .splineToSplineHeading(new Pose2d(-50, -33, -PI/2), PI)
-                                        .setTangent(PI)
-                                        .splineToSplineHeading(new Pose2d(-60, -15, -PI/2), PI)
-
+                        .splineToLinearHeading(new Pose2d(-15.6, -50, PI+PI/6), 0)
+                        .setTangent(PI)
+                        .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0)
+                        .splineToSplineHeading(new Pose2d(-50, -43, -PI/2), PI)
+                        .setTangent(PI)
+                        .splineToSplineHeading(new Pose2d(-60, -15, -PI/2), PI)
 
                                         .build()));
 

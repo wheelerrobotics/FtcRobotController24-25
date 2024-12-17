@@ -129,9 +129,6 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionWait(1000),
                                 park,
                                 hob.actionMacro(PARK)
-
-
-
                         ),
                         hob.actionTick()));
     }
