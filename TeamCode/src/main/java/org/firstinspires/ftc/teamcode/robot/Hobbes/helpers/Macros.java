@@ -41,7 +41,7 @@ public class Macros {
             SLIDES_IN, new LinkedState(TRANSFER_WRIST_UP, 600));
     public static HobbesState EXTENDO_PICKING_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, INTAKE_POWER, null, null,
-            new LinkedState(EXTENDO_PICKING_UP2, 1000));
+            new LinkedState(EXTENDO_PICKING_UP2, 800));
 
     public static HobbesState SLIDES_DOWN = new HobbesState(null, null, null, SLIDES_ARM_ABOVE_TRANSFER,
             SLIDES_WRIST_TRANSFER, null, CLAW_OPEN, SLIDES_IN, null);
