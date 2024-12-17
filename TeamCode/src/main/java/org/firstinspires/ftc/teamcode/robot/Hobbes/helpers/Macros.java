@@ -160,6 +160,7 @@ public class Macros {
     public static HobbesState AUTO = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT,
             null, null, null, null, null, new LinkedState(AUTO1, 1000));
 
-
+    public static HobbesState OUTTAKE = new HobbesState(null, EXTENDO_ARM_OUTAKE, EXTENDO_WRIST_OUTAKE,
+            null, null, INTAKE_REVERSE, null, null, null);
 
 }
