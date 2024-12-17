@@ -60,10 +60,10 @@ public class DanielSickAuto extends LinearOpMode {
 
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
                                 .splineTo(new Vector2d(-20, 21), PI * 3 / 4);
-                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(5*PI/16);
+                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(5*PI/16, new TurnConstraints(4, -4, 1.4));
                 TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                                 .splineTo(new Vector2d(-23, 29), PI * 3 / 4);
-                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh().turnTo(PI/4);
+                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh().turnTo(3.8*PI/16, new TurnConstraints(4, -4, 1.4));
                 TrajectoryActionBuilder a4 = s3.endTrajectory().fresh().setTangent(-PI / 4)
                                 .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
                                 .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
@@ -112,7 +112,7 @@ public class DanielSickAuto extends LinearOpMode {
                                                                 hob.actionWait(500),
                                                                 hob.actionMacro(SPECIMEN_START),
 
-                                                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT),
+                                                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT_START),
                                                                 t1,
                                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                                                 // place preload specimen
@@ -125,12 +125,12 @@ public class DanielSickAuto extends LinearOpMode {
                                                         ),
                                                                 // run sweepage for first sample
                                                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                                                hob.actionWait(100),
+                                                                hob.actionWait(500),
                                                                 t3,
                                                                 hob.actionMacro(SAMPLE_SWEEP_UP),
                                                                 st2,
                                                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                                                hob.actionWait(100),
+                                                                hob.actionWait(500),
                                                                 st3,
                                                                 hob.actionMacro(EXTENDO_FULL_IN),
                                                                 hob.actionWait(50),
@@ -173,7 +173,8 @@ public class DanielSickAuto extends LinearOpMode {
                                                                 // deposit wall specimen 3
 
                                                                 // park and make bot ready for tele
-                                                                t12),
+                                                                t12,
+                                                        hob.finishAction()),
                                                 hob.actionTick()));
         }
 

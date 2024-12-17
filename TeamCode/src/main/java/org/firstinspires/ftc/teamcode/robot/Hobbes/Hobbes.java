@@ -27,6 +27,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_SIGMOID_SCALER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_IN;
 import static java.lang.Math.E;
 import static java.lang.Math.abs;
 
@@ -124,7 +125,6 @@ public class Hobbes extends Meccanum implements Robot {
         // define servos
         intakeLeft = hardwareMap.crservo.get("intakeLeft");
         intakeRight = hardwareMap.crservo.get("intakeRight");
-
         // give servos good range of motion
         slidesWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         slidesArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
@@ -152,6 +152,24 @@ public class Hobbes extends Meccanum implements Robot {
     public int macroTimeout = INFINITY;
     public int slidesTrigger = INFINITY;
     public int slidesTriggerThreshold = 10;
+    public boolean done = false;
+
+    public Action finishAction() {
+        return new FinishAction(this);
+    }
+    public class FinishAction implements Action {
+        Hobbes bot = null;
+
+        public FinishAction(Hobbes h) {
+            bot = h;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            bot.done = true;
+            return false;
+        }
+    }
 
     public class TickingAction implements Action {
         Hobbes bot = null;
@@ -163,6 +181,11 @@ public class Hobbes extends Meccanum implements Robot {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             bot.tick();
+            if (bot.done) {
+                bot.runMacro(FULL_IN);
+                bot.tick();
+                return false;
+            }
             return true;
         }
     }

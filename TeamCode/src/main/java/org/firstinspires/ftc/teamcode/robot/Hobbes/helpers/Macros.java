@@ -38,7 +38,7 @@ public class Macros {
 
     public static HobbesState EXTENDO_PICKING_UP2 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER,
             EXTENDO_WRIST_TRANSFER, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_POWER, CLAW_OPEN,
-            SLIDES_IN, new LinkedState(FULL_TRANSFER, 600));
+            SLIDES_IN, new LinkedState(TRANSFER_WRIST_UP, 600));
     public static HobbesState EXTENDO_PICKING_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, INTAKE_POWER, null, null,
             new LinkedState(EXTENDO_PICKING_UP2, 1000));
@@ -59,7 +59,7 @@ public class Macros {
     public static HobbesState SLIDES_DEPOSIT_AUTO4 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
             SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, CLAW_OPEN, SLIDES_OUT_TOP_SAMPLE, null);
     public static HobbesState SLIDES_DEPOSIT_AUTO3 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
-            SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, SLIDES_OUT_TOP_SAMPLE, new LinkedState(SLIDES_DEPOSIT_AUTO4, 600));
+            SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, SLIDES_OUT_TOP_SAMPLE, new LinkedState(SLIDES_DEPOSIT_AUTO4, 900));
     public static HobbesState SLIDES_DEPOSIT_AUTO2 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
             null, null, null, null, SLIDES_OUT_TOP_SAMPLE, new LinkedState(SLIDES_DEPOSIT_AUTO3, 750));
     public static HobbesState SLIDES_DEPOSIT_AUTO = new HobbesState(null, null, null, null, SLIDES_WRIST_HALF, null, null,
@@ -83,6 +83,7 @@ public class Macros {
             SLIDES_SPECIMEN_TO_DEPOSIT, null);
     public static HobbesState SPECIMEN_BEFORE_PICKUP = new HobbesState(null, null, null, SLIDES_ARM_SPECIMEN_PICKUP,
             SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_OPEN, SLIDES_SPECIMEN_TO_PICKUP, null);
+
 
     public static HobbesState SPECIMEN_START = new HobbesState(null, null, null, SLIDES_ARM_ABOVE_TRANSFER,
             SLIDES_WRIST_TRANSFER, null, CLAW_CLOSED, SLIDES_IN, null);
@@ -109,6 +110,10 @@ public class Macros {
     public static HobbesState STUPID_SPECIMEN_TO_DEPOSIT = new HobbesState(null, null, null,
             STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT, STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
             STUPID_SLIDES_SPECIMEN_TO_DEPOSITED, null);
+
+    public static HobbesState STUPID_SPECIMEN_TO_DEPOSIT_START = new HobbesState(null, null, null,
+            STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT, STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
+            STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START, null);
 
     public static HobbesState PARK2 = new HobbesState(null, null, null,
             null, null, null, CLAW_CLOSED,
