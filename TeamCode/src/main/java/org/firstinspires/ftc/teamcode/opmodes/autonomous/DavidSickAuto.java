@@ -5,8 +5,10 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 import static java.lang.Math.PI;
 
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -41,7 +43,7 @@ public class DavidSickAuto extends LinearOpMode {
                 .setTangent(0)
                 .splineToSplineHeading(new Pose2d(-12, -19, -PI), -PI/2)
                 .setTangent(-PI/2)
-                .splineToSplineHeading(new Pose2d(-11, -42, PI), -PI/2);
+                .splineToSplineHeading(new Pose2d(-11, -40, PI), -PI/2);
 
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
                 .setTangent(PI)
@@ -57,7 +59,10 @@ public class DavidSickAuto extends LinearOpMode {
 
         TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(-15.6, -50, PI+PI/6), 0);
+                .splineToLinearHeading(new Pose2d(-15.9, -50, PI+PI/6), 0);
+
+        TrajectoryActionBuilder s3_5 = b2.endTrajectory().fresh()
+                .lineToX(-18, null, new ProfileAccelConstraint(-10, 10));
         TrajectoryActionBuilder b3 =  s3.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToLinearHeading(new Pose2d(-7, -50, Math.toRadians(150)), 0);
@@ -74,6 +79,7 @@ public class DavidSickAuto extends LinearOpMode {
         Action sa2 = s2.build();
         Action bu2 = b2.build();
         Action sa3 = s3.build();
+        Action sa3_5 = s3_5.build();
         Action bu3 = b3.build();
         Action park = p1.build();
 
@@ -91,7 +97,7 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionWait(500),
                                 hob.actionMacro(SPECIMEN_START),
 
-                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT),
+                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT_START),
                                 spec1,
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
 
@@ -105,6 +111,7 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionMacro(EXTENDO_PICKING_UP),
                                 hob.actionWait(3000),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
+                                hob.actionWait(300),
                                 bu1,
                                 hob.actionWait(1500),
                                 hob.actionMacro(SLIDES_DOWN),
@@ -114,15 +121,21 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionMacro(EXTENDO_PICKING_UP),
                                 hob.actionWait(3000),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
+                                hob.actionWait(300),
                                 bu2,
                                 hob.actionWait(1500),
                                 hob.actionMacro(SLIDES_DOWN),
                                 sa3,
+
                                 hob.actionMacro(EXTENDO_BEFORE_PICKUP),
                                 hob.actionWait(1000),
-                                hob.actionMacro(EXTENDO_PICKING_UP),
-                                hob.actionWait(3000),
+                                new ParallelAction(
+                                        sa3_5,
+                                        hob.actionMacro(EXTENDO_PICKING_UP),
+                                        hob.actionWait(3000)
+                                        ),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
+                                hob.actionWait(300),
                                 bu3,
                                 hob.actionWait(1500),
                                 hob.actionMacro(SLIDES_DOWN),
