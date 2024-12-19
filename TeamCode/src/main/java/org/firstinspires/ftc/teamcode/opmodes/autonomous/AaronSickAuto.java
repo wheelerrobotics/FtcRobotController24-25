@@ -124,7 +124,7 @@ public class AaronSickAuto extends LinearOpMode {
         Action t11 = a11.build();
         Action t12 = a12.build();
 
-        // hob.servosController.setup();
+        hob.servosController.setupAuto();
 
         waitForStart();
 

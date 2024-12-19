@@ -43,7 +43,7 @@ public class DavidSickAuto extends LinearOpMode {
                 .setTangent(0)
                 .splineToSplineHeading(new Pose2d(-12, -19, -PI), -PI/2)
                 .setTangent(-PI/2)
-                .splineToSplineHeading(new Pose2d(-11, -42, PI), -PI/2);
+                .splineToSplineHeading(new Pose2d(-11, -40, PI), -PI/2);
 
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
                 .setTangent(PI)
@@ -88,7 +88,7 @@ public class DavidSickAuto extends LinearOpMode {
         Action park = p1.build();
 
 
-        //hob.servosController.setup();
+        hob.servosController.setupAuto();
 
         waitForStart();
 
@@ -108,10 +108,12 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionWait(100),
                               //  hob.actionMacro(AUTO),
                                 hob.actionMacro(SLIDES_DOWN),
+                                hob.actionWait(100),
+
+                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
 
                                 sa1,
-                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
-                                hob.actionWait(1000),
+                                hob.actionWait(500),
                                 hob.actionMacro(EXTENDO_PICKING_UP),
                                 hob.actionWait(2000),
                                 hob.actionMacro(CLOSE_CLAW),
