@@ -91,7 +91,15 @@ public class Meccanum implements Chassis {
         // define hw as the hardware map for possible access later in this class
         hw = hardwareMap;
     }
+    public void motorDriveSpecimen(double motorFrontLeftPower, double motorBackLeftPower, double motorFrontRightPower, double motorBackRightPower, double power){
+        // drive the motors at custom powers for each
+        // used for every other drive class
 
+        motorBackLeft.setPower(motorBackLeftPower-power);
+        motorFrontLeft.setPower(motorFrontLeftPower+power);
+        motorBackRight.setPower(motorBackRightPower+power);
+        motorFrontRight.setPower(motorFrontRightPower-power);
+    }
     // SUPPORT METHODS
     public void motorDrive(double motorFrontLeftPower, double motorBackLeftPower, double motorFrontRightPower, double motorBackRightPower){
         // drive the motors at custom powers for each
@@ -123,6 +131,27 @@ public class Meccanum implements Chassis {
         double backRightPower = (y + x - rx) / denominator;
 
         motorDrive(frontLeftPower,backLeftPower, frontRightPower, backRightPower);
+
+    }
+    public void shutUp(double xvec, double yvec, double spinvec, double power){
+        // this class drives the robot in the direction of vectors from a joystick and a spin value
+        // used for teleop mode driving wheels with joysticks
+
+        double y = pow(yvec,1); // Remember, this is reversed!
+        double x = pow(xvec * 1.1,1); // Counteract imperfect strafing
+        double rx = pow(spinvec,1);
+
+
+        //denominator is the largest motor power (absolute value) or 1
+        //this ensures all the powers maintain the same ratio, but only when
+        //at least one is out of the range [-1, 1]
+        double denominator = Math.max(abs(y) + abs(x) + abs(rx), 1);
+        double frontLeftPower = (y + x + rx) / denominator;
+        double backLeftPower = (y - x + rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
+
+        motorDriveSpecimen(frontLeftPower,backLeftPower, frontRightPower, backRightPower, power);
 
     }
 

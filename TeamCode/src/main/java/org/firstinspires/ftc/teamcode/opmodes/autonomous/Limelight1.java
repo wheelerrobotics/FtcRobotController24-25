@@ -13,8 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 import java.util.List;
 
-@TeleOp(name = "Sensor: Limelight3A", group = "Sensor")
-@Disabled
+@TeleOp
 public class Limelight1 extends LinearOpMode {
 
     private Limelight3A limelight;
@@ -72,10 +71,10 @@ public class Limelight1 extends LinearOpMode {
                     }
 
                     // Access classifier results
-                    List<LLResultTypes.ClassifierResult> classifierResults = result.getClassifierResults();
-                    for (LLResultTypes.ClassifierResult cr : classifierResults) {
-                        telemetry.addData("Classifier", "Class: %s, Confidence: %.2f", cr.getClassName(), cr.getConfidence());
-                    }
+//                    List<LLResultTypes.ClassifierResult> classifierResults = result.getClassifierResults();
+//                    for (LLResultTypes.ClassifierResult cr : classifierResults) {
+//                        telemetry.addData("Classifier", "Class: %s, Confidence: %.2f", cr.getClassName(), cr.getConfidence());
+//                    }
 
                     // Access detector results
                     List<LLResultTypes.DetectorResult> detectorResults = result.getDetectorResults();
