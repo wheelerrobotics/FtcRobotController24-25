@@ -92,7 +92,8 @@ public class HobbesTele extends OpMode {
 
         // p2: slides down, arm above sample
         //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(SLIDES_DOWN);
-        if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(AUTO);
+        if (gamepad2.dpad_down && !lastGamepad2.dpad_down)
+            hob.runMacro(SLIDES_DOWN);
 
         // tick robot
         hob.tick();

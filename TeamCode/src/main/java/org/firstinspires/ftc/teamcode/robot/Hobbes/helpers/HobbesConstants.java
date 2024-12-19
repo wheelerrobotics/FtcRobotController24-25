@@ -35,7 +35,7 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_UP = 1;
     public static double EXTENDO_ARM_INTAKE = .15;
     public static double EXTENDO_ARM_INTAKE_ANGLED = .3;
-    public static double EXTENDO_ARM_PUSH_UP = .32;
+    public static double EXTENDO_ARM_PUSH_UP = .42;
     public static double EXTENDO_ARM_PUSH_DOWN = .1;
     public static double EXTENDO_ARM_OUTAKE = .5;
   
@@ -47,7 +47,7 @@ public class HobbesConstants {
     //  public static double EXTENDO_WRIST_INTAKE_FLAT = 0.80;
 
     public static double EXTENDO_WRIST_INTAKE_ANGLED = 0.83;
-    public static double EXTENDO_WRIST_OUTAKE = .9;
+    public static double EXTENDO_WRIST_OUTAKE = .87;
 
     // public static double EXTENDO_WRIST_INTAKE_ANGLED = 1;
 
@@ -57,7 +57,7 @@ public class HobbesConstants {
     public static double SLIDES_ARM_TRANSFER = .84;
     // past value: .85
     public static double SLIDES_ARM_ABOVE_TRANSFER = 0.77;
-    public static double SLIDES_ARM_DEPOSIT = 0.3;
+    public static double SLIDES_ARM_DEPOSIT = 0.45;
     // NOT TUNED
     public static double SLIDES_ARM_SPECIMEN = 0.02;
 

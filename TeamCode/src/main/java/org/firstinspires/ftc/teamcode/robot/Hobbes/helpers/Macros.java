@@ -51,10 +51,12 @@ public class Macros {
     public static HobbesState SLIDES_DOWN1 = new HobbesState(null, null, null, SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT,
             null, null, null, new LinkedState(SLIDES_DOWN2, 100));
 
-    public static HobbesState SLIDES_DEPOSIT2 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
+    public static HobbesState SLIDES_DEPOSIT3 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
             SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, SLIDES_OUT_TOP_SAMPLE, null);
-    public static HobbesState SLIDES_DEPOSIT = new HobbesState(null, null, null, null, SLIDES_WRIST_HALF, null, null,
-            null, new LinkedState(SLIDES_DEPOSIT2, 500));
+    public static HobbesState SLIDES_DEPOSIT2 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
+            null, SLIDES_WRIST_HALF, null, null, SLIDES_OUT_TOP_SAMPLE, new LinkedState(SLIDES_DEPOSIT3, 300));
+    public static HobbesState SLIDES_DEPOSIT = new HobbesState(null, null, null, null, null, null, null,
+            null, new LinkedState(SLIDES_DEPOSIT2, 300));
 
     public static HobbesState SLIDES_DEPOSIT_AUTO4 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
             SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, CLAW_OPEN, SLIDES_OUT_TOP_SAMPLE, null);

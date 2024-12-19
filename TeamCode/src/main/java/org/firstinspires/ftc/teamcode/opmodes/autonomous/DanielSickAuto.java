@@ -102,17 +102,16 @@ public class DanielSickAuto extends LinearOpMode {
                 Action t9 = a9.build();
                 Action t12 = a12.build();
 
-                // hob.servosController.setup();
 
                 waitForStart();
 
                 Actions.runBlocking(
                                 new ParallelAction(
                                                 new SequentialAction(
-                                                                hob.actionWait(500),
-                                                                hob.actionMacro(SPECIMEN_START),
+                                                        hob.actionMacro(SPECIMEN_START),
 
-                                                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT_START),
+                                                        hob.actionWait(500),
+                                                                hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT),
                                                                 t1,
                                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                                                 // place preload specimen

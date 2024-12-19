@@ -365,6 +365,14 @@ public class Hobbes extends Meccanum implements Robot {
             slidesArm.setPosition(SLIDES_ARM_ABOVE_TRANSFER);
             slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
         }
+        public void setupAuto() {
+            claw.setPosition(CLAW_CLOSED);
+            extendoLeft.setPosition(EXTENDO_IN);
+            extendoRight.setPosition(servosController.extendoLeftToRight(EXTENDO_IN));
+            extendoArm.setPosition(EXTENDO_ARM_TRANSFER);
+            extendoWrist.setPosition(EXTENDO_WRIST_TRANSFER + extendoWristRezeroOffset);
+
+        }
 
         public void autoSetup() {
             slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
