@@ -43,7 +43,7 @@ public class DavidSickAuto extends LinearOpMode {
                 .setTangent(0)
                 .splineToSplineHeading(new Pose2d(-12, -19, -PI), -PI/2)
                 .setTangent(-PI/2)
-                .splineToSplineHeading(new Pose2d(-11, -42, PI), -PI/2);
+                .splineToSplineHeading(new Pose2d(-11, -40, PI), -PI/2);
 
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
                 .setTangent(PI)
@@ -59,7 +59,7 @@ public class DavidSickAuto extends LinearOpMode {
 
         TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(-15.9, -50, PI+PI/6), 0);
+                .splineToLinearHeading(new Pose2d(-15.9, -50, PI+PI/4), 0);
 //        TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
 //                .setTangent(0)
 //                .splineToLinearHeading(new Pose2d(-11, -43, PI+(PI/4)), 0);
@@ -109,7 +109,7 @@ public class DavidSickAuto extends LinearOpMode {
                               //  hob.actionMacro(AUTO),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
-                                hob.actionMacroTimeout(EXTENDO_BEFORE_PICKUP,1000),
+                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
 
                                 sa1,
                                 hob.actionWait(200),
@@ -123,7 +123,7 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionWait(1500),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
-                                hob.actionMacroTimeout(EXTENDO_BEFORE_PICKUP,1000),
+                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
                                 sa2,
                                 hob.actionWait(200),
                                 hob.actionMacro(EXTENDO_PICKING_UP),
@@ -136,7 +136,7 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionWait(1500),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
-                                hob.actionMacroTimeout(EXTENDO_BEFORE_PICKUP,1000),
+                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
                                 sa3,
                                 hob.actionWait(200),
                                 hob.actionMacro(EXTENDO_PICKING_UP),
@@ -146,15 +146,6 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
                                 hob.actionWait(100),
 
-//                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
-//                                hob.actionWait(1000),
-//                                new ParallelAction(
-//                                        sa3_5,
-//                                        hob.actionMacro(EXTENDO_PICKING_UP),
-//                                        hob.actionWait(3000)
-//                                        ),
-//                                hob.actionMacro(SLIDES_DEPOSIT_AUTO),
-//                                hob.actionWait(300),
                                 bu3,
                                 hob.actionWait(1500),
                                 hob.actionMacro(SLIDES_DOWN),

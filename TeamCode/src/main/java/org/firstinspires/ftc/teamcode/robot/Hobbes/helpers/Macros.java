@@ -6,7 +6,7 @@ public class Macros {
     public static HobbesState EXTENDO_BEFORE_PICKUP2 = new HobbesState(EXTENDO_IN + .07, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);
     public static HobbesState EXTENDO_BEFORE_PICKUP = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE,
-            EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, new LinkedState(EXTENDO_BEFORE_PICKUP2, 1000));
+            EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, new LinkedState(EXTENDO_BEFORE_PICKUP2, 500));
 
     public static HobbesState EXTENDO_ARM_WRIST_FLAT = new HobbesState(null, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null, null);

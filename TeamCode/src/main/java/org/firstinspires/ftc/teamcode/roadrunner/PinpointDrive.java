@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.messages.PoseMessage;
  * Unless otherwise noted, comments are from Gobilda
  */
 public class PinpointDrive extends MecanumDrive {
+
     public static class Params {
         /*
         Set this to the name that your Pinpoint is configured as in your hardware config.
@@ -155,6 +156,9 @@ public class PinpointDrive extends MecanumDrive {
             this.x = pose.getX(DistanceUnit.INCH);
             this.y = pose.getY(DistanceUnit.INCH);
             this.heading = pose.getHeading(AngleUnit.RADIANS);
+        }
+        public double getAngle(){
+            return heading;
         }
     }
 

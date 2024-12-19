@@ -255,6 +255,12 @@ public class Hobbes extends Meccanum implements Robot {
         }
     }
 
+    public void strafe(double power){
+        motorFrontLeft.setPower(power);
+        motorBackLeft.setPower(-power);
+        motorFrontRight.setPower(-power);
+        motorBackRight.setPower(power);
+    }
     public Action actionTick() {
         return new TickingAction(this);
     }
