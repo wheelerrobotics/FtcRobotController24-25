@@ -210,13 +210,9 @@ public class Hobbes extends Meccanum implements Robot {
             return specimenRotationPID.isFinished() && specimenStrafePID.isFinished() && specimenForwardPID.isFinished();
         }
         public void setCorrectionOn(boolean on) {
-            if (on) {
-                limelight.start();
-                correctionOn = true;
-            }else {
-                limelight.stop();
-                correctionOn = false;
-            }
+            correctionOn = on;
+            if (on) limelight.start();
+            else limelight.stop();
         }
         public double normalizeRadians(double angle) {
             return angle - (2 * PI) * Math.floor((angle + PI) / (2 * PI));
