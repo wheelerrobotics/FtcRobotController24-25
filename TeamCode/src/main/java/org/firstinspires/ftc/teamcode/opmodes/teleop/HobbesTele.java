@@ -43,6 +43,15 @@ public class HobbesTele extends OpMode {
     public void loop() {
         // p1 & p2: start freeze (to ignore input while switching mode)
         if (gamepad2.start || gamepad1.start) return;
+        // p2: slides rezero for right after auto (hold back and they'll go down, release at bottom and theyll be good to go)
+        if (gamepad2.back && !lastGamepad2.back) hob.slidesController.runToBottom = true;
+        if (lastGamepad2.back && !gamepad2.back) {
+            hob.slidesController.resetSlideBasePos();
+            hob.slidesController.runToBottom = false;
+            hob.slidesController.setTarget(0);
+            hob.slidesController.setTargeting(false);
+        }
+
         // p1: motion
         if (!gamepad1.right_bumper && !gamepad1.left_bumper) hob.motorDriveXYVectors(-gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
         else hob.motorDriveXYVectors(0.3 * -gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
@@ -69,14 +78,6 @@ public class HobbesTele extends OpMode {
         // p2: angled on ground
         if (gamepad2.x && !lastGamepad2.x) hob.runMacro(EXTENDO_ARM_WRIST_ANGLED);
 
-        // p2: manual extendo arm articulation
-        if (gamepad2.left_trigger > 0) hob.servosController.incrementExtendoArmWrist(gamepad2.left_trigger * EXTENDO_ARM_SPEED, 0);
-        if (gamepad2.right_trigger > 0) hob.servosController.incrementExtendoArmWrist(gamepad2.right_trigger * -EXTENDO_ARM_SPEED, 0);
-
-        // p2: manual extendo wrist articulation
-        if (gamepad2.right_bumper) hob.servosController.incrementExtendoArmWrist(0, EXTENDO_WRIST_SPEED);
-        if (gamepad2.left_bumper) hob.servosController.incrementExtendoArmWrist(0, -EXTENDO_WRIST_SPEED);
-
         // p2: transfer macro
         if (gamepad2.y && !lastGamepad2.y) hob.runMacro(FULL_TRANSFER);
 
@@ -85,10 +86,6 @@ public class HobbesTele extends OpMode {
 
         // p2: toggle claw
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) hob.servosController.setClaw(hob.servosController.clawPos == CLAW_CLOSED);
-
-        // p2: wrist re-zeroer
-        if (gamepad2.back) hob.extendoWristRezeroOffset = hob.servosController.extendoWristPos - EXTENDO_WRIST_INTAKE_FLAT;
-        if (gamepad2.left_stick_button) hob.extendoWristRezeroOffset = 0;
 
         // p2: slides down, arm above sample
         //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(SLIDES_DOWN);
