@@ -173,6 +173,8 @@ public class Hobbes extends Meccanum implements Robot {
         // 3: keep rotation constant
         PID specimenStrafePID = new PID(2, 0, 0.001);
         PID specimenForwardPID = new PID(0, 0, 0); // TODO: defo not right vals
+        PID specimenForwardNonDetectionPID = new PID(0, 0, 0); // TODO: defo not right vals
+        // ^^ is a duplicate of forward PID but uses the RR localizer instead of limelight
         PID specimenRotationPID = new PID(0, 0, 0); // TODO: defo not right vals
         boolean correctionOn = false;
         double angle = 0;
@@ -180,6 +182,7 @@ public class Hobbes extends Meccanum implements Robot {
         double rotationPower = 0;
         double strafePower = 0;
         double forwardPower = 0;
+        double forwardNonDetectionPower = 0;
         public SpecimenCorrector(PinpointDrive drive) {
             // to figure these out they should prob be copied into tick and given config vars
             specimenStrafePID.init(0);
@@ -189,6 +192,11 @@ public class Hobbes extends Meccanum implements Robot {
             specimenForwardPID.init(0);
             specimenForwardPID.setTarget(1000); // TODO: CHANGE TO ACTUAL DESIRED PIXELS (might be zero, not sure what limelight likes)
             specimenForwardPID.setDoneThresholds(0, 0); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
+
+            specimenForwardNonDetectionPID.init(drive.pose.position.y);
+            specimenForwardNonDetectionPID.setTarget(-1); // TODO: CHANGE TO ACTUAL DESIRED Y POSITION (should be about -1)
+            specimenForwardNonDetectionPID.setDoneThresholds(0, 0); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
+
 
             specimenRotationPID.init(drive.pose.heading.toDouble());
             specimenRotationPID.setTarget(PI); // TODO: CHANGE TO ACTUAL DESIRED ROTATION (like 80% sure this is right tho)
@@ -202,6 +210,9 @@ public class Hobbes extends Meccanum implements Robot {
         }
         public double getForwardPower() {
             return forwardPower;
+        }
+        public double getForwardNonDetectionPower() {
+            return forwardNonDetectionPower;
         }
         public double getRotationPower() {
             return rotationPower;
@@ -233,6 +244,8 @@ public class Hobbes extends Meccanum implements Robot {
 
 
             rotationPower = specimenRotationPID.tick(drive.pose.heading.toDouble()); // doesnt depend on knowing where a specimen is
+            forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.y); // doesnt depend on knowing where a specimen is
+
             if (correctionOn) {
                 LLResult result = limelight.getLatestResult();
 
@@ -448,13 +461,14 @@ public class Hobbes extends Meccanum implements Robot {
     }
 
     public void tick() {
+        drive.updatePoseEstimate(); // update localizer
         failsafeCheck(); // empty
-        tickMacros();
+        tickMacros(); // check macros
         slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update();
-        specimenCorrector.tick();
+        specimenCorrector.tick(); // run specimen corrector
 
     }
 
