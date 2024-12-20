@@ -144,14 +144,36 @@ public class Hobbes extends Meccanum implements Robot {
     public Action specimenAction() {
         return new SpecimenPickupAction(this);
     }
+    public static class SpecimenCorrVals {
+        public double strafeTarget = 0;
+        public double strafeErrorThresh = 0;
+        public double strafeDerivativeThresh = 0;
+        public double strafeP = 2;
+        public double strafeI = 0;
+        public double strafeD = 0.01;
+
+        public double forwardTarget = 1000;
+        public double forwardErrorThresh = 0;
+        public double forwardDerivativeThresh = 0;
+        public double forwardP = 0;
+        public double forwardI = 0;
+        public double forwardD = 0;
+
+        public double rotationTarget = PI;
+        public double rotationErrorThresh = 0;
+        public double rotationDerivativeThresh = 0;
+        public double rotationP = 0;
+        public double rotationI = 0;
+        public double rotationD = 0;
+    }
     public class SpecimenCorrector {
         // 3 goals, 3 PIDs
         // 1: follow sample
         // 2: move forwards
         // 3: keep rotation constant
         PID specimenStrafePID = new PID(2, 0, 0.001);
-        PID specimenForwardPID = new PID(2, 0, 0.001); // TODO: defo not right vals
-        PID specimenRotationPID = new PID(2, 0, 0.001); // TODO: defo not right vals
+        PID specimenForwardPID = new PID(0, 0, 0); // TODO: defo not right vals
+        PID specimenRotationPID = new PID(0, 0, 0); // TODO: defo not right vals
         boolean correctionOn = false;
         double angle = 0;
         double forwardDistance = 0;
@@ -200,6 +222,20 @@ public class Hobbes extends Meccanum implements Robot {
             return angle - (2 * PI) * Math.floor((angle + PI) / (2 * PI));
         }
         public void tick() {
+            SpecimenCorrVals v = new SpecimenCorrVals();
+            // this top block for debugging when we are changing config vals
+            specimenStrafePID.setTarget(v.strafeTarget); 
+            specimenStrafePID.setDoneThresholds(v.strafeErrorThresh, v.strafeDerivativeThresh); 
+            specimenStrafePID.setConsts(v.strafeP, v.strafeI, v.strafeD);
+            specimenForwardPID.setTarget(v.forwardTarget);
+            specimenForwardPID.setDoneThresholds(v.forwardErrorThresh, v.forwardDerivativeThresh);
+            specimenForwardPID.setConsts(v.forwardP, v.forwardI, v.forwardD);
+            specimenRotationPID.setTarget(v.rotationTarget);
+            specimenRotationPID.setDoneThresholds(v.rotationErrorThresh, v.rotationDerivativeThresh);
+            specimenRotationPID.setConsts(v.rotationP, v.rotationI, v.rotationD);
+
+
+
             rotationPower = specimenRotationPID.tick(drive.pose.heading.toDouble()); // doesnt depend on knowing where a specimen is
             if (correctionOn) {
                 LLResult result = limelight.getLatestResult();
@@ -226,9 +262,6 @@ public class Hobbes extends Meccanum implements Robot {
         }
     }
 
-    public void specimenTeleMove(double xvec, double yvec, double spinvec) {
-        motorDriveXYVectors(xvec+specimenCorrector.getStrafePower(), yvec, spinvec);
-    }
     // macros stuff
     public HobbesState macroState = null;
     public boolean MACROING = false;
