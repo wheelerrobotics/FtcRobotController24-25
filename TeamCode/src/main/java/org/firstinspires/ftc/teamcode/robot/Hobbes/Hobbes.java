@@ -105,8 +105,8 @@ public class Hobbes extends Meccanum implements Robot {
         ascentRight = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentRight"); // CH0
 
         // reverse left side motors
-        motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+     //   motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         // set braking
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
