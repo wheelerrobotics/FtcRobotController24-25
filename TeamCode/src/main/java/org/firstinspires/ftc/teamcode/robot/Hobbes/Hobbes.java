@@ -452,6 +452,8 @@ public class Hobbes extends Meccanum implements Robot {
                 servosController.intakeSpeed = m.intakeSpeed;
             if (m.clawPos != null)
                 servosController.clawPos = m.clawPos;
+            if (m.ascentPos != null)
+                motorAscentController.setTarget(m.ascentPos);
             if (m.linkedState != null) {
                 if (m.linkedState.type == Link.LinkType.WAIT) {
                     macroTimer.reset();

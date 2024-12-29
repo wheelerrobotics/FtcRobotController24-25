@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.Hobbes.helpers;
 
 public class HobbesState {
     public Double extendoPos, extendoArmPos, extendoWristPos, slidesArmPos, slidesWristPos, intakeSpeed, clawPos;
-    public Integer slidesPos;
+    public Integer slidesPos, ascentPos;
     public LinkedState linkedState;
     public HobbesState(Double extendoPos,
                        Double extendoArmPos,
@@ -12,6 +12,7 @@ public class HobbesState {
                        Double intakeSpeed,
                        Double clawPos,
                        Integer slidesPos,
+                       Integer ascentPos,
                        LinkedState linkedState) {
         this.extendoPos = extendoPos;
         this.extendoArmPos = extendoArmPos;
@@ -21,6 +22,7 @@ public class HobbesState {
         this.intakeSpeed = intakeSpeed;
         this.clawPos = clawPos;
         this.slidesPos = slidesPos;
+        this.ascentPos = ascentPos;
         this.linkedState = linkedState;
     }
 }
