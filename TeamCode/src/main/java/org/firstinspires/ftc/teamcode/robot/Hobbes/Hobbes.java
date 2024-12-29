@@ -19,6 +19,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_IN
 import static java.lang.Math.E;
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 
 import android.content.Context;
 
@@ -60,11 +61,12 @@ import java.util.logging.Logger;
 public class Hobbes extends Meccanum implements Robot {
     protected HardwareMap hw = null;
 
-    public MotorSlideThread slidesController = new MotorSlideThread();
-    public ServosThread servosController = new ServosThread();
+    public MotorAscentController motorAscentController = new MotorAscentController();
+    public MotorSlideController slidesController = new MotorSlideController();
+    public ServosController servosController = new ServosController();
     public SpecimenCorrector specimenCorrector = null;
     // public SampleMecanumDrive rr = null;
-    public DcMotorImplEx slides;
+    public DcMotorImplEx slides, ascentLeft, ascentRight;
     public ServoImplEx slidesWrist;
     public PinpointDrive drive;
 
@@ -96,6 +98,11 @@ public class Hobbes extends Meccanum implements Robot {
         motorBackLeft = (DcMotorEx) hardwareMap.dcMotor.get("motorBackLeft"); // EH4
         motorFrontRight = (DcMotorEx) hardwareMap.dcMotor.get("motorFrontRight"); // CH2
         motorBackRight = (DcMotorEx) hardwareMap.dcMotor.get("motorBackRight"); // CH0
+
+
+        ascentLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("motorFrontRight"); // CH2
+        ascentRight = (DcMotorImplEx) hardwareMap.dcMotor.get("motorBackRight"); // CH0
+
         // reverse left side motors
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -228,7 +235,7 @@ public class Hobbes extends Meccanum implements Robot {
         public double normalizeRadians(double angle) {
             return angle - (2 * PI) * Math.floor((angle + PI) / (2 * PI));
         }
-        public void tick() {
+        public void specimenTick() {
             SpecimenCorrVals v = new SpecimenCorrVals();
             // this top block for debugging when we are changing config vals
             specimenStrafePID.setTarget(v.strafeTarget); 
@@ -468,7 +475,8 @@ public class Hobbes extends Meccanum implements Robot {
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update();
-        specimenCorrector.tick(); // run specimen corrector
+        specimenCorrector.specimenTick(); // run specimen corrector
+        motorAscentController.ascentTick();
 
     }
 
@@ -482,7 +490,7 @@ public class Hobbes extends Meccanum implements Robot {
 
 
     // servos ticking
-    public class ServosThread {
+    public class ServosController {
         public double extendoPos = EXTENDO_IN;
         public double intakeSpeed = INTAKE_OFF;
         public double slidesArmPos = SLIDES_ARM_ABOVE_TRANSFER;
@@ -581,7 +589,7 @@ public class Hobbes extends Meccanum implements Robot {
 
     // slide motor ticking (i have no clue how this works, i just know it worked
     // last year)
-    public class MotorSlideThread {
+    public class MotorSlideController {
         public double slideTar = 0;
         public boolean runToBottom = false;
         public boolean SLIDE_TARGETING = false;
@@ -647,10 +655,10 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         // REWRITE EVENTUALLY AND CLEAN UP PLEASE
-        public double minMaxScaler(double x, double power) {
+        private double minMaxScaler(double x, double power) {
             double p = power * (power > 0
-                    ? ((1.3 * 1 / (1 + Math.pow(E, -SLIDES_SIGMOID_SCALER * (x - 300 + SLIDES_MIN)))) - 0.1)
-                    : ((1.3 * 1 / (1 + Math.pow(E, SLIDES_SIGMOID_SCALER * (x + 300 - SLIDES_MAX)))) - 0.1));
+                    ? ((1.3 * 1 / (1 + pow(E, -SLIDES_SIGMOID_SCALER * (x - 300 + SLIDES_MIN)))) - 0.1)
+                    : ((1.3 * 1 / (1 + pow(E, SLIDES_SIGMOID_SCALER * (x + 300 - SLIDES_MAX)))) - 0.1));
             // uuuuuh
             return p;
         }
@@ -686,6 +694,110 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
     }
+
+
+    public class MotorAscentController {
+        public boolean ASCENT_TARGETING = false;
+        public double maxHeight = 1000; // TODO: GET ACTUAL VALUE
+        public double minHeight = 0; // probably good (maybe just set to 20 so the 10ish off errors are unnoticed)
+
+        public double differenceScalar = 0.01; // scales slide tick difference correction intensity // TODO: GET ACTUAL VALUE
+        public double scaler = 0.008; // TODO: GET ACTUAL VALUE
+        public double ascentP = 0.00003; // TODO: GET ACTUAL VALUE
+        public double ascentTar = 0; //
+
+
+        public double leftBasePos = 0;
+        public double rightBasePos = 0;
+        public double leftPos = 0;
+        public double rightPos = 0;
+        public double errorThreshold = 20;
+        public double derivativeThreshold = 1;
+
+        public double power = 0;
+
+        //public double slideTar = 0;
+        public PID ascentPID;
+
+        //public double maxHeight = 1000;
+        //public double minHeight = 0;
+
+        //public double differenceScalar = 0.0001;
+        //public double scaler = 50;
+        Telemetry tele = FtcDashboard.getInstance().getTelemetry();
+        public void setTele(Telemetry t) {
+            tele = t;
+        }
+
+        public void ascentStart() {
+            leftBasePos = ascentLeft.getCurrentPosition();
+            rightBasePos = ascentRight.getCurrentPosition();
+
+            ascentPID = new PID(0.001, 0, 0, false);
+            tele = FtcDashboard.getInstance().getTelemetry();
+        }
+
+        public void ascentTick() {
+
+            ascentPID.setConsts(ascentP, 0, 0);
+            ascentPID.setTarget(ascentTar);
+            leftPos = ascentLeft.getCurrentPosition() - leftBasePos;
+            rightPos = ascentRight.getCurrentPosition() - rightBasePos;
+
+            tele.addData("left", leftPos);
+            tele.addData("right", rightPos);
+
+            if ((leftPos + rightPos) /2 < minHeight  && power < 0) {
+                ASCENT_TARGETING = true;
+                ascentTar = minHeight;
+            }
+            if ((rightPos+leftPos)/2 > maxHeight && power > 0) {
+                ASCENT_TARGETING = true;
+                ascentTar = maxHeight;
+            }
+            if (ASCENT_TARGETING) {
+                power = ascentPID.tick((leftPos + rightPos) / 2);
+                tele.addData("pidpower", power);
+            }
+
+            tele.addData("drivingl", minMaxScaler(leftPos, (power + differenceScaler(rightPos - leftPos))));
+            tele.addData("drivingr", minMaxScaler(rightPos, (power + differenceScaler(leftPos - rightPos))));
+            tele.addData("dl", differenceScaler(rightPos - leftPos));
+            tele.addData("dr", differenceScaler(leftPos - rightPos));
+            tele.update();
+
+            ascentLeft.setPower(minMaxScaler(leftPos, (power + differenceScaler(rightPos - leftPos))));
+            ascentRight.setPower(minMaxScaler(rightPos, (power + differenceScaler(leftPos - rightPos))));
+        }
+        private double minMaxScaler(double x, double power) {
+            return power * (power < 0 ? ((1.3 * 1/(1+pow(E, -scaler*(x-300+minHeight)))) - 0.1) : ((1.3 * 1/(1+pow(E, scaler*(x+300-maxHeight)))) - 0.1));
+        }
+        private double differenceScaler(double difference) {
+            return differenceScalar * difference;
+        }
+
+        public void driveSlides(double p) {
+            tele.addData("cpower", power);
+            ASCENT_TARGETING = false;
+            power = p;
+        }
+
+        private double getSlidesPos() {
+            return (leftPos + rightPos) / 2;
+        }
+
+        public void setTarget(double tar) {
+            ascentTar = tar;
+            ASCENT_TARGETING = true;
+        }
+        public boolean isBusy() {
+
+            return ascentPID.getDerivative() < derivativeThreshold && abs(getSlidesPos() - ascentTar) < errorThreshold;
+            //                                                       could get proportion (^) from pid but dont want to
+        }
+
+    }
+
 
     public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
         motorBackLeft.setZeroPowerBehavior(zeroPowerBehavior);
