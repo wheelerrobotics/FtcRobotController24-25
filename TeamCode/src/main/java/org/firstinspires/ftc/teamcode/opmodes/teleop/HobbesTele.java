@@ -29,7 +29,7 @@ public class HobbesTele extends OpMode {
         // define and init robot
         hob = new Hobbes();
         hob.init(hardwareMap);
-        
+
     }
 
     @Override
