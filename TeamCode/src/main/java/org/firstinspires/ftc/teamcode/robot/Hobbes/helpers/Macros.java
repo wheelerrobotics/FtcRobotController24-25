@@ -168,4 +168,9 @@ public class Macros {
     public static HobbesState OUTTAKE = new HobbesState(null, EXTENDO_ARM_OUTAKE, EXTENDO_WRIST_OUTAKE,
             null, null, INTAKE_REVERSE, null, null, null,null);
 
+    public static HobbesState ASCENT_UP = new HobbesState(null, null, null,
+            null, null, null, null, null, 0,null);
+    public static HobbesState ASCENT_DOWN = new HobbesState(null, null, null,
+            null, null, null, null, null, 5000,null);
+
 }
