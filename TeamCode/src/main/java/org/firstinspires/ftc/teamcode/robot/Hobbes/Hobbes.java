@@ -90,9 +90,10 @@ public class Hobbes extends Meccanum implements Robot {
         // AngleUnit.RADIANS);
         vs = hardwareMap.voltageSensor.get("Control Hub");
         // init limelight:
-        limelight = hw.get(Limelight3A.class, "limelight");
-        tele.setMsTransmissionInterval(11);
-        limelight.pipelineSwitch(3);
+        //limelight = hw.get(Limelight3A.class, "limelight");
+        //tele.setMsTransmissionInterval(11);
+        //limelight.pipelineSwitch(3);
+
         // define motors:
         motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("motorFrontLeft"); // EH1
         motorBackLeft = (DcMotorEx) hardwareMap.dcMotor.get("motorBackLeft"); // EH4
@@ -135,6 +136,7 @@ public class Hobbes extends Meccanum implements Robot {
         slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // set slides base pos
         slidesController.start();
+        motorAscentController.ascentStart();
 
         // define hw as the hardware map for possible access later in this class
         hw = hardwareMap;
@@ -477,7 +479,7 @@ public class Hobbes extends Meccanum implements Robot {
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update();
-        specimenCorrector.specimenTick(); // run specimen corrector
+        //specimenCorrector.specimenTick(); // run specimen corrector
         motorAscentController.ascentTick();
 
     }

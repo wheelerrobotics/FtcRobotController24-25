@@ -108,11 +108,11 @@ public class Macros {
             SLIDES_SPECIMEN_DEPOSITED,  null,new LinkedState(SPECIMEN_DEPOSIT2, 1500));
 
     public static HobbesState STUPID_SPECIMEN_TO_DEPOSIT = new HobbesState(null, null, null,
-            STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT, STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
-            STUPID_SLIDES_SPECIMEN_TO_DEPOSITED,  null,null);
+            HobbesConstants.SLIDES_ARM_SPECIMEN_TO_DEPOSIT, HobbesConstants.SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
+            SLIDES_SPECIMEN_TO_DEPOSITED,  null,null);
 
     public static HobbesState STUPID_SPECIMEN_TO_DEPOSIT_START = new HobbesState(null, null, null,
-            STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT, STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
+            HobbesConstants.SLIDES_ARM_SPECIMEN_TO_DEPOSIT, HobbesConstants.SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
             STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START,  null,null);
 
     public static HobbesState PARK2 = new HobbesState(null, null, null,
@@ -122,15 +122,12 @@ public class Macros {
             ARM_PARK, WRIST_PARK, null, CLAW_CLOSED,
             SLIDES_PARK,  null,new LinkedState(PARK2,750));
 
-    public static HobbesState STUPID_SPECIMEN_TO_DEPOSIT_FIRST_FIRST = new HobbesState(null, null, null,
-            STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT_FIRST, STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
-            null,  null,null);
 
     public static HobbesState STUPID_SPECIMEN_DEPOSIT2 = new HobbesState(null, null, null, null, null, null, CLAW_OPEN, null,
             null,new LinkedState(SPECIMEN_BEFORE_PICKUP, 200));
     public static HobbesState STUPID_SPECIMEN_DEPOSIT_AND_RESET = new HobbesState(null, null, null,
-            STUPID_SLIDES_ARM_SPECIMEN_TO_DEPOSIT, STUPID_SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
-            STUPID_SLIDES_SPECIMEN_DEPOSITED,  null,new LinkedState(STUPID_SPECIMEN_DEPOSIT2, 200));
+            HobbesConstants.SLIDES_ARM_SPECIMEN_TO_DEPOSIT, HobbesConstants.SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
+            HobbesConstants.SLIDES_SPECIMEN_DEPOSITED,  null,new LinkedState(STUPID_SPECIMEN_DEPOSIT2, 200));
 
 
 
