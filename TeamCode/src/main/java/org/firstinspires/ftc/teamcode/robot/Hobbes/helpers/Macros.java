@@ -172,4 +172,7 @@ public class Macros {
 
     public static HobbesState START = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START ,null
             ,null ,null ,null ,null ,null, null );
+    public static HobbesState BUCKET_PARK = new HobbesState(null,null,null ,null
+            ,null ,null ,null ,null ,ASCENT_PARK, null );
+
 }
