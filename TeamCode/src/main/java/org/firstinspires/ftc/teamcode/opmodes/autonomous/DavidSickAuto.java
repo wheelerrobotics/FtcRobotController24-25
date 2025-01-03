@@ -43,7 +43,7 @@ public class DavidSickAuto extends LinearOpMode {
         //Splines for first spike mark and first bucket
         TrajectoryActionBuilder s1 = spec.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(-15, -20, -PI), -PI/2)
+                .splineToSplineHeading(new Pose2d(-17, -20, -PI), -PI/2)
                 .setTangent(-PI/2)
                 .splineToSplineHeading(new Pose2d(-11, -42, PI), -PI/2);
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
@@ -54,7 +54,7 @@ public class DavidSickAuto extends LinearOpMode {
         //Splines for second spike mark then second bucket
         TrajectoryActionBuilder s2 = b1.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(-15, -53, PI), 0);
+                .splineToLinearHeading(new Pose2d(-17, -54, PI), 0);
         TrajectoryActionBuilder b2 =  s2.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToLinearHeading(new Pose2d(-7.5, -49.5, Math.toRadians(125
@@ -64,7 +64,7 @@ public class DavidSickAuto extends LinearOpMode {
         //splines for third spike mark then third bucket
         TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(-15.9, -50, PI+PI/8), 0);
+                .splineToLinearHeading(new Pose2d(-15.9, -50, PI+3*PI/8), 0);
         TrajectoryActionBuilder b3 =  s3.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToLinearHeading(new Pose2d(-7.5, -49.5, Math.toRadians(125)), 0);
@@ -105,7 +105,7 @@ public class DavidSickAuto extends LinearOpMode {
                                 //deposit specimen
 
 
-                                hob.actionWait(100),
+                                hob.actionWait(400),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
                                 hob.actionMacro(EXTENDO_BEFORE_PICKUP),
@@ -117,7 +117,6 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionMacro(CLOSE_CLAW),
                                 hob.actionWait(200),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
-                                hob.actionWait(100),
                                 bu1, //move to bucket for first time
 
                                 hob.actionWait(1500),
@@ -132,7 +131,6 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionMacro(CLOSE_CLAW),
                                 hob.actionWait(200),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
-                                hob.actionWait(100),
                                 bu2, //move to bucket for second time
 
                                 hob.actionWait(1500),
@@ -147,7 +145,6 @@ public class DavidSickAuto extends LinearOpMode {
                                 hob.actionMacro(CLOSE_CLAW),
                                 hob.actionWait(200),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
-                                hob.actionWait(100),
                                 bu3, // move to bucket for third time
 
                                 hob.actionWait(1500),
