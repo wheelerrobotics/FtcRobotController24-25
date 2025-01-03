@@ -94,4 +94,8 @@ public class HobbesConstants {
     public static double ARM_PARK = .2;
     public static double WRIST_PARK = .5;
 
+    public static double EXTENDO_WRIST_START = .83;
+    public static double EXTENDO_ARM_START = 1;
+
+
 }

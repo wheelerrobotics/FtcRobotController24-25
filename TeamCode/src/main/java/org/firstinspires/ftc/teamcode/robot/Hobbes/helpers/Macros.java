@@ -170,4 +170,6 @@ public class Macros {
     public static HobbesState ASCENT_DOWN = new HobbesState(null, null, null,
             null, null, null, null, null, 5000,null);
 
+    public static HobbesState START = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START ,null
+            ,null ,null ,null ,null ,null, null );
 }

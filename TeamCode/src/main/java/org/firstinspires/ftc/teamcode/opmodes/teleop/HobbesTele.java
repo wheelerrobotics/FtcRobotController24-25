@@ -97,6 +97,11 @@ public class HobbesTele extends OpMode {
         //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(SLIDES_DOWN);
         if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(AUTO);
 
+        //p2: : Drive ascent
+        if (gamepad2.right_stick_y != 0 && gamepad2.dpad_left && !lastGamepad2.dpad_left)
+            hob.motorAscentController.driveSlides(gamepad2.left_stick_y);
+
+
         // tick robot
         hob.tick();
 

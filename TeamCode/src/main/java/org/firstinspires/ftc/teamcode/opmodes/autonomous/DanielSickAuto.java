@@ -109,7 +109,7 @@ public class DanielSickAuto extends LinearOpMode {
                 Actions.runBlocking(
                                 new ParallelAction(
                                                 new SequentialAction(
-                                                                hob.actionWait(500),
+                                                                hob.actionMacro(START),
                                                                 hob.actionMacro(SPECIMEN_START),
 
                                                                 hob.actionMacro(STUPID_SPECIMEN_TO_DEPOSIT_START),
