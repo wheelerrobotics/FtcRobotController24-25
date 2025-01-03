@@ -174,10 +174,10 @@ public class Hobbes extends Meccanum implements Robot {
         public double forwardI = 0;
         public double forwardD = 0;
 
-        public double rotationTarget = PI;
+        public double rotationTarget = PI; // DONE
         public double rotationErrorThresh = 0;
         public double rotationDerivativeThresh = 0;
-        public double rotationP = 0;
+        public double rotationP = 3; // DONE
         public double rotationI = 0;
         public double rotationD = 0;
     }
@@ -257,7 +257,7 @@ public class Hobbes extends Meccanum implements Robot {
             specimenRotationPID.setConsts(corVals.rotationP, corVals.rotationI, corVals.rotationD);
 
 
-            rotationPower = specimenRotationPID.tick(drive.pose.heading.toDouble()); // doesnt depend on knowing where a specimen is
+            rotationPower = specimenRotationPID.tick(abs(drive.pose.heading.toDouble())); // doesnt depend on knowing where a specimen is
             forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.y); // doesnt depend on knowing where a specimen is
 
             if (correctionOn) {
@@ -267,6 +267,7 @@ public class Hobbes extends Meccanum implements Robot {
                     if (result.isValid()) {
                         forwardDistance = result.getColorResults().get(0).getTargetXPixels(); // TODO: not sure if this gets the value from the right specimen detection
                         angle = normalizeRadians(Math.toRadians(result.getTx()));
+                        tele.addData("SPECIMENV_strafe", angle);
                         /* logging
                         List<LLResultTypes.ColorResult> colorResults = result.getColorResults();
                         for (LLResultTypes.ColorResult cr : colorResults) {
@@ -281,7 +282,9 @@ public class Hobbes extends Meccanum implements Robot {
             } else {
                 strafePower = 0;
                 forwardPower = 0;
+                tele.addData("SPECIMENV_strafe", "not on");
             }
+            tele.update();
         }
     }
 
@@ -305,8 +308,16 @@ public class Hobbes extends Meccanum implements Robot {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (firstRun) bot.specimenCorrector.setCorrectionOn(true);
             firstRun = false;
+            bot.specimenCorrector.specimenTick();
+            tele.addData("SPECIMENP_rotationPower", bot.specimenCorrector.getRotationPower());
+            tele.addData("SPECIMENP_forwardndPower", bot.specimenCorrector.getForwardNonDetectionPower());
+            tele.addData("SPECIMENP_strafePower", bot.specimenCorrector.getStrafePower());
 
-            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(bot.specimenCorrector.getStrafePower(),bot.specimenCorrector.getForwardNonDetectionPower()), bot.specimenCorrector.getRotationPower()));
+            tele.addData("SPECIMENV_rotation", drive.pose.heading.toDouble());
+            tele.addData("SPECIMENV_forward", drive.pose.position.y);
+
+            tele.update();
+            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(bot.specimenCorrector.getForwardNonDetectionPower(),bot.specimenCorrector.getStrafePower()), (drive.pose.heading.toDouble()>0 ? 1 : -1) * bot.specimenCorrector.getRotationPower()));
             return !bot.specimenCorrector.isFinished();
         }
     }
@@ -754,11 +765,11 @@ public class Hobbes extends Meccanum implements Robot {
             posL = -(ascentLeft.getCurrentPosition() - basePosL);
             posR = -(ascentRight.getCurrentPosition() - basePosR);
 
-            tele.addData("posL", posL);
-            tele.addData("posR", posR);
-            tele.addData("targeting", SLIDE_TARGETING);
-            tele.addData("slidetar", slideTar);
-            tele.addData("slidep", SLIDES_KP);
+            //tele.addData("posL", posL);
+            //tele.addData("posR", posR);
+            //tele.addData("targeting", SLIDE_TARGETING);
+            //tele.addData("slidetar", slideTar);
+            //tele.addData("slidep", SLIDES_KP);
 
             if (posL < SLIDES_MIN - 100 && powerL < 0) {
                 SLIDE_TARGETING = true;
