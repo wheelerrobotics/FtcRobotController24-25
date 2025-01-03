@@ -19,10 +19,7 @@ public class HobbesConstants {
     public static double SLIDES_KP = 0.04;
 
     public static int SLIDES_IN = 0;
-    public static int SLIDES_SPECIMEN_PICKUP = 0;
     public static int SLIDES_OUT_TOP_SAMPLE = 1450;
-    public static int SLIDES_OUT_TOP_SPECIMEN = 870;
-    public static int SLIDES_OUT_TOP_SPECIMEN_DOWN = 530;
 
     public static double EXTENDO_IN = 0.18;
     public static double EXTENDO_OUT_FULL = 0.58;
@@ -78,7 +75,7 @@ public class HobbesConstants {
     public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
     public static int SLIDES_SPECIMEN_PICKED_UP = 200;
 
-    public static double SLIDES_ARM_SPECIMEN_PICKUP = 1;
+    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.95;
     public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.25;
 
     public static int SLIDES_SPECIMEN_TO_DEPOSIT = 900;
