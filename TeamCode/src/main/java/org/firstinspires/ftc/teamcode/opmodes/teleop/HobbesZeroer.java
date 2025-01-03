@@ -45,5 +45,7 @@ public class HobbesZeroer extends OpMode {
         if (clawON)
             hob.servosController.setClawPrecise(clawPos);
         hob.tick();
+        tele.addData("slides", hob.slidesController.pos);
+        tele.update();
     }
 }

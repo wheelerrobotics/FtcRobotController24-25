@@ -136,7 +136,7 @@ public class Hobbes extends Meccanum implements Robot {
         slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // set slides base pos
         slidesController.start();
-        motorAscentController.ascentStart();
+        motorAscentController.start();
 
         // define hw as the hardware map for possible access later in this class
         hw = hardwareMap;
@@ -699,105 +699,131 @@ public class Hobbes extends Meccanum implements Robot {
 
     }
 
-
     public class MotorAscentController {
-        public boolean ASCENT_TARGETING = false;
-        public double maxHeight = 1000; // TODO: GET ACTUAL VALUE
-        public double minHeight = 0; // probably good (maybe just set to 20 so the 10ish off errors are unnoticed)
-
-        public double differenceScalar = 0.01; // scales slide tick difference correction intensity // TODO: GET ACTUAL VALUE
-        public double scaler = 0.008; // TODO: GET ACTUAL VALUE
-        public double ascentP = 0.00003; // TODO: GET ACTUAL VALUE
-        public double ascentTar = 0; //
-
-
-        public double leftBasePos = 0;
-        public double rightBasePos = 0;
-        public double leftPos = 0;
-        public double rightPos = 0;
+        public double slideTar = 0;
+        public boolean runToBottom = false;
+        public boolean SLIDE_TARGETING = false;
+        public double basePosR = 0;
+        public double posR = 0;
+        public double basePosL = 0;
+        public double posL = 0;
         public double errorThreshold = 20;
         public double derivativeThreshold = 1;
 
-        public double power = 0;
+        public double powerL = 0;
+        public double powerR = 0;
 
-        //public double slideTar = 0;
-        public PID ascentPID;
+        // public double slideTar = 0;
+        public PID slidePIDL;
+        public PID slidePIDR;
 
-        //public double maxHeight = 1000;
-        //public double minHeight = 0;
+        // public double maxHeight = 1000;
+        // public double minHeight = 0;
 
-        //public double differenceScalar = 0.0001;
-        //public double scaler = 50;
+        // public double differenceScalar = 0.0001;
+        // public double scaler = 50;
         Telemetry tele = FtcDashboard.getInstance().getTelemetry();
+
         public void setTele(Telemetry t) {
             tele = t;
         }
 
-        public void ascentStart() {
-            leftBasePos = ascentLeft.getCurrentPosition();
-            rightBasePos = ascentRight.getCurrentPosition();
+        public void start() {
+            basePosL = ascentLeft.getCurrentPosition();
+            basePosR = ascentRight.getCurrentPosition();
 
-            ascentPID = new PID(0.001, 0, 0, false);
+
+            slidePIDR = new PID(SLIDES_KP, 0, 0, false);
+            slidePIDL = new PID(SLIDES_KP, 0, 0, false);
+
             tele = FtcDashboard.getInstance().getTelemetry();
         }
 
         public void ascentTick() {
 
-            ascentPID.setConsts(ascentP, 0, 0);
-            ascentPID.setTarget(ascentTar);
-            leftPos = ascentLeft.getCurrentPosition() - leftBasePos;
-            rightPos = ascentRight.getCurrentPosition() - rightBasePos;
+            slidePIDL.setConsts(SLIDES_KP, 0, 0);
+            slidePIDR.setConsts(SLIDES_KP, 0, 0);
+            slidePIDR.setTarget(slideTar);
+            slidePIDL.setTarget(slideTar);
+            posL = -(ascentLeft.getCurrentPosition() - basePosL);
+            posR = -(ascentRight.getCurrentPosition() - basePosR);
 
-            tele.addData("left", leftPos);
-            tele.addData("right", rightPos);
+            tele.addData("posL", posL);
+            tele.addData("posR", posR);
+            tele.addData("targeting", SLIDE_TARGETING);
+            tele.addData("slidetar", slideTar);
+            tele.addData("slidep", SLIDES_KP);
 
-            if ((leftPos + rightPos) /2 < minHeight  && power < 0) {
-                ASCENT_TARGETING = true;
-                ascentTar = minHeight;
+            if (posL < SLIDES_MIN - 100 && powerL < 0) {
+                SLIDE_TARGETING = true;
+                slideTar = SLIDES_MIN - 100;
             }
-            if ((rightPos+leftPos)/2 > maxHeight && power > 0) {
-                ASCENT_TARGETING = true;
-                ascentTar = maxHeight;
-            }
-            if (ASCENT_TARGETING) {
-                power = ascentPID.tick((leftPos + rightPos) / 2);
-                tele.addData("pidpower", power);
+            if (posL > SLIDES_MAX && powerL > 0) {
+                SLIDE_TARGETING = true;
+                slideTar = SLIDES_MAX;
             }
 
-            tele.addData("drivingl", minMaxScaler(leftPos, (power + differenceScaler(rightPos - leftPos))));
-            tele.addData("drivingr", minMaxScaler(rightPos, (power + differenceScaler(leftPos - rightPos))));
-            tele.addData("dl", differenceScaler(rightPos - leftPos));
-            tele.addData("dr", differenceScaler(leftPos - rightPos));
+            if (posR < SLIDES_MIN - 100 && powerR < 0) {
+                SLIDE_TARGETING = true;
+                slideTar = SLIDES_MIN - 100;
+            }
+            if (posR > SLIDES_MAX && powerR > 0) {
+                SLIDE_TARGETING = true;
+                slideTar = SLIDES_MAX;
+            }
+
+            if (SLIDE_TARGETING) {
+                powerR = -slidePIDR.tick(posR);
+                tele.addData("pidpowerR", powerR);
+                powerL = -slidePIDL.tick(posL);
+                tele.addData("pidpowerR", powerL);
+            }
+
             tele.update();
 
-            ascentLeft.setPower(minMaxScaler(leftPos, (power + differenceScaler(rightPos - leftPos))));
-            ascentRight.setPower(minMaxScaler(rightPos, (power + differenceScaler(leftPos - rightPos))));
+            if (!runToBottom) {
+                ascentRight.setPower(powerR);
+                ascentLeft.setPower(powerL);
+            }else{
+                ascentRight.setPower(-1);
+                ascentLeft.setPower(-1);
+            }
         }
-        private double minMaxScaler(double x, double power) {
-            return power * (power < 0 ? ((1.3 * 1/(1+pow(E, -scaler*(x-300+minHeight)))) - 0.1) : ((1.3 * 1/(1+pow(E, scaler*(x+300-maxHeight)))) - 0.1));
-        }
-        private double differenceScaler(double difference) {
-            return differenceScalar * difference;
-        }
+
+        // REWRITE EVENTUALLY AND CLEAN UP PLEAS
 
         public void driveSlides(double p) {
-            tele.addData("cpower", power);
-            ASCENT_TARGETING = false;
-            power = p;
+            // if (p == 0) setTarget(pos); // untested
+            tele.addData("ipower", p);
+            tele.addData("cpower", powerR);
+            tele.update();
+            SLIDE_TARGETING = false;
+            powerR = -p;
+            powerL = -p;
         }
 
-        private double getSlidesPos() {
-            return (leftPos + rightPos) / 2;
+        public void setTargeting(boolean targeting) {
+            SLIDE_TARGETING = targeting;
         }
 
         public void setTarget(double tar) {
-            ascentTar = tar;
-            ASCENT_TARGETING = true;
+            slideTar = tar;
+            SLIDE_TARGETING = true;
         }
+
+        public void resetSlideBasePos() {
+            ascentRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            ascentRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            basePosL = ascentLeft.getCurrentPosition();
+            ascentLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            ascentLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            basePosL = ascentLeft.getCurrentPosition();
+        }
+
         public boolean isBusy() {
 
-            return ascentPID.getDerivative() < derivativeThreshold && abs(getSlidesPos() - ascentTar) < errorThreshold;
-            //                                                       could get proportion (^) from pid but dont want to
+            return slidePIDL.getDerivative() < derivativeThreshold && abs(posL - slideTar) < errorThreshold;
+            // could get proportion (^) from pid but dont want to
         }
 
     }

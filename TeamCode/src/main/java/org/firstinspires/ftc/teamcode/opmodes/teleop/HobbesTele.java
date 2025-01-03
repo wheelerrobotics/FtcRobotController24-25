@@ -74,7 +74,7 @@ public class HobbesTele extends OpMode {
         if (gamepad2.left_trigger > 0) hob.servosController.incrementExtendoArmWrist(gamepad2.left_trigger * EXTENDO_ARM_SPEED, 0);
         if (gamepad2.right_trigger > 0) hob.servosController.incrementExtendoArmWrist(gamepad2.right_trigger * -EXTENDO_ARM_SPEED, 0);
 
-        if (gamepad1.back && !lastGamepad1.back) hob.runMacro((hob.motorAscentController.ascentTar != 0) ? ASCENT_DOWN : ASCENT_UP);
+        if (gamepad1.back && !lastGamepad1.back) hob.runMacro((hob.motorAscentController.slideTar != 0) ? ASCENT_DOWN : ASCENT_UP);
 
         // p2: manual extendo wrist articulation
         if (gamepad2.right_bumper) hob.servosController.incrementExtendoArmWrist(0, EXTENDO_WRIST_SPEED);
