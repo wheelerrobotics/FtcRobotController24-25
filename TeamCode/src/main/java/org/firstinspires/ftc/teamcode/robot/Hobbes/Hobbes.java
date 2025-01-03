@@ -30,7 +30,9 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -46,6 +48,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Link;
@@ -83,6 +86,8 @@ public class Hobbes extends Meccanum implements Robot {
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
         drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        specimenCorrector = new SpecimenCorrector(drive);
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
         // imu.initialize(parameters);
@@ -153,15 +158,16 @@ public class Hobbes extends Meccanum implements Robot {
     public Action specimenAction() {
         return new SpecimenPickupAction(this);
     }
+    public static SpecimenCorrVals corVals = new SpecimenCorrVals();
     public static class SpecimenCorrVals {
         public double strafeTarget = 0;
         public double strafeErrorThresh = 0;
         public double strafeDerivativeThresh = 0;
-        public double strafeP = 2;
+        public double strafeP = 0;
         public double strafeI = 0;
-        public double strafeD = 0.01;
+        public double strafeD = 0;
 
-        public double forwardTarget = 1000;
+        public double forwardTarget = 0;
         public double forwardErrorThresh = 0;
         public double forwardDerivativeThresh = 0;
         public double forwardP = 0;
@@ -181,10 +187,10 @@ public class Hobbes extends Meccanum implements Robot {
         // 2: move forwards
         // 3: keep rotation constant
         PID specimenStrafePID = new PID(2, 0, 0.001);
-        PID specimenForwardPID = new PID(0, 0, 0); // TODO: defo not right vals
+        PID specimenForwardPID = new PID(0.5, 0, 0); // TODO: defo not right vals
         PID specimenForwardNonDetectionPID = new PID(0, 0, 0); // TODO: defo not right vals
         // ^^ is a duplicate of forward PID but uses the RR localizer instead of limelight
-        PID specimenRotationPID = new PID(0, 0, 0); // TODO: defo not right vals
+        PID specimenRotationPID = new PID(0.5, 0, 0); // TODO: defo not right vals
         boolean correctionOn = false;
         double angle = 0;
         double forwardDistance = 0;
@@ -196,20 +202,20 @@ public class Hobbes extends Meccanum implements Robot {
             // to figure these out they should prob be copied into tick and given config vars
             specimenStrafePID.init(0);
             specimenStrafePID.setTarget(0); // TODO: CHANGE TO ACTUAL DESIRED ANGLE (might be zero, not sure what limelight likes)
-            specimenStrafePID.setDoneThresholds(0, 0); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
+            specimenStrafePID.setDoneThresholds(0.3, 1); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
 
             specimenForwardPID.init(0);
-            specimenForwardPID.setTarget(1000); // TODO: CHANGE TO ACTUAL DESIRED PIXELS (might be zero, not sure what limelight likes)
+            specimenForwardPID.setTarget(0); // TODO: CHANGE TO ACTUAL DESIRED PIXELS (might be zero, not sure what limelight likes)
             specimenForwardPID.setDoneThresholds(0, 0); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
 
-            specimenForwardNonDetectionPID.init(drive.pose.position.y);
-            specimenForwardNonDetectionPID.setTarget(-1); // TODO: CHANGE TO ACTUAL DESIRED Y POSITION (should be about -1)
-            specimenForwardNonDetectionPID.setDoneThresholds(0, 0); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
+            specimenForwardNonDetectionPID.init(drive.pose.position.x);
+            specimenForwardNonDetectionPID.setTarget(-1.5); // TODO: CHANGE TO ACTUAL DESIRED Y POSITION (should be about -1)
+            specimenForwardNonDetectionPID.setDoneThresholds(0.5, 1); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
 
 
             specimenRotationPID.init(drive.pose.heading.toDouble());
             specimenRotationPID.setTarget(PI); // TODO: CHANGE TO ACTUAL DESIRED ROTATION (like 80% sure this is right tho)
-            specimenRotationPID.setDoneThresholds(0, 0); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
+            specimenRotationPID.setDoneThresholds(0.1, 0.2); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
         }
         // just because all of these are defined doesnt mean they have to be used
         // teleop will likely only use "getStrafePower" and the rest will be done by the driver
@@ -227,7 +233,7 @@ public class Hobbes extends Meccanum implements Robot {
             return rotationPower;
         }
         public boolean isFinished() {
-            return specimenRotationPID.isFinished() && specimenStrafePID.isFinished() && specimenForwardPID.isFinished();
+            return specimenRotationPID.isFinished() && specimenStrafePID.isFinished() && specimenForwardNonDetectionPID.isFinished();
         }
         public void setCorrectionOn(boolean on) {
             correctionOn = on;
@@ -238,18 +244,17 @@ public class Hobbes extends Meccanum implements Robot {
             return angle - (2 * PI) * Math.floor((angle + PI) / (2 * PI));
         }
         public void specimenTick() {
-            SpecimenCorrVals v = new SpecimenCorrVals();
+            drive.updatePoseEstimate(); // update localizer
             // this top block for debugging when we are changing config vals
-            specimenStrafePID.setTarget(v.strafeTarget); 
-            specimenStrafePID.setDoneThresholds(v.strafeErrorThresh, v.strafeDerivativeThresh); 
-            specimenStrafePID.setConsts(v.strafeP, v.strafeI, v.strafeD);
-            specimenForwardPID.setTarget(v.forwardTarget);
-            specimenForwardPID.setDoneThresholds(v.forwardErrorThresh, v.forwardDerivativeThresh);
-            specimenForwardPID.setConsts(v.forwardP, v.forwardI, v.forwardD);
-            specimenRotationPID.setTarget(v.rotationTarget);
-            specimenRotationPID.setDoneThresholds(v.rotationErrorThresh, v.rotationDerivativeThresh);
-            specimenRotationPID.setConsts(v.rotationP, v.rotationI, v.rotationD);
-
+            specimenStrafePID.setTarget(corVals.strafeTarget);
+            specimenStrafePID.setDoneThresholds(corVals.strafeErrorThresh, corVals.strafeDerivativeThresh);
+            specimenStrafePID.setConsts(corVals.strafeP, corVals.strafeI, corVals.strafeD);
+            specimenForwardNonDetectionPID.setTarget(corVals.forwardTarget);
+            specimenForwardNonDetectionPID.setDoneThresholds(corVals.forwardErrorThresh, corVals.forwardDerivativeThresh);
+            specimenForwardNonDetectionPID.setConsts(corVals.forwardP, corVals.forwardI, corVals.forwardD);
+            specimenRotationPID.setTarget(corVals.rotationTarget);
+            specimenRotationPID.setDoneThresholds(corVals.rotationErrorThresh, corVals.rotationDerivativeThresh);
+            specimenRotationPID.setConsts(corVals.rotationP, corVals.rotationI, corVals.rotationD);
 
 
             rotationPower = specimenRotationPID.tick(drive.pose.heading.toDouble()); // doesnt depend on knowing where a specimen is
@@ -300,7 +305,8 @@ public class Hobbes extends Meccanum implements Robot {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (firstRun) bot.specimenCorrector.setCorrectionOn(true);
             firstRun = false;
-            motorDriveXYVectors(bot.specimenCorrector.getStrafePower(), bot.specimenCorrector.getForwardPower(), bot.specimenCorrector.getRotationPower());
+
+            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(bot.specimenCorrector.getStrafePower(),bot.specimenCorrector.getForwardNonDetectionPower()), bot.specimenCorrector.getRotationPower()));
             return !bot.specimenCorrector.isFinished();
         }
     }
@@ -479,7 +485,7 @@ public class Hobbes extends Meccanum implements Robot {
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update();
-        //specimenCorrector.specimenTick(); // run specimen corrector
+        specimenCorrector.specimenTick(); // run specimen corrector
         motorAscentController.ascentTick();
 
     }
