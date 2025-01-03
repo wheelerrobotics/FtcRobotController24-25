@@ -14,6 +14,7 @@ import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Trajectory;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
@@ -53,41 +54,48 @@ public class DanielSickAuto extends LinearOpMode {
                 // define and init robot
                 hob = new Hobbes();
                 hob.init(hardwareMap);
-                drive = new PinpointDrive(hardwareMap, new Pose2d(0, 0, 0));
+                drive = hob.drive;
 
                 TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0)).setTangent(PI)
-                                .splineTo(new Vector2d(-27.6, -5), PI);
+                        .splineTo(new Vector2d(-26.6, -5), PI);
 
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                                .splineTo(new Vector2d(-20, 21), PI * 3 / 4);
-                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh().turnTo(5*PI/16, new TurnConstraints(4, -4, 1.4));
+                        .splineTo(new Vector2d(-23, 24), PI * 3 / 4);
+                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
+                        .setTangent(0).splineToLinearHeading(new Pose2d(-15, 25, 4*PI/16), 0, null, new ProfileAccelConstraint(-10, 10));
                 TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
-                                .splineTo(new Vector2d(-23, 29), PI * 3 / 4);
-                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh().turnTo(3.8*PI/16, new TurnConstraints(4, -4, 1.4));
-                TrajectoryActionBuilder a4 = s3.endTrajectory().fresh().setTangent(-PI / 4)
-                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
-                                .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
+                        .setTangent(PI)
+                        .splineToLinearHeading(new Pose2d(-28, 32, PI*3/4), PI * 3 / 4);
+                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
+                        .setTangent(0).splineToLinearHeading(new Pose2d(-15, 31, 4*PI/16), 0, null, new ProfileAccelConstraint(-10, 10));
+                TrajectoryActionBuilder a4 = s3.endTrajectory().fresh().setTangent(0)
+                        .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10))
+                        .splineToConstantHeading(new Vector2d(-1.5, 33), 0, null, new ProfileAccelConstraint(-10, 10));
 
                 TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
-                                .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
-                                .splineToSplineHeading(new Pose2d(-28, -1, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
+                        .splineToSplineHeading(new Pose2d(-29.5, -1, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
-                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
+                        .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
+                        .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
                         .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
+
                 TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
-                                .splineToSplineHeading(new Pose2d(-20, -9, 0 - 0.0002), PI)
-                                .splineToSplineHeading(new Pose2d(-28, -9, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-15, -9, 0 - 0.0002), PI)
+                        .splineToSplineHeading(new Pose2d(-29.5, -9, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
-                                .splineToSplineHeading(new Pose2d(-20, 32.5, PI), 0)
+                        .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
+                        .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
                         .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
                 TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
-                                .splineToSplineHeading(new Pose2d(-20, -12, 0 - 0.0003), PI)
-                                .splineToSplineHeading(new Pose2d(-28, -12, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-15, -12, 0 - 0.0003), PI)
+                        .splineToSplineHeading(new Pose2d(-29.5, -12, 0 - 0.0004), PI);
 
                 TrajectoryActionBuilder a12 = a9.endTrajectory().fresh().setTangent(0)
-                                .splineToLinearHeading(new Pose2d(0, 33, PI / 2), 0);
+                        .splineToLinearHeading(new Pose2d(0, 33, PI / 2), 0);
+
 
                 Action t1 = a1.build();
                 Action t2 = a2.build();
@@ -117,7 +125,7 @@ public class DanielSickAuto extends LinearOpMode {
                                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                                                 // place preload specimen
                                                                 // hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET),
-                                                                hob.actionWait(300),
+                                                                hob.actionWait(500),
                                                                 // run to before sweepage
                                                         new ParallelAction(
                                                                 hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 500),
