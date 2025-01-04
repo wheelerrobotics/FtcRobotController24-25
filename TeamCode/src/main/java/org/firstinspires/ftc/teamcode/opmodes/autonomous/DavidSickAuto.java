@@ -45,7 +45,7 @@ public class DavidSickAuto extends LinearOpMode {
                 .setTangent(0)
                 .splineToSplineHeading(new Pose2d(-17, -20, -PI), -PI/2)
                 .setTangent(-PI/2)
-                .splineToSplineHeading(new Pose2d(-11, -42, PI), -PI/2);
+                .splineToSplineHeading(new Pose2d(-19, -42, PI), -PI/2);
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToLinearHeading(new Pose2d(-7.5, -49.5, Math.toRadians(125)), 0);
@@ -54,20 +54,20 @@ public class DavidSickAuto extends LinearOpMode {
         //Splines for second spike mark then second bucket
         TrajectoryActionBuilder s2 = b1.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(-17, -54, PI), 0);
+                .splineToLinearHeading(new Pose2d(-19, -53.3, PI), 0);
         TrajectoryActionBuilder b2 =  s2.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-7.5, -49.5, Math.toRadians(125
+                .splineToLinearHeading(new Pose2d(-7.7, -49.5, Math.toRadians(125
                 )), 0);
 
 
         //splines for third spike mark then third bucket
         TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(-15.9, -50, PI+3*PI/8), 0);
+                .splineToLinearHeading(new Pose2d(-23, -48.5, PI+2*PI/8), 0);
         TrajectoryActionBuilder b3 =  s3.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-7.5, -49.5, Math.toRadians(125)), 0);
+                .splineToLinearHeading(new Pose2d(-7.7, -49.5, Math.toRadians(127)), 0);
 
 
     //Spline for park

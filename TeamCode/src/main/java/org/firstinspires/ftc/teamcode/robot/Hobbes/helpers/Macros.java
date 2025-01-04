@@ -3,25 +3,27 @@ package org.firstinspires.ftc.teamcode.robot.Hobbes.helpers;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.*;
 
 public class Macros {
+
+
     public static HobbesState EXTENDO_BEFORE_PICKUP2 = new HobbesState(EXTENDO_IN + .07, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null,  null,null);
     public static HobbesState EXTENDO_BEFORE_PICKUP = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null,  null,new LinkedState(EXTENDO_BEFORE_PICKUP2, 500));
 
+
     public static HobbesState EXTENDO_ARM_WRIST_FLAT = new HobbesState(null, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null,  null,null);
-
     public static HobbesState EXTENDO_ARM_WRIST_UP = new HobbesState(null, EXTENDO_ARM_UP, EXTENDO_WRIST_UP, null, null,
             INTAKE_OFF, null, null,  null,null);
-
     public static HobbesState EXTENDO_ARM_WRIST_ANGLED = new HobbesState(null, EXTENDO_ARM_INTAKE_ANGLED,
             EXTENDO_WRIST_INTAKE_ANGLED, null, null, null, null, null,  null,null);
 
+
     public static HobbesState FULL_IN = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER,
             SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_OPEN, SLIDES_IN,  null,null);
-
     public static HobbesState EXTENDO_FULL_IN = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER,
             EXTENDO_WRIST_TRANSFER, null, null, null, null, null,  null,null);
+
 
     public static HobbesState TRANSFER_CLOSED = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER,
             EXTENDO_WRIST_TRANSFER, SLIDES_ARM_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_CLOSED, SLIDES_IN,
@@ -61,7 +63,7 @@ public class Macros {
     public static HobbesState SLIDES_DEPOSIT_AUTO4 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
             SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, CLAW_OPEN, SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO5, 200));
     public static HobbesState SLIDES_DEPOSIT_AUTO3 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
-            SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO4, 1300));
+            SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO4, 1500));
     public static HobbesState SLIDES_DEPOSIT_AUTO2 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
             null, null, null, null, SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO3, 750));
     public static HobbesState SLIDES_DEPOSIT_AUTO = new HobbesState(null, null, null, null, SLIDES_WRIST_HALF, null, null,
@@ -117,13 +119,6 @@ public class Macros {
             SLIDES_ARM_SPECIMEN_TO_DEPOSIT, SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
             STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START,  null,null);
 
-    public static HobbesState PARK2 = new HobbesState(null, null, null,
-            null, null, null, CLAW_CLOSED,
-            SLIDES_PARK,  null,null);
-    public static HobbesState PARK = new HobbesState(null, null, null,
-            ARM_PARK, WRIST_PARK, null, CLAW_CLOSED,
-            SLIDES_PARK,  null,new LinkedState(PARK2,750));
-
 
     public static HobbesState STUPID_SPECIMEN_DEPOSIT2 = new HobbesState(null, null, null, null, null, null, CLAW_OPEN, null,
             null,new LinkedState(SPECIMEN_BEFORE_PICKUP, 200));
@@ -172,8 +167,8 @@ public class Macros {
     public static HobbesState ASCENT_DOWN = new HobbesState(null, null, null,
             null, null, null, null, null, 5000,null);
 
-    public static HobbesState START = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START ,null
-            ,null ,null ,null ,null ,null, null );
+    public static HobbesState START = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START ,SLIDES_ARM_START
+            ,SLIDES_WRIST_START ,null ,CLAW_CLOSED ,null ,null, null );
     public static HobbesState BUCKET_PARK = new HobbesState(null,null,null ,null
             ,null ,null ,null ,null ,ASCENT_PARK, null );
 
