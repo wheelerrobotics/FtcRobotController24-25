@@ -7,6 +7,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.EXTEND;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_IN;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,7 +17,7 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Disabled
 @Autonomous
 public class parker extends LinearOpMode {
 

@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.messages.PoseMessage;
  * Unless otherwise noted, comments are from Gobilda
  */
 public class PinpointDrive extends MecanumDrive {
+
     public static class Params {
         /*
         Set this to the name that your Pinpoint is configured as in your hardware config.
@@ -40,12 +41,8 @@ public class PinpointDrive extends MecanumDrive {
          */
         //These are tuned for 3110-0002-0001 Product Insight #1
         // RR localizer note: These units are inches, presets are converted from mm (which is why they are inexact)
-     //   public double xOffset = 3.307;
-       // public double yOffset = -2.25;
-
-       public double xOffset = 3.30709;
-        public double yOffset = 4.40945;
-
+        public double xOffset = 3.3;
+        public double yOffset = 4.4;
 
         /*
         Set the kind of pods used by your robot. If you're using goBILDA odometry pods, select either
@@ -64,7 +61,7 @@ public class PinpointDrive extends MecanumDrive {
         increase when you move the robot forward. And the Y (strafe) pod should increase when
         you move the robot to the left.
          */
-        public GoBildaPinpointDriver.EncoderDirection xDirection = GoBildaPinpointDriver.EncoderDirection.FORWARD;
+        public GoBildaPinpointDriver.EncoderDirection xDirection = GoBildaPinpointDriver.EncoderDirection.REVERSED;
         public GoBildaPinpointDriver.EncoderDirection yDirection = GoBildaPinpointDriver.EncoderDirection.REVERSED;
 
         /*
@@ -159,6 +156,9 @@ public class PinpointDrive extends MecanumDrive {
             this.x = pose.getX(DistanceUnit.INCH);
             this.y = pose.getY(DistanceUnit.INCH);
             this.heading = pose.getHeading(AngleUnit.RADIANS);
+        }
+        public double getAngle(){
+            return heading;
         }
     }
 

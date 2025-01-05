@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.Hobbes.helpers;
 public class HobbesState {
     public Double extendoPos, extendoArmPos, extendoWristPos, slidesArmPos, slidesWristPos, intakeSpeed, clawPos;
     public Integer slidesPos, ascentPos;
-    public Link linkedState;
+    public LinkedState linkedState;
     public HobbesState(Double extendoPos,
                        Double extendoArmPos,
                        Double extendoWristPos,

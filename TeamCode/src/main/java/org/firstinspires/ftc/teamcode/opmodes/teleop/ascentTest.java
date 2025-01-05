@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.autonomous;
+package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.*;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
@@ -16,9 +16,9 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
 @Disabled
-@TeleOp
-public class MacroTester extends OpMode {
+public class ascentTest extends OpMode {
 
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
@@ -42,18 +42,13 @@ public class MacroTester extends OpMode {
     @Override
     // loops after start press
     public void loop() {
+        // p1 & p2: start freeze (to ignore input while switching mode)
         if (gamepad2.start || gamepad1.start) return;
-        if (gamepad1.a) hob.runMacro(SAMPLE_SWEEP_DOWN);
-        if (gamepad1.b) hob.runMacro(SAMPLE_SWEEP_UP);
-        if (gamepad1.x) hob.runMacro(SPECIMEN_BEFORE_DEPOSIT);
-        if (gamepad1.y) hob.runMacro(SPECIMEN_DEPOSIT_AND_RESET);
-        if (gamepad1.dpad_down) hob.runMacro(SPECIMEN_PICKUP);
-        if (gamepad1.dpad_up) hob.runMacro(SPECIMEN_BEFORE_PICKUP);
-        if (gamepad1.dpad_left) hob.runMacro(SPECIMEN_START);
-        if (gamepad1.dpad_right) hob.runMacro(OPEN_CLAW);
-        if (gamepad1.back) hob.runMacro(CLOSE_CLAW);
-        if (gamepad2.a) hob.runMacro(STUPID_SPECIMEN_TO_DEPOSIT);
-        if (gamepad2.b) hob.runMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET);
+        // p1: motion
+        hob.motorAscentController.driveSlides(gamepad1.left_stick_y);
+
+
+
         // tick robot
         hob.tick();
 

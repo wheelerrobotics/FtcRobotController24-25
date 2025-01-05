@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Config
 public class PID {
-    public static double dThresh = 0.01;
-    public static double eThresh = 2;
+    public double dThresh = 0.01;
+    public double eThresh = 2;
     double integral = 0;
     double derivative = 0;
     double proportion = 0;
@@ -29,6 +29,10 @@ public class PID {
     double[] pastJitter = {0, 0, 0, 0, 0};
     boolean distanceSensor = false;
 
+    public void setDoneThresholds(double error, double derivative) {
+        eThresh = error;
+        dThresh = derivative;
+    }
     // time break
     // rotation shit
     // threshold and derivative brake
@@ -44,6 +48,12 @@ public class PID {
 
     ElapsedTime et = new ElapsedTime();
 
+    public PID(double p, double i, double d){
+        ki = i;
+        kd = d;
+        kp = p;
+        this.correctJitter = false;
+    }
     public PID(double p, double i, double d, boolean correctJitter){
         ki = i;
         kd = d;
@@ -103,12 +113,15 @@ public class PID {
         double out = kp * error + kd * derivative + ki * integral;
         return out;
     }
-    public void setPauseState(boolean p){
+    public void setPaused(boolean p){
         paused = p;
         if(!p) et.reset();
     }
     public int isDone() {
         return (abs(derivative) < dThresh && abs(error) < eThresh) ? 1:0;
+    }
+    public boolean isFinished() {
+        return abs(derivative) < dThresh && abs(error) < eThresh;
     }
 
 }
