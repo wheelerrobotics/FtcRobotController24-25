@@ -96,7 +96,7 @@ public class Macros {
             SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_CLOSED, SLIDES_SPECIMEN_PICKED_UP,  null,null);
     public static HobbesState SPECIMEN_PICKUP = new HobbesState(null, null, null, SLIDES_ARM_SPECIMEN_PICKUP,
             SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_CLOSED, SLIDES_SPECIMEN_TO_PICKUP,
-            null,new LinkedState(SPECIMEN_PICKUP2, 200));
+            null,new LinkedState(SPECIMEN_PICKUP2, 100));
 
     public static HobbesState SPECIMEN_PICKUP_AND_BEFORE_DEPOSIT2 = new HobbesState(null, null, null,
             SLIDES_ARM_SPECIMEN_PICKUP, SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_CLOSED, SLIDES_SPECIMEN_PICKED_UP,
@@ -133,6 +133,9 @@ public class Macros {
     public static HobbesState SAMPLE_SWEEP_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_PUSH_UP,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null,  null,null);
 
+
+
+
     public static HobbesState AUTO9 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_INTAKE_ANGLED,
             SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_CLOSED, SLIDES_IN,  null,null);
     public static HobbesState AUTO8 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_INTAKE_ANGLED,
@@ -158,6 +161,9 @@ public class Macros {
             null, null, null, null, null, null, new LinkedState(AUTO2, 2000));
     public static HobbesState AUTO = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE, EXTENDO_WRIST_INTAKE_FLAT,
             null, null, null, null, null, null, new LinkedState(AUTO1, 1000));
+
+
+
 
     public static HobbesState OUTTAKE = new HobbesState(null, EXTENDO_ARM_OUTAKE, EXTENDO_WRIST_OUTAKE,
             null, null, INTAKE_REVERSE, null, null, null,null);

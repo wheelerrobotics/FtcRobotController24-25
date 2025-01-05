@@ -23,6 +23,7 @@ import com.acmerobotics.roadrunner.TurnConstraints;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -41,7 +42,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import javax.crypto.Mac;
-
+@Disabled
 @Autonomous
 public class DanielSuperDuperAuto extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.

@@ -5,10 +5,8 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 import static java.lang.Math.PI;
 
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -19,7 +17,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
-@Autonomous
+@Autonomous(name = "3SampleAuto")
+
 public class DavidSickAuto extends LinearOpMode {
 
     Hobbes hob = null;
