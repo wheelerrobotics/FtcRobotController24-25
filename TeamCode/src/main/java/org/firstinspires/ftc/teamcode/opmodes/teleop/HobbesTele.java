@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-@TeleOp(name = "Old TeleOp")
+@TeleOp(name = "1HobbesTele")
 public class HobbesTele extends OpMode {
 
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
@@ -94,12 +94,12 @@ public class HobbesTele extends OpMode {
         if (gamepad2.left_stick_button) hob.extendoWristRezeroOffset = 0;
 
         // p2: slides down, arm above sample
-        //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(SLIDES_DOWN);
-        if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(AUTO);
+        if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(SLIDES_DOWN);
+        //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(AUTO);
 
         //p2: : Drive ascent
-        if (gamepad2.right_stick_y != 0 && gamepad2.dpad_left && !lastGamepad2.dpad_left)
-            hob.motorAscentController.driveSlides(gamepad2.left_stick_y);
+        if (gamepad2.right_stick_y != 0 && gamepad2.dpad_left)
+            hob.motorAscentController.driveSlides(gamepad2.right_stick_y);
 
 
         // tick robot

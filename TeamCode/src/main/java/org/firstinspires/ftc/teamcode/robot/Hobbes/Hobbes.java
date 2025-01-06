@@ -87,6 +87,8 @@ public class Hobbes extends Meccanum implements Robot {
         super.init(hardwareMap);
         drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        tele.setMsTransmissionInterval(11);
+        limelight.pipelineSwitch(3);
         specimenCorrector = new SpecimenCorrector(drive);
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -95,9 +97,8 @@ public class Hobbes extends Meccanum implements Robot {
         // AngleUnit.RADIANS);
         vs = hardwareMap.voltageSensor.get("Control Hub");
         // init limelight:
-         limelight = hw.get(Limelight3A.class, "limelight");
-         tele.setMsTransmissionInterval(11);
-         limelight.pipelineSwitch(3);
+        // limelight = hw.get(Limelight3A.class, "limelight");
+
 
         // define motors:
         motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("motorFrontLeft"); // EH1

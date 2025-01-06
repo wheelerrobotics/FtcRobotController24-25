@@ -29,12 +29,13 @@ public class HobbesConstants {
      * 13, misc
      *
      */
+    public static double EXTENDO_ARM_OFFSET = -.12;
 
 
 
-    public static int SLIDES_MAX = 1600; //top of slides
+    public static int SLIDES_MAX = 1170; //top of slides
     public static int SLIDES_MIN = 0; //bottom of slides
-    public static int SLIDES_OUT_TOP_SAMPLE = 1450; //bucket deposit
+    public static int SLIDES_OUT_TOP_SAMPLE = 1100; //bucket deposit
     public static double SLIDES_SIGMOID_SCALER = 0.008; // (DONEISH)
     public static double SLIDES_KP = 0.04;
     public static int SLIDES_IN = 0; //used to put slides all the way down
@@ -43,10 +44,11 @@ public class HobbesConstants {
 
 
     //transfer
-    public static double EXTENDO_ARM_TRANSFER = 0.62;
+    public static double EXTENDO_ARM_TRANSFER = 0.64 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER = .66;
-    public static double SLIDES_ARM_TRANSFER = .18;
-    public static double SLIDES_WRIST_TRANSFER = 0.88;
+    public static double SLIDES_ARM_TRANSFER = .25;
+    public static double SLIDES_WRIST_TRANSFER = 0.9;
+
 
 
 
@@ -59,8 +61,8 @@ public class HobbesConstants {
 
     // intake (arm / wrist)
     public static double EXTENDO_WRIST_INTAKE_FLAT = 0.75;
-    public static double EXTENDO_ARM_INTAKE = .23;
-    public static double EXTENDO_ARM_INTAKE_ANGLED = .26;
+    public static double EXTENDO_ARM_INTAKE = .23 + EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_ARM_INTAKE_ANGLED = .3 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_INTAKE_ANGLED = 0.83;
 
 
@@ -69,17 +71,16 @@ public class HobbesConstants {
     public static double EXTENDO_IN = 0.18;
     public static double EXTENDO_OUT_FULL = 0.58;
     public static double EXTENDO_OUT_SOME = 0.3;
-    public static double EXTENDO_SPEED = 0.01;
+    public static double EXTENDO_SPEED = .1;
 
 
 
     // extendo arm
-    public static double EXTENDO_ARM_UP = 1;
-    public static double EXTENDO_ARM_PUSH_UP = .3;
-    public static double EXTENDO_ARM_PUSH_DOWN = .19;
-    public static double EXTENDO_ARM_OUTAKE = .5;
+    public static double EXTENDO_ARM_UP = .3 + EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_ARM_PUSH_UP = .3+ EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_ARM_PUSH_DOWN = .19+ EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_ARM_OUTAKE = .5 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_SPEED = 0.01;
-
 
     // extendo wrist
     public static double EXTENDO_WRIST_UP = 0.73;
@@ -89,8 +90,8 @@ public class HobbesConstants {
 
 
     // slides arm/wrist
-    public static double SLIDES_ARM_ABOVE_TRANSFER = 0.23;
-    public static double SLIDES_ARM_DEPOSIT = 0.45;
+    public static double SLIDES_ARM_ABOVE_TRANSFER = 0.35;
+    public static double SLIDES_ARM_DEPOSIT = 0.62;
     public static double SLIDES_WRIST_DEPOSIT = 0.38;
     public static double SLIDES_WRIST_HALF = 0.5;
 
@@ -106,24 +107,24 @@ public class HobbesConstants {
     //specimen pickup
     public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
     public static int SLIDES_SPECIMEN_PICKED_UP = 200;
-    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.63;
-    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.26;
+    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.87;
+    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.22;
 
 
 
     //specimen deposit
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 600;
-    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.45; // done
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 400;
+    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.65; // done
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.28; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 200;
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 530;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 490;
+    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 400;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 400;
 
 
 
     //auto stupid start fix
     public static double EXTENDO_WRIST_START = .83;
-    public static double EXTENDO_ARM_START = .6;
+    public static double EXTENDO_ARM_START = .6 + EXTENDO_ARM_OFFSET;
     public static double SLIDES_ARM_START = .2;
     public static double SLIDES_WRIST_START  = .65;
 
