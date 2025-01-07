@@ -81,7 +81,7 @@ public class Hobbes extends Meccanum implements Robot {
 
 
     Telemetry tele = FtcDashboard.getInstance().getTelemetry();
-
+    public boolean inited = false;
     @Override
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
@@ -118,6 +118,12 @@ public class Hobbes extends Meccanum implements Robot {
 
         // define slides
         slides = (DcMotorImplEx) hardwareMap.dcMotor.get("slides"); // EH3
+
+        // configure slides
+        slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slides.setDirection(DcMotorSimple.Direction.REVERSE);
+        slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // define limited servos
         claw = hardwareMap.get(ServoImplEx.class, "claw");
         extendoLeft = hardwareMap.get(ServoImplEx.class, "extendoLeft");
@@ -135,11 +141,6 @@ public class Hobbes extends Meccanum implements Robot {
         extendoWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendoArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
-        // configure slides
-        slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slides.setDirection(DcMotorSimple.Direction.REVERSE);
-        slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // set slides base pos
         slidesController.start();
         motorAscentController.start();
@@ -148,6 +149,7 @@ public class Hobbes extends Meccanum implements Robot {
         hw = hardwareMap;
         // start runtime timer
         runtime.reset();
+        inited = true;
     }
 
     public void strafe(double power){
