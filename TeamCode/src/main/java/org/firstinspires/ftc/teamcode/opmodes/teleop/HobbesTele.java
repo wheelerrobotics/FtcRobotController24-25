@@ -57,6 +57,7 @@ public class HobbesTele extends OpMode {
 
         // p2: slides motion
         if (gamepad2.right_stick_y != 0 && !gamepad2.dpad_left) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
+        else if (gamepad2.dpad_left) hob.motorAscentController.driveSlides(gamepad2.right_stick_y);
 
         // p2: extendo motion
         hob.servosController.incrementExtendo(-gamepad2.left_stick_y * EXTENDO_SPEED);
@@ -74,7 +75,6 @@ public class HobbesTele extends OpMode {
         if (gamepad2.left_trigger > 0) hob.servosController.incrementExtendoArmWrist(gamepad2.left_trigger * EXTENDO_ARM_SPEED, 0);
         if (gamepad2.right_trigger > 0) hob.servosController.incrementExtendoArmWrist(gamepad2.right_trigger * -EXTENDO_ARM_SPEED, 0);
 
-        if (gamepad1.back && !lastGamepad1.back) hob.runMacro((hob.motorAscentController.slideTar != 0) ? ASCENT_DOWN : ASCENT_UP);
 
         // p2: manual extendo wrist articulation
         if (gamepad2.right_bumper) hob.servosController.incrementExtendoArmWrist(0, EXTENDO_WRIST_SPEED);
@@ -98,9 +98,6 @@ public class HobbesTele extends OpMode {
         //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(AUTO);
 
         //p2: : Drive ascent
-        if (gamepad2.right_stick_y != 0 && gamepad2.dpad_left)
-            hob.motorAscentController.driveSlides(gamepad2.right_stick_y);
-
 
         // tick robot
         hob.tick();
