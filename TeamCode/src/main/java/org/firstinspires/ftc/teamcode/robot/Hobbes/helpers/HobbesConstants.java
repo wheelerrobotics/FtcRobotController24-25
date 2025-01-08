@@ -29,7 +29,7 @@ public class HobbesConstants {
      * 13, misc
      *
      */
-    public static double EXTENDO_ARM_OFFSET = 0;
+    public static double EXTENDO_ARM_OFFSET = 0.02;
 
 
 
@@ -113,18 +113,18 @@ public class HobbesConstants {
 
 
     //specimen deposit
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 400;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 420;
     public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.61; // done
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.75; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 120;
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 400;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 400;
+    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 420;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 420;
 
 
 
     //auto stupid start fix
-    public static double EXTENDO_WRIST_START = .83;
-    public static double EXTENDO_ARM_START = .6 + EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_WRIST_START = .84;
+    public static double EXTENDO_ARM_START = .65 + EXTENDO_ARM_OFFSET;
     public static double SLIDES_ARM_START = .16;
     public static double SLIDES_WRIST_START  = .1;
 

@@ -2,18 +2,22 @@ package org.firstinspires.ftc.teamcode.robot.Hobbes;
 
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OFFSET;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INFINITY;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_ABOVE_TRANSFER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MAX;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MIN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_SIGMOID_SCALER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_IN;
 import static java.lang.Math.E;
@@ -166,9 +170,9 @@ public class Hobbes extends Meccanum implements Robot {
         public double strafeTarget = 0;
         public double strafeErrorThresh = 0;
         public double strafeDerivativeThresh = 0;
-        public double strafeP = 0;
+        public double strafeP = -2;
         public double strafeI = 0;
-        public double strafeD = 0;
+        public double strafeD = -0.1;
 
         public double forwardTarget = 0;
         public double forwardErrorThresh = 0;
@@ -261,7 +265,7 @@ public class Hobbes extends Meccanum implements Robot {
 
 
             rotationPower = specimenRotationPID.tick(abs(drive.pose.heading.toDouble())); // doesnt depend on knowing where a specimen is
-            forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.y); // doesnt depend on knowing where a specimen is
+            forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.x); // doesnt depend on knowing where a specimen is
 
             if (correctionOn) {
                 LLResult result = limelight.getLatestResult();
@@ -287,6 +291,9 @@ public class Hobbes extends Meccanum implements Robot {
                 forwardPower = 0;
                 tele.addData("SPECIMENV_strafe", "not on");
             }
+            tele.addData("SPECIMEND_strafe", specimenStrafePID.isFinished());
+            tele.addData("SPECIMEND_forward", specimenForwardNonDetectionPID.isFinished());
+            tele.addData("SPECIMEND_rotation", specimenRotationPID.isFinished());
             tele.update();
         }
     }
@@ -527,10 +534,10 @@ public class Hobbes extends Meccanum implements Robot {
             claw.setPosition(CLAW_CLOSED);
             extendoLeft.setPosition(EXTENDO_IN);
             extendoRight.setPosition(servosController.extendoLeftToRight(EXTENDO_IN));
-            extendoArm.setPosition(EXTENDO_ARM_TRANSFER);
-            extendoWrist.setPosition(EXTENDO_WRIST_TRANSFER + extendoWristRezeroOffset);
-            slidesArm.setPosition(SLIDES_ARM_ABOVE_TRANSFER);
-            slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
+            extendoArm.setPosition(EXTENDO_ARM_START);
+            extendoWrist.setPosition(EXTENDO_WRIST_START + extendoWristRezeroOffset);
+            slidesArm.setPosition(SLIDES_ARM_START);
+            slidesWrist.setPosition(SLIDES_WRIST_START);
         }
 
         public void autoSetup() {
@@ -623,6 +630,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         // public double slideTar = 0;
         public PID slidePID;
+        public boolean disabled = false;
 
         // public double maxHeight = 1000;
         // public double minHeight = 0;
@@ -643,7 +651,13 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void slidesTick() {
-
+            if (disabled) {
+                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slides.setPower(0);
+                return;
+            } else if (slides.getZeroPowerBehavior() != DcMotor.ZeroPowerBehavior.BRAKE) {
+                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
             slidePID.setConsts(SLIDES_KP, 0, 0);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
@@ -716,6 +730,7 @@ public class Hobbes extends Meccanum implements Robot {
 
     }
 
+    public static double ASCENT_KP = 0.2;
     public class MotorAscentController {
         public double slideTar = 0;
         public boolean runToBottom = false;
@@ -750,16 +765,16 @@ public class Hobbes extends Meccanum implements Robot {
             basePosR = ascentRight.getCurrentPosition();
 
 
-            slidePIDR = new PID(SLIDES_KP, 0, 0, false);
-            slidePIDL = new PID(SLIDES_KP, 0, 0, false);
+            slidePIDR = new PID(ASCENT_KP, 0, 0, false);
+            slidePIDL = new PID(ASCENT_KP, 0, 0, false);
 
             tele = FtcDashboard.getInstance().getTelemetry();
         }
 
         public void ascentTick() {
 
-            slidePIDL.setConsts(SLIDES_KP, 0, 0);
-            slidePIDR.setConsts(SLIDES_KP, 0, 0);
+            slidePIDL.setConsts(ASCENT_KP, 0, 0);
+            slidePIDR.setConsts(ASCENT_KP, 0, 0);
             slidePIDR.setTarget(slideTar);
             slidePIDL.setTarget(slideTar);
             posL = -(ascentLeft.getCurrentPosition() - basePosL);
