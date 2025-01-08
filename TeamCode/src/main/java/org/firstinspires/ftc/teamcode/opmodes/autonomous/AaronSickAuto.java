@@ -62,7 +62,7 @@ public class AaronSickAuto extends LinearOpMode {
         // wall specimen 1
         TrajectoryActionBuilder a4 = s6.endTrajectory().fresh().setTangent(PI*3/4)
                 .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, null)
-                .splineToConstantHeading(new Vector2d(-2.5, 33), 0, null, null);
+                .splineToConstantHeading(new Vector2d(-3, 33), 0, null, null);
         TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -1, 0 - 0.0004), PI);
@@ -71,7 +71,7 @@ public class AaronSickAuto extends LinearOpMode {
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-2.5, 33, PI), 0, null, null);
+                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0, null, null);
         TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -9, 0 - 0.0002), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -9, 0 - 0.0004), PI);
@@ -80,19 +80,19 @@ public class AaronSickAuto extends LinearOpMode {
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-2.5, 33, PI), 0, null, null);
+                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0, null, null);
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -12, 0 - 0.0003), PI)
-                .splineToSplineHeading(new Pose2d(-29.5, -12, 0 - 0.0004), PI);
+                .splineToSplineHeading(new Pose2d(-30, -12, 0 - 0.0004), PI);
 
         //wall specimen 4
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, null);
+                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0, null, null);
         TrajectoryActionBuilder a11 = a10.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -14, 0 - 0.0003), PI)
-                .splineToSplineHeading(new Pose2d(-29.5, -14, 0 - 0.0004), PI);
+                .splineToSplineHeading(new Pose2d(-30, -14, 0 - 0.0004), PI);
 
         // park
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
