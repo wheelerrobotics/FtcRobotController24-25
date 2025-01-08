@@ -80,7 +80,7 @@ public class HobbesConstants {
 
     // extendo arm
     public static double EXTENDO_ARM_UP = .3 + EXTENDO_ARM_OFFSET;
-    public static double EXTENDO_ARM_PUSH_UP = .35+ EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_ARM_PUSH_UP = .4+ EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_PUSH_DOWN = .19+ EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_OUTAKE = .5 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_SPEED = 0.01;
