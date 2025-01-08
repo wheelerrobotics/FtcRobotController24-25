@@ -49,7 +49,7 @@ public class HobbesConstants {
     //transfer
     public static double EXTENDO_ARM_TRANSFER = 0.64 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER = .63 + EXTENDO_WRIST_OFFSET;
-    public static double SLIDES_ARM_TRANSFER = .24;
+    public static double SLIDES_ARM_TRANSFER = .14;
     public static double SLIDES_WRIST_TRANSFER = 0.05;
 
 
@@ -102,7 +102,7 @@ public class HobbesConstants {
 
     // claw
     public static double CLAW_OPEN = 0.45;
-    public static double CLAW_CLOSED = 0.87;
+    public static double CLAW_CLOSED = 0.89;
 
 
 
@@ -110,15 +110,15 @@ public class HobbesConstants {
     //specimen pickup
     public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
     public static int SLIDES_SPECIMEN_PICKED_UP = 100;
-    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.88;
+    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.92;
     public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.8;
 
 
 
     //specimen deposit
     public static int SLIDES_SPECIMEN_TO_DEPOSIT = 420;
-    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.61; // done
-    public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.75; // done
+    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64; // done
+    public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.79; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 120;
     public static int SLIDES_SPECIMEN_TO_DEPOSITED = 420;
     public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 420;

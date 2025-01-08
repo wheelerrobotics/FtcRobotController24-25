@@ -103,25 +103,16 @@ public class MeepMeepPaths {
                 Action t1 = a1.build();
                 Action t2 = a2.build();
                 Action t3 = a3.build();
-                Action st2 = s2.build();
-                Action st3 = s3.build();
-                Action st4 = s4.build();
-                Action st5 = s5.build();
-                Action st6 = s6.build();
+
+
                 Action t4 = a4.build();
                 Action t5 = a5.build();
-                Action t6 = a6.build();
-                Action t7 = a7.build();
-                Action t8 = a8.build();
-                Action t9 = a9.build();
-                Action t10 = a10.build();
-                Action t11 = a11.build();
                 Action t12 = a12.build();
 
                 myBot.runAction(new SequentialAction(
                                 // hob.actionMacro(SPECIMEN_BEFORE_DEPOSIT),
                                 // specimen sweep pos 1 - X: -23, Y: 29, R: 5pi/4
-                                t1,t2,t3,st2,st3,st4,st5,st6,t4,t5,t6,t7,t8,t9,t10,t11));
+                                t1,t2,t3,t4,t5,t12));
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                                 .setDarkMode(true)
