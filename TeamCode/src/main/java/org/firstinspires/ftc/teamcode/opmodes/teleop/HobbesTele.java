@@ -63,6 +63,7 @@ public class HobbesTele extends OpMode {
         hob.servosController.incrementExtendo(-gamepad2.left_stick_y * EXTENDO_SPEED);
 
         if (gamepad2.back && !lastGamepad2.back) {
+            hob.slidesController.disabled = !hob.slidesController.disabled;
         }
 
         // p2: flat on ground
