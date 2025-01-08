@@ -29,6 +29,9 @@ public class HobbesConstants {
      * 13, misc
      *
      */
+
+    //offsets
+    public static double EXTENDO_WRIST_OFFSET = 0;
     public static double EXTENDO_ARM_OFFSET = 0.02;
 
 
@@ -45,7 +48,7 @@ public class HobbesConstants {
 
     //transfer
     public static double EXTENDO_ARM_TRANSFER = 0.64 + EXTENDO_ARM_OFFSET;
-    public static double EXTENDO_WRIST_TRANSFER = .66;
+    public static double EXTENDO_WRIST_TRANSFER = .66 + EXTENDO_WRIST_OFFSET;
     public static double SLIDES_ARM_TRANSFER = .24;
     public static double SLIDES_WRIST_TRANSFER = 0.05;
 
@@ -60,10 +63,10 @@ public class HobbesConstants {
 
 
     // intake (arm / wrist)
-    public static double EXTENDO_WRIST_INTAKE_FLAT = 0.75;
+    public static double EXTENDO_WRIST_INTAKE_FLAT = 0.75 + EXTENDO_WRIST_OFFSET;
     public static double EXTENDO_ARM_INTAKE = .23 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_INTAKE_ANGLED = .3 + EXTENDO_ARM_OFFSET;
-    public static double EXTENDO_WRIST_INTAKE_ANGLED = 0.83;
+    public static double EXTENDO_WRIST_INTAKE_ANGLED = 0.83 +EXTENDO_WRIST_OFFSET;
 
 
 
@@ -83,9 +86,9 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_SPEED = 0.01;
 
     // extendo wrist
-    public static double EXTENDO_WRIST_UP = 0.73;
-    public static double EXTENDO_WRIST_OUTAKE = .9;
-    public static double EXTENDO_WRIST_SPEED = 0.003;
+    public static double EXTENDO_WRIST_UP = 0.73 + EXTENDO_WRIST_OFFSET;
+    public static double EXTENDO_WRIST_OUTAKE = .9 + EXTENDO_WRIST_OFFSET;
+    public static double EXTENDO_WRIST_SPEED = 0.003 + EXTENDO_WRIST_OFFSET;
 
 
 
@@ -123,7 +126,7 @@ public class HobbesConstants {
 
 
     //auto stupid start fix
-    public static double EXTENDO_WRIST_START = .84;
+    public static double EXTENDO_WRIST_START = .84 + EXTENDO_WRIST_OFFSET;
     public static double EXTENDO_ARM_START = .65 + EXTENDO_ARM_OFFSET;
     public static double SLIDES_ARM_START = .16;
     public static double SLIDES_WRIST_START  = .1;
