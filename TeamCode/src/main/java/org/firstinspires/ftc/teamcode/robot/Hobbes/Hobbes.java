@@ -541,11 +541,11 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void autoSetup() {
-            claw.setPosition(CLAW_CLOSED);
-            extendoLeft.setPosition(EXTENDO_IN);
-            extendoRight.setPosition(servosController.extendoLeftToRight(EXTENDO_IN));
-            extendoArm.setPosition(EXTENDO_ARM_TRANSFER);
-            extendoWrist.setPosition(EXTENDO_WRIST_TRANSFER);
+            claw.setPwmEnable();
+            extendoLeft.setPwmEnable();
+            extendoRight.setPwmEnable();
+            extendoArm.setPwmEnable();
+            extendoWrist.setPwmEnable();
         }
 
         public void servosTick() {
