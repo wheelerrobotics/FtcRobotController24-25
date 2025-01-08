@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
 @Config
 @TeleOp
-@Disabled
 public class HobbesZeroer extends OpMode {
 
     Hobbes hob = null;

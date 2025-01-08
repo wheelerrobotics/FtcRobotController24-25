@@ -180,8 +180,10 @@ public class Macros {
     public static HobbesState ASCENT_DOWN = new HobbesState(null, null, null,
             null, null, null, null, null, 5000,null);
 
-    public static HobbesState START = new HobbesState(EXTENDO_IN,EXTENDO_ARM_START,EXTENDO_WRIST_START ,SLIDES_ARM_START
-            ,SLIDES_WRIST_START ,null ,CLAW_CLOSED ,null ,null, null );
+    public static HobbesState START2 = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START ,null
+            ,null ,null ,null ,null ,null, null);
+    public static HobbesState START = new HobbesState(EXTENDO_IN,EXTENDO_ARM_START+0.2,EXTENDO_WRIST_START ,SLIDES_ARM_START
+            ,SLIDES_WRIST_START ,null ,CLAW_CLOSED ,null ,null, new LinkedState(START2, 500));
     public static HobbesState BUCKET_PARK = new HobbesState(null,null,null ,null
             ,null ,null ,null ,null ,ASCENT_PARK, null );
 
