@@ -55,16 +55,15 @@ public class HobbesTele extends OpMode {
         else if (gamepad1.left_trigger > 0) hob.servosController.spintake(INTAKE_REVERSE * gamepad1.left_trigger);
         else hob.servosController.spintake(INTAKE_OFF);
 
-
-
-
-
         // p2: slides motion
         if (gamepad2.right_stick_y != 0 && !gamepad2.dpad_left) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
         else if (gamepad2.dpad_left) hob.motorAscentController.driveSlides(gamepad2.right_stick_y);
 
         // p2: extendo motion
         hob.servosController.incrementExtendo(-gamepad2.left_stick_y * EXTENDO_SPEED);
+
+        if (gamepad2.back && !lastGamepad2.back) {
+        }
 
         // p2: flat on ground
         if (gamepad2.b && !lastGamepad2.b) hob.runMacro(EXTENDO_ARM_WRIST_FLAT);

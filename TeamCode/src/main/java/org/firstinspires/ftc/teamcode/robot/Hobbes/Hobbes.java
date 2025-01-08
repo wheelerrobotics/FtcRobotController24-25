@@ -633,6 +633,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         // public double slideTar = 0;
         public PID slidePID;
+        public boolean disabled = false;
 
         // public double maxHeight = 1000;
         // public double minHeight = 0;
@@ -653,7 +654,13 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void slidesTick() {
-
+            if (disabled) {
+                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slides.setPower(0);
+                return;
+            } else if (slides.getZeroPowerBehavior() != DcMotor.ZeroPowerBehavior.BRAKE) {
+                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
             slidePID.setConsts(SLIDES_KP, 0, 0);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
