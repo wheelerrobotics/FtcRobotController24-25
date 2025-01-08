@@ -123,8 +123,8 @@ public class HobbesConstants {
 
 
     //auto stupid start fix
-    public static double EXTENDO_WRIST_START = .83;
-    public static double EXTENDO_ARM_START = .6 + EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_WRIST_START = .84;
+    public static double EXTENDO_ARM_START = .65 + EXTENDO_ARM_OFFSET;
     public static double SLIDES_ARM_START = .16;
     public static double SLIDES_WRIST_START  = .1;
 
