@@ -109,7 +109,7 @@ public class DanielSickAuto extends LinearOpMode {
                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET), // place preload specimen
                                                 hob.actionWait(500), // run to before sweepage
                                                 new ParallelAction(
-                                                        hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 500),
+                                                        hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 300),
                                                                 t2), // move to before first sweep
 
                                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
@@ -154,6 +154,7 @@ public class DanielSickAuto extends LinearOpMode {
 
                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                                 t12, //park
+                                                hob.actionMacro(START),
                                                 hob.finishAction()),
                                 hob.actionTick()));
         }

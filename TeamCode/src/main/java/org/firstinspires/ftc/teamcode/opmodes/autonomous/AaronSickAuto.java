@@ -187,9 +187,10 @@ public class AaronSickAuto extends LinearOpMode {
                                 hob.actionMacro(SPECIMEN_PICKUP),
                                 hob.actionWait(150),
                                 new ParallelAction(
-                                        t11, //get into position to deposit wall specimen 3
+                                        t11, //get into position to deposit wall specimen 4
                                         hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)),
-                                t12,
+                                t12, //park
+                                hob.actionMacro(START),
 
 
                                 hob.finishAction()),

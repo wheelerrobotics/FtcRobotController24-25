@@ -106,7 +106,7 @@ public class HobbesTele extends OpMode {
         //p2: get ready to specimen deposit
         if (gamepad2.left_bumper && !lastGamepad2.left_bumper) hob.runMacro(STUPID_SPECIMEN_TO_DEPOSIT);
         //p2: deposit specimen
-        if (gamepad2.left_trigger != 0 && (lastGamepad2.left_trigger == 0)) hob.runMacro(STUPID_SPECIMEN_TO_DEPOSIT);
+        if (gamepad2.left_trigger > 0) hob.runMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET);
 
 
 
