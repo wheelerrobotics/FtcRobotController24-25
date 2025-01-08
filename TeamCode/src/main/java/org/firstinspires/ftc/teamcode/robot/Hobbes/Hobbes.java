@@ -541,14 +541,11 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void autoSetup() {
-            slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
             claw.setPosition(CLAW_CLOSED);
             extendoLeft.setPosition(EXTENDO_IN);
             extendoRight.setPosition(servosController.extendoLeftToRight(EXTENDO_IN));
             extendoArm.setPosition(EXTENDO_ARM_TRANSFER);
             extendoWrist.setPosition(EXTENDO_WRIST_TRANSFER);
-            slidesArm.setPosition(SLIDES_ARM_TRANSFER);
-
         }
 
         public void servosTick() {
@@ -733,6 +730,7 @@ public class Hobbes extends Meccanum implements Robot {
 
     }
 
+    public static double ASCENT_KP = 0.2;
     public class MotorAscentController {
         public double slideTar = 0;
         public boolean runToBottom = false;
@@ -767,16 +765,16 @@ public class Hobbes extends Meccanum implements Robot {
             basePosR = ascentRight.getCurrentPosition();
 
 
-            slidePIDR = new PID(SLIDES_KP, 0, 0, false);
-            slidePIDL = new PID(SLIDES_KP, 0, 0, false);
+            slidePIDR = new PID(ASCENT_KP, 0, 0, false);
+            slidePIDL = new PID(ASCENT_KP, 0, 0, false);
 
             tele = FtcDashboard.getInstance().getTelemetry();
         }
 
         public void ascentTick() {
 
-            slidePIDL.setConsts(SLIDES_KP, 0, 0);
-            slidePIDR.setConsts(SLIDES_KP, 0, 0);
+            slidePIDL.setConsts(ASCENT_KP, 0, 0);
+            slidePIDR.setConsts(ASCENT_KP, 0, 0);
             slidePIDR.setTarget(slideTar);
             slidePIDL.setTarget(slideTar);
             posL = -(ascentLeft.getCurrentPosition() - basePosL);

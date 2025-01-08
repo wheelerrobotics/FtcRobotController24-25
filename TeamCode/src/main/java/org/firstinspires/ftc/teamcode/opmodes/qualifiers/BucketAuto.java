@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.autonomous;
+package org.firstinspires.ftc.teamcode.opmodes.qualifiers;
 
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 
@@ -12,15 +12,14 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
-@Autonomous(name = "3SampleAuto")
-@Disabled
-public class DavidSickAuto extends LinearOpMode {
+@Autonomous(name = "Bucket Auto")
+
+public class BucketAuto extends LinearOpMode {
 
     Hobbes hob = null;
     PinpointDrive drive;
@@ -70,7 +69,7 @@ public class DavidSickAuto extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-7.7, -49.5, Math.toRadians(127)), 0);
 
 
-    //Spline for park
+        //Spline for park
         TrajectoryActionBuilder p1 =  b3.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-50, -43, -PI/2), PI)
@@ -88,7 +87,7 @@ public class DavidSickAuto extends LinearOpMode {
         Action bu3 = b3.build();
         Action park = p1.build();
 
-        //runs when start is pressed
+        hob.servosController.autoSetup();
         waitForStart();
 
         if (isStopRequested()) {
