@@ -2,18 +2,22 @@ package org.firstinspires.ftc.teamcode.robot.Hobbes;
 
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OFFSET;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INFINITY;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_ABOVE_TRANSFER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MAX;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MIN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_SIGMOID_SCALER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_IN;
 import static java.lang.Math.E;
@@ -530,10 +534,10 @@ public class Hobbes extends Meccanum implements Robot {
             claw.setPosition(CLAW_CLOSED);
             extendoLeft.setPosition(EXTENDO_IN);
             extendoRight.setPosition(servosController.extendoLeftToRight(EXTENDO_IN));
-            extendoArm.setPosition(EXTENDO_ARM_TRANSFER);
-            extendoWrist.setPosition(EXTENDO_WRIST_TRANSFER + extendoWristRezeroOffset);
-            slidesArm.setPosition(SLIDES_ARM_ABOVE_TRANSFER);
-            slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
+            extendoArm.setPosition(EXTENDO_ARM_START);
+            extendoWrist.setPosition(EXTENDO_WRIST_START + extendoWristRezeroOffset);
+            slidesArm.setPosition(SLIDES_ARM_START);
+            slidesWrist.setPosition(SLIDES_WRIST_START);
         }
 
         public void autoSetup() {
