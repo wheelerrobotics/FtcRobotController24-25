@@ -48,7 +48,7 @@ public class HobbesConstants {
 
     //transfer
     public static double EXTENDO_ARM_TRANSFER = 0.64 + EXTENDO_ARM_OFFSET;
-    public static double EXTENDO_WRIST_TRANSFER = .66 + EXTENDO_WRIST_OFFSET;
+    public static double EXTENDO_WRIST_TRANSFER = .63 + EXTENDO_WRIST_OFFSET;
     public static double SLIDES_ARM_TRANSFER = .24;
     public static double SLIDES_WRIST_TRANSFER = 0.05;
 

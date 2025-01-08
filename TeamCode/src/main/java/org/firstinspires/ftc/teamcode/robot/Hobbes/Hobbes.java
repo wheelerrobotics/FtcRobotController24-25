@@ -20,6 +20,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_IN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static java.lang.Math.E;
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;
@@ -358,7 +359,7 @@ public class Hobbes extends Meccanum implements Robot {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             bot.tick();
             if (bot.done) {
-                bot.runMacro(FULL_IN);
+                bot.runMacro(START);
                 bot.tick();
                 return false;
             }
@@ -481,8 +482,11 @@ public class Hobbes extends Meccanum implements Robot {
                 servosController.intakeSpeed = m.intakeSpeed;
             if (m.clawPos != null)
                 servosController.clawPos = m.clawPos;
-            if (m.ascentPos != null)
+            if (m.ascentPos != null){
+                if (m.ascentPos == -1) motorAscentController.runToBottom = true;
+                else motorAscentController.runToBottom = false;
                 motorAscentController.setTarget(m.ascentPos);
+            }
             if (m.linkedState != null) {
                 if (m.linkedState.type == Link.LinkType.WAIT) {
                     macroTimer.reset();

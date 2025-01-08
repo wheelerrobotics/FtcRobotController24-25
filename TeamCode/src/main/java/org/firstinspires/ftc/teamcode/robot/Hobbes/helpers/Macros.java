@@ -56,8 +56,8 @@ public class Macros {
     public static HobbesState SLIDES_DEPOSIT3 = new HobbesState(null, null, null,
             SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, null,  null,null);
     public static HobbesState SLIDES_DEPOSIT2 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
-            null, null, null, null, null,  null,new LinkedState(SLIDES_DEPOSIT3, 700));
-    public static HobbesState SLIDES_DEPOSIT = new HobbesState(null, null, null, null, SLIDES_WRIST_HALF, null, null,
+            null, SLIDES_WRIST_HALF, null, null, null,  null,new LinkedState(SLIDES_DEPOSIT3, 700));
+    public static HobbesState SLIDES_DEPOSIT = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null,
             SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT2, 500));
 
     public static HobbesState SLIDES_DEPOSIT_AUTO5 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
@@ -176,14 +176,17 @@ public class Macros {
             null, null, INTAKE_REVERSE, null, null, null,null);
 
     public static HobbesState ASCENT_UP = new HobbesState(null, null, null,
-            null, null, null, null, null, 0,null);
+            null, null, null, null, SLIDES_OUT_TOP_SAMPLE, 5000,null);
     public static HobbesState ASCENT_DOWN = new HobbesState(null, null, null,
-            null, null, null, null, null, 5000,null);
+            null, null, null, null, null, -1,null);
 
-    public static HobbesState START2 = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START ,null
-            ,null ,null ,null ,null ,null, null);
+    public static HobbesState START2 = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START, SLIDES_ARM_TRANSFER
+            ,SLIDES_WRIST_TRANSFER ,null ,null ,null ,null, null);
+
+    public static HobbesState TELE_START = new HobbesState(EXTENDO_IN,EXTENDO_ARM_START+0.2,EXTENDO_WRIST_START ,null
+            ,null ,null ,null ,null ,null, new LinkedState(START2, 300));
     public static HobbesState START = new HobbesState(EXTENDO_IN,EXTENDO_ARM_START+0.2,EXTENDO_WRIST_START ,SLIDES_ARM_START
-            ,SLIDES_WRIST_START ,null ,CLAW_CLOSED ,null ,null, new LinkedState(START2, 500));
+            ,SLIDES_WRIST_START ,null ,CLAW_CLOSED ,null ,null, new LinkedState(START2, 300));
     public static HobbesState BUCKET_PARK = new HobbesState(null,null,null ,null
             ,null ,null ,null ,null ,ASCENT_PARK, null );
 

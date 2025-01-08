@@ -22,6 +22,7 @@ public class HobbesTele extends OpMode {
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
     Hobbes hob = null;
+    boolean ascentUp = false;
 
     @Override
     // runs on init press
@@ -58,11 +59,11 @@ public class HobbesTele extends OpMode {
         // p1: ascent control
         if (gamepad1.dpad_down && !lastGamepad2.dpad_down) {
             hob.slidesController.disabled = !hob.slidesController.disabled;
-
         }
 
         if (gamepad1.dpad_up && !lastGamepad1.dpad_up) {
-            hob.actionMacro(ASCENT);
+            hob.actionMacro(ascentUp ? ASCENT_DOWN : ASCENT_UP);
+            ascentUp = !ascentUp;
         }
 
 

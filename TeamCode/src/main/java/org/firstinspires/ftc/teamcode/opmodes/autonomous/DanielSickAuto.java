@@ -57,7 +57,7 @@ public class DanielSickAuto extends LinearOpMode {
                         .splineToConstantHeading(new Vector2d(-3.5, 33), 0, null, new ProfileAccelConstraint(-10, 10));
                 TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
-                        .splineToSplineHeading(new Pose2d(-29.5, -1, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-30.5, -1, 0 - 0.0004), PI);
 
                 // wall specimen 2
                 TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
@@ -66,7 +66,7 @@ public class DanielSickAuto extends LinearOpMode {
                         .splineToSplineHeading(new Pose2d(-3.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
                 TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-15, -9, 0 - 0.0002), PI)
-                        .splineToSplineHeading(new Pose2d(-29.5, -9, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-30.5, -9, 0 - 0.0004), PI);
 
                 // wall specimen 3
                 TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
@@ -75,7 +75,7 @@ public class DanielSickAuto extends LinearOpMode {
                         .splineToSplineHeading(new Pose2d(-3.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
                 TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-15, -12, 0 - 0.0003), PI)
-                        .splineToSplineHeading(new Pose2d(-30, -12, 0 - 0.0004), PI);
+                        .splineToSplineHeading(new Pose2d(-30.5, -12, 0 - 0.0004), PI);
 
                 // park
                 TrajectoryActionBuilder a12 = a9.endTrajectory().fresh().setTangent(0)
