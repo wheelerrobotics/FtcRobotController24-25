@@ -170,9 +170,9 @@ public class Hobbes extends Meccanum implements Robot {
         public double strafeTarget = 0;
         public double strafeErrorThresh = 0;
         public double strafeDerivativeThresh = 0;
-        public double strafeP = 0;
+        public double strafeP = -2;
         public double strafeI = 0;
-        public double strafeD = 0;
+        public double strafeD = -0.1;
 
         public double forwardTarget = 0;
         public double forwardErrorThresh = 0;
@@ -265,7 +265,7 @@ public class Hobbes extends Meccanum implements Robot {
 
 
             rotationPower = specimenRotationPID.tick(abs(drive.pose.heading.toDouble())); // doesnt depend on knowing where a specimen is
-            forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.y); // doesnt depend on knowing where a specimen is
+            forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.x); // doesnt depend on knowing where a specimen is
 
             if (correctionOn) {
                 LLResult result = limelight.getLatestResult();
@@ -291,6 +291,9 @@ public class Hobbes extends Meccanum implements Robot {
                 forwardPower = 0;
                 tele.addData("SPECIMENV_strafe", "not on");
             }
+            tele.addData("SPECIMEND_strafe", specimenStrafePID.isFinished());
+            tele.addData("SPECIMEND_forward", specimenForwardNonDetectionPID.isFinished());
+            tele.addData("SPECIMEND_rotation", specimenRotationPID.isFinished());
             tele.update();
         }
     }
