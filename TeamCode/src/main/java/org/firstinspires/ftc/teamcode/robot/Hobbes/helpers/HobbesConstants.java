@@ -136,5 +136,6 @@ public class HobbesConstants {
     public static int INFINITY = 2000000000;
     public static double EXTENDO_OFFSET = 1;
     public static int ASCENT_PARK = 1500;
+    public static  int ASCENT_UP_ALL = 3000;
 
 }

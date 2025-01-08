@@ -61,6 +61,10 @@ public class HobbesTele extends OpMode {
 
         }
 
+        if (gamepad1.dpad_up && !lastGamepad1.dpad_up) {
+            hob.actionMacro(ASCENT);
+        }
+
 
         // p2: slides motion
         if (gamepad2.right_stick_y != 0 && !gamepad2.dpad_left) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
