@@ -29,7 +29,7 @@ public class HobbesConstants {
      * 13, misc
      *
      */
-    public static double EXTENDO_ARM_OFFSET = -.18;
+    public static double EXTENDO_ARM_OFFSET = 0;
 
 
 
@@ -71,7 +71,7 @@ public class HobbesConstants {
     public static double EXTENDO_IN = 0.18;
     public static double EXTENDO_OUT_FULL = 0.58;
     public static double EXTENDO_OUT_SOME = 0.3;
-    public static double EXTENDO_SPEED = .1;
+    public static double EXTENDO_SPEED = .02;
 
 
 
