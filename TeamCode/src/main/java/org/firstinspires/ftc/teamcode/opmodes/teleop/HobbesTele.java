@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-@TeleOp(name = "1HobbesTele")
+@TeleOp(name = "(RUN THIS) - Tele Op")
 public class HobbesTele extends OpMode {
 
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();

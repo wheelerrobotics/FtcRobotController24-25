@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.vision;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @TeleOp
 @Config
+@Disabled
 public class CameraAlgorithm extends LinearOpMode {
     public static int exposure = 10;
     public static int gain = 10;
