@@ -7,14 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.LinkedState;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
-import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 @TeleOp(name = "(RUN THIS) - Tele Op")
 public class HobbesTele extends OpMode {
@@ -24,7 +20,7 @@ public class HobbesTele extends OpMode {
     Hobbes hob = null;
     boolean ascentUp = false;
 
-    @Override
+@Override
     // runs on init press
     public void init() {
         // define and init robot
@@ -57,20 +53,30 @@ public class HobbesTele extends OpMode {
         else hob.servosController.spintake(INTAKE_OFF);
 
         // p1: ascent control
-        if (gamepad1.dpad_down && !lastGamepad2.dpad_down) {
-            hob.slidesController.disabled = !hob.slidesController.disabled;
+        //if (gamepad1.dpad_down && !lastGamepad1.dpad_down) hob.slidesController.disabled = (hob.slidesController.disabled == 0) ? 1 : (hob.slidesController.disabled == 1 ? 2 : 0);
+
+        //hob.slidesController.runToBottom = gamepad1.dpad_down; // this line breaks like everything >:(
+
+        if (gamepad1.dpad_left && !lastGamepad1.dpad_left) hob.runMacro(ASCENT_SLIDES_UP);
+        if (gamepad1.x) {
+            //hob.slidesController.driveSlides(-1);
+            hob.motorAscentController.runToBottomAscent = false;
+            hob.motorAscentController.setTarget(-1960);
+            hob.motorAscentController.setTargeting(true);
+        }else if (gamepad1.y) {
+            hob.slidesController.driveSlides(-0.4);
+            hob.motorAscentController.runToBottomAscent = true;
+        }else {
+            hob.motorAscentController.runToBottomAscent = false;
+            hob.motorAscentController.setTargeting(false);
+            hob.motorAscentController.driveSlides(0);
         }
 
-        if (gamepad1.dpad_up && !lastGamepad1.dpad_up) {
-            hob.actionMacro(ascentUp ? ASCENT_DOWN : ASCENT_UP);
-            ascentUp = !ascentUp;
-        }
+
 
 
         // p2: slides motion
-        if (gamepad2.right_stick_y != 0 && !gamepad2.dpad_left) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
-        else if (gamepad2.dpad_left) hob.motorAscentController.driveSlides(gamepad2.right_stick_y);
-
+        if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
         // p2: extendo motion
         hob.servosController.incrementExtendo(-gamepad2.left_stick_y * EXTENDO_SPEED);
 
@@ -136,12 +142,6 @@ public class HobbesTele extends OpMode {
         // keep last gamepad in because its useful for simple button presses
         lastGamepad1.copy(gamepad1);
         lastGamepad2.copy(gamepad2);
-    }
-
-    @Override
-    // runs on stop press or automatic stop
-    public void stop() {
-
     }
 
 }

@@ -33,10 +33,10 @@ public class Macros {
             null,new LinkedState(TRANSFER_CLOSED, 250));
     public static HobbesState TRANSFER_WRIST_UP = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER,
             EXTENDO_WRIST_TRANSFER, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_OPEN, SLIDES_IN,
-            null,new LinkedState(TRANSFER_ON, 200));
+            null,new LinkedState(TRANSFER_ON, 700));
     public static HobbesState FULL_TRANSFER = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_UP,
             SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_OFF, CLAW_OPEN, SLIDES_IN,
-            null,new LinkedState(TRANSFER_WRIST_UP, 600));
+            null,new LinkedState(TRANSFER_WRIST_UP, 400));
 
     public static HobbesState EXTENDO_PICKING_UP2 = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER,
             EXTENDO_WRIST_TRANSFER, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, INTAKE_POWER, CLAW_OPEN,
@@ -175,10 +175,12 @@ public class Macros {
     public static HobbesState OUTTAKE = new HobbesState(null, EXTENDO_ARM_OUTAKE, EXTENDO_WRIST_OUTAKE,
             null, null, INTAKE_REVERSE, null, null, null,null);
 
+    public static HobbesState ASCENT_SLIDES_UP = new HobbesState(null, null, null,
+            SLIDES_ARM_TRANSFER, SLIDES_WRIST_TRANSFER, null, null, SLIDES_OUT_TOP_SAMPLE, ASCENT_MAX,null);
     public static HobbesState ASCENT_UP = new HobbesState(null, null, null,
-            null, null, null, null, SLIDES_OUT_TOP_SAMPLE, 5000,null);
+            null, null, null, null, SLIDES_OUT_TOP_SAMPLE, ASCENT_MAX,null);
     public static HobbesState ASCENT_DOWN = new HobbesState(null, null, null,
-            null, null, null, null, null, -1,null);
+            null, null, null, null, null, ASCENT_MIN,null);
 
     public static HobbesState START2 = new HobbesState(null,EXTENDO_ARM_START,EXTENDO_WRIST_START, SLIDES_ARM_TRANSFER
             ,SLIDES_WRIST_TRANSFER ,null ,null ,null ,null, null);

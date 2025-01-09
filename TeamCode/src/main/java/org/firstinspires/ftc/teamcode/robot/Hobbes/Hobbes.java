@@ -12,14 +12,12 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_ABOVE_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_START;
-import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MAX;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MIN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_SIGMOID_SCALER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
-import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static java.lang.Math.E;
 import static java.lang.Math.PI;
@@ -53,7 +51,6 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Link;
@@ -482,11 +479,8 @@ public class Hobbes extends Meccanum implements Robot {
                 servosController.intakeSpeed = m.intakeSpeed;
             if (m.clawPos != null)
                 servosController.clawPos = m.clawPos;
-            if (m.ascentPos != null){
-                if (m.ascentPos == -1) motorAscentController.runToBottom = true;
-                else motorAscentController.runToBottom = false;
-                motorAscentController.setTarget(m.ascentPos);
-            }
+            if (m.ascentPos != null) motorAscentController.setTarget(m.ascentPos);
+
             if (m.linkedState != null) {
                 if (m.linkedState.type == Link.LinkType.WAIT) {
                     macroTimer.reset();
@@ -506,12 +500,12 @@ public class Hobbes extends Meccanum implements Robot {
         drive.updatePoseEstimate(); // update localizer
         failsafeCheck(); // empty
         tickMacros(); // check macros
+        motorAscentController.ascentTick();
         slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update();
         specimenCorrector.specimenTick(); // run specimen corrector
-        motorAscentController.ascentTick();
 
     }
 
@@ -634,7 +628,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         // public double slideTar = 0;
         public PID slidePID;
-        public boolean disabled = false;
+        public int disabled = 2;
 
         // public double maxHeight = 1000;
         // public double minHeight = 0;
@@ -655,9 +649,13 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void slidesTick() {
-            if (disabled) {
+            if (disabled == 0) {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 slides.setPower(0);
+                return;
+            } else if (disabled == 1) {
+                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slides.setPower(0.2);
                 return;
             } else if (slides.getZeroPowerBehavior() != DcMotor.ZeroPowerBehavior.BRAKE) {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -690,7 +688,7 @@ public class Hobbes extends Meccanum implements Robot {
             if (!runToBottom)
                 slides.setPower(minMaxScaler(pos, power));
             else
-                slides.setPower(0.4);
+                slides.setPower(0.3);
         }
 
         // REWRITE EVENTUALLY AND CLEAN UP PLEASE
@@ -734,17 +732,17 @@ public class Hobbes extends Meccanum implements Robot {
 
     }
 
-    public static double ASCENT_KP = 0.2;
+    public static double ASCENT_KP = 0.01;
     public class MotorAscentController {
-        public double slideTar = 0;
-        public boolean runToBottom = false;
+        public double ascentTar = 0;
+        public boolean runToBottomAscent = false;
         public boolean SLIDE_TARGETING = false;
         public double basePosR = 0;
         public double posR = 0;
         public double basePosL = 0;
         public double posL = 0;
         public double errorThreshold = 20;
-        public double derivativeThreshold = 1;
+        public double derivativeThreshold = 10;
 
         public double powerL = 0;
         public double powerR = 0;
@@ -758,12 +756,6 @@ public class Hobbes extends Meccanum implements Robot {
 
         // public double differenceScalar = 0.0001;
         // public double scaler = 50;
-        Telemetry tele = FtcDashboard.getInstance().getTelemetry();
-
-        public void setTele(Telemetry t) {
-            tele = t;
-        }
-
         public void start() {
             basePosL = ascentLeft.getCurrentPosition();
             basePosR = ascentRight.getCurrentPosition();
@@ -772,15 +764,13 @@ public class Hobbes extends Meccanum implements Robot {
             slidePIDR = new PID(ASCENT_KP, 0, 0, false);
             slidePIDL = new PID(ASCENT_KP, 0, 0, false);
 
-            tele = FtcDashboard.getInstance().getTelemetry();
         }
 
         public void ascentTick() {
-
             slidePIDL.setConsts(ASCENT_KP, 0, 0);
             slidePIDR.setConsts(ASCENT_KP, 0, 0);
-            slidePIDR.setTarget(slideTar);
-            slidePIDL.setTarget(slideTar);
+            slidePIDR.setTarget(ascentTar);
+            slidePIDL.setTarget(ascentTar);
             posL = -(ascentLeft.getCurrentPosition() - basePosL);
             posR = -(ascentRight.getCurrentPosition() - basePosR);
 
@@ -792,20 +782,20 @@ public class Hobbes extends Meccanum implements Robot {
 
             if (posL < SLIDES_MIN - 100 && powerL < 0) {
                 SLIDE_TARGETING = true;
-                slideTar = SLIDES_MIN - 100;
+                ascentTar = SLIDES_MIN - 100;
             }
             if (posL > SLIDES_MAX && powerL > 0) {
                 SLIDE_TARGETING = true;
-                slideTar = SLIDES_MAX;
+                ascentTar = SLIDES_MAX;
             }
 
             if (posR < SLIDES_MIN - 100 && powerR < 0) {
                 SLIDE_TARGETING = true;
-                slideTar = SLIDES_MIN - 100;
+                ascentTar = SLIDES_MIN - 100;
             }
             if (posR > SLIDES_MAX && powerR > 0) {
                 SLIDE_TARGETING = true;
-                slideTar = SLIDES_MAX;
+                ascentTar = SLIDES_MAX;
             }
 
             if (SLIDE_TARGETING) {
@@ -814,10 +804,10 @@ public class Hobbes extends Meccanum implements Robot {
                 powerL = -slidePIDL.tick(posL);
                 tele.addData("pidpowerR", powerL);
             }
+            tele.addData("ASC_TAR", ascentTar);
+            tele.addData("TARING", SLIDE_TARGETING);
 
-            tele.update();
-
-            if (!runToBottom) {
+            if (!runToBottomAscent) {
                 ascentRight.setPower(powerR);
                 ascentLeft.setPower(powerL);
             }else{
@@ -843,7 +833,7 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void setTarget(double tar) {
-            slideTar = tar;
+            ascentTar = tar;
             SLIDE_TARGETING = true;
         }
 
@@ -858,7 +848,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         public boolean isBusy() {
 
-            return slidePIDL.getDerivative() < derivativeThreshold && abs(posL - slideTar) < errorThreshold;
+            return slidePIDL.getDerivative() < derivativeThreshold && abs(posL - ascentTar) < errorThreshold;
             // could get proportion (^) from pid but dont want to
         }
 
