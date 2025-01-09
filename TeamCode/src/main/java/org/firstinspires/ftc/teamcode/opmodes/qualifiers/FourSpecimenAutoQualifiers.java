@@ -35,7 +35,7 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
 
         //to deposit first specimen
         TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0)).setTangent(PI)
-                .splineTo(new Vector2d(-26.6, -5), PI);
+                .splineTo(new Vector2d(-25.6, -5), PI);
 
         //first sweep
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
@@ -152,8 +152,8 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
                                         hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)),
 
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
-                                t12, //park
-                                hob.actionMacro(START),
+                                new ParallelAction(t12, //park
+                                hob.actionMacroTimeout(SPEC_AUTO_PARK, 400)),
                                 hob.finishAction()),
                         hob.actionTick()));
     }

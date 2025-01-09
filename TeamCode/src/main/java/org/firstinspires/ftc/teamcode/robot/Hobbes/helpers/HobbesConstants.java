@@ -39,7 +39,8 @@ public class HobbesConstants {
     public static int SLIDES_MAX = 3100; //top of slides
     public static int SLIDES_MIN = 0; //bottom of slides
     public static int SLIDES_OUT_TOP_SAMPLE = 2900; //bucket deposit
-    public static double SLIDES_SIGMOID_SCALER = 0.008; // (DONEISH)
+
+    public static double SLIDES_SIGMOID_SCALER = 0.01; // (DONEISH)
     public static double SLIDES_KP = 0.008;
     public static int SLIDES_IN = 0; //used to put slides all the way down
 
@@ -123,11 +124,12 @@ public class HobbesConstants {
 
     //specimen deposit
     public static int SLIDES_SPECIMEN_TO_DEPOSIT = 1150;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT_TELEOP = 1230;
     public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64; // done
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.79; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 200;
     public static int SLIDES_SPECIMEN_TO_DEPOSITED = 1150;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 1100;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 1050;
 
 
 
