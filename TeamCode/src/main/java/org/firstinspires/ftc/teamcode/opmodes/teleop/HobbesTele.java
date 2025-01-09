@@ -19,6 +19,7 @@ public class HobbesTele extends OpMode {
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
     Hobbes hob = null;
     boolean ascentUp = false;
+    boolean weRed = true;
 
 @Override
     // runs on init press
@@ -26,8 +27,10 @@ public class HobbesTele extends OpMode {
         // define and init robot
         hob = new Hobbes();
         hob.init(hardwareMap);
+        hob.specimenCorrector.setCorrectionOn(true);
 
-    }
+
+}
 
     @Override
     // runs on start press
@@ -44,8 +47,16 @@ public class HobbesTele extends OpMode {
         if (gamepad2.start || gamepad1.start) return;
         // p1: motion
         if (!gamepad1.right_bumper && !gamepad1.left_bumper) hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
+        else if (gamepad1.left_bumper && gamepad1.right_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -0.3 * gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
         else if (gamepad1.right_bumper) hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
         else if (gamepad1.left_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
+
+        if (gamepad1.back) {
+            hob.slidesController.resetSlideBasePos();
+            //weRed = !weRed;
+            //hob.specimenCorrector.switchPipe(weRed ? 3 : 4);
+
+        }
 
         // p1: intake
         if (gamepad1.a) hob.servosController.spintake(INTAKE_POWER);
@@ -59,26 +70,31 @@ public class HobbesTele extends OpMode {
 
         //hob.slidesController.runToBottom = gamepad1.dpad_down; // this line breaks like everything >:(
 
-        if (gamepad1.dpad_left && !lastGamepad1.dpad_left) hob.runMacro(ASCENT_SLIDES_UP);
-        if (gamepad1.x) {
+        if (gamepad2.right_trigger == 1 && lastGamepad2.right_trigger != 1) hob.runMacro(ASCENT_SLIDES_UP);
+        if (gamepad2.right_trigger == 1) {
             //hob.slidesController.driveSlides(-1);
             hob.motorAscentController.runToBottomAscent = false;
             hob.motorAscentController.setTarget(-1960);
             hob.motorAscentController.setTargeting(true);
-        }else if (gamepad1.y) {
+        }
+        if (gamepad1.y) {
+            hob.slidesController.runToBottom = true;
             hob.slidesController.driveSlides(-0.4);
             hob.motorAscentController.runToBottomAscent = true;
-        }else {
-            hob.motorAscentController.runToBottomAscent = false;
-            hob.motorAscentController.setTargeting(false);
-            hob.motorAscentController.driveSlides(0);
+        }else if (!gamepad1.y && lastGamepad1.y){
+            hob.slidesController.runToBottom = false;
         }
+            //hob.motorAscentController.runToBottomAscent = false;
+            //hob.motorAscentController.setTargeting(false);
+            //hob.motorAscentController.driveSlides(0);
+        //}
 
 
 
 
         // p2: slides motion
         if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
+        if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0) hob.slidesController.driveSlides(0);
         // p2: extendo motion
         hob.servosController.incrementExtendo(-gamepad2.left_stick_y * EXTENDO_SPEED);
 

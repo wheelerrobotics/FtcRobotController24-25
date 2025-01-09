@@ -91,6 +91,7 @@ public class Hobbes extends Meccanum implements Robot {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         tele.setMsTransmissionInterval(11);
         limelight.pipelineSwitch(3);
+        limelight.start();
         specimenCorrector = new SpecimenCorrector(drive);
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -196,7 +197,7 @@ public class Hobbes extends Meccanum implements Robot {
         PID specimenForwardNonDetectionPID = new PID(0, 0, 0); // TODO: defo not right vals
         // ^^ is a duplicate of forward PID but uses the RR localizer instead of limelight
         PID specimenRotationPID = new PID(0.5, 0, 0); // TODO: defo not right vals
-        boolean correctionOn = false;
+        boolean correctionOn = true;
         double angle = 0;
         double forwardDistance = 0;
         double rotationPower = 0;
@@ -227,6 +228,9 @@ public class Hobbes extends Meccanum implements Robot {
         // I would say teleop could use rotation power, but im not sure how to make sure the bot knows which way the wall is after auto ends and we lost the ref point of the auto start
         public double getStrafePower() {
             return strafePower;
+        }
+        public void switchPipe(int pipelineNumber) {
+            limelight.pipelineSwitch(pipelineNumber);
         }
         public double getForwardPower() {
             return forwardPower;
@@ -660,6 +664,7 @@ public class Hobbes extends Meccanum implements Robot {
             } else if (slides.getZeroPowerBehavior() != DcMotor.ZeroPowerBehavior.BRAKE) {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
+            if (!SLIDE_TARGETING)
             slidePID.setConsts(SLIDES_KP, 0, 0);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
@@ -694,8 +699,8 @@ public class Hobbes extends Meccanum implements Robot {
         // REWRITE EVENTUALLY AND CLEAN UP PLEASE
         private double minMaxScaler(double x, double power) {
             double p = power * (power > 0
-                    ? ((1.3 * 1 / (1 + pow(E, -SLIDES_SIGMOID_SCALER * (x - 300 + SLIDES_MIN)))) - 0.1)
-                    : ((1.3 * 1 / (1 + pow(E, SLIDES_SIGMOID_SCALER * (x + 300 - SLIDES_MAX)))) - 0.1));
+                    ? ((1.3 * 1 / (1 + pow(E, -SLIDES_SIGMOID_SCALER * (x - 100 + SLIDES_MIN)))) - 0.1)
+                    : ((1.3 * 1 / (1 + pow(E, SLIDES_SIGMOID_SCALER * (x + 100 - SLIDES_MAX)))) - 0.1));
             // uuuuuh
             return p;
         }
