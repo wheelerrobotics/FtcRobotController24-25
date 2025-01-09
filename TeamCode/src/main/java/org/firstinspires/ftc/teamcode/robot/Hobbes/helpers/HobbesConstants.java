@@ -115,7 +115,7 @@ public class HobbesConstants {
 
     //specimen pickup
     public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
-    public static int SLIDES_SPECIMEN_PICKED_UP = 100;
+    public static int SLIDES_SPECIMEN_PICKED_UP = 300;
     public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.92;
     public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.8;
 
