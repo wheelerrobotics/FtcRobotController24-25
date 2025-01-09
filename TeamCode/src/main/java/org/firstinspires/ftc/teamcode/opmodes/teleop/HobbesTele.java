@@ -43,7 +43,8 @@ public class HobbesTele extends OpMode {
         if (gamepad2.start || gamepad1.start) return;
         // p1: motion
         if (!gamepad1.right_bumper && !gamepad1.left_bumper) hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
-        else hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
+        else if (gamepad1.right_bumper) hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
+        else if (gamepad1.left_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         // p1: intake
         if (gamepad1.a) hob.servosController.spintake(INTAKE_POWER);
