@@ -85,7 +85,7 @@ public class HobbesConstants {
 
 
     // extendo arm
-    public static double EXTENDO_ARM_UP = .3 + EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_ARM_UP = .37 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_PUSH_UP = .4+ EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_PUSH_DOWN = .19+ EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_OUTAKE = .5 + EXTENDO_ARM_OFFSET;
@@ -127,7 +127,7 @@ public class HobbesConstants {
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.79; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 120;
     public static int SLIDES_SPECIMEN_TO_DEPOSITED = 450;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 450;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 400;
 
 
 
@@ -141,7 +141,7 @@ public class HobbesConstants {
     // misc
     public static int INFINITY = 2000000000;
     public static double EXTENDO_OFFSET = 1;
-    public static int ASCENT_PARK = 1500;
-    public static  int ASCENT_UP_ALL = 3000;
+    public static int ASCENT_PARK = -1500;
+    public static  int ASCENT_UP_ALL = -1960;
 
 }

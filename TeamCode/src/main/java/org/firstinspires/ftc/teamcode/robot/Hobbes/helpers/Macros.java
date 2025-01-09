@@ -67,9 +67,9 @@ public class Macros {
     public static HobbesState SLIDES_DEPOSIT_AUTO3 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
             SLIDES_ARM_DEPOSIT, SLIDES_WRIST_DEPOSIT, null, null, SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO4, 1500));
     public static HobbesState SLIDES_DEPOSIT_AUTO2 = new HobbesState(null, null, EXTENDO_WRIST_INTAKE_FLAT,
-            null, null, null, null, SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO3, 750));
-    public static HobbesState SLIDES_DEPOSIT_AUTO = new HobbesState(null, null, null, null, SLIDES_WRIST_HALF, null, null,
-            null,  null,new LinkedState(SLIDES_DEPOSIT_AUTO2, 500));
+            null, SLIDES_WRIST_HALF, null, null, SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO3, 1500));
+    public static HobbesState SLIDES_DEPOSIT_AUTO = new HobbesState(null, null, null, null, null, null, null,
+            SLIDES_OUT_TOP_SAMPLE,  null,new LinkedState(SLIDES_DEPOSIT_AUTO2, 750));
 
     public static HobbesState OPEN_CLAW = new HobbesState(null, null, null, null, null, null, CLAW_OPEN, null,  null,null);
 

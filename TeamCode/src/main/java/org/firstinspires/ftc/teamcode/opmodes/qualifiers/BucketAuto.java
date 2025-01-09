@@ -36,7 +36,7 @@ public class BucketAuto extends LinearOpMode {
         //spline for specimen
         TrajectoryActionBuilder spec = drive.actionBuilder(new Pose2d(0, 0, 0))
                 .setTangent(PI)
-                .splineTo(new Vector2d(-27.6, 2), PI);
+                .splineTo(new Vector2d(-26.6, 2), PI);
 
 
         //Splines for first spike mark and first bucket
@@ -87,7 +87,7 @@ public class BucketAuto extends LinearOpMode {
         Action bu3 = b3.build();
         Action park = p1.build();
 
-        hob.servosController.autoSetup();
+        //hob.servosController.autoSetup();
         waitForStart();
 
         if (isStopRequested()) {
@@ -107,18 +107,20 @@ public class BucketAuto extends LinearOpMode {
                                 hob.actionWait(400),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
-                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
                                 sa1, //move to first spike mark
+                                hob.actionWait(100),
+                                hob.actionMacro(EXTENDO_BEFORE_PICKUP),
+
 
                                 hob.actionWait(200),
                                 hob.actionMacro(EXTENDO_PICKING_UP),
-                                hob.actionWait(2000),
+                                hob.actionWait(2700),
                                 hob.actionMacro(CLOSE_CLAW),
                                 hob.actionWait(200),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
                                 bu1, //move to bucket for first time
 
-                                hob.actionWait(1500),
+                                hob.actionWait(2500),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
                                 hob.actionMacro(EXTENDO_BEFORE_PICKUP),
@@ -126,13 +128,13 @@ public class BucketAuto extends LinearOpMode {
 
                                 hob.actionWait(200),
                                 hob.actionMacro(EXTENDO_PICKING_UP),
-                                hob.actionWait(2000),
+                                hob.actionWait(2700),
                                 hob.actionMacro(CLOSE_CLAW),
                                 hob.actionWait(200),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
                                 bu2, //move to bucket for second time
 
-                                hob.actionWait(1500),
+                                hob.actionWait(2500),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
                                 hob.actionMacro(EXTENDO_BEFORE_PICKUP),
@@ -140,13 +142,13 @@ public class BucketAuto extends LinearOpMode {
 
                                 hob.actionWait(200),
                                 hob.actionMacro(EXTENDO_PICKING_UP),
-                                hob.actionWait(2000),
+                                hob.actionWait(2700),
                                 hob.actionMacro(CLOSE_CLAW),
                                 hob.actionWait(200),
                                 hob.actionMacro(SLIDES_DEPOSIT_AUTO),
                                 bu3, // move to bucket for third time
 
-                                hob.actionWait(1500),
+                                hob.actionWait(2500),
                                 hob.actionMacro(SLIDES_DOWN),
                                 hob.actionWait(100),
 

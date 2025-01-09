@@ -86,7 +86,7 @@ public class ThreeSpecimenAutoQualifiers extends LinearOpMode {
 
         Action t12 = a12.build();
 
-        hob.servosController.autoSetup();
+        //hob.servosController.autoSetup();
         waitForStart();
 
         Actions.runBlocking(
