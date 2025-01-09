@@ -35,7 +35,7 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_OFFSET = 0.02;
 
 
-
+    //slides
     public static int SLIDES_MAX = 1170; //top of slides
     public static int SLIDES_MIN = 0; //bottom of slides
     public static int SLIDES_OUT_TOP_SAMPLE = 1100; //bucket deposit
@@ -44,6 +44,12 @@ public class HobbesConstants {
     public static int SLIDES_IN = 0; //used to put slides all the way down
 
 
+
+    //ascent
+    public static int ASCENT_MAX = -1960; //top of slides
+    public static double ASCENT_ASCENDED = 1000;
+    public static int ASCENT_MIN = 0; //bottom of slides
+    public static double ASCENT_KP = 0.01;
 
 
     //transfer
@@ -116,12 +122,12 @@ public class HobbesConstants {
 
 
     //specimen deposit
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 420;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 450;
     public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64; // done
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.79; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 120;
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 420;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 420;
+    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 450;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 400;
 
 
 
@@ -135,7 +141,7 @@ public class HobbesConstants {
     // misc
     public static int INFINITY = 2000000000;
     public static double EXTENDO_OFFSET = 1;
-    public static int ASCENT_PARK = 1500;
-    public static  int ASCENT_UP_ALL = 3000;
+    public static int ASCENT_PARK = -1500;
+    public static  int ASCENT_UP_ALL = -1960;
 
 }

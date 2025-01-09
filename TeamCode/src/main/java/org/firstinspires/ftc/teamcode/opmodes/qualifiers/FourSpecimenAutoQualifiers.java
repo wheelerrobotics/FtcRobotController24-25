@@ -94,7 +94,7 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
         Action t9 = a9.build();
         Action t12 = a12.build();
 
-        hob.servosController.setup();
+        //hob.servosController.autoSetup();
         waitForStart();
 
         Actions.runBlocking(

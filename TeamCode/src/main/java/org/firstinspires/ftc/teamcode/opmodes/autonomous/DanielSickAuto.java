@@ -95,7 +95,7 @@ public class DanielSickAuto extends LinearOpMode {
                 Action t9 = a9.build();
                 Action t12 = a12.build();
 
-                // hob.servosController.setup();
+                hob.servosController.setup();
 
                 waitForStart();
 

@@ -15,12 +15,13 @@ public class HobbesZeroer extends OpMode {
 
     Hobbes hob = null;
     public static double extendo, extendoArm, extendoWrist, slidesArm, slidesWrist, intake, clawPos;
-    public static int slides;
+    public static int slides, ascent;
     public static boolean extendoON = false;
     public static boolean extendoArmWristON = false;
     public static boolean slidesArmWristON = false;
     public static boolean intakeON = false;
     public static boolean slidesON = false;
+    public static boolean ascentOn = false;
     public static boolean clawON = false;
     Telemetry tele;
 
@@ -35,6 +36,8 @@ public class HobbesZeroer extends OpMode {
     public void loop() {
         if (extendoON)
             hob.servosController.setExtendo(extendo);
+        if (ascentOn)
+            hob.motorAscentController.setTarget(ascent);
         if (extendoArmWristON)
             hob.servosController.setExtendoArmWrist(extendoArm, extendoWrist);
         if (slidesArmWristON)
