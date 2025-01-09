@@ -32,8 +32,9 @@ public class HobbesTele extends OpMode {
     @Override
     // runs on start press
     public void start() {
+        hob.runMacro(SPEC_AUTO_PARK);
         // run everything to start positions
-        hob.servosController.setup();
+        // hob.servosController.setup();
     }
 
     @Override
