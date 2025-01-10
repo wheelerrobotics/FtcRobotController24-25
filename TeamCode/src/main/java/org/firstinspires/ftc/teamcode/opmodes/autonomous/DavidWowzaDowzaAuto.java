@@ -47,6 +47,7 @@ public class DavidWowzaDowzaAuto extends LinearOpMode {
                 // second sweep
                 .splineToLinearHeading(new Pose2d(-28, 32, PI*6/8),
                         PI * 3 / 4)
+                .waitSeconds(1)
                // .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_DOWN))
                 .splineToSplineHeading(new Pose2d(-15, 31, 6*PI/16),
                         0, null, null)
@@ -127,7 +128,7 @@ public class DavidWowzaDowzaAuto extends LinearOpMode {
                                 spec1, //Move to deposit specimen
 
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET), // place preload specimen
-                                hob.actionWait(500), // run to before sweepage
+                                hob.actionWait(200), // run to before sweepage
                                 new ParallelAction(
                                         hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 200),
                                         sweeps), // move to before first sweep

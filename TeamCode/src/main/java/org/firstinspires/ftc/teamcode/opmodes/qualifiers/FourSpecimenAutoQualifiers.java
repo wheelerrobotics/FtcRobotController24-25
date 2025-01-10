@@ -41,19 +41,19 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
                 .splineTo(new Vector2d(-23, 24), PI * 3 / 4);
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 25, 4*PI/16), 0, null, new ProfileAccelConstraint(-10, 10));
+                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 25, 4*PI/16), 0, null, new ProfileAccelConstraint(-60, 10));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToLinearHeading(new Pose2d(-28, 32, PI*3/4), PI * 3 / 4);
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 31, 4*PI/16), 0, null, new ProfileAccelConstraint(-10, 10));
+                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 31, 4*PI/16), 0, null, new ProfileAccelConstraint(-60, 10));
 
         // wall specimen 1
         TrajectoryActionBuilder a4 = s3.endTrajectory().fresh().setTangent(0)
-                .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10))
-                .splineToConstantHeading(new Vector2d(-6.5, 33), 0, null, new ProfileAccelConstraint(-10, 10));
+                .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, new ProfileAccelConstraint(-20, 20))
+                .splineToConstantHeading(new Vector2d(-6.5, 33), 0, null, new ProfileAccelConstraint(-3.5, 3.5));
         TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -1, 0 - 0.0004), PI);
@@ -61,8 +61,8 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
         // wall specimen 2
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
-                .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-7.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
+                .splineToConstantHeading(new Vector2d(-13, 32.5), 0)
+                .splineToSplineHeading(new Pose2d(-6.5, 33, PI), 0, null, new ProfileAccelConstraint(-3.5, 3.5));
         TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -9, 0 - 0.0002), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -9, 0 - 0.0004), PI);
@@ -70,8 +70,8 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
         // wall specimen 3
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
-                .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-7.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
+                .splineToConstantHeading(new Vector2d(-13, 32.5), 0)
+                .splineToSplineHeading(new Pose2d(-6.5, 33, PI), 0, null, new ProfileAccelConstraint(-3.5, 3.5));
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -12, 0 - 0.0003), PI)
                 .splineToSplineHeading(new Pose2d(-30, -12, 0 - 0.0004), PI);
@@ -106,20 +106,20 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
                                 t1, //Move to deposit specimen
 
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET), // place preload specimen
-                                hob.actionWait(500), // run to before sweepage
+                                hob.actionWait(300), // run to before sweepage
                                 new ParallelAction(
                                         hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 200),
                                         t2), // move to before first sweep
 
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                hob.actionWait(500),
+                                hob.actionWait(100),
                                 t3, // first sweep
 
                                 hob.actionMacro(SAMPLE_SWEEP_UP),
                                 st2, // move to second sweep
 
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                hob.actionWait(500),
+                                hob.actionWait(100),
                                 st3,// second sweep
 
                                 hob.actionMacro(EXTENDO_FULL_IN),

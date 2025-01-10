@@ -143,17 +143,17 @@ public class Macros {
 
 
     public static HobbesState STUPID_SPECIMEN_DEPOSIT2 = new HobbesState(null, null, null, null, null, null, CLAW_OPEN, null,
-            null,new LinkedState(SPECIMEN_BEFORE_PICKUP, 100));
+            null,new LinkedState(SPECIMEN_BEFORE_PICKUP, 700));
     public static HobbesState STUPID_SPECIMEN_DEPOSIT_AND_RESET = new HobbesState(null, null, null,
             SLIDES_ARM_SPECIMEN_TO_DEPOSIT, SLIDES_WRIST_SPECIMEN_TO_DEPOSIT, null, CLAW_CLOSED,
-            SLIDES_SPECIMEN_DEPOSITED,  null,new LinkedState(STUPID_SPECIMEN_DEPOSIT2, 200));
+            SLIDES_SPECIMEN_DEPOSITED,  null,new LinkedState(STUPID_SPECIMEN_DEPOSIT2, 400));
 
 
 
     public static HobbesState SAMPLE_SWEEP_DOWN = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_PUSH_DOWN,
-            EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null,  null,null);
+            EXTENDO_WRIST_INTAKE_FLAT, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, null, null, null,  null,null);
     public static HobbesState SAMPLE_SWEEP_UP = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_PUSH_UP,
-            EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, null,  null,null);
+            EXTENDO_WRIST_INTAKE_FLAT, SLIDES_ARM_ABOVE_TRANSFER, SLIDES_WRIST_TRANSFER, null, null, null,  null,null);
 
 
 
