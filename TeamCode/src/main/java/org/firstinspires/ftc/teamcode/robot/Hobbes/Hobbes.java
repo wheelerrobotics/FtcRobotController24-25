@@ -616,10 +616,8 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementExtendo(double increment) {
-            if (slidesArmPos > 0.5 )
-                if ((extendoPos + increment) < EXTENDO_OUT_FULL_LIMIT)
-                    extendoPos += increment;
-            else if ((extendoPos + increment) < 0.58 && (extendoPos + increment) > 0.1)
+
+            if ((extendoPos + increment) < 0.34 && (extendoPos + increment) > 0.1)
                 extendoPos += increment;
         }
 
