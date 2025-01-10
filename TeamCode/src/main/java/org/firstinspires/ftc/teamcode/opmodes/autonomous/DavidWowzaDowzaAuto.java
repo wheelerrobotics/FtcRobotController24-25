@@ -40,25 +40,25 @@ public class DavidWowzaDowzaAuto extends LinearOpMode {
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
                 // first sweep
                 .splineTo(new Vector2d(-23,24),PI * 3 / 4)
-                .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_DOWN))
+               // .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_DOWN))
                 .splineToSplineHeading(new Pose2d(-15, 25, 7*PI/16)
                         , 0, null, null)
-                .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_UP))
+               // .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_UP))
                 // second sweep
                 .splineToLinearHeading(new Pose2d(-28, 32, PI*6/8),
                         PI * 3 / 4)
-                .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_DOWN))
+               // .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_DOWN))
                 .splineToSplineHeading(new Pose2d(-15, 31, 6*PI/16),
                         0, null, null)
-                .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_UP))
+               // .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_UP))
                 // third sweep
                 .splineToLinearHeading(new Pose2d(-40, 36, PI/2),
                         PI * 3 / 4)
-                .afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_DOWN))
+                //.afterDisp(0,hob.actionMacro(SAMPLE_SWEEP_DOWN))
                 .splineToSplineHeading(new Pose2d(-15, 39, PI/2),
                         0, null, null)
                 // bring crap back in
-                .afterDisp(0,hob.actionMacro(COLLAPSE_TO_SPECIMEN))
+              //  .afterDisp(0,hob.actionMacro(COLLAPSE_TO_SPECIMEN))
 
                 // wall spec
                 .splineToSplineHeading(new Pose2d(-13, 33, PI),

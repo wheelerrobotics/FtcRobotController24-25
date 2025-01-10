@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OFFSET;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OUT_FULL_LIMIT;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INFINITY;
@@ -615,7 +616,10 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementExtendo(double increment) {
-            if ((extendoPos + increment) < 0.58 && (extendoPos + increment) > 0.1)
+            if (slidesArmPos > 0.5 )
+                if ((extendoPos + increment) < EXTENDO_OUT_FULL_LIMIT)
+                    extendoPos += increment;
+            else if ((extendoPos + increment) < 0.58 && (extendoPos + increment) > 0.1)
                 extendoPos += increment;
         }
 

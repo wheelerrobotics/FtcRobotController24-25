@@ -212,6 +212,8 @@ public class Macros {
 
     public static HobbesState SPEC_AUTO_PARK = new HobbesState(EXTENDO_OUT_SOME, EXTENDO_ARM_INTAKE,
             EXTENDO_WRIST_INTAKE_FLAT, null, null, null, null, SLIDES_IN,  null,null);
+    public static HobbesState SOFTWARE_LIMIT = new HobbesState(EXTENDO_OUT_FULL_LIMIT, null,
+            null, null, null, null, null, null,  null,null);
 
 
 }

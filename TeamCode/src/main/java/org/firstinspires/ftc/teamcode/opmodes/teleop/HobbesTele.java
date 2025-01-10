@@ -124,7 +124,10 @@ public class HobbesTele extends OpMode {
         if (gamepad2.y && !lastGamepad2.y) hob.runMacro(FULL_TRANSFER);
 
         // p2: run to deposit
-        if (gamepad2.dpad_up && !lastGamepad2.dpad_up) hob.runMacro(SLIDES_DEPOSIT);
+        if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
+            hob.runMacro(SLIDES_DEPOSIT);
+           
+        }
 
         // p2: toggle claw
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) hob.servosController.setClaw(hob.servosController.clawPos == CLAW_CLOSED);

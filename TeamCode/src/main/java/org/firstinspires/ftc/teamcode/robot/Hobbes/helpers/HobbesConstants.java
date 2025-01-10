@@ -80,6 +80,7 @@ public class HobbesConstants {
     // extendo
     public static double EXTENDO_IN = 0.18;
     public static double EXTENDO_OUT_FULL = 0.58;
+    public static double EXTENDO_OUT_FULL_LIMIT = .34;
     public static double EXTENDO_OUT_SOME = 0.3;
     public static double EXTENDO_SPEED = .02;
 
@@ -118,7 +119,7 @@ public class HobbesConstants {
     public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
     public static int SLIDES_SPECIMEN_PICKED_UP = 300;
     public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.92;
-    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.16;
+    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.13;
 
 
 
