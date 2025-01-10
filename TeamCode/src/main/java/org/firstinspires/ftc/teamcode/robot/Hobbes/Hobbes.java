@@ -169,9 +169,9 @@ public class Hobbes extends Meccanum implements Robot {
         public double strafeTarget = 0;
         public double strafeErrorThresh = 0;
         public double strafeDerivativeThresh = 0;
-        public double strafeP = -2;
+        public double strafeP = 2;
         public double strafeI = 0;
-        public double strafeD = -0.1;
+        public double strafeD = 0.1;
 
         public double forwardTarget = 0;
         public double forwardErrorThresh = 0;
@@ -204,6 +204,8 @@ public class Hobbes extends Meccanum implements Robot {
         double strafePower = 0;
         double forwardPower = 0;
         double forwardNonDetectionPower = 0;
+
+        double rotTar = PI;
         public SpecimenCorrector(PinpointDrive drive) {
             // to figure these out they should prob be copied into tick and given config vars
             specimenStrafePID.init(0);
@@ -249,6 +251,9 @@ public class Hobbes extends Meccanum implements Robot {
             if (on) limelight.start();
             else limelight.stop();
         }
+        public void setRotationTarget(double rotationTarget) {
+            rotTar = rotationTarget;
+        }
         public double normalizeRadians(double angle) {
             return angle - (2 * PI) * Math.floor((angle + PI) / (2 * PI));
         }
@@ -264,6 +269,8 @@ public class Hobbes extends Meccanum implements Robot {
             specimenRotationPID.setTarget(corVals.rotationTarget);
             specimenRotationPID.setDoneThresholds(corVals.rotationErrorThresh, corVals.rotationDerivativeThresh);
             specimenRotationPID.setConsts(corVals.rotationP, corVals.rotationI, corVals.rotationD);
+
+            specimenRotationPID.setTarget(rotTar);
 
 
             rotationPower = specimenRotationPID.tick(abs(drive.pose.heading.toDouble())); // doesnt depend on knowing where a specimen is
@@ -329,7 +336,7 @@ public class Hobbes extends Meccanum implements Robot {
             tele.addData("SPECIMENV_forward", drive.pose.position.y);
 
             tele.update();
-            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(bot.specimenCorrector.getForwardNonDetectionPower(),bot.specimenCorrector.getStrafePower()), (drive.pose.heading.toDouble()>0 ? 1 : -1) * bot.specimenCorrector.getRotationPower()));
+            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(bot.specimenCorrector.getForwardNonDetectionPower(),-bot.specimenCorrector.getStrafePower()), (drive.pose.heading.toDouble()>0 ? 1 : -1) * bot.specimenCorrector.getRotationPower()));
             return !bot.specimenCorrector.isFinished();
         }
     }

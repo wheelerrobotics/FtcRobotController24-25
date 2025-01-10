@@ -55,7 +55,10 @@ public class HobbesTele extends OpMode {
             hob.slidesController.resetSlideBasePos();
             //weRed = !weRed;
             //hob.specimenCorrector.switchPipe(weRed ? 3 : 4);
-
+        }
+        if (gamepad1.dpad_left && !lastGamepad1.dpad_left) {
+            weRed = !weRed;
+            hob.specimenCorrector.switchPipe(weRed ? 3 : 4);
         }
 
         // p1: intake
