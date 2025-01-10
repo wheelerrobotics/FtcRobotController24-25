@@ -601,8 +601,8 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementExtendoArmWrist(double incrementArm, double incrementWrist) {
-            if ((extendoArmPos + incrementArm) > 0 && (extendoArmPos + incrementArm) < 1)
-                extendoArmPos += incrementArm;
+//            if ((extendoArmPos + incrementArm) > 0 && (extendoArmPos + incrementArm) < 1)
+//                extendoArmPos += incrementArm;
             if ((extendoWristPos + incrementWrist) > 0 && (extendoWristPos + incrementWrist) < 1)
                 extendoWristPos += incrementWrist;
         }
