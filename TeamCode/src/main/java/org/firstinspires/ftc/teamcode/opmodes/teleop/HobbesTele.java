@@ -71,19 +71,20 @@ public class HobbesTele extends OpMode {
         //hob.slidesController.runToBottom = gamepad1.dpad_down; // this line breaks like everything >:(
 
         if (gamepad2.right_trigger == 1 && lastGamepad2.right_trigger != 1) hob.runMacro(ASCENT_SLIDES_UP);
-        if (gamepad2.right_trigger == 1) {
+        if (gamepad1.y) {
+            hob.slidesController.runToBottom = true;
+            hob.slidesController.driveSlides(-0.4);
+            hob.motorAscentController.runToBottomAscent = true;
+        }else if (gamepad2.right_trigger == 1) {
             //hob.slidesController.driveSlides(-1);
             hob.motorAscentController.runToBottomAscent = false;
             hob.motorAscentController.setTarget(-1960);
             hob.motorAscentController.setTargeting(true);
         }
-        if (gamepad1.y) {
-            hob.slidesController.runToBottom = true;
-            hob.slidesController.driveSlides(-0.4);
-            hob.motorAscentController.runToBottomAscent = true;
-        }else if (!gamepad1.y && lastGamepad1.y){
+        if (!gamepad1.y && lastGamepad1.y){
             hob.slidesController.runToBottom = false;
         }
+        if (gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.runMacro(IN_NO_TRANSFER);
             //hob.motorAscentController.runToBottomAscent = false;
             //hob.motorAscentController.setTargeting(false);
             //hob.motorAscentController.driveSlides(0);

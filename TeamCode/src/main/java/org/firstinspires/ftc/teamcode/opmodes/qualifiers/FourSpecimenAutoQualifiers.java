@@ -53,7 +53,7 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
         // wall specimen 1
         TrajectoryActionBuilder a4 = s3.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10))
-                .splineToConstantHeading(new Vector2d(-4.5, 33), 0, null, new ProfileAccelConstraint(-10, 10));
+                .splineToConstantHeading(new Vector2d(-6.5, 33), 0, null, new ProfileAccelConstraint(-10, 10));
         TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -1, 0 - 0.0004), PI);
@@ -62,7 +62,7 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-4.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
+                .splineToSplineHeading(new Pose2d(-7.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
         TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -9, 0 - 0.0002), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -9, 0 - 0.0004), PI);
@@ -71,7 +71,7 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-4.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
+                .splineToSplineHeading(new Pose2d(-7.5, 33, PI), 0, null, new ProfileAccelConstraint(-10, 10));
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -12, 0 - 0.0003), PI)
                 .splineToSplineHeading(new Pose2d(-30, -12, 0 - 0.0004), PI);
@@ -153,7 +153,7 @@ public class FourSpecimenAutoQualifiers extends LinearOpMode {
 
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                 new ParallelAction(t12, //park
-                                hob.actionMacroTimeout(SPEC_AUTO_PARK, 400)),
+                                hob.actionMacroTimeout(SPEC_AUTO_PARK, 1400)),
                                 hob.finishAction()),
                         hob.actionTick()));
     }

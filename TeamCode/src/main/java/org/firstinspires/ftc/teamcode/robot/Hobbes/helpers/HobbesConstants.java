@@ -123,13 +123,13 @@ public class HobbesConstants {
 
 
     //specimen deposit
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 1150;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 1080;
     public static int SLIDES_SPECIMEN_TO_DEPOSIT_TELEOP = 1230;
     public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64; // done
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.16; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 200;
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 1150;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 1050;
+    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 1080;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 1000;
 
 
 
