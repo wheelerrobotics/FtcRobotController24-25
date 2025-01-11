@@ -19,6 +19,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_SIGMOID_SCALER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SOFTWARE_ARM_LIMIT;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static java.lang.Math.E;
 import static java.lang.Math.PI;
@@ -566,6 +567,10 @@ public class Hobbes extends Meccanum implements Robot {
             tele.addData("clawPos", clawPos);
             tele.addData("slidesArmPos", slidesArmPos);
             tele.addData("slidesWristPos", slidesWristPos);
+            if (extendoPos > 0.25) {
+                slidesArmPos = SLIDES_ARM_ABOVE_TRANSFER;
+                slidesWristPos = SLIDES_WRIST_TRANSFER;
+            }
             slidesArm.setPosition(slidesArmPos);
             slidesWrist.setPosition(slidesWristPos);
 
@@ -616,8 +621,8 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementExtendo(double increment) {
-
-            if ((extendoPos + increment) < 0.34 && (extendoPos + increment) > 0.1)
+            //if (abs(increment) > 0 && extendoPos > 0.25) runMacro(SOFTWARE_ARM_LIMIT);
+            if ((extendoPos + increment) < EXTENDO_OUT_FULL_LIMIT && (extendoPos + increment) > 0.1)
                 extendoPos += increment;
         }
 

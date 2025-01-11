@@ -33,29 +33,16 @@ public class MeepMeepPaths {
 
 
                 //to deposit first specimen
-                TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0)).setTangent(PI)
-                        .splineTo(new Vector2d(-26.6, -5), PI);
+                TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 12, 0))
+                        .splineTo(new Vector2d(24,10),0);
 
                 //first sweep
 
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
                         // first sweep
-                        .splineTo(new Vector2d(-23,24),PI * 3 / 4)
-                        .splineToSplineHeading(new Pose2d(-15, 25, 7*PI/16)
-                                , 0, null, null)
-                        // second sweep
-                        .splineToLinearHeading(new Pose2d(-28, 32, PI*6/8),
-                                PI * 3 / 4)
-                        .splineToSplineHeading(new Pose2d(-15, 31, 6*PI/16),
-                                0, null, null)
-                        // third sweep
-                        .splineToLinearHeading(new Pose2d(-40, 36, PI/2),
-                                PI * 3 / 4)
-                        .splineToSplineHeading(new Pose2d(-15, 39, PI/2),
-                                0, null, null)
-                        .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, null)
-                        .splineToConstantHeading(new Vector2d(-1.5, 33), 0, null, null)
-
+                        .lineToX(17)
+                        .setTangent(0)
+                        .splineTo(new Vector2d(16,50),0)
                 ;
 
 
@@ -63,16 +50,18 @@ public class MeepMeepPaths {
 
 
 
-                TrajectoryActionBuilder a5 = a2.endTrajectory().fresh().setTangent(PI)
-                        .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
-                        .splineToSplineHeading(new Pose2d(-29.5, -1, 0 - 0.0004), PI);
+                TrajectoryActionBuilder a5 = a2.endTrajectory().fresh()
+
+                        .lineToX(25)
+                        ;
 
                 // wall specimen 2
-                TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
-                        .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
-                        .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                        .splineToSplineHeading(new Pose2d(-1.5, 33, PI), 0, null, null);
-                TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
+                TrajectoryActionBuilder a6 = a5.endTrajectory().fresh()
+                        .setTangent(PI)
+                        .splineTo(new Vector2d(7,58),Math.toRadians(135))
+
+                        ;
+                             TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-15, -9, 0 - 0.0002), PI)
                         .splineToSplineHeading(new Pose2d(-29.5, -9, 0 - 0.0004), PI);
 

@@ -32,7 +32,7 @@ public class HobbesConstants {
 
     //offsets
     public static double EXTENDO_WRIST_OFFSET = 0;
-    public static double EXTENDO_ARM_OFFSET = 0.02;
+    public static double EXTENDO_ARM_OFFSET = -0.09;
 
 
     //slides
@@ -57,7 +57,7 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_TRANSFER = 0.64 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER = .63 + EXTENDO_WRIST_OFFSET;
     public static double SLIDES_ARM_TRANSFER = .14;
-    public static double SLIDES_WRIST_TRANSFER = 0.97;
+    public static double SLIDES_WRIST_TRANSFER = 0.99;
 
 
 
@@ -81,7 +81,8 @@ public class HobbesConstants {
     public static double EXTENDO_IN = 0.18;
    // public static double EXTENDO_OUT_FULL = 0.58;
     public static double EXTENDO_OUT_FULL = 0.58;
-    public static double EXTENDO_OUT_FULL_LIMIT = .34;
+    public static double EXTENDO_OUT_FULL_LIMIT = .5;
+    public static double EXTENDO__ARM_LIMIT = .25;
     public static double EXTENDO_OUT_SOME = 0.3;
     public static double EXTENDO_SPEED = .02;
 
@@ -119,18 +120,18 @@ public class HobbesConstants {
     //specimen pickup
     public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
     public static int SLIDES_SPECIMEN_PICKED_UP = 300;
-    public static double SLIDES_ARM_SPECIMEN_PICKUP = 0.92;
-    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.13;
+    public static double SLIDES_ARM_SPECIMEN_PICKUP = 1;
+    public static double SLIDES_WRIST_SPECIMEN_PICKUP = 0.07;
 
 
 
     //specimen deposit
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 1080;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 1060;
     public static int SLIDES_SPECIMEN_TO_DEPOSIT_TELEOP = 1230;
     public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64; // done
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.16; // done
     public static int SLIDES_SPECIMEN_DEPOSITED = 200;
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 1080;
+    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 1060;
     public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 1000;
 
 

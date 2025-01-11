@@ -118,7 +118,7 @@ public class HobbesTele extends OpMode {
 
         // p2: manual extendo wrist articulation
         if (gamepad2.right_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, EXTENDO_WRIST_SPEED);
-        if (gamepad2.left_bumper&& gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, -EXTENDO_WRIST_SPEED);
+        if (gamepad2.left_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, -EXTENDO_WRIST_SPEED);
 
         // p2: transfer macro
         if (gamepad2.y && !lastGamepad2.y) hob.runMacro(FULL_TRANSFER);
@@ -141,11 +141,11 @@ public class HobbesTele extends OpMode {
         //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(AUTO);
 
         //p2: Specimen pickup
-        if (gamepad2.right_bumper && !lastGamepad2.right_bumper) hob.runMacro(TELE_SPECIMEN_PICKUP);
+        if (gamepad2.right_bumper && !lastGamepad2.right_bumper && !gamepad2.right_stick_button) hob.runMacro(TELE_SPECIMEN_PICKUP);
         //p2: get ready to specimen deposit
-        if (gamepad2.left_bumper && !lastGamepad2.left_bumper) hob.runMacro(STUPID_SPECIMEN_TO_DEPOSIT);
+        if (gamepad2.left_bumper && !lastGamepad2.left_bumper && !gamepad2.right_stick_button) hob.runMacro(STUPID_SPECIMEN_TO_DEPOSIT);
         //p2: deposit specimen
-        if (gamepad2.left_trigger > 0) hob.runMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET);
+        if (gamepad2.left_trigger > 0 && !gamepad2.right_stick_button) hob.runMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET);
 
 
 
