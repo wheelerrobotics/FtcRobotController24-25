@@ -25,7 +25,6 @@ public class Macros {
             EXTENDO_WRIST_TRANSFER, null, null, null, null, null,  null,null);
 
 
-
     public static HobbesState COLLAPSE_TO_SPECIMEN = new HobbesState(EXTENDO_IN, EXTENDO_ARM_TRANSFER, EXTENDO_WRIST_TRANSFER, SLIDES_ARM_SPECIMEN_PICKUP,
             SLIDES_WRIST_SPECIMEN_PICKUP, null, CLAW_OPEN, SLIDES_SPECIMEN_TO_PICKUP,  null,null);
 
