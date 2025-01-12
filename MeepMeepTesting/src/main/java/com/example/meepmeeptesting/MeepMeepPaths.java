@@ -72,10 +72,10 @@ public class MeepMeepPaths {
                 // wall specimen 2
                 TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                         .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
-                        .splineToConstantHeading(new Vector2d(-6.7, 29), 0)
+                        .splineToConstantHeading(new Vector2d(-7.5, 29), 0)
                         .splineToSplineHeading(new Pose2d(-6.5, 29, PI),
                                 0,
-                                null, new ProfileAccelConstraint(-1, 1));
+                                null, new ProfileAccelConstraint(-2, 2));
                 TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-24, -9, 0 - 0.0002), PI// Motor-based velocity constraint
                         )
@@ -84,9 +84,9 @@ public class MeepMeepPaths {
                 // wall specimen 3
                 TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
                         .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
-                        .splineToConstantHeading(new Vector2d(-6.7, 29), 0)
+                        .splineToConstantHeading(new Vector2d(-7.5, 29), 0)
                         .splineToSplineHeading(new Pose2d(-6.5, 29, PI),
-                                0,null, new ProfileAccelConstraint(-1, 1));
+                                0,null, new ProfileAccelConstraint(-2, 2));
 
                 TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
                         .splineToSplineHeading(new Pose2d(-24, -12, 0 - 0.0003), PI)
@@ -94,9 +94,9 @@ public class MeepMeepPaths {
 
                 TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
                         .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
-                        .splineToConstantHeading(new Vector2d(-6.7, 29), 0)
+                        .splineToConstantHeading(new Vector2d(-7.5, 29), 0)
                         .splineToSplineHeading(new Pose2d(-6.5, 29, PI),
-                                0,null, new ProfileAccelConstraint(-1, 1));
+                                0,null, new ProfileAccelConstraint(-2, 2));
 
                 TrajectoryActionBuilder a11 = a10.endTrajectory().fresh().setTangent(PI)
 
