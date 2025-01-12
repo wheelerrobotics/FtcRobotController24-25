@@ -27,10 +27,9 @@ public class MeepMeepPaths {
                         .setDimensions(12, 15)
                         .setStartPose(new Pose2d(-63, 6, PI))
                         // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                        .setConstraints(80, 80, 100,100, 15)
+                        .setConstraints(80, 80, Math.PI*3,Math.PI*2, 15)
                         .build();
                 DriveShim drive = myBot.getDrive();
-
 
                 TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0))
 
@@ -108,27 +107,30 @@ public class MeepMeepPaths {
                 TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
                         .splineToConstantHeading(new Vector2d(-5,29),0);
 
-
-                Action t1 = a1.build();
-                Action t2 = a2.build();
-                Action t3 = a3.build();
-                Action st2 = s2.build();
-                Action st3 = s3.build();
-                Action st4 = s4.build();
-
-                Action t5 = a5.build();
-                Action t6 = a6.build();
-                Action t7 = a7.build();
-                Action t8 = a8.build();
-                Action t9 = a9.build();
-                Action t10 = a10.build();
-                Action t11 = a11.build();
-                Action t12 = a12.build();
+                // preload
+                Action specimen1 = a1.build();
+                // sweeps
+                Action beforeSweep1 = a2.build();
+                Action sweep1 = a3.build();
+                Action beforeSweep2 = s2.build();
+                Action sweep2 = s3.build();
+                Action sweep3 = s4.build();
+                // cycling specimens
+                Action specimen2 = a5.build();
+                Action wall2 = a6.build();
+                Action specimen3 = a7.build();
+                Action wall3 = a8.build();
+                Action specimen4 = a9.build();
+                Action wall4 = a10.build();
+                Action specimen5 = a11.build();
+                Action park = a12.build();
 
                 myBot.runAction(new SequentialAction(
                         // hob.actionMacro(SPECIMEN_BEFORE_DEPOSIT),
                         // specimen sweep pos 1 - X: -23, Y: 29, R: 5pi/4
-                        t1, t2, t3, st2, st3, st4, t5, t6,t7,t8,t9,t10, t11,t12));
+                        specimen1, beforeSweep1, sweep1, beforeSweep2, sweep2,
+                        sweep3, specimen2, wall2, specimen3, wall3, specimen4, wall4, specimen5, park
+                        ));
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                         .setDarkMode(true)
