@@ -154,8 +154,8 @@ public class DanielSickAuto extends LinearOpMode {
                                                         hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)),
 
                                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
-                                                t12, //park
-                                                hob.actionMacro(SPEC_AUTO_PARK),
+                                                new ParallelAction(t12, //park
+                                                        hob.actionMacroTimeout(SPEC_AUTO_PARK, 1400)),
                                                 hob.finishAction()),
                                 hob.actionTick()));
         }

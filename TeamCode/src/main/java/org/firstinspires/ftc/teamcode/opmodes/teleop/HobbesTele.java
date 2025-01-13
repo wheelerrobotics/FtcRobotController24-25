@@ -51,11 +51,12 @@ public class HobbesTele extends OpMode {
         else if (gamepad1.right_bumper) hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
         else if (gamepad1.left_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
 
+        // p1: zero slides
         if (gamepad1.back) {
             hob.slidesController.resetSlideBasePos();
-            //weRed = !weRed;
-            //hob.specimenCorrector.switchPipe(weRed ? 3 : 4);
         }
+
+        //p1: switch alliance color (specimen detection color)
         if (gamepad1.dpad_left && !lastGamepad1.dpad_left) {
             weRed = !weRed;
             hob.specimenCorrector.switchPipe(weRed ? 3 : 4);
@@ -73,6 +74,8 @@ public class HobbesTele extends OpMode {
 
         //hob.slidesController.runToBottom = gamepad1.dpad_down; // this line breaks like everything >:(
 
+
+        //p1 & p2: ascent
         if (gamepad2.right_trigger == 1 && lastGamepad2.right_trigger != 1) hob.runMacro(ASCENT_SLIDES_UP);
         if (gamepad1.y) {
             hob.slidesController.runToBottom = true;
@@ -87,7 +90,8 @@ public class HobbesTele extends OpMode {
         if (!gamepad1.y && lastGamepad1.y){
             hob.slidesController.runToBottom = false;
         }
-        if (gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.runMacro(IN_NO_TRANSFER);
+
+
             //hob.motorAscentController.runToBottomAscent = false;
             //hob.motorAscentController.setTargeting(false);
             //hob.motorAscentController.driveSlides(0);
@@ -122,6 +126,9 @@ public class HobbesTele extends OpMode {
 
         // p2: transfer macro
         if (gamepad2.y && !lastGamepad2.y) hob.runMacro(FULL_TRANSFER);
+
+        //p2: in, but no transfer
+        if (gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.runMacro(IN_NO_TRANSFER);
 
         // p2: run to deposit
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {

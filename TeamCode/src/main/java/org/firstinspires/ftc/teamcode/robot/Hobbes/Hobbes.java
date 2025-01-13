@@ -26,6 +26,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 
 import android.content.Context;
+import android.service.quickaccesswallet.WalletCard;
 
 import androidx.annotation.NonNull;
 
@@ -40,6 +41,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -82,6 +85,7 @@ public class Hobbes extends Meccanum implements Robot {
     private VoltageSensor vs;
     private Limelight3A limelight = null;
 
+    private AnalogInput wallDistanceSensor;
 
     Telemetry tele = FtcDashboard.getInstance().getTelemetry();
     public boolean inited = false;
@@ -144,6 +148,10 @@ public class Hobbes extends Meccanum implements Robot {
         slidesArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendoWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendoArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
+
+        //define sensors
+
+        wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
 
         // set slides base pos
         slidesController.start();
@@ -307,6 +315,45 @@ public class Hobbes extends Meccanum implements Robot {
             tele.update();
         }
     }
+
+
+
+
+    //an attempt at a distance sensor action implementation
+
+    public double wallDistance()
+    {
+        return ( wallDistanceSensor.getVoltage()- .6050) / .0175;
+    }
+
+    public class distanceSensing implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+               while (abs(wallDistance() - 10) > 0.01){
+                   tele.addData("Distance From Wall" , wallDistance());
+                   if ((wallDistance() - 10) > 0) {
+                       motorDriveXYVectors(5, 0, 0);
+                   } else {
+                       motorDriveXYVectors(-5, 0, 0);
+                   };
+                }
+
+
+                initialized = true;
+
+            }
+            return (abs(wallDistance() - 10) < 0.01);
+        }
+        public Action distance() {
+            return new distanceSensing();
+        }
+    }
+
+
+
 
     // macros stuff
     public HobbesState macroState = null;

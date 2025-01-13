@@ -112,7 +112,7 @@ public class HobbesConstants {
     // claw
     public static double CLAW_OPEN = 0.45;
     public static double CLAW_CLOSED = 0.89;
-
+    public static double CLAW_ALMOST_CLOSED = .82;
 
 
 
