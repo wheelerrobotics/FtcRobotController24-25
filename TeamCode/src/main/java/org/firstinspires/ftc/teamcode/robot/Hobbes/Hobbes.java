@@ -4,13 +4,15 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_TRANSFER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_CLAW_CLOSED;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OFFSET;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OUT_FULL_LIMIT;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INFINITY;
-import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
+//import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_ABOVE_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KP;
@@ -19,7 +21,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_SIGMOID_SCALER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
-import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SOFTWARE_ARM_LIMIT;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SWIVEL_STRAIGHT;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static java.lang.Math.E;
 import static java.lang.Math.PI;
@@ -27,6 +29,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 
 import android.content.Context;
+import android.service.quickaccesswallet.WalletCard;
 
 import androidx.annotation.NonNull;
 
@@ -41,6 +44,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -67,7 +72,7 @@ import java.util.logging.Logger;
 @Config
 public class Hobbes extends Meccanum implements Robot {
     protected HardwareMap hw = null;
-    private PinpointDrive pinpointDrive;
+
     public MotorAscentController motorAscentController = new MotorAscentController();
     public MotorSlideController slidesController = new MotorSlideController();
     public ServosController servosController = new ServosController();
@@ -78,11 +83,12 @@ public class Hobbes extends Meccanum implements Robot {
     public PinpointDrive drive;
 
     // all relative to robot's reference frame with deposit as front:
-    private ServoImplEx extendoLeft, extendoRight, extendoArm, extendoWrist, slidesArm, claw;
-    private CRServo intakeRight, intakeLeft;
+    private ServoImplEx extendoLeft, extendoRight, extendoArm, extendoWrist, claw, slidesArm, extendoSwivel, extendoClaw;
+    //private CRServo intakeRight, intakeLeft;
     private VoltageSensor vs;
     private Limelight3A limelight = null;
 
+    private AnalogInput wallDistanceSensor;
 
     Telemetry tele = FtcDashboard.getInstance().getTelemetry();
     public boolean inited = false;
@@ -137,14 +143,22 @@ public class Hobbes extends Meccanum implements Robot {
         extendoWrist = hardwareMap.get(ServoImplEx.class, "extendoWrist");
         slidesArm = hardwareMap.get(ServoImplEx.class, "slidesArm");
         slidesWrist = hardwareMap.get(ServoImplEx.class, "slidesWrist");
+        extendoSwivel = hardwareMap.get(ServoImplEx.class, "extendoSwivel");
+        extendoClaw = hardwareMap.get(ServoImplEx.class, "extendoClaw");
         // define continous servos
-        intakeLeft = hardwareMap.crservo.get("intakeLeft");
-        intakeRight = hardwareMap.crservo.get("intakeRight");
+       // intakeLeft = hardwareMap.crservo.get("intakeLeft");
+       // intakeRight = hardwareMap.crservo.get("intakeRight");
         // give servos good range of motion
         slidesWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         slidesArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendoWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendoArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        extendoSwivel.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        extendoClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
+
+        //define sensors
+
+        wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
 
         // set slides base pos
         slidesController.start();
@@ -188,19 +202,6 @@ public class Hobbes extends Meccanum implements Robot {
         public double rotationP = 3; // DONE
         public double rotationI = 0;
         public double rotationD = 0;
-    }
-    public void teleOpIMU() {
-        double realAngle = pinpointDrive.getHeading();
-        double targetAngle = 0;
-
-        double error = targetAngle - realAngle;
-
-        if (error > Math.PI)
-            error -= 2 * Math.PI;
-        else if (error < -Math.PI) error += 2 * Math.PI;
-
-
-
     }
     public class SpecimenCorrector {
         // 3 goals, 3 PIDs
@@ -321,6 +322,45 @@ public class Hobbes extends Meccanum implements Robot {
             tele.update();
         }
     }
+
+
+
+
+    //an attempt at a distance sensor action implementation
+
+    public double wallDistance()
+    {
+        return ( wallDistanceSensor.getVoltage()- .6050) / .0175;
+    }
+
+    public class distanceSensing implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+               while (abs(wallDistance() - 10) > 0.01){
+                   tele.addData("Distance From Wall" , wallDistance());
+                   if ((wallDistance() - 10) > 0) {
+                       motorDriveXYVectors(5, 0, 0);
+                   } else {
+                       motorDriveXYVectors(-5, 0, 0);
+                   };
+                }
+
+
+                initialized = true;
+
+            }
+            return (abs(wallDistance() - 10) < 0.01);
+        }
+        public Action distance() {
+            return new distanceSensing();
+        }
+    }
+
+
+
 
     // macros stuff
     public HobbesState macroState = null;
@@ -501,8 +541,12 @@ public class Hobbes extends Meccanum implements Robot {
                 servosController.slidesArmPos = m.slidesArmPos;
             if (m.slidesWristPos != null)
                 servosController.slidesWristPos = m.slidesWristPos;
-            if (m.intakeSpeed != null)
-                servosController.intakeSpeed = m.intakeSpeed;
+            if (m.extendoSwivelPos != null)
+                servosController.extendoSwivelPos = m.extendoSwivelPos;
+            if (m.extendoClawPos != null)
+                servosController.extendoClawPos = m.extendoClawPos;
+            //if (m.intakeSpeed != null)
+            //    servosController.intakeSpeed = m.intakeSpeed;
             if (m.clawPos != null)
                 servosController.clawPos = m.clawPos;
             if (m.ascentPos != null) motorAscentController.setTarget(m.ascentPos);
@@ -547,12 +591,14 @@ public class Hobbes extends Meccanum implements Robot {
     // servos ticking
     public class ServosController {
         public double extendoPos = EXTENDO_IN;
-        public double intakeSpeed = INTAKE_OFF;
+        //public double intakeSpeed = INTAKE_OFF;
         public double slidesArmPos = SLIDES_ARM_ABOVE_TRANSFER;
         public double slidesWristPos = SLIDES_WRIST_TRANSFER;
         public double extendoArmPos = EXTENDO_ARM_TRANSFER;
         public double extendoWristPos = EXTENDO_WRIST_TRANSFER;
         public double clawPos = CLAW_CLOSED;
+        public double extendoClawPos = CLAW_CLOSED;
+        public double extendoSwivelPos = SWIVEL_STRAIGHT;
 
         public void setup() {
             claw.setPosition(CLAW_CLOSED);
@@ -562,6 +608,8 @@ public class Hobbes extends Meccanum implements Robot {
             extendoWrist.setPosition(EXTENDO_WRIST_START + extendoWristRezeroOffset);
             slidesArm.setPosition(SLIDES_ARM_START);
             slidesWrist.setPosition(SLIDES_WRIST_START);
+            extendoSwivel.setPosition(SWIVEL_STRAIGHT);
+            extendoClaw.setPosition(EXTENDO_CLAW_CLOSED);
         }
 
         public void autoSetup() {
@@ -576,14 +624,13 @@ public class Hobbes extends Meccanum implements Robot {
             tele.addData("extendoPos", extendoPos);
             tele.addData("extendoArmPos", extendoArmPos);
             tele.addData("extendoWristPos", extendoWristPos);
-            tele.addData("intakeSpeed", intakeSpeed);
+            //tele.addData("intakeSpeed", intakeSpeed);
             tele.addData("clawPos", clawPos);
             tele.addData("slidesArmPos", slidesArmPos);
             tele.addData("slidesWristPos", slidesWristPos);
-            if (extendoPos > 0.25) {
-                slidesArmPos = SLIDES_ARM_ABOVE_TRANSFER;
-                slidesWristPos = SLIDES_WRIST_TRANSFER;
-            }
+            tele.addData("extendoSwivelPos", extendoSwivelPos);
+            tele.addData("extendoClawPos" , extendoClawPos);
+
             slidesArm.setPosition(slidesArmPos);
             slidesWrist.setPosition(slidesWristPos);
 
@@ -595,14 +642,17 @@ public class Hobbes extends Meccanum implements Robot {
             extendoLeft.setPosition(extendoPos);
             extendoRight.setPosition(extendoLeftToRight(extendoPos));
 
-            intakeLeft.setPower(intakeSpeed);
-            intakeRight.setPower(-intakeSpeed);
+           // intakeLeft.setPower(intakeSpeed);
+           // intakeRight.setPower(-intakeSpeed);
+
+            extendoSwivel.setPosition(extendoSwivelPos);
+            extendoClaw.setPosition(extendoClawPos);
 
         }
 
-        public void spintake(double power) {
-            intakeSpeed = power;
-        }
+        //public void spintake(double power) {
+          //  intakeSpeed = power;
+        //}
 
         public void setSlidesArmWrist(double armPosition, double wristPosition) {
             slidesArmPos = armPosition;
@@ -634,13 +684,18 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementExtendo(double increment) {
-            //if (abs(increment) > 0 && extendoPos > 0.25) runMacro(SOFTWARE_ARM_LIMIT);
-            if ((extendoPos + increment) < EXTENDO_OUT_FULL_LIMIT && (extendoPos + increment) > 0.1)
+
+            if ((extendoPos + increment) < 0.58 && (extendoPos + increment) > 0.1)
                 extendoPos += increment;
         }
 
         public double extendoLeftToRight(double leftPosition) {
             return EXTENDO_OFFSET - leftPosition;
+        }
+
+        public void setExtendoClawSwivel(double extendoclawposition , double extendoswivelposition) {
+            extendoClawPos = extendoclawposition;
+            extendoSwivelPos = extendoswivelposition;
         }
     }
 
@@ -692,7 +747,7 @@ public class Hobbes extends Meccanum implements Robot {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
             if (!SLIDE_TARGETING)
-                slidePID.setConsts(SLIDES_KP, 0, 0);
+            slidePID.setConsts(SLIDES_KP, 0, 0);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
 

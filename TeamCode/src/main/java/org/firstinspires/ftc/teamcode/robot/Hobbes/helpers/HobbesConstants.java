@@ -164,6 +164,11 @@ public class HobbesConstants {
     public static double SLIDES_WRIST_START  = .87;
 
 
+    // extendo claw
+    public static double EXTENDO_CLAW_CLOSED = .9;
+    public static double EXTENDO_CLAW_OPEN = .45;
+    public static double SWIVEL_STRAIGHT = .5;
+
     // misc
     public static int INFINITY = 2000000000;
     public static double EXTENDO_OFFSET = 1;
