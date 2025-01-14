@@ -30,6 +30,18 @@ public class HobbesConstants {
      *
      */
 
+    public static double INTAKE_CLAW_ABOVE = 0;
+    public static double INTAKE_CLAW_PICK = 0;
+    public static double INTAKE_R_CLAW_ABOVE = 0;
+
+
+
+
+
+
+
+
+
     //offsets
     public static double EXTENDO_WRIST_OFFSET = 0;
     public static double EXTENDO_ARM_OFFSET = -0.09;
