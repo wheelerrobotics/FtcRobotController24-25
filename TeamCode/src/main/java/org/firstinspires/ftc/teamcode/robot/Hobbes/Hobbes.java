@@ -67,7 +67,7 @@ import java.util.logging.Logger;
 @Config
 public class Hobbes extends Meccanum implements Robot {
     protected HardwareMap hw = null;
-
+    private PinpointDrive pinpointDrive;
     public MotorAscentController motorAscentController = new MotorAscentController();
     public MotorSlideController slidesController = new MotorSlideController();
     public ServosController servosController = new ServosController();
@@ -188,6 +188,19 @@ public class Hobbes extends Meccanum implements Robot {
         public double rotationP = 3; // DONE
         public double rotationI = 0;
         public double rotationD = 0;
+    }
+    public void teleOpIMU() {
+        double realAngle = pinpointDrive.getHeading();
+        double targetAngle = 0;
+
+        double error = targetAngle - realAngle;
+
+        if (error > Math.PI)
+            error -= 2 * Math.PI;
+        else if (error < -Math.PI) error += 2 * Math.PI;
+
+
+
     }
     public class SpecimenCorrector {
         // 3 goals, 3 PIDs
@@ -679,7 +692,7 @@ public class Hobbes extends Meccanum implements Robot {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
             if (!SLIDE_TARGETING)
-            slidePID.setConsts(SLIDES_KP, 0, 0);
+                slidePID.setConsts(SLIDES_KP, 0, 0);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
 
