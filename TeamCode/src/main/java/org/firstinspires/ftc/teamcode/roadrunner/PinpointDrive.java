@@ -142,6 +142,12 @@ public class PinpointDrive extends MecanumDrive {
 
         return pinpoint.getVelocityRR();
     }
+    public Pose2d getPose(){
+        return this.pose;
+    }
+    public double getHeading(){
+        return this.pinpoint.getHeading();
+    }
 
 
     // for debug logging
