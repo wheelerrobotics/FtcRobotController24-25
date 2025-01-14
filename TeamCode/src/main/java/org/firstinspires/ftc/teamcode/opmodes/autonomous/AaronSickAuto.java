@@ -7,6 +7,7 @@ import static java.lang.Math.PI;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -63,8 +64,8 @@ public class AaronSickAuto extends LinearOpMode {
 
         // wall specimen 1
         TrajectoryActionBuilder a4 = s6.endTrajectory().fresh().setTangent(PI*3/4)
-                .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, null)
-                .splineToConstantHeading(new Vector2d(-3, 33), 0, null, null);
+                .splineToSplineHeading(new Pose2d(-13, 33, PI), 0, null, new ProfileAccelConstraint(-20, 20))
+                .splineToConstantHeading(new Vector2d(-6, 33), 0, null, new ProfileAccelConstraint(-3.5, 3.5));
         TrajectoryActionBuilder a5 = a4.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-20, -1, 0 - 0.0001), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -1, 0 - 0.0004), PI);
@@ -73,7 +74,7 @@ public class AaronSickAuto extends LinearOpMode {
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0, null, null);
+                .splineToSplineHeading(new Pose2d(-6, 33, PI), 0, null, new ProfileAccelConstraint(-3.5, 3.5));
         TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -9, 0 - 0.0002), PI)
                 .splineToSplineHeading(new Pose2d(-29.5, -9, 0 - 0.0004), PI);
@@ -82,7 +83,7 @@ public class AaronSickAuto extends LinearOpMode {
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0, null, null);
+                .splineToSplineHeading(new Pose2d(-6, 33, PI), 0, null, new ProfileAccelConstraint(-3.5, 3.5));
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -12, 0 - 0.0003), PI)
                 .splineToSplineHeading(new Pose2d(-30, -12, 0 - 0.0004), PI);
@@ -91,7 +92,7 @@ public class AaronSickAuto extends LinearOpMode {
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
                 .splineToSplineHeading(new Pose2d(-15, 4, PI), PI/2)
                 .splineToConstantHeading(new Vector2d(-10, 32.5), 0)
-                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0, null, null);
+                .splineToSplineHeading(new Pose2d(-3, 33, PI), 0, null, new ProfileAccelConstraint(-3.5, 3.5));
         TrajectoryActionBuilder a11 = a10.endTrajectory().fresh().setTangent(PI)
                 .splineToSplineHeading(new Pose2d(-15, -14, 0 - 0.0003), PI)
                 .splineToSplineHeading(new Pose2d(-30, -14, 0 - 0.0004), PI);
@@ -158,12 +159,14 @@ public class AaronSickAuto extends LinearOpMode {
                                 hob.actionWait(50),
                                 hob.actionMacro(SPECIMEN_BEFORE_PICKUP),
                                 t4, // get into position to pick up wall specimen 1
+                                hob.specimenAction(),
+
 
                                 hob.actionMacro(SPECIMEN_PICKUP),
                                 hob.actionWait(150),
                                 new ParallelAction(
                                         t5, // get in position to deposit wall specimen 1
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)),
+                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 200)),
 
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                 t6, // get into position to pick up wall specimen 2
@@ -172,7 +175,7 @@ public class AaronSickAuto extends LinearOpMode {
                                 hob.actionWait(150),
                                 new ParallelAction(
                                         t7, // get into position to deposit wall specimen 2
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)),
+                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 200)),
 
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                 t8, // get into position to pick up wall specimen 3
@@ -181,7 +184,7 @@ public class AaronSickAuto extends LinearOpMode {
                                 hob.actionWait(150),
                                 new ParallelAction(
                                         t9, //get into position to deposit wall specimen 3
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)),
+                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 200)),
 
                                 hob.actionMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET),
                                 t10, //get into position to pick up wall specimen 4
@@ -190,10 +193,10 @@ public class AaronSickAuto extends LinearOpMode {
                                 hob.actionWait(150),
                                 new ParallelAction(
                                         t11, //get into position to deposit wall specimen 4
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 500)),
+                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT, 200)),
                                 t12, //park
-                                hob.actionMacro(START),
-
+                                new ParallelAction(t12, //park
+                                        hob.actionMacroTimeout(SPEC_AUTO_PARK, 1400)),
 
                                 hob.finishAction()),
                         hob.actionTick()));
