@@ -8,7 +8,7 @@ public class HobbesConstants {
      * EXTENDO/SLIDES: Intake and deposit respectively
      * IN/OUT: Relative to robot, for slides/extendo
      * INTAKE & DEPOSIT vs TRANSFER: for arms/wrists
-     * 
+     *
      * ARM: pivots arm
      * WRIST: pivots end of an arm
      *
@@ -35,13 +35,6 @@ public class HobbesConstants {
     public static double INTAKE_R_CLAW_ABOVE = 0;
 
 
-
-
-
-
-
-
-
     //offsets
     public static double EXTENDO_WRIST_OFFSET = 0;
     public static double EXTENDO_ARM_OFFSET = -0.09;
@@ -56,7 +49,7 @@ public class HobbesConstants {
     public static double SLIDES_KP = 0.008;
     public static int SLIDES_IN = 0; //used to put slides all the way down
 
-
+    public static double CLAW_ALMOST_CLOSED = 0;
 
     //ascent
     public static int ASCENT_MAX = -1960; //top of slides

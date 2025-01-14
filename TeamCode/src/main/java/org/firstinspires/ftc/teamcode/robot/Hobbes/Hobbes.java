@@ -158,7 +158,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         //define sensors
 
-        wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
+       // wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
 
         // set slides base pos
         slidesController.start();
