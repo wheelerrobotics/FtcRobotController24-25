@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 public class HobbesZeroer extends OpMode {
 
     Hobbes hob = null;
-    public static double extendo, extendoArm, extendoWrist, slidesArm, slidesWrist, intake, clawPos;
+    public static double extendo, extendoArm, extendoWrist, slidesArm, slidesWrist, intake, clawPos, extendoClaw, extendoSwivel;
     public static int slides, ascent;
     public static boolean extendoON = false;
     public static boolean extendoArmWristON = false;
@@ -23,6 +23,7 @@ public class HobbesZeroer extends OpMode {
     public static boolean slidesON = false;
     public static boolean ascentOn = false;
     public static boolean clawON = false;
+    public static boolean extendoClawSwivelOn = false;
     Telemetry tele;
 
     @Override
@@ -44,10 +45,12 @@ public class HobbesZeroer extends OpMode {
             hob.servosController.setSlidesArmWrist(slidesArm, slidesWrist);
         if (slidesON)
             hob.slidesController.setTarget(slides);
-        if (intakeON)
-            hob.servosController.spintake(intake);
+        //if (intakeON)
+        //    hob.servosController.spintake(intake);
         if (clawON)
             hob.servosController.setClawPrecise(clawPos);
+        if (extendoClawSwivelOn)
+            hob.servosController.setExtendoClawSwivel(extendoClaw, extendoSwivel);
         hob.tick();
         tele.addData("slides", hob.slidesController.pos);
         tele.update();

@@ -63,11 +63,11 @@ public class HobbesTele extends OpMode {
         }
 
         // p1: intake
-        if (gamepad1.a) hob.servosController.spintake(INTAKE_POWER);
-        else if (gamepad1.b) hob.servosController.spintake(INTAKE_REVERSE);
-        else if (gamepad1.right_trigger > 0) hob.servosController.spintake(INTAKE_POWER * gamepad1.right_trigger);
-        else if (gamepad1.left_trigger > 0) hob.servosController.spintake(INTAKE_REVERSE * gamepad1.left_trigger);
-        else hob.servosController.spintake(INTAKE_OFF);
+//        if (gamepad1.a) hob.servosController.spintake(INTAKE_POWER);
+//        else if (gamepad1.b) hob.servosController.spintake(INTAKE_REVERSE);
+//        else if (gamepad1.right_trigger > 0) hob.servosController.spintake(INTAKE_POWER * gamepad1.right_trigger);
+//        else if (gamepad1.left_trigger > 0) hob.servosController.spintake(INTAKE_REVERSE * gamepad1.left_trigger);
+//        else hob.servosController.spintake(INTAKE_OFF);
 
         // p1: ascent control
         //if (gamepad1.dpad_down && !lastGamepad1.dpad_down) hob.slidesController.disabled = (hob.slidesController.disabled == 0) ? 1 : (hob.slidesController.disabled == 1 ? 2 : 0);

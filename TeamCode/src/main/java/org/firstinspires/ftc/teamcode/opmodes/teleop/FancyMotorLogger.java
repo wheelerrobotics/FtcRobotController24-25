@@ -58,11 +58,11 @@ public class FancyMotorLogger extends OpMode {
         else hob.motorDriveXYVectors(0.3 * -gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
 
         // p1: intake
-        if (gamepad1.a) hob.servosController.spintake(INTAKE_POWER);
-        else if (gamepad1.b) hob.servosController.spintake(INTAKE_REVERSE);
-        else if (gamepad1.right_trigger > 0) hob.servosController.spintake(INTAKE_POWER * gamepad1.right_trigger);
-        else if (gamepad1.left_trigger > 0) hob.servosController.spintake(INTAKE_REVERSE * gamepad1.left_trigger);
-        else hob.servosController.spintake(INTAKE_OFF);
+//        if (gamepad1.a) hob.servosController.spintake(INTAKE_POWER);
+//        else if (gamepad1.b) hob.servosController.spintake(INTAKE_REVERSE);
+//        else if (gamepad1.right_trigger > 0) hob.servosController.spintake(INTAKE_POWER * gamepad1.right_trigger);
+//        else if (gamepad1.left_trigger > 0) hob.servosController.spintake(INTAKE_REVERSE * gamepad1.left_trigger);
+//        else hob.servosController.spintake(INTAKE_OFF);
 
         // p2: slides motion
         if (gamepad2.right_stick_y != 0) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
