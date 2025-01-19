@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_CLAW_CLOSED;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_CLAW_IP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OFFSET;
@@ -696,6 +697,17 @@ public class Hobbes extends Meccanum implements Robot {
         public void setExtendoClawSwivel(double extendoclawposition , double extendoswivelposition) {
             extendoClawPos = extendoclawposition;
             extendoSwivelPos = extendoswivelposition;
+        }
+
+        public void incrementSwivel(double increment) {
+            if ((extendoPos + increment) < 0.58 && (extendoPos + increment) > 0.1)
+                extendoPos += increment;
+        }
+        public void setExtendoClaw(boolean open) {
+            extendoClawPos = open ? EXTENDO_CLAW_OPEN : EXTENDO_CLAW_CLOSED;
+        }
+        public void setExtendoClawIP(boolean open) {
+            extendoClawPos = open ? EXTENDO_CLAW_IP : EXTENDO_CLAW_CLOSED;
         }
     }
 
