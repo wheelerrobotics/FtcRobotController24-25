@@ -62,17 +62,13 @@ public class HobbesTele extends OpMode {
             hob.specimenCorrector.switchPipe(weRed ? 3 : 4);
         }
 
-        // p1: intake
-//        if (gamepad1.a) hob.servosController.spintake(INTAKE_POWER);
-//        else if (gamepad1.b) hob.servosController.spintake(INTAKE_REVERSE);
-//        else if (gamepad1.right_trigger > 0) hob.servosController.spintake(INTAKE_POWER * gamepad1.right_trigger);
-//        else if (gamepad1.left_trigger > 0) hob.servosController.spintake(INTAKE_REVERSE * gamepad1.left_trigger);
-//        else hob.servosController.spintake(INTAKE_OFF);
-
-        // p1: ascent control
-        //if (gamepad1.dpad_down && !lastGamepad1.dpad_down) hob.slidesController.disabled = (hob.slidesController.disabled == 0) ? 1 : (hob.slidesController.disabled == 1 ? 2 : 0);
-
-        //hob.slidesController.runToBottom = gamepad1.dpad_down; // this line breaks like everything >:(
+        // p1: toggle intake claw
+        if (gamepad1.a && !lastGamepad1.a){
+            hob.servosController.setExtendoClaw(hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED);
+        }
+        if (gamepad1.b && !lastGamepad1.b){
+            hob.servosController.setExtendoClawIP(hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED);
+        }
 
 
         //p1 & p2: ascent
@@ -106,14 +102,20 @@ public class HobbesTele extends OpMode {
         // p2: extendo motion
         hob.servosController.incrementExtendo(-gamepad2.left_stick_y * EXTENDO_SPEED);
 
-        // p2: flat on ground
-        if (gamepad2.b && !lastGamepad2.b) hob.runMacro(EXTENDO_ARM_WRIST_FLAT);
+
+
+
+        // p2: Inside Pickup
+        if (gamepad2.b && !lastGamepad2.b) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
 
         // p2: up but low
-        if (gamepad2.a && !lastGamepad2.a) hob.runMacro(EXTENDO_ARM_WRIST_UP);
+        if (gamepad2.a && !lastGamepad2.a) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
 
-        // p2: angled on ground
-        if (gamepad2.x && !lastGamepad2.x) hob.runMacro(EXTENDO_ARM_WRIST_ANGLED);
+        // p2: Outside Pickup
+        if (gamepad2.x && !lastGamepad2.x) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
+
+
+
 
         // p2: manual extendo arm articulation
         if (gamepad2.left_trigger > 0 && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(gamepad2.left_trigger * EXTENDO_ARM_SPEED, 0);
@@ -124,8 +126,13 @@ public class HobbesTele extends OpMode {
         if (gamepad2.right_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, EXTENDO_WRIST_SPEED);
         if (gamepad2.left_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, -EXTENDO_WRIST_SPEED);
 
+
+
         // p2: transfer macro
-        if (gamepad2.y && !lastGamepad2.y) hob.runMacro(FULL_TRANSFER);
+        if (gamepad2.y && !lastGamepad2.y){
+            if (hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED) hob.runMacro(FULL_TRANSFER);
+            else hob.runMacro(FULL_TRANSFER_IP);
+        }
 
         //p2: in, but no transfer
         if (gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.runMacro(IN_NO_TRANSFER);
@@ -146,6 +153,8 @@ public class HobbesTele extends OpMode {
         // p2: slides down, arm above sample
         if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(SLIDES_DOWN);
         //if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(AUTO);
+
+
 
         //p2: Specimen pickup
         if (gamepad2.right_bumper && !lastGamepad2.right_bumper && !gamepad2.right_stick_button) hob.runMacro(TELE_SPECIMEN_PICKUP);

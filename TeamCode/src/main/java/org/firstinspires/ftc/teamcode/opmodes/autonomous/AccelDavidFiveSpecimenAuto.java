@@ -168,7 +168,7 @@ public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
                                 hob.actionWait(300),
                                 new ParallelAction(
                                         specimen2, // get in position to deposit wall specimen 1
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT_NEW, 500)),
+                                        hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
 
@@ -178,7 +178,7 @@ public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
                                 hob.actionWait(300),
                                 new ParallelAction(
                                         specimen3, // get into position to deposit wall specimen 2
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT_NEW, 500)),
+                                        hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
@@ -188,7 +188,7 @@ public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
                                 hob.actionWait(300),
                                 new ParallelAction(
                                         specimen4, //get into position to deposit wall specimen 3
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT_NEW, 500)),
+                                        hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
@@ -198,7 +198,7 @@ public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
                                 hob.actionWait(300),
                                 new ParallelAction(
                                         specimen5, // get into position to deposit wall specimen 2
-                                        hob.actionMacroTimeout(STUPID_SPECIMEN_TO_DEPOSIT_NEW, 500)),
+                                        hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),

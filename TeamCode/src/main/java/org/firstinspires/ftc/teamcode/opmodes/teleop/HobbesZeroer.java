@@ -14,12 +14,11 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 public class HobbesZeroer extends OpMode {
 
     Hobbes hob = null;
-    public static double extendo, extendoArm, extendoWrist, slidesArm, slidesWrist, intake, clawPos, extendoClaw, extendoSwivel;
+    public static double extendo, extendoArm, extendoWrist, slidesArm, slidesWrist, clawPos, extendoClaw, extendoSwivel;
     public static int slides, ascent;
     public static boolean extendoON = false;
     public static boolean extendoArmWristON = false;
     public static boolean slidesArmWristON = false;
-    public static boolean intakeON = false;
     public static boolean slidesON = false;
     public static boolean ascentOn = false;
     public static boolean clawON = false;
