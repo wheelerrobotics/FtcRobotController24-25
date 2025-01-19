@@ -72,13 +72,12 @@ public class HobbesTele extends OpMode {
 
 
         //p1 & p2: ascent
-        if (gamepad2.right_trigger == 1 && lastGamepad2.right_trigger != 1) hob.runMacro(ASCENT_SLIDES_UP);
+        if (gamepad2.left_bumper && !lastGamepad2.left_bumper  && !gamepad2.right_bumper) hob.runMacro(ASCENT_SLIDES_UP);
         if (gamepad1.y) {
             hob.slidesController.runToBottom = true;
             hob.slidesController.driveSlides(-0.4);
             hob.motorAscentController.runToBottomAscent = true;
-        }else if (gamepad2.right_trigger == 1) {
-            //hob.slidesController.driveSlides(-1);
+        }else if (gamepad2.left_bumper) {
             hob.motorAscentController.runToBottomAscent = false;
             hob.motorAscentController.setTarget(-1960);
             hob.motorAscentController.setTargeting(true);
@@ -107,10 +106,8 @@ public class HobbesTele extends OpMode {
 
         // p2: Inside Pickup
         if (gamepad2.b && !lastGamepad2.b) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
-
         // p2: up but low
         if (gamepad2.a && !lastGamepad2.a) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
-
         // p2: Outside Pickup
         if (gamepad2.x && !lastGamepad2.x) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
 
@@ -157,11 +154,18 @@ public class HobbesTele extends OpMode {
 
 
         //p2: Specimen pickup
-        if (gamepad2.right_bumper && !lastGamepad2.right_bumper && !gamepad2.right_stick_button) hob.runMacro(TELE_SPECIMEN_PICKUP);
+        if (gamepad2.right_bumper && !gamepad2.right_stick_button && gamepad2.a) hob.runMacro(TELE_SPECIMEN_PICKUP);
         //p2: get ready to specimen deposit
-        if (gamepad2.left_bumper && !lastGamepad2.left_bumper && !gamepad2.right_stick_button) hob.runMacro(STUPID_SPECIMEN_TO_DEPOSIT);
+        if (gamepad2.right_bumper && !gamepad2.right_stick_button && gamepad2.b) hob.runMacro(FULL_TRANSFER_AUTO);
         //p2: deposit specimen
-        if (gamepad2.left_trigger > 0 && !gamepad2.right_stick_button) hob.runMacro(STUPID_SPECIMEN_DEPOSIT_AND_RESET);
+        if (gamepad2.right_bumper && !gamepad2.right_stick_button && gamepad2.x) hob.runMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW);
+
+
+
+        //p2: increment swivel
+        if (gamepad2.right_trigger > 0) hob.servosController.incrementSwivel(-gamepad2.right_trigger);
+        if (gamepad2.left_trigger > 0) hob.servosController.incrementSwivel(gamepad2.left_trigger);
+
 
 
 

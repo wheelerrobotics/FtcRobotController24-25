@@ -168,10 +168,14 @@ public class HobbesConstants {
     public static double EXTENDO_TRANSFER_IP = 0.8;
     public static double EXTENDO_MOSTLY_TRANSFER = .77;
     public static double EXTENDO_MOSTLY_TRANSFER_IP = 0.77;
-
     public static double EXTENDO_ARM_ABOVE_PICKUP = 0;
     public static double EXTENDO_WRIST_PICKUP = 0;
     public static double EXTENDO_ARM_PICKUP = 0;
+
+
+    public static double EXTENDO_WRIST_SPECIMEN_PICKUP = 0;
+    public static double EXTENDO_ARM_SPECIMEN_PICKUP = 0;
+
 
     // misc
     public static int INFINITY = 2000000000;
