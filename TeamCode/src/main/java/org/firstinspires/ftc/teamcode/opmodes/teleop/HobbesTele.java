@@ -155,6 +155,8 @@ public class HobbesTele extends OpMode {
 
         //p2: Specimen pickup
         if (gamepad2.right_bumper && !gamepad2.right_stick_button && gamepad2.a) hob.runMacro(TELE_SPECIMEN_PICKUP);
+        //p2: spec almost pickup
+        if (gamepad2.right_bumper && !gamepad2.right_stick_button && gamepad2.y) hob.runMacro(SPEC_ALMOST_PICKUP);
         //p2: get ready to specimen deposit
         if (gamepad2.right_bumper && !gamepad2.right_stick_button && gamepad2.b) hob.runMacro(FULL_TRANSFER_AUTO);
         //p2: deposit specimen
