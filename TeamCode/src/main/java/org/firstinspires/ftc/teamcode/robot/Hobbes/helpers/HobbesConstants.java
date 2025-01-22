@@ -88,7 +88,7 @@ public class HobbesConstants {
 
 
     // extendo
-    public static double EXTENDO_IN = 0.82;
+    public static double EXTENDO_IN = 0.86;
    // public static double EXTENDO_OUT_FULL = 0.58;
     public static double EXTENDO_OUT_FULL = 0.62;
     public static double EXTENDO_OUT_FULL_LIMIT = .5;
@@ -164,7 +164,7 @@ public class HobbesConstants {
 
 
     // extendo claw
-    public static double EXTENDO_CLAW_OPEN = .54;
+    public static double EXTENDO_CLAW_OPEN = .48;
     public static double EXTENDO_CLAW_IP = .53;
     public static double SWIVEL_STRAIGHT = .305;
     public static double SWIVEL_STRAIGHT_SPEC = .96;
@@ -181,8 +181,10 @@ public class HobbesConstants {
     public static double SWIVEL_SPEED = .05;
 
 
-    public static double EXTENDO_WRIST_SPECIMEN_PICKUP = .65 ;  //TODO: get these vals
-    public static double EXTENDO_ARM_SPECIMEN_PICKUP = .35;
+    public static double EXTENDO_WRIST_SPECIMEN_PICKUP = .6 ;
+    public static double EXTENDO_WRIST_SPECIMEN_PICKED_UP = .45 ;
+
+    public static double EXTENDO_ARM_SPECIMEN_PICKUP = .43;
 
 
     // misc
