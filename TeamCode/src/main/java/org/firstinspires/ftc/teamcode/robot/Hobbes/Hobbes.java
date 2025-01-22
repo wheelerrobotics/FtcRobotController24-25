@@ -65,6 +65,9 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Link;
 import org.firstinspires.ftc.teamcode.robot.Meccanum.Meccanum;
 import org.firstinspires.ftc.teamcode.helpers.PID;
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.vision.BotVision;
+import org.firstinspires.ftc.teamcode.vision.ColorIsolationPipeline;
+import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -91,8 +94,10 @@ public class Hobbes extends Meccanum implements Robot {
 
     private AnalogInput wallDistanceSensor;
 
+    private BotVision bv;
     Telemetry tele = FtcDashboard.getInstance().getTelemetry();
     public boolean inited = false;
+    public ColorIsolationPipeline p = new ColorIsolationPipeline();
     @Override
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
@@ -101,6 +106,8 @@ public class Hobbes extends Meccanum implements Robot {
         tele.setMsTransmissionInterval(11);
         limelight.pipelineSwitch(3);
         limelight.start();
+        bv = new BotVision();
+        bv.init(hardwareMap, p, "Webcam 1");
         specimenCorrector = new SpecimenCorrector(drive);
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -209,6 +216,7 @@ public class Hobbes extends Meccanum implements Robot {
         // 1: follow sample
         // 2: move forwards
         // 3: keep rotation constant
+        public boolean LIMELIGHT_USED = false;
         PID specimenStrafePID = new PID(2, 0, 0.001);
         PID specimenForwardPID = new PID(0.5, 0, 0); // TODO: defo not right vals
         PID specimenForwardNonDetectionPID = new PID(0, 0, 0); // TODO: defo not right vals
@@ -294,6 +302,7 @@ public class Hobbes extends Meccanum implements Robot {
             forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.x); // doesnt depend on knowing where a specimen is
 
             if (correctionOn) {
+                if (LIMELIGHT_USED) {
                 LLResult result = limelight.getLatestResult();
 
                 if (result != null) {
@@ -312,6 +321,10 @@ public class Hobbes extends Meccanum implements Robot {
                 }
                 strafePower = specimenStrafePID.tick(angle);
                 forwardPower = specimenForwardPID.tick(forwardDistance);
+                }else {
+                    angle = p.getAngle();
+                    strafePower = specimenStrafePID.tick(angle);
+                }
             } else {
                 strafePower = 0;
                 forwardPower = 0;
