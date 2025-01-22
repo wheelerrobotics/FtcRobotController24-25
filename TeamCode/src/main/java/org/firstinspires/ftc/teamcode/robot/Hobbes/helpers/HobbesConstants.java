@@ -67,8 +67,8 @@ public class HobbesConstants {
     //TODO: specimen pickup transfer is going to require new vals (since its transferring dif)
     public static double EXTENDO_ARM_TRANSFER_SPEC = 0.56 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER_SPEC = .54 + EXTENDO_WRIST_OFFSET;
-    public static double SLIDES_ARM_TRANSFER_SPEC = .17;
-    public static double SLIDES_WRIST_TRANSFER_SPEC = 0.85;
+    public static double SLIDES_ARM_TRANSFER_SPEC = .13;
+    public static double SLIDES_WRIST_TRANSFER_SPEC = 0.81;
 
 
 
@@ -94,7 +94,7 @@ public class HobbesConstants {
     public static double EXTENDO_OUT_FULL_LIMIT = .5;
     public static double EXTENDO__ARM_LIMIT = .25;
     public static double EXTENDO_OUT_SOME = 0.3;
-    public static double EXTENDO_SPEED = .02;
+    public static double EXTENDO_SPEED = .01;
 
 
 
