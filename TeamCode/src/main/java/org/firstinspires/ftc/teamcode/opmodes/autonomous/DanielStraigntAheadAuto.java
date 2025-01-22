@@ -1,7 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmodes.autonomous;
 
-import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
-
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.COLLAPSE_TO_SPECIMEN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TRANSFER_AUTO;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_DOWN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_PICKUP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_START;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_DEPOSIT_AND_RESET;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_TO_DEPOSIT_START;
 import static java.lang.Math.PI;
 
 import com.acmerobotics.roadrunner.Action;
@@ -12,15 +20,12 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
-@Autonomous (name = "--- Accel --- David Five Spec")
-// TODO: NOT DONE
-public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
+public class DanielStraigntAheadAuto extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.
     Hobbes hob = null;
     PinpointDrive drive;
@@ -39,9 +44,9 @@ public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
 
                 .setTangent(PI)
                 .lineToX(-25.5,null, new ProfileAccelConstraint(-60, 80));
-               // .lineToX(-27.5,null, new ProfileAccelConstraint(-5, 5));
-           //     .lineToX(-34,null, new ProfileAccelConstraint(-80, 80));
-                //.splineTo(new Vector2d(-34, -4), PI,null, new ProfileAccelConstraint(-80, 80));
+        // .lineToX(-27.5,null, new ProfileAccelConstraint(-5, 5));
+        //     .lineToX(-34,null, new ProfileAccelConstraint(-80, 80));
+        //.splineTo(new Vector2d(-34, -4), PI,null, new ProfileAccelConstraint(-80, 80));
 
         // .splineTo(new Vector2d(-25.6, -5), PI);
 
@@ -62,55 +67,45 @@ public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-48, 57, PI), 0)
-                .lineToX(-11,
-                        null,
-                        new ProfileAccelConstraint(-80, 80))
+                .splineToLinearHeading(new Pose2d(-48, 57, 0), 0)
                 .lineToX(-10,
                         null,
-                        new ProfileAccelConstraint(-1.5, 1.5));
+                        new ProfileAccelConstraint(-80, 80));
 
 
         TrajectoryActionBuilder a5 = s4.endTrajectory().fresh().setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-24, -8, 0 + 0.0001), PI)
-                .splineToSplineHeading(new Pose2d(-40, -8, 0 + 0.0004), PI);
+                .splineToConstantHeading(new Vector2d(-24, -8), PI)
+                .splineToConstantHeading(new Vector2d(-40, -8), PI);
         // wall specimen 2
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
-                .splineToSplineHeading(new Pose2d(-25, 25, PI), PI/2)
-                .splineToConstantHeading(new Vector2d(-9.5, 29), 0)
-                .splineToSplineHeading(new Pose2d(-8.5, 29, PI),
-                        0,
-                        null, new ProfileAccelConstraint(-2, 2));
+                .splineToConstantHeading(new Vector2d(-20, 0), PI/2)
+                .splineToConstantHeading(new Vector2d(-9, 29), 0);
         TrajectoryActionBuilder a7 = a6.endTrajectory().fresh().setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-24, -9, 0 + 0.0002), PI// Motor-based velocity constraint
+                .splineToConstantHeading(new Vector2d(-24, -10), PI// Motor-based velocity constraint
                 )
-                .splineToSplineHeading(new Pose2d(-38, -9, 0 + 0.0004), PI);
+                .splineToConstantHeading(new Vector2d(-38, -10), PI);
 
         // wall specimen 3
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
-                .splineToSplineHeading(new Pose2d(-25, 25, PI), PI/2)
-                .splineToConstantHeading(new Vector2d(-8.5, 29), 0)
-                .splineToSplineHeading(new Pose2d(-7.5, 29, PI),
-                        0,null, new ProfileAccelConstraint(-2, 2));
+                .splineToConstantHeading(new Vector2d(-20, 0), PI/2)
+                .splineToConstantHeading(new Vector2d(-8, 29), 0);
 
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-24, -12, 0 + 0.0003), PI)
-                .splineToSplineHeading(new Pose2d(-38, -12, 0 + 0.0004), PI);
+                .splineToConstantHeading(new Vector2d(-24, -12), PI)
+                .splineToConstantHeading(new Vector2d(-38, -12), PI);
 
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
-                .splineToSplineHeading(new Pose2d(-25, 25, PI), PI/2)
-                .splineToConstantHeading(new Vector2d(-8.5, 29), 0)
-                .splineToSplineHeading(new Pose2d(-7.5, 29, PI),
-                        0,null, new ProfileAccelConstraint(-2, 2));
+                .splineToConstantHeading(new Vector2d(-20, 0), PI/2)
+                .splineToConstantHeading(new Vector2d(-8, 29), 0);
 
         TrajectoryActionBuilder a11 = a10.endTrajectory().fresh().setTangent(PI)
 
-                .splineToLinearHeading(new Pose2d(-24, -17, 0 + 0.0003), PI)
-                .splineToSplineHeading(new Pose2d(-38, -17, 0 + 0.0004), PI);
+                .splineToConstantHeading(new Vector2d(-24, -14), PI)
+                .splineToConstantHeading(new Vector2d(-38, -14), PI);
 
         // park
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
-                .splineToConstantHeading(new Vector2d(-5,29),0);
+                .splineTo(new Vector2d(-5,29),PI/2);
 
         // preload
         Action specimen1 = a1.build();
@@ -207,5 +202,4 @@ public class AccelDavidFiveSpecimenAuto extends LinearOpMode {
                                 hob.finishAction()),
                         hob.actionTick()));
     }
-
 }
