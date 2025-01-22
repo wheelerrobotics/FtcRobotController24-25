@@ -99,29 +99,29 @@ public class HobbesTele extends OpMode {
         if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
         if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0) hob.slidesController.driveSlides(0);
         // p2: extendo motion
-        hob.servosController.incrementExtendo(-gamepad2.left_stick_y * EXTENDO_SPEED);
+        hob.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
 
 
 
 
-        // p2: Inside Pickup
-        if (gamepad2.b && !lastGamepad2.b) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
+        // p2: Outside Pickup
+        if (gamepad1.left_trigger > 0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
         // p2: up but low
         if (gamepad2.a && !lastGamepad2.a) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
-        // p2: Outside Pickup
-        if (gamepad2.x && !lastGamepad2.x) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
+        // p2: Inside Pickup
+        if (gamepad1.right_trigger >0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
 
 
 
 
         // p2: manual extendo arm articulation
-        if (gamepad2.left_trigger > 0 && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(gamepad2.left_trigger * EXTENDO_ARM_SPEED, 0);
-        if (gamepad2.right_trigger > 0 && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(gamepad2.right_trigger * -EXTENDO_ARM_SPEED, 0);
+      //  if (gamepad2.left_trigger > 0 && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(gamepad2.left_trigger * EXTENDO_ARM_SPEED, 0);
+      //  if (gamepad2.right_trigger > 0 && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(gamepad2.right_trigger * -EXTENDO_ARM_SPEED, 0);
 
 
         // p2: manual extendo wrist articulation
-        if (gamepad2.right_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, EXTENDO_WRIST_SPEED);
-        if (gamepad2.left_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, -EXTENDO_WRIST_SPEED);
+      //  if (gamepad2.right_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, EXTENDO_WRIST_SPEED);
+      //  if (gamepad2.left_bumper && gamepad2.right_stick_button) hob.servosController.incrementExtendoArmWrist(0, -EXTENDO_WRIST_SPEED);
 
 
 
@@ -163,8 +163,8 @@ public class HobbesTele extends OpMode {
 
 
         //p2: increment swivel
-        if (gamepad2.right_trigger > 0) hob.servosController.incrementSwivel(-gamepad2.right_trigger);
-        if (gamepad2.left_trigger > 0) hob.servosController.incrementSwivel(gamepad2.left_trigger);
+        if (gamepad2.right_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*gamepad2.right_trigger);
+        if (gamepad2.left_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*(-gamepad2.left_trigger));
 
 
 

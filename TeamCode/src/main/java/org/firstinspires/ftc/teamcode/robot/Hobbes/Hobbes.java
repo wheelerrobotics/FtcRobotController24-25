@@ -159,7 +159,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         //define sensors
 
-       // wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
+        //wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
 
         // set slides base pos
         slidesController.start();
@@ -331,7 +331,7 @@ public class Hobbes extends Meccanum implements Robot {
 
     public double wallDistance()
     {
-        return ( wallDistanceSensor.getVoltage()- .6050) / .0175;
+        return ( (wallDistanceSensor.getVoltage()*32.5)-2.6);
     }
 
     public class distanceSensing implements Action {
@@ -342,7 +342,7 @@ public class Hobbes extends Meccanum implements Robot {
             if (!initialized) {
                while (abs(wallDistance() - 10) > 0.01){
                    tele.addData("Distance From Wall" , wallDistance());
-                   if ((wallDistance() - 10) > 0) {
+                   if ((wallDistance() - 10) > 0) {  //TODO: probably some sign errors here, and need to get actual wall distance
                        motorDriveXYVectors(5, 0, 0);
                    } else {
                        motorDriveXYVectors(-5, 0, 0);
@@ -355,11 +355,11 @@ public class Hobbes extends Meccanum implements Robot {
             }
             return (abs(wallDistance() - 10) < 0.01);
         }
-        public Action distance() {
-            return new distanceSensing();
-        }
-    }
 
+    }
+    public Action distance() {
+        return new distanceSensing();
+    }
 
 
 
@@ -686,7 +686,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         public void incrementExtendo(double increment) {
 
-            if ((extendoPos + increment) < 0.58 && (extendoPos + increment) > 0.1)
+            if ((extendoPos + increment) > 0.5 && (extendoPos + increment) > 0.1)
                 extendoPos += increment;
         }
 
@@ -700,8 +700,8 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementSwivel(double increment) {
-            if ((extendoPos + increment) < 0.58 && (extendoPos + increment) > 0.1)
-                extendoPos += increment;
+            if ( (extendoSwivelPos + increment) > 0.1)
+                extendoSwivelPos += increment;
         }
         public void setExtendoClaw(boolean open) {
             extendoClawPos = open ? EXTENDO_CLAW_OPEN : EXTENDO_CLAW_CLOSED;

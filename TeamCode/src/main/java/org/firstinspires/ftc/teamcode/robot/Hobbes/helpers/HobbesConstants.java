@@ -49,7 +49,6 @@ public class HobbesConstants {
     public static double SLIDES_KP = 0.008;
     public static int SLIDES_IN = 0; //used to put slides all the way down
 
-    public static double CLAW_ALMOST_CLOSED = 0;
 
     //ascent
     public static int ASCENT_MAX = -1960; //top of slides
@@ -61,9 +60,15 @@ public class HobbesConstants {
     //transfer
     public static double EXTENDO_ARM_TRANSFER = 0.4 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER = .09 + EXTENDO_WRIST_OFFSET;
-    public static double SLIDES_ARM_TRANSFER = .05;
-    public static double SLIDES_WRIST_TRANSFER = 0.9;
+    public static double SLIDES_ARM_TRANSFER = 0.01;
+    public static double SLIDES_ARM_TRANSFER_IP = 0.08;
 
+    public static double SLIDES_WRIST_TRANSFER = 0.95;
+    //TODO: specimen pickup transfer is going to require new vals (since its transferring dif)
+    public static double EXTENDO_ARM_TRANSFER_SPEC = 0.56 + EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_WRIST_TRANSFER_SPEC = .54 + EXTENDO_WRIST_OFFSET;
+    public static double SLIDES_ARM_TRANSFER_SPEC = .17;
+    public static double SLIDES_WRIST_TRANSFER_SPEC = 0.85;
 
 
 
@@ -83,9 +88,9 @@ public class HobbesConstants {
 
 
     // extendo
-    public static double EXTENDO_IN = 0.18;
+    public static double EXTENDO_IN = 0.82;
    // public static double EXTENDO_OUT_FULL = 0.58;
-    public static double EXTENDO_OUT_FULL = 0.58;
+    public static double EXTENDO_OUT_FULL = 0.62;
     public static double EXTENDO_OUT_FULL_LIMIT = .5;
     public static double EXTENDO__ARM_LIMIT = .25;
     public static double EXTENDO_OUT_SOME = 0.3;
@@ -116,9 +121,10 @@ public class HobbesConstants {
 
 
     // claw
-    public static double CLAW_OPEN = 0.45;
+    public static double CLAW_OPEN = 0.62;
     public static double CLAW_CLOSED = 1;
-
+    public static double EXTENDO_CLAW_CLOSED = .86;
+    public static double CLAW_ALMOST_CLOSED = .77;
 
 
 
@@ -158,23 +164,25 @@ public class HobbesConstants {
 
 
     // extendo claw
-    public static double EXTENDO_CLAW_CLOSED = .9;
-    public static double EXTENDO_CLAW_OPEN = .45;
+    public static double EXTENDO_CLAW_OPEN = .54;
     public static double EXTENDO_CLAW_IP = .53;
-    public static double SWIVEL_STRAIGHT = .64;
-    public static double SWIVEL_TRANSFER = 0.64;
-    public static double SWIVEL_TRANSFER_IP = 0.95;
-    public static double EXTENDO_TRANSFER = 0.8;
-    public static double EXTENDO_TRANSFER_IP = 0.8;
+    public static double SWIVEL_STRAIGHT = .305;
+    public static double SWIVEL_STRAIGHT_SPEC = .96;
+
+    public static double SWIVEL_TRANSFER = 0.305;
+    public static double SWIVEL_TRANSFER_IP = 0.64;
+    public static double EXTENDO_TRANSFER = 0.84;
+    public static double EXTENDO_TRANSFER_IP = 0.86;
     public static double EXTENDO_MOSTLY_TRANSFER = .77;
-    public static double EXTENDO_MOSTLY_TRANSFER_IP = 0.77;
-    public static double EXTENDO_ARM_ABOVE_PICKUP = 0;
-    public static double EXTENDO_WRIST_PICKUP = 0;
-    public static double EXTENDO_ARM_PICKUP = 0;
+    public static double EXTENDO_MOSTLY_TRANSFER_IP = .76;
+    public static double EXTENDO_ARM_ABOVE_PICKUP = .3;
+    public static double EXTENDO_WRIST_PICKUP = .95;
+    public static double EXTENDO_ARM_PICKUP = .25;
+    public static double SWIVEL_SPEED = .05;
 
 
-    public static double EXTENDO_WRIST_SPECIMEN_PICKUP = 0;
-    public static double EXTENDO_ARM_SPECIMEN_PICKUP = 0;
+    public static double EXTENDO_WRIST_SPECIMEN_PICKUP = .65 ;  //TODO: get these vals
+    public static double EXTENDO_ARM_SPECIMEN_PICKUP = .35;
 
 
     // misc
