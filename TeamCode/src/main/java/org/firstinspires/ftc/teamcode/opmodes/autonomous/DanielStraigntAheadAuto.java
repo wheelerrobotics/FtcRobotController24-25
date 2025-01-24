@@ -8,6 +8,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIME
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_START;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPEC_ALMOST_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_DEPOSIT_AND_RESET;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_TO_DEPOSIT_START;
@@ -155,9 +156,10 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
                                 hob.actionWait(100),
                                 sweep2,
-
-                                hob.actionMacro(SPECIMEN_PICKUP),
-                                sweep3,
+                                
+                                hob.actionMacro(COLLAPSE_TO_SPECIMEN),
+                                new ParallelAction( sweep3,
+                                                    hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
 
                                 hob.actionMacro(SPECIMEN_PICKUP),
                                 hob.actionWait(300),
@@ -167,7 +169,8 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
 
-                                wall2, // get into position to pick up wall specimen 2
+                                new ParallelAction( wall2, // get into position to pick up wall specimen 2
+                                                    hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
 
                                 hob.actionMacro(SPECIMEN_PICKUP),
                                 hob.actionWait(300),
@@ -177,7 +180,8 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
-                                wall3, // get into position to pick up wall specimen 3
+                                new ParallelAction( wall3, // get into position to pick up wall specimen 3
+                                                    hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
 
                                 hob.actionMacro(SPECIMEN_PICKUP),
                                 hob.actionWait(300),
@@ -187,7 +191,8 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
-                                wall4, // get into position to pick up wall specimen 2
+                                new ParallelAction(  wall4, // get into position to pick up wall specimen 2
+                                                     hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
 
                                 hob.actionMacro(SPECIMEN_PICKUP),
                                 hob.actionWait(300),

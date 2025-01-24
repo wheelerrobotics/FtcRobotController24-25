@@ -20,6 +20,7 @@ public class HobbesTele extends OpMode {
     Hobbes hob = null;
     boolean ascentUp = false;
     boolean weRed = true;
+    boolean forward = true;
 
 @Override
     // runs on init press
@@ -46,10 +47,14 @@ public class HobbesTele extends OpMode {
         // p1 & p2: start freeze (to ignore input while switching mode)
         if (gamepad2.start || gamepad1.start) return;
         // p1: motion
-        if (!gamepad1.right_bumper && !gamepad1.left_bumper) hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
-        else if (gamepad1.left_bumper && gamepad1.right_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -0.3 * gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
-        else if (gamepad1.right_bumper) hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
-        else if (gamepad1.left_bumper) hob.motorDriveXYVectors(-hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
+
+        if (!gamepad1.right_bumper && forward) hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
+     //   else if (gamepad1.left_bumper && gamepad1.right_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -0.3 * gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
+        else if (gamepad1.right_bumper && forward) hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
+       // else if (gamepad1.left_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
+        else if (!gamepad1.right_bumper && !forward) hob.motorDriveXYVectors(-gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
+        else if (gamepad1.right_bumper && !forward) hob.motorDriveXYVectors(-0.3 * gamepad1.left_stick_x, 0.3 * gamepad1.left_stick_y, -0.3 * gamepad1.right_stick_x);
+
 
         // p1: zero slides
         if (gamepad1.back) {
@@ -104,12 +109,14 @@ public class HobbesTele extends OpMode {
 
 
 
-        // p2: Outside Pickup
-        if (gamepad1.left_trigger > 0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
+        // p1/p2: Outside Pickup
+        if (gamepad1.left_bumper && !lastGamepad1.left_bumper) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
+        if (gamepad2.b && !lastGamepad2.b && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
         // p2: up but low
-        if (gamepad2.a && !lastGamepad2.a) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
-        // p2: Inside Pickup
-        if (gamepad1.right_trigger >0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
+        if (gamepad2.a && !lastGamepad2.a && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
+        // p1/p2: Inside Pickup
+        if (gamepad1.left_trigger >0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
+        if (gamepad2.x && lastGamepad2.x && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
 
 
 
@@ -126,7 +133,7 @@ public class HobbesTele extends OpMode {
 
 
         // p2: transfer macro
-        if (gamepad2.y && !lastGamepad2.y){
+        if (gamepad2.y && !lastGamepad2.y && !gamepad2.right_bumper){
             if (hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED) hob.runMacro(FULL_TRANSFER);
             else hob.runMacro(FULL_TRANSFER_IP);
         }
