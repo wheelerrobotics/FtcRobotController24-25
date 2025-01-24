@@ -63,12 +63,12 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_TRANSFER = 0.4 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER = .09 + EXTENDO_WRIST_OFFSET;
     public static double SLIDES_ARM_TRANSFER = 0.00;
-    public static double SLIDES_ARM_TRANSFER_IP = 0.02;
+    public static double SLIDES_ARM_TRANSFER_IP = 0.00;
 
     public static double SLIDES_WRIST_TRANSFER = 0.92;
-    public static double EXTENDO_ARM_TRANSFER_SPEC = 0.56 + EXTENDO_ARM_OFFSET;
+    public static double EXTENDO_ARM_TRANSFER_SPEC = 0.58 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER_SPEC = .54 + EXTENDO_WRIST_OFFSET;
-    public static double SLIDES_ARM_TRANSFER_SPEC = .13;
+    public static double SLIDES_ARM_TRANSFER_SPEC = .065;
     public static double SLIDES_WRIST_TRANSFER_SPEC = 0.78;
 
 
@@ -124,7 +124,7 @@ public class HobbesConstants {
 
     // claw
     public static double CLAW_OPEN = 0.62;
-    public static double CLAW_CLOSED = 1;
+    public static double CLAW_CLOSED = .99;
     public static double EXTENDO_CLAW_CLOSED = .86;
     public static double CLAW_ALMOST_CLOSED = .8;
 
@@ -184,8 +184,8 @@ public class HobbesConstants {
     public static double SWIVEL_SPEED = .05;
 
 
-    public static double EXTENDO_WRIST_SPECIMEN_PICKUP = .6 ;
-    public static double EXTENDO_WRIST_SPECIMEN_PICKED_UP = .45 ;
+    public static double EXTENDO_WRIST_SPECIMEN_PICKUP = .645 ;
+    public static double EXTENDO_WRIST_SPECIMEN_PICKED_UP = .52 ;
 
     public static double EXTENDO_ARM_SPECIMEN_PICKUP = .43;
 
