@@ -180,6 +180,7 @@ public class HobbesTele extends OpMode {
         if (gamepad2.right_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*gamepad2.right_trigger);
         if (gamepad2.left_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*(-gamepad2.left_trigger));
 
+        if (gamepad2.left_stick_button && !lastGamepad2.left_stick_button) hob.servosController.setExtendo(EXTENDO_OUT_FULL);
 
 
 

@@ -295,7 +295,7 @@ public class Hobbes extends Meccanum implements Robot {
             return angle - (2 * PI) * Math.floor((angle + PI) / (2 * PI));
         }
         public void specimenTick() {
-            drive.updatePoseEstimate(); // update localizer
+            //drive.updatePoseEstimate(); // update localizer
             // this top block for debugging when we are changing config vals
             specimenStrafePID.setTarget(corVals.strafeTarget);
             specimenStrafePID.setDoneThresholds(corVals.strafeErrorThresh, corVals.strafeDerivativeThresh);
@@ -594,13 +594,13 @@ public class Hobbes extends Meccanum implements Robot {
 
     public void tick() {
        // drive.updatePoseEstimate(); // update localizer
-        failsafeCheck(); // empty
+        //failsafeCheck(); // empty
         tickMacros(); // check macros
         motorAscentController.ascentTick();
         slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
-        tele.addData("voltage", vs.getVoltage());
-        tele.update();
+        //tele.addData("voltage", vs.getVoltage());
+        //tele.update();
         specimenCorrector.specimenTick(); // run specimen corrector
 
     }
