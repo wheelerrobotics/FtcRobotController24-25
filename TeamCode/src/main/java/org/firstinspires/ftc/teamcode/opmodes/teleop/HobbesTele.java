@@ -51,13 +51,18 @@ public class HobbesTele extends OpMode {
         if (!gamepad1.right_bumper && forward) hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
      //   else if (gamepad1.left_bumper && gamepad1.right_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -0.3 * gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
         else if (gamepad1.right_bumper && forward) hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
-       // else if (gamepad1.left_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
+        else if (gamepad1.left_bumper) hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
         else if (!gamepad1.right_bumper && !forward) hob.motorDriveXYVectors(-gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
         else if (gamepad1.right_bumper && !forward) hob.motorDriveXYVectors(-0.3 * gamepad1.left_stick_x, 0.3 * gamepad1.left_stick_y, -0.3 * gamepad1.right_stick_x);
 
+        //p1: switch which way is front
+
+        if (gamepad1.back && !lastGamepad1.back){
+            forward = !forward;
+        }
 
         // p1: zero slides
-        if (gamepad1.back) {
+        if (gamepad1.dpad_down) {
             hob.slidesController.resetSlideBasePos();
         }
 
@@ -189,7 +194,7 @@ public class HobbesTele extends OpMode {
         gamepad2History.add(gamepad2);
         // delete everything in gamepad histories with a 500 cycle delay (prob would
         // make a memory leak if not?)
-        if (gamepad1History.size() > 500) {
+        if (gamepad1History.size() > 100) {
             gamepad1History.removeLast();
             gamepad2History.removeLast();
         }

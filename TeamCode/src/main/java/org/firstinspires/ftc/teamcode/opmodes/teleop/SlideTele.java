@@ -33,7 +33,7 @@ public class SlideTele extends OpMode {
         // define and init robot
         hob = new Hobbes();
         hob.init(hardwareMap);
-        hob.specimenCorrector.setCorrectionOn(true);
+        //hob.specimenCorrector.setCorrectionOn(true);
 
     }
 

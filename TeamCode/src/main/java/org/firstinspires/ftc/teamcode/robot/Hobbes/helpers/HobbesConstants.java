@@ -65,11 +65,11 @@ public class HobbesConstants {
     public static double SLIDES_ARM_TRANSFER = 0.01;
     public static double SLIDES_ARM_TRANSFER_IP = 0.08;
 
-    public static double SLIDES_WRIST_TRANSFER = 0.95;
+    public static double SLIDES_WRIST_TRANSFER = 0.9;
     public static double EXTENDO_ARM_TRANSFER_SPEC = 0.56 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER_SPEC = .54 + EXTENDO_WRIST_OFFSET;
     public static double SLIDES_ARM_TRANSFER_SPEC = .13;
-    public static double SLIDES_WRIST_TRANSFER_SPEC = 0.81;
+    public static double SLIDES_WRIST_TRANSFER_SPEC = 0.78;
 
 
 
@@ -173,10 +173,10 @@ public class HobbesConstants {
     public static double SWIVEL_TRANSFER = 0.305;
     public static double SWIVEL_TRANSFER_IP = 0.64;
 
-    public static double EXTENDO_TRANSFER = 0.84;
-    public static double EXTENDO_TRANSFER_IP = 0.85;
-    public static double EXTENDO_MOSTLY_TRANSFER = .77;
-    public static double EXTENDO_MOSTLY_TRANSFER_IP = .76;
+    public static double EXTENDO_TRANSFER = 0.87;
+    public static double EXTENDO_TRANSFER_IP = 0.87;
+    public static double EXTENDO_MOSTLY_TRANSFER = .8;
+    public static double EXTENDO_MOSTLY_TRANSFER_IP = .8;
 
     public static double EXTENDO_ARM_ABOVE_PICKUP = .3;
     public static double EXTENDO_WRIST_PICKUP = .95;

@@ -593,7 +593,7 @@ public class Hobbes extends Meccanum implements Robot {
     }
 
     public void tick() {
-        drive.updatePoseEstimate(); // update localizer
+       // drive.updatePoseEstimate(); // update localizer
         failsafeCheck(); // empty
         tickMacros(); // check macros
         motorAscentController.ascentTick();
