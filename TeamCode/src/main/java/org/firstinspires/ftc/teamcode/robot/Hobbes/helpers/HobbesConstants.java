@@ -90,12 +90,12 @@ public class HobbesConstants {
 
     // extendo
     public static double EXTENDO_IN = 0.86;
-   // public static double EXTENDO_OUT_FULL = 0.58;
+   // public static double EXTENDO_OUT_FULL = 0.58;a
     public static double EXTENDO_OUT_FULL = 0.62;
     public static double EXTENDO_OUT_FULL_LIMIT = .5;
     public static double EXTENDO__ARM_LIMIT = .25;
     public static double EXTENDO_OUT_SOME = 0.3;
-    public static double EXTENDO_SPEED = .01;
+    public static double EXTENDO_SPEED = .05;
 
 
 
