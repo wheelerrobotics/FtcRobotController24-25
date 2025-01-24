@@ -7,6 +7,9 @@ import static org.opencv.imgproc.Imgproc.COLOR_BGR2HSV;
 import static org.opencv.imgproc.Imgproc.contourArea;
 import static org.opencv.imgproc.Imgproc.drawContours;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.pow;
+
 import android.provider.ContactsContract;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -37,13 +40,18 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
     */
 
     public static boolean outputMode, blurry;
-    public static int hMax = 10, hMin=0, sMax=255, sMin=50, lMax=255, lMin=50;
-    public static int hMax2 = 130, hMin2=115, sMax2=225, sMin2=150, lMax2=255, lMin2=50;
+    public static int hMax = 20, hMin=0, sMax=255, sMin=100, lMax=100, lMin=10;
+    public static int hMax2 = 135, hMin2=120, sMax2=225, sMin2=100, lMax2=100, lMin2=10;
+    public static int sizeTresh = 200;
+    public static double powerer = 1.05;
     public int pos = 0;
     public double angle = 0;
 
     public double getAngle() {
         return angle;
+    }
+    public void setAngle(double angle) {
+        this.angle = angle;
     }
 
     public ColorIsolationPipeline() {
@@ -53,32 +61,31 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
     @Override
     public void init(Mat input) {
     }
+    Mat hierarchey = new Mat();
+    List<MatOfPoint> contours = new ArrayList<>();
+    Mat mask1 = new Mat();
+    Mat temp = new Mat();
+
+    Scalar lowR = new Scalar(hMin, sMin, lMin);
+    Scalar highR = new Scalar(hMax, sMax, lMax);
+
+    Scalar lowB = new Scalar(hMin2, sMin2, lMin2);
+    Scalar highB = new Scalar(hMax2, sMax2, lMax2);
+
+    double maxArea = 0;
+    int maxIdx = 0;
     public Mat isolate(Mat input) {
-        Mat temp = new Mat();
         Imgproc.cvtColor(input, temp, COLOR_BGR2HSV);
 
-        Scalar lowR = new Scalar(hMin, sMin, lMin);
-        Scalar highR = new Scalar(hMax, sMax, lMax);
-
-        Scalar lowB = new Scalar(hMin2, sMin2, lMin2);
-        Scalar highB = new Scalar(hMax2, sMax2, lMax2);
-
-        Mat mask1 = new Mat();
         inRange(temp, lowR, highR, mask1);
+        inRange(temp, lowB, highB, temp);
+        add(mask1, temp, temp);
 
-        Mat mask2 = new Mat();
-        inRange(temp, lowB, highB, mask2);
+        maxArea = 0;
+        maxIdx = 0;
 
+        Imgproc.findContours(temp, contours, hierarchey, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
-        Mat mask = new Mat();
-        add(mask1, mask2, mask);
-
-        List<MatOfPoint> contours = new ArrayList<>();
-        double maxArea = 0;
-        int maxIdx = 0;
-        Mat hierarchey = new Mat();
-
-        Imgproc.findContours(mask, contours, hierarchey, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         if (contours.isEmpty()) return input;
 
         for (MatOfPoint contour : contours) {
@@ -88,11 +95,14 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
                 maxIdx = contours.indexOf(contour);
             }
         }
+
+        if (maxArea < sizeTresh) return input;
+
         Imgproc.drawContours(input, contours, maxIdx, new Scalar(0, 255, 0));
 
         RotatedRect wallpos = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(maxIdx).toArray()));
         Imgproc.drawMarker(input, wallpos.center, new Scalar(0, 255, 255));
-        angle = wallpos.angle;
+        setAngle(pow(abs(wallpos.center.x-60), powerer) * (abs(wallpos.center.x-60)/(wallpos.center.x-60)));
         return input;
     }
     public Mat ROI, blur;

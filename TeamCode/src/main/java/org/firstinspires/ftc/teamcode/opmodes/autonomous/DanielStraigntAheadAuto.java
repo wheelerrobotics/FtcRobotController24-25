@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.COLLAPS
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TRANSFER_AUTO;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_DOWN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_START;
@@ -155,7 +156,7 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
                                 hob.actionWait(100),
                                 sweep2,
 
-                                hob.actionMacro(COLLAPSE_TO_SPECIMEN),
+                                hob.actionMacro(SPECIMEN_PICKUP),
                                 sweep3,
 
                                 hob.actionMacro(SPECIMEN_PICKUP),
