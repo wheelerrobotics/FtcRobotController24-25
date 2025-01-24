@@ -41,12 +41,14 @@ public class HobbesConstants {
 
 
     //slides
-    public static int SLIDES_MAX = 3100; //top of slides
+    public static int SLIDES_MAX = 1100; //top of slides
     public static int SLIDES_MIN = 0; //bottom of slides
-    public static int SLIDES_OUT_TOP_SAMPLE = 2900; //bucket deposit
+    public static int SLIDES_OUT_TOP_SAMPLE = 1000; //bucket deposit
 
     public static double SLIDES_SIGMOID_SCALER = 0.01; // (DONEISH)
-    public static double SLIDES_KP = 0.008;
+    public static double SLIDES_KP = 0.007;
+    public static double SLIDES_KI = 0.00000008;
+    public static double SLIDES_KD = 0.0005;
     public static int SLIDES_IN = 0; //used to put slides all the way down
 
 
@@ -129,8 +131,8 @@ public class HobbesConstants {
 
 
     //specimen pickup
-    public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
-    public static int SLIDES_SPECIMEN_PICKED_UP = 300;
+    public static int SLIDES_SPECIMEN_TO_PICKUP = 0;//TODO: REDO (DRAFTED THO)
+    public static int SLIDES_SPECIMEN_PICKED_UP = 100;//TODO: REDO (DRAFTED THO)
 
     public static double SLIDES_ARM_SPECIMEN_PICKUP = .94;
     public static double SLIDES_WRIST_SPECIMEN_PICKUP = .1;
@@ -139,18 +141,16 @@ public class HobbesConstants {
     public static double SLIDES_WRIST_SPECIMEN_PICKUP_QUALIFIERS = .07;
 
     //specimen deposit
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT_QUALIFIERS = 1100;
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 1130;
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT_TELEOP = 1230;
-    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64; // done
-    public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.16; // done
-    public static int SLIDES_SPECIMEN_DEPOSITED = 200;
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 1130;
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED_QUALIFIERS = 1030;
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 1060;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 400; //TODO: REDO (DRAFTED THO)
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT_TELEOP = 410; //TODO: REDO (DRAFTED THO)
+    public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64;
+    public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.16;
+    public static int SLIDES_SPECIMEN_DEPOSITED = 70;//TODO: REDO (DRAFTED THO)
+    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 400;//TODO: REDO (DRAFTED THO)
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 350;//TODO: REDO (DRAFTED THO)
 
-    public static int SLIDES_SPEC_NEW = 900;
-    public static int SLIDES_SPEC_DOWN = 750;
+    public static int SLIDES_SPEC_NEW = 300;//TODO: REDO (DRAFTED THO)
+    public static int SLIDES_SPEC_DOWN = 250;//TODO: REDO (DRAFTED THO)
     public static double SLIDES_WRIST_SPEC_NEW = .3;
     public static double SLIDES_ARM_SPEC_NEW = .85;
 

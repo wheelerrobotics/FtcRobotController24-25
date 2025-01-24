@@ -20,6 +20,7 @@ public class SlideTele extends OpMode {
     public static int pos = 0;
     public static double kp = 0;
     public static double ki = 0;
+    public static double kd = 0;
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
     Hobbes hob = null;
@@ -49,7 +50,7 @@ public class SlideTele extends OpMode {
         // p1 & p2: start freeze (to ignore input while switching mode)
         if (gamepad2.start || gamepad1.start) return;
         hob.slidesController.setTarget(pos);
-        hob.slidesController.setConsts(kp, ki, 0);
+        hob.slidesController.setConsts(kp, ki, kd);
         //hob.runMacro(new HobbesState(null, null, null, null, null, null, null, pos, null, null, null));
         hob.tick();
     }

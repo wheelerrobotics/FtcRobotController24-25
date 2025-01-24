@@ -17,6 +17,8 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 //import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_ABOVE_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_START;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KD;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KI;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MAX;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MIN;
@@ -765,7 +767,7 @@ public class Hobbes extends Meccanum implements Robot {
         public void start() {
             basePos = slides.getCurrentPosition();
 
-            slidePID = new PID(SLIDES_KP, 0, 0, false);
+            slidePID = new PID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
         }
         public void setConsts(double kp, double ki, double kd) {
@@ -788,7 +790,7 @@ public class Hobbes extends Meccanum implements Robot {
                 slides.setZeroPowerBehavior(BRAKE);
                 slides2.setZeroPowerBehavior(BRAKE);
             }
-            //slidePID.setConsts(SLIDES_KP, 0, 0);
+            slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
 
