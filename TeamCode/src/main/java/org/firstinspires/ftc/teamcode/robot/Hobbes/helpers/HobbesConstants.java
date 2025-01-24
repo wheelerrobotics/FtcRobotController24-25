@@ -89,12 +89,12 @@ public class HobbesConstants {
 
 
     // extendo
-    public static double EXTENDO_IN = 0.86;
-   // public static double EXTENDO_OUT_FULL = 0.58;a
+    public static double EXTENDO_IN = 0.9;
+   // public static double EXTENDO_OUT_FULL = 0.58;
     public static double EXTENDO_OUT_FULL = 0.62;
     public static double EXTENDO_OUT_FULL_LIMIT = .5;
     public static double EXTENDO__ARM_LIMIT = .25;
-    public static double EXTENDO_OUT_SOME = 0.3;
+    public static double EXTENDO_OUT_SOME = 0.7;
     public static double EXTENDO_SPEED = .05;
 
 
@@ -131,8 +131,8 @@ public class HobbesConstants {
 
 
     //specimen pickup
-    public static int SLIDES_SPECIMEN_TO_PICKUP = 0;//TODO: REDO (DRAFTED THO)
-    public static int SLIDES_SPECIMEN_PICKED_UP = 100;//TODO: REDO (DRAFTED THO)
+    public static int SLIDES_SPECIMEN_TO_PICKUP = 0;
+    public static int SLIDES_SPECIMEN_PICKED_UP = 80;
 
     public static double SLIDES_ARM_SPECIMEN_PICKUP = .94;
     public static double SLIDES_WRIST_SPECIMEN_PICKUP = .1;
@@ -141,16 +141,17 @@ public class HobbesConstants {
     public static double SLIDES_WRIST_SPECIMEN_PICKUP_QUALIFIERS = .07;
 
     //specimen deposit
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 400; //TODO: REDO (DRAFTED THO)
-    public static int SLIDES_SPECIMEN_TO_DEPOSIT_TELEOP = 410; //TODO: REDO (DRAFTED THO)
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT = 400;
+    public static int SLIDES_SPECIMEN_TO_DEPOSIT_TELEOP = 410;
     public static double SLIDES_ARM_SPECIMEN_TO_DEPOSIT = 0.64;
     public static double SLIDES_WRIST_SPECIMEN_TO_DEPOSIT = 0.16;
-    public static int SLIDES_SPECIMEN_DEPOSITED = 70;//TODO: REDO (DRAFTED THO)
-    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 400;//TODO: REDO (DRAFTED THO)
-    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 350;//TODO: REDO (DRAFTED THO)
 
-    public static int SLIDES_SPEC_NEW = 300;//TODO: REDO (DRAFTED THO)
-    public static int SLIDES_SPEC_DOWN = 250;//TODO: REDO (DRAFTED THO)
+    public static int SLIDES_SPECIMEN_DEPOSITED = 200;
+    public static int SLIDES_SPECIMEN_TO_DEPOSITED = 300;
+    public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 350;
+
+    public static int SLIDES_SPEC_NEW = 400;
+    public static int SLIDES_SPEC_DOWN = 150;
     public static double SLIDES_WRIST_SPEC_NEW = .3;
     public static double SLIDES_ARM_SPEC_NEW = .85;
 
@@ -171,10 +172,12 @@ public class HobbesConstants {
 
     public static double SWIVEL_TRANSFER = 0.305;
     public static double SWIVEL_TRANSFER_IP = 0.64;
+
     public static double EXTENDO_TRANSFER = 0.84;
-    public static double EXTENDO_TRANSFER_IP = 0.86;
+    public static double EXTENDO_TRANSFER_IP = 0.85;
     public static double EXTENDO_MOSTLY_TRANSFER = .77;
     public static double EXTENDO_MOSTLY_TRANSFER_IP = .76;
+
     public static double EXTENDO_ARM_ABOVE_PICKUP = .3;
     public static double EXTENDO_WRIST_PICKUP = .95;
     public static double EXTENDO_ARM_PICKUP = .25;
