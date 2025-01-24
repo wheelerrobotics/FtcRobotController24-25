@@ -64,7 +64,6 @@ public class HobbesConstants {
     public static double SLIDES_ARM_TRANSFER_IP = 0.08;
 
     public static double SLIDES_WRIST_TRANSFER = 0.95;
-    //TODO: specimen pickup transfer is going to require new vals (since its transferring dif)
     public static double EXTENDO_ARM_TRANSFER_SPEC = 0.56 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_WRIST_TRANSFER_SPEC = .54 + EXTENDO_WRIST_OFFSET;
     public static double SLIDES_ARM_TRANSFER_SPEC = .13;
@@ -99,6 +98,7 @@ public class HobbesConstants {
 
 
     // extendo arm
+    //TODO: get these pushing values for auto
     public static double EXTENDO_ARM_UP = .37 + EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_PUSH_UP = .4+ EXTENDO_ARM_OFFSET;
     public static double EXTENDO_ARM_PUSH_DOWN = .19+ EXTENDO_ARM_OFFSET;
