@@ -30,21 +30,10 @@ import java.util.List;
 
 @Config
 public class ColorIsolationPipeline extends OpenCvPipeline {
-    /*static public int hMax = 12;
-    static public int sMax = 300;
-    static public int lMax = 400;
-
-    static public int hMin = 0;
-    static public int sMin = 120;
-    static public int lMin = 0;
-    */
-
-    public static boolean outputMode, blurry;
-    public static int hMax = 20, hMin=0, sMax=255, sMin=100, lMax=100, lMin=10;
-    public static int hMax2 = 135, hMin2=120, sMax2=225, sMin2=100, lMax2=100, lMin2=10;
+    public static int hMax = 20, hMin=0, sMax=255, sMin=100, lMax=100, lMin=10; // blue
+    public static int hMax2 = 135, hMin2=120, sMax2=225, sMin2=100, lMax2=100, lMin2=10; // red
     public static int sizeTresh = 200;
-    public static double powerer = 1.05;
-    public int pos = 0;
+    public static double powerer = 1.05; // make more weighted at edge of frame to offset bad fov/framerate? could fix with better framerate.
     public double angle = 0;
 
     public double getAngle() {
@@ -76,6 +65,7 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
     int maxIdx = 0;
     public Mat isolate(Mat input) {
         Imgproc.cvtColor(input, temp, COLOR_BGR2HSV);
+        Imgproc.GaussianBlur(temp, temp, new Size(5.0, 5.0), 0.00);
 
         inRange(temp, lowR, highR, mask1);
         inRange(temp, lowB, highB, temp);
@@ -105,7 +95,6 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
         setAngle(pow(abs(wallpos.center.x-60), powerer) * (abs(wallpos.center.x-60)/(wallpos.center.x-60)));
         return input;
     }
-    public Mat ROI, blur;
     @Override
     public Mat processFrame(Mat input) {
         //Drawing the Contours

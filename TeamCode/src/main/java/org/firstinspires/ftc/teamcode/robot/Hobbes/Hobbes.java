@@ -88,7 +88,7 @@ public class Hobbes extends Meccanum implements Robot {
     public MotorSlideController slidesController = new MotorSlideController();
     public ServosController servosController = new ServosController();
     public SpecimenCorrector specimenCorrector = null;
-    // public SampleMecanumDrive rr = null;
+
     public DcMotorImplEx slides, ascentLeft, ascentRight, slides2;
     public ServoImplEx slidesWrist;
     public PinpointDrive drive;
@@ -108,22 +108,26 @@ public class Hobbes extends Meccanum implements Robot {
     @Override
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
+
         bv = new BotVision();
         bv.init(hardwareMap, p, "Webcam 1");
+
         drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
+
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         tele.setMsTransmissionInterval(11);
         limelight.pipelineSwitch(3);
         limelight.start();
+
         specimenCorrector = new SpecimenCorrector(drive);
+
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
         // imu.initialize(parameters);
         // angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX,
         // AngleUnit.RADIANS);
+
         vs = hardwareMap.voltageSensor.get("Control Hub");
-        // init limelight:
-        // limelight = hw.get(Limelight3A.class, "limelight");
 
 
         // define motors:
@@ -135,11 +139,12 @@ public class Hobbes extends Meccanum implements Robot {
 
         ascentLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentLeft"); // CH2
         ascentRight = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentRight"); // CH0
-        // TODO: REVERSE ONE ASCENT MODULE SO THEY PLAY NICE WITH ASCENT CONTROLLER
+        // TODO: REVERSE ASCENT MODULES HOWEVER NECESSARY SO THEY PLAY NICE WITH ASCENT CONTROLLER
 
         // reverse left side motors
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
         // set braking
         setZeroPowerBehavior(BRAKE);
 
@@ -149,11 +154,12 @@ public class Hobbes extends Meccanum implements Robot {
 
         // configure slides
         slides.setZeroPowerBehavior(BRAKE);
+        slides2.setZeroPowerBehavior(BRAKE);
         slides.setDirection(DcMotorSimple.Direction.FORWARD);
         slides2.setDirection(DcMotorSimple.Direction.REVERSE);
-        slides2.setZeroPowerBehavior(BRAKE);
         slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         // define limited servos
         claw = hardwareMap.get(ServoImplEx.class, "claw");
         extendoLeft = hardwareMap.get(ServoImplEx.class, "extendoLeft");
@@ -164,10 +170,12 @@ public class Hobbes extends Meccanum implements Robot {
         slidesWrist = hardwareMap.get(ServoImplEx.class, "slidesWrist");
         extendoSwivel = hardwareMap.get(ServoImplEx.class, "extendoSwivel");
         extendoClaw = hardwareMap.get(ServoImplEx.class, "extendoClaw");
+
         // define continous servos
        // intakeLeft = hardwareMap.crservo.get("intakeLeft");
        // intakeRight = hardwareMap.crservo.get("intakeRight");
-        // give servos good range of motion
+
+        // give servos full range of motion
         slidesWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         slidesArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendoWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
@@ -176,7 +184,6 @@ public class Hobbes extends Meccanum implements Robot {
         extendoClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
         //define sensors
-
         //wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
 
         // set slides base pos
@@ -892,7 +899,7 @@ public class Hobbes extends Meccanum implements Robot {
             spd = abs(pos-lastPos);
 
             // could try some endpoint detection with a current detector ??   just an idea for now
-            lastCurrent = currentL = currentR;
+            lastCurrent = currentL + currentR;
             currentL = ascentLeft.getCurrent(CurrentUnit.MILLIAMPS);
             currentR = ascentRight.getCurrent(CurrentUnit.MILLIAMPS);
             currentSpike = currentL + currentR - lastCurrent;
@@ -903,14 +910,25 @@ public class Hobbes extends Meccanum implements Robot {
                     ascentLeft.setPower(0);
                 case TOP:
                     if (spd < 50 && switchTime.milliseconds() > 100) mode = ASCENT_MODE.OFF;
+                    if (mode != ASCENT_MODE.TOP) return;
                     ascentRight.setPower(1); // idk if this goes the right way
                     ascentLeft.setPower(1); // idk if this goes the right way
                 case BOTTOM:
-                    if (spd < 50 && switchTime.milliseconds() > 100) mode = ASCENT_MODE.OFF;
+                    if (spd < 50 && switchTime.milliseconds() > 100) {
+                        ascentLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                        ascentRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                        ascentLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        ascentRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        mode = ASCENT_MODE.OFF;
+                    }
+                    if (mode != ASCENT_MODE.BOTTOM) return;
                     ascentRight.setPower(-1); // idk if this goes the right way
                     ascentLeft.setPower(-1); // idk if this goes the right way
                 case ENCODED:
+                    if (target>=2000) mode = ASCENT_MODE.TOP;
+                    if (target<=0) mode = ASCENT_MODE.BOTTOM;
                     if (signum(pos-target) != signum(lastPos-target)) mode = ASCENT_MODE.OFF;
+                    if (mode != ASCENT_MODE.ENCODED) return;
                     ascentRight.setPower(-signum(lastPos-target)); // idk if this goes the right way
                     ascentLeft.setPower(-signum(lastPos-target)); // idk if this goes the right way
             }
