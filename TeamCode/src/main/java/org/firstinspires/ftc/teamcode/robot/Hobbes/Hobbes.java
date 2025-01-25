@@ -31,6 +31,7 @@ import static java.lang.Math.E;
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
+import static java.lang.Math.signum;
 
 import android.content.Context;
 import android.service.quickaccesswallet.WalletCard;
@@ -63,6 +64,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Link;
@@ -133,6 +135,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         ascentLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentLeft"); // CH2
         ascentRight = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentRight"); // CH0
+        // TODO: REVERSE ONE ASCENT MODULE SO THEY PLAY NICE WITH ASCENT CONTROLLER
 
         // reverse left side motors
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -555,27 +558,17 @@ public class Hobbes extends Meccanum implements Robot {
         }
         if (MACROING) {
             HobbesState m = macroState;
-            if (m.slidesPos != null)
-                slidesController.setTarget(m.slidesPos);
-            if (m.extendoPos != null)
-                servosController.setExtendo(m.extendoPos);
-            if (m.extendoArmPos != null)
-                servosController.extendoArmPos = m.extendoArmPos;
-            if (m.extendoWristPos != null)
-                servosController.extendoWristPos = m.extendoWristPos;
-            if (m.slidesArmPos != null)
-                servosController.slidesArmPos = m.slidesArmPos;
-            if (m.slidesWristPos != null)
-                servosController.slidesWristPos = m.slidesWristPos;
-            if (m.extendoSwivelPos != null)
-                servosController.extendoSwivelPos = m.extendoSwivelPos;
-            if (m.extendoClawPos != null)
-                servosController.extendoClawPos = m.extendoClawPos;
-            //if (m.intakeSpeed != null)
-            //    servosController.intakeSpeed = m.intakeSpeed;
-            if (m.clawPos != null)
-                servosController.clawPos = m.clawPos;
+            if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
+            if (m.extendoPos != null) servosController.setExtendo(m.extendoPos);
+            if (m.extendoArmPos != null) servosController.extendoArmPos = m.extendoArmPos;
+            if (m.extendoWristPos != null) servosController.extendoWristPos = m.extendoWristPos;
+            if (m.slidesArmPos != null) servosController.slidesArmPos = m.slidesArmPos;
+            if (m.slidesWristPos != null) servosController.slidesWristPos = m.slidesWristPos;
+            if (m.extendoSwivelPos != null) servosController.extendoSwivelPos = m.extendoSwivelPos;
+            if (m.extendoClawPos != null) servosController.extendoClawPos = m.extendoClawPos;
+            if (m.clawPos != null) servosController.clawPos = m.clawPos;
             if (m.ascentPos != null) motorAscentController.setTarget(m.ascentPos);
+
 
             if (m.linkedState != null) {
                 if (m.linkedState.type == Link.LinkType.WAIT) {
@@ -592,6 +585,19 @@ public class Hobbes extends Meccanum implements Robot {
         }
     }
 
+    public ElapsedTime teleAutoAscent;
+    public void startTeleAutoAscent() {
+        teleAutoAscent = new ElapsedTime();
+        teleAutoAscent.reset();
+    }
+    public void checkAutoAscent() {
+        if (teleAutoAscent != null) {
+            if (teleAutoAscent.seconds() > 114) {
+                motorAscentController.setMode(ASCENT_MODE.TOP);
+                slidesController.setTarget(SLIDES_MAX);
+            }
+        }
+    }
     public void tick() {
         //drive.updatePoseEstimate(); // update localizer
         //failsafeCheck(); // empty
@@ -869,125 +875,55 @@ public class Hobbes extends Meccanum implements Robot {
     }
 
     public static double ASCENT_KP = 0.01;
+    public enum ASCENT_MODE {OFF, TOP, BOTTOM, ENCODED}
+    // NOTE: THIS ASSUMES DRIVING BOTH MOTORS AT +1 POWER MAKES THEM GO UP
     public class MotorAscentController {
-        public double ascentTar = 0;
-        public boolean runToBottomAscent = false;
-        public boolean SLIDE_TARGETING = false;
-        public double basePosR = 0;
-        public double posR = 0;
-        public double basePosL = 0;
-        public double posL = 0;
-        public double errorThreshold = 20;
-        public double derivativeThreshold = 10;
-
-        public double powerL = 0;
-        public double powerR = 0;
-
-        // public double slideTar = 0;
-        public PID slidePIDL;
-        public PID slidePIDR;
-
-        // public double maxHeight = 1000;
-        // public double minHeight = 0;
-
-        // public double differenceScalar = 0.0001;
-        // public double scaler = 50;
+        public double pos = 0, lastPos = 0, spd = 0;
+        public int target;
+        public double currentL=0, currentR=0, lastCurrent=0, currentSpike=0;
+        public ASCENT_MODE mode = ASCENT_MODE.OFF;
+        public ElapsedTime switchTime;
         public void start() {
-            basePosL = ascentLeft.getCurrentPosition();
-            basePosR = ascentRight.getCurrentPosition();
-
-
-            slidePIDR = new PID(ASCENT_KP, 0, 0, false);
-            slidePIDL = new PID(ASCENT_KP, 0, 0, false);
-
+            switchTime = new ElapsedTime();
         }
-
         public void ascentTick() {
-            slidePIDL.setConsts(ASCENT_KP, 0, 0);
-            slidePIDR.setConsts(ASCENT_KP, 0, 0);
-            slidePIDR.setTarget(ascentTar);
-            slidePIDL.setTarget(ascentTar);
-            posL = -(ascentLeft.getCurrentPosition() - basePosL);
-            posR = -(ascentRight.getCurrentPosition() - basePosR);
+            lastPos = pos;
+            pos = (ascentRight.getCurrentPosition() + ascentLeft.getCurrentPosition());
+            spd = abs(pos-lastPos);
 
-            //tele.addData("posL", posL);
-            //tele.addData("posR", posR);
-            //tele.addData("targeting", SLIDE_TARGETING);
-            //tele.addData("slidetar", slideTar);
-            //tele.addData("slidep", SLIDES_KP);
+            // could try some endpoint detection with a current detector ??   just an idea for now
+            lastCurrent = currentL = currentR;
+            currentL = ascentLeft.getCurrent(CurrentUnit.MILLIAMPS);
+            currentR = ascentRight.getCurrent(CurrentUnit.MILLIAMPS);
+            currentSpike = currentL + currentR - lastCurrent;
 
-            if (posL < SLIDES_MIN - 100 && powerL < 0) {
-                SLIDE_TARGETING = true;
-                ascentTar = SLIDES_MIN - 100;
-            }
-            if (posL > SLIDES_MAX && powerL > 0) {
-                SLIDE_TARGETING = true;
-                ascentTar = SLIDES_MAX;
-            }
-
-            if (posR < SLIDES_MIN - 100 && powerR < 0) {
-                SLIDE_TARGETING = true;
-                ascentTar = SLIDES_MIN - 100;
-            }
-            if (posR > SLIDES_MAX && powerR > 0) {
-                SLIDE_TARGETING = true;
-                ascentTar = SLIDES_MAX;
-            }
-
-            if (SLIDE_TARGETING) {
-                powerR = -slidePIDR.tick(posR);
-                tele.addData("pidpowerR", powerR);
-                powerL = -slidePIDL.tick(posL);
-                tele.addData("pidpowerR", powerL);
-            }
-            tele.addData("ASC_TAR", ascentTar);
-            tele.addData("TARING", SLIDE_TARGETING);
-
-            if (!runToBottomAscent) {
-                ascentRight.setPower(powerR);
-                ascentLeft.setPower(powerL);
-            }else{
-                ascentRight.setPower(-1);
-                ascentLeft.setPower(-1);
+            switch (mode) {
+                case OFF:
+                    ascentRight.setPower(0);
+                    ascentLeft.setPower(0);
+                case TOP:
+                    if (spd < 50 && switchTime.milliseconds() > 100) mode = ASCENT_MODE.OFF;
+                    ascentRight.setPower(1); // idk if this goes the right way
+                    ascentLeft.setPower(1); // idk if this goes the right way
+                case BOTTOM:
+                    if (spd < 50 && switchTime.milliseconds() > 100) mode = ASCENT_MODE.OFF;
+                    ascentRight.setPower(-1); // idk if this goes the right way
+                    ascentLeft.setPower(-1); // idk if this goes the right way
+                case ENCODED:
+                    if (signum(pos-target) != signum(lastPos-target)) mode = ASCENT_MODE.OFF;
+                    ascentRight.setPower(-signum(lastPos-target)); // idk if this goes the right way
+                    ascentLeft.setPower(-signum(lastPos-target)); // idk if this goes the right way
             }
         }
-
-        // REWRITE EVENTUALLY AND CLEAN UP PLEAS
-
-        public void driveSlides(double p) {
-            // if (p == 0) setTarget(pos); // untested
-            tele.addData("ipower", p);
-            tele.addData("cpower", powerR);
-            tele.update();
-            SLIDE_TARGETING = false;
-            powerR = -p;
-            powerL = -p;
+        public void setTarget(int target) {
+            this.target = target;
+            switchTime.reset();
+            this.mode = ASCENT_MODE.ENCODED;
         }
-
-        public void setTargeting(boolean targeting) {
-            SLIDE_TARGETING = targeting;
+        public void setMode(ASCENT_MODE mode) {
+            this.mode = mode;
+            switchTime.reset();
         }
-
-        public void setTarget(double tar) {
-            ascentTar = tar;
-            SLIDE_TARGETING = true;
-        }
-
-        public void resetSlideBasePos() {
-            ascentRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            ascentRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            basePosL = ascentLeft.getCurrentPosition();
-            ascentLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            ascentLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            basePosL = ascentLeft.getCurrentPosition();
-        }
-
-        public boolean isBusy() {
-
-            return slidePIDL.getDerivative() < derivativeThreshold && abs(posL - ascentTar) < errorThreshold;
-            // could get proportion (^) from pid but dont want to
-        }
-
     }
 
 
