@@ -44,28 +44,36 @@ public class MeepMeepPaths {
 
                 //first sweep
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                        .splineTo(new Vector2d(-23, 24), PI * 5 / 6);
+                        .splineTo(new Vector2d(-23, 24), PI * 4 / 6);
                 TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
                         .setTangent(0).splineToLinearHeading(new Pose2d(-15, 25, 4*PI/16),
-                                0, null, new ProfileAccelConstraint(-80, 20));
+                                0, null, new ProfileAccelConstraint(-80, 80));
 
                 //second sweep
                 TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                         .setTangent(PI)
-                        .splineToLinearHeading(new Pose2d(-28, 32, PI*5/6), PI * 5 / 6);
+                        .splineToLinearHeading(new Pose2d(-30, 32, PI*4/6), PI * 4 / 6);
                 TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
                         .setTangent(0).splineToLinearHeading(new Pose2d(-15, 31, 4*PI/16),
-                                0,  null, new ProfileAccelConstraint(-80, 20));
+                                0,  null, new ProfileAccelConstraint(-80, 80));
+
                 //third sweep
                 TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                         .setTangent(PI)
-                        .splineToLinearHeading(new Pose2d(-48, 57, 0), 0)
+                        .splineToLinearHeading(new Pose2d(-34, 40, PI*4/6), PI * 4 / 6);
+                TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
+                        .setTangent(0).splineToLinearHeading(new Pose2d(-15, 39, 4*PI/16),
+                                0,  null, new ProfileAccelConstraint(-80, 80));
+
+                TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
+                        .setTangent(PI)
+                        .splineToLinearHeading(new Pose2d(-20, 30, 0), 0)
                         .lineToX(-10,
                                 null,
                                 new ProfileAccelConstraint(-80, 80));
 
 
-                TrajectoryActionBuilder a5 = s4.endTrajectory().fresh().setTangent(PI)
+                TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh().setTangent(PI)
                         .splineToConstantHeading(new Vector2d(-24, -8), PI)
                         .splineToConstantHeading(new Vector2d(-40, -8), PI);
                 // wall specimen 2
@@ -95,9 +103,36 @@ public class MeepMeepPaths {
                         .splineToConstantHeading(new Vector2d(-24, -14), PI)
                         .splineToConstantHeading(new Vector2d(-38, -14), PI);
 
-                // park
+                // sample on clip
+
                 TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
-                        .splineTo(new Vector2d(-5,29),PI/2);
+                        .splineToConstantHeading(new Vector2d(-20, 0), PI/2)
+                        .splineToConstantHeading(new Vector2d(-8, 29), 0);
+
+                // sample deposit
+                TrajectoryActionBuilder a13 = a12.endTrajectory().fresh()
+                        .setReversed(true)
+                        .splineTo(new Vector2d(-5,-60),-PI/4);
+
+                //spike mark sample
+                TrajectoryActionBuilder a14 = a13.endTrajectory().fresh()
+                        .setReversed(false)
+                        .splineTo(new Vector2d(-25,-50),PI);
+
+                TrajectoryActionBuilder a15 = a14.endTrajectory().fresh()
+                        .setReversed(true)
+                        .splineTo(new Vector2d(-5,-60),-PI/4);
+
+                //spike mark sample
+                TrajectoryActionBuilder a16 = a15.endTrajectory().fresh()
+                        .setReversed(false)
+                        .splineTo(new Vector2d(-25,-55),PI);
+
+                TrajectoryActionBuilder a17 = a16.endTrajectory().fresh()
+                        .setReversed(true)
+                        .splineTo(new Vector2d(-5,-60),-PI/4);
+
+
 
                 // preload
                 Action specimen1 = a1.build();
@@ -107,6 +142,9 @@ public class MeepMeepPaths {
                 Action beforeSweep2 = s2.build();
                 Action sweep2 = s3.build();
                 Action sweep3 = s4.build();
+                Action sweep3_1 = s4_5.build();
+                Action sweep3_1_1 = s4_5_5.build();
+
                 // cycling specimens
                 Action specimen2 = a5.build();
                 Action wall2 = a6.build();
@@ -115,13 +153,19 @@ public class MeepMeepPaths {
                 Action specimen4 = a9.build();
                 Action wall4 = a10.build();
                 Action specimen5 = a11.build();
-                Action park = a12.build();
+                Action notPark = a12.build();
+                Action yes = a13.build();
+                Action yes2 = a14.build();
+                Action yes3 = a15.build();
+                Action yes4 = a16.build();
+                Action yes5 = a17.build();
 
                 myBot.runAction(new SequentialAction(
                         // hob.actionMacro(SPECIMEN_BEFORE_DEPOSIT),
                         // specimen sweep pos 1 - X: -23, Y: 29, R: 5pi/4
                         specimen1, beforeSweep1, sweep1, beforeSweep2, sweep2,
-                        sweep3, specimen2, wall2, specimen3, wall3, specimen4, wall4, specimen5, park
+                        sweep3, sweep3_1, sweep3_1_1, specimen2, wall2, specimen3,
+                        wall3, specimen4, wall4, specimen5, notPark, yes, yes2, yes3, yes4, yes5
                         ));
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
