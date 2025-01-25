@@ -53,8 +53,8 @@ public class HobbesConstants {
 
 
     //ascent
-    public static int ASCENT_MAX = -1960; //top of slides
-    public static double ASCENT_ASCENDED = 1000;
+    public static int ASCENT_MAX = 2000; //top of slides
+    public static double ASCENT_AUTO = 1000;
     public static int ASCENT_MIN = 0; //bottom of slides
     public static double ASCENT_KP = 0.01;
 
