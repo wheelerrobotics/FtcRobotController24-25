@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.robot.Hobbes;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_ABOVE_SUB_BARRIER;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_SPECIMEN_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_CLAW_CLOSED;
@@ -11,6 +13,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OFFSET;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OUT_FULL_LIMIT;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_SPECIMEN_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INFINITY;
@@ -26,6 +29,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SWIVEL_STRAIGHT;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPEC_ALMOST_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static java.lang.Math.E;
 import static java.lang.Math.PI;
@@ -648,7 +652,21 @@ public class Hobbes extends Meccanum implements Robot {
             slidesArm.setPosition(SLIDES_ARM_START);
             slidesWrist.setPosition(SLIDES_WRIST_START);
             extendoSwivel.setPosition(SWIVEL_STRAIGHT);
-            extendoClaw.setPosition(EXTENDO_CLAW_CLOSED);
+            extendoClaw.setPosition(EXTENDO_CLAW_OPEN);
+        }
+        public void teleSetup() {
+            claw.setPosition(CLAW_CLOSED);
+            extendoLeft.setPosition(EXTENDO_IN);
+            extendoRight.setPosition(servosController.extendoLeftToRight(EXTENDO_IN));
+
+            extendoArm.setPosition(EXTENDO_ARM_ABOVE_SUB_BARRIER);
+            extendoWrist.setPosition(EXTENDO_WRIST_SPECIMEN_PICKUP + extendoWristRezeroOffset);
+
+            slidesArm.setPosition(SLIDES_ARM_ABOVE_TRANSFER);
+            slidesWrist.setPosition(SLIDES_WRIST_TRANSFER);
+
+            extendoSwivel.setPosition(SWIVEL_STRAIGHT);
+            extendoClaw.setPosition(EXTENDO_CLAW_OPEN);
         }
 
         public void autoSetup() {
@@ -724,7 +742,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         public void incrementExtendo(double increment) {
 
-            if ((extendoPos + increment) > 0.5 && (extendoPos + increment) > 0.1)
+            if ((extendoPos + increment) > EXTENDO_OUT_FULL_LIMIT && (extendoPos + increment) < EXTENDO_IN)
                 extendoPos += increment;
         }
 
@@ -803,7 +821,7 @@ public class Hobbes extends Meccanum implements Robot {
                 slides.setZeroPowerBehavior(BRAKE);
                 slides2.setZeroPowerBehavior(BRAKE);
             }
-            slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
+            //slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
 
@@ -842,10 +860,10 @@ public class Hobbes extends Meccanum implements Robot {
 
         // REWRITE EVENTUALLY AND CLEAN UP PLEASE
         private double minMaxScaler(double x, double power) {
-            if (SLIDE_TARGETING) return power;
+            //if (SLIDE_TARGETING) return power;
             double p = power * (power > 0
-                    ? ((1.3 * 1 / (1 + pow(E, -SLIDES_SIGMOID_SCALER * (x - 100 + SLIDES_MIN)))) - 0.1)
-                    : ((1.3 * 1 / (1 + pow(E, SLIDES_SIGMOID_SCALER * (x + 100 - SLIDES_MAX)))) - 0.1));
+                    ? ((1 / (1 + pow(E, -0.01 * (x - 200 + SLIDES_MIN)))))
+                    : ((1 / (1 + pow(E, 0.05 * (x + 25 - SLIDES_MAX))))));
             // uuuuuh
             return p;
         }

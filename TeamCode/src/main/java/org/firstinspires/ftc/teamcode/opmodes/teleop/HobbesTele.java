@@ -36,9 +36,9 @@ public class HobbesTele extends OpMode {
     @Override
     // runs on start press
     public void start() {
-        hob.runMacro(SPEC_AUTO_PARK);
+        //hob.runMacro(SPEC_AUTO_PARK);
         // run everything to start positions
-        // hob.servosController.setup();
+        hob.servosController.teleSetup();
     }
 
     @Override
@@ -81,8 +81,11 @@ public class HobbesTele extends OpMode {
         }
 
 
+        if (gamepad2.left_bumper && !lastGamepad2.left_bumper) hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_STRAIGHT);
+        if (gamepad2.left_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementExtendo(0.07); // 15 degrees?
+        if (gamepad2.right_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementExtendo(-0.07); // 15 degrees?
         //p1 & p2: ascent
-        if (gamepad2.left_bumper && !lastGamepad2.left_bumper  && !gamepad2.right_bumper) hob.runMacro(ASCENT_SLIDES_UP);
+        //if (gamepad2.left_bumper && !lastGamepad2.left_bumper  && !gamepad2.right_bumper) hob.runMacro(ASCENT_SLIDES_UP);
 
 
 
@@ -105,12 +108,12 @@ public class HobbesTele extends OpMode {
 
         // p1/p2: Outside Pickup
         if (gamepad1.left_bumper && !lastGamepad1.left_bumper) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
-        if (gamepad2.b && !lastGamepad2.b && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
+        //if (gamepad2.b && !lastGamepad2.b && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
         // p2: up but low
         if (gamepad2.a && !lastGamepad2.a && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
         // p1/p2: Inside Pickup
         if (gamepad1.left_trigger >0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
-        if (gamepad2.x && lastGamepad2.x && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
+        if (gamepad2.x && !lastGamepad2.x && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SUB_BARRIER);
 
 
 
