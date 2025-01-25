@@ -11,6 +11,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
+import java.util.concurrent.TimeUnit;
+
 public class BotVision {
     public OpenCvWebcam webcam;
     FtcDashboard dash = FtcDashboard.getInstance();
@@ -32,7 +34,7 @@ public class BotVision {
             @Override
             public void onOpened() {
                 FtcDashboard.getInstance().startCameraStream(webcam, 20);
-                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(160, 120, OpenCvCameraRotation.UPRIGHT);
                 tele.addLine("Opened!");
                 tele.update();
                 opened = true;
@@ -57,7 +59,7 @@ public class BotVision {
             @Override
             public void onOpened() {
                 FtcDashboard.getInstance().startCameraStream(webcam, 20);
-                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(160, 120, OpenCvCameraRotation.UPRIGHT);
                 tele.addLine("Opened!");
                 tele.update();
             }

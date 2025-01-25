@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.Hobbes;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_START;
@@ -16,6 +17,8 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 //import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_ABOVE_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_START;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KD;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KI;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MAX;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_MIN;
@@ -59,6 +62,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Link;
@@ -69,6 +73,7 @@ import org.firstinspires.ftc.teamcode.vision.BotVision;
 import org.firstinspires.ftc.teamcode.vision.ColorIsolationPipeline;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -82,7 +87,7 @@ public class Hobbes extends Meccanum implements Robot {
     public ServosController servosController = new ServosController();
     public SpecimenCorrector specimenCorrector = null;
     // public SampleMecanumDrive rr = null;
-    public DcMotorImplEx slides, ascentLeft, ascentRight;
+    public DcMotorImplEx slides, ascentLeft, ascentRight, slides2;
     public ServoImplEx slidesWrist;
     public PinpointDrive drive;
 
@@ -101,13 +106,13 @@ public class Hobbes extends Meccanum implements Robot {
     @Override
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
+        bv = new BotVision();
+        bv.init(hardwareMap, p, "Webcam 1");
         drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         tele.setMsTransmissionInterval(11);
         limelight.pipelineSwitch(3);
         limelight.start();
-        bv = new BotVision();
-        bv.init(hardwareMap, p, "Webcam 1");
         specimenCorrector = new SpecimenCorrector(drive);
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -133,14 +138,17 @@ public class Hobbes extends Meccanum implements Robot {
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         // set braking
-        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        setZeroPowerBehavior(BRAKE);
 
         // define slides
         slides = (DcMotorImplEx) hardwareMap.dcMotor.get("slides"); // EH3
+        slides2 = (DcMotorImplEx) hardwareMap.dcMotor.get("slides2"); // EH3
 
         // configure slides
-        slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slides.setDirection(DcMotorSimple.Direction.REVERSE);
+        slides.setZeroPowerBehavior(BRAKE);
+        slides.setDirection(DcMotorSimple.Direction.FORWARD);
+        slides2.setDirection(DcMotorSimple.Direction.REVERSE);
+        slides2.setZeroPowerBehavior(BRAKE);
         slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // define limited servos
@@ -175,6 +183,9 @@ public class Hobbes extends Meccanum implements Robot {
         // define hw as the hardware map for possible access later in this class
         hw = hardwareMap;
         // start runtime timer
+        while (!bv.inited);
+        bv.webcam.getExposureControl().setMode(ExposureControl.Mode.Manual);
+        bv.webcam.getExposureControl().setExposure(2, TimeUnit.MILLISECONDS);
         runtime.reset();
         inited = true;
     }
@@ -211,6 +222,7 @@ public class Hobbes extends Meccanum implements Robot {
         public double rotationI = 0;
         public double rotationD = 0;
     }
+    public static double webcamScaler = -0.003; // TODO: TUNE THIS
     public class SpecimenCorrector {
         // 3 goals, 3 PIDs
         // 1: follow sample
@@ -283,7 +295,7 @@ public class Hobbes extends Meccanum implements Robot {
             return angle - (2 * PI) * Math.floor((angle + PI) / (2 * PI));
         }
         public void specimenTick() {
-            drive.updatePoseEstimate(); // update localizer
+            //drive.updatePoseEstimate(); // update localizer
             // this top block for debugging when we are changing config vals
             specimenStrafePID.setTarget(corVals.strafeTarget);
             specimenStrafePID.setDoneThresholds(corVals.strafeErrorThresh, corVals.strafeDerivativeThresh);
@@ -323,7 +335,7 @@ public class Hobbes extends Meccanum implements Robot {
                 forwardPower = specimenForwardPID.tick(forwardDistance);
                 }else {
                     angle = p.getAngle();
-                    strafePower = specimenStrafePID.tick(angle);
+                    strafePower = specimenStrafePID.tick(angle * webcamScaler);
                 }
             } else {
                 strafePower = 0;
@@ -581,14 +593,14 @@ public class Hobbes extends Meccanum implements Robot {
     }
 
     public void tick() {
-        drive.updatePoseEstimate(); // update localizer
-        failsafeCheck(); // empty
+       // drive.updatePoseEstimate(); // update localizer
+        //failsafeCheck(); // empty
         tickMacros(); // check macros
         motorAscentController.ascentTick();
         slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
-        tele.addData("voltage", vs.getVoltage());
-        tele.update();
+        //tele.addData("voltage", vs.getVoltage());
+        //tele.update();
         specimenCorrector.specimenTick(); // run specimen corrector
 
     }
@@ -755,23 +767,30 @@ public class Hobbes extends Meccanum implements Robot {
         public void start() {
             basePos = slides.getCurrentPosition();
 
-            slidePID = new PID(SLIDES_KP, 0, 0, false);
+            slidePID = new PID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
         }
-
+        public void setConsts(double kp, double ki, double kd) {
+            slidePID.setConsts(kp, ki, kd);
+        }
         public void slidesTick() {
             if (disabled == 0) {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 slides.setPower(0);
+                slides2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slides2.setPower(0);
                 return;
             } else if (disabled == 1) {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 slides.setPower(0.2);
+                slides2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slides2.setPower(0.2);
                 return;
-            } else if (slides.getZeroPowerBehavior() != DcMotor.ZeroPowerBehavior.BRAKE) {
-                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            } else if (slides.getZeroPowerBehavior() != BRAKE) {
+                slides.setZeroPowerBehavior(BRAKE);
+                slides2.setZeroPowerBehavior(BRAKE);
             }
-            slidePID.setConsts(SLIDES_KP, 0, 0);
+            slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
 
@@ -796,10 +815,16 @@ public class Hobbes extends Meccanum implements Robot {
             tele.addData("drivingPower", !runToBottom ? minMaxScaler(pos, power) : 0.4);
             tele.update();
 
-            if (!runToBottom)
+            if (!runToBottom) {
                 slides.setPower(minMaxScaler(pos, power));
-            else
+                //slides 2 reversed relative to slides (look in init), so same power
+                slides2.setPower(minMaxScaler(pos, power));
+            }
+            else{
                 slides.setPower(0.3);
+                slides2.setPower(0.3);
+            }
+
         }
 
         // REWRITE EVENTUALLY AND CLEAN UP PLEASE
