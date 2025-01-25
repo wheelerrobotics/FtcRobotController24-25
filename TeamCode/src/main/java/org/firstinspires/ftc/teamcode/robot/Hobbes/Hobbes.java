@@ -842,6 +842,7 @@ public class Hobbes extends Meccanum implements Robot {
 
         // REWRITE EVENTUALLY AND CLEAN UP PLEASE
         private double minMaxScaler(double x, double power) {
+            if (SLIDE_TARGETING) return power;
             double p = power * (power > 0
                     ? ((1.3 * 1 / (1 + pow(E, -SLIDES_SIGMOID_SCALER * (x - 100 + SLIDES_MIN)))) - 0.1)
                     : ((1.3 * 1 / (1 + pow(E, SLIDES_SIGMOID_SCALER * (x + 100 - SLIDES_MAX)))) - 0.1));
