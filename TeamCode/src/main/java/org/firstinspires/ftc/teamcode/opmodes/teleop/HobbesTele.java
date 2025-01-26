@@ -104,7 +104,7 @@ public class HobbesTele extends OpMode {
 
         }
 
-        else if ( gamepad2.left_bumper && (gamepad2.right_stick_y > 0 || gamepad1.right_stick_x > 0 ) && ( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad1.right_stick_x,2)) > .9){
+        else if ( gamepad2.left_bumper && gamepad2.right_bumper && (gamepad2.right_stick_y > 0 || gamepad1.right_stick_x > 0 ) && ( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad1.right_stick_x,2)) > .9){
 
             if (0 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) <= PI) {
                 hob.servosController.setExtendoSwivel( (atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)/ (PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT))) + SWIVEL_STRAIGHT);}
