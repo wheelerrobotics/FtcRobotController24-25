@@ -13,6 +13,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OFFSET;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OUT_FULL_LIMIT;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OUT_SOME;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_SPECIMEN_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_TRANSFER;
@@ -20,6 +21,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 //import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.INTAKE_OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_ABOVE_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_START;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_ARM_UP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KD;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KI;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_KP;
@@ -741,8 +743,10 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementExtendo(double increment) {
-
-            if ((extendoPos + increment) > EXTENDO_OUT_FULL_LIMIT && (extendoPos + increment) < EXTENDO_IN)
+            if (slidesArmPos < SLIDES_ARM_UP){
+                if ((extendoPos + increment) > EXTENDO_OUT_FULL_LIMIT && (extendoPos + increment) < EXTENDO_IN)
+                    extendoPos += increment;}
+            else if ((extendoPos + increment) > EXTENDO_OUT_SOME && (extendoPos + increment) < EXTENDO_IN)
                 extendoPos += increment;
         }
 
@@ -754,7 +758,9 @@ public class Hobbes extends Meccanum implements Robot {
             extendoClawPos = extendoclawposition;
             extendoSwivelPos = extendoswivelposition;
         }
-
+        public void setExtendoSwivel(double extendoswivelposition) {
+            extendoSwivelPos = extendoswivelposition;
+        }
         public void incrementSwivel(double increment) {
             if ( (extendoSwivelPos + increment) > 0.1)
                 extendoSwivelPos += increment;
