@@ -155,7 +155,8 @@ public class HobbesConstants {
 
 
     // extendo claw
-    public static double EXTENDO_CLAW_OPEN = .48;
+    //prev open value = .48
+    public static double EXTENDO_CLAW_OPEN = .4;
     public static double EXTENDO_CLAW_IP = .53;
     public static double EXTENDO_CLAW_SWEEP = .6;
     public static double EXTENDO_CLAW_CLOSED = .88;

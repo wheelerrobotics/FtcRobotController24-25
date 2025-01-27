@@ -85,33 +85,22 @@ public class HobbesTele2 extends OpMode {
 
 
         // p2: swivel
-        if (gamepad2.left_bumper && !lastGamepad2.left_bumper) hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_STRAIGHT);
-        if (gamepad2.left_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementSwivel(0.07); // 15 degrees?
-        if (gamepad2.right_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementSwivel(-0.07); // 15 degrees?
-        //p2: increment swivel
-        if (gamepad2.right_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*gamepad2.right_trigger);
-        if (gamepad2.left_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*(-gamepad2.left_trigger));
+//        if (gamepad2.left_bumper && !lastGamepad2.left_bumper) hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_STRAIGHT);
+//        if (gamepad2.left_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementSwivel(0.07); // 15 degrees?
+//        if (gamepad2.right_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementSwivel(-0.07); // 15 degrees?
+//        //p2: increment swivel
+//        if (gamepad2.right_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*gamepad2.right_trigger);
+//        if (gamepad2.left_trigger > 0) hob.servosController.incrementSwivel(SWIVEL_SPEED*(-gamepad2.left_trigger));
 
         //p2: another swivel concept, using the joystick
-        if ( gamepad2.left_bumper && (gamepad2.right_stick_y > 0 || gamepad1.right_stick_x > 0 ) && ( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad1.right_stick_x,2)) > .9){
+        if (( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad1.right_stick_x,2)) > .1) {
 
-            if (-PI/2 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)< PI/2) {
-                hob.servosController.setFieldCentricSwivel( ((atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) + PI/2 )/ (PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT))) + SWIVEL_STRAIGHT);}
-
-            else if (atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)> PI/2) hob.servosController.setFieldCentricSwivel(SWIVEL_STRAIGHT_SPEC);
-
-            else hob.servosController.setFieldCentricSwivel(SWIVEL_STRAIGHT);
-
-        }
-
-        else if ( gamepad2.left_bumper && gamepad2.right_bumper && (gamepad2.right_stick_y > 0 || gamepad1.right_stick_x > 0 ) && ( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad1.right_stick_x,2)) > .9){
-
-            if (0 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) <= PI) {
-                hob.servosController.setFieldCentricSwivel( (atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)/ (PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT))) + SWIVEL_STRAIGHT);}
-
-            else if (atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)< -PI/2) hob.servosController.setFieldCentricSwivel(SWIVEL_STRAIGHT_SPEC);
-
-            else hob.servosController.setFieldCentricSwivel(SWIVEL_STRAIGHT);
+            // if (-PI/2 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)< PI/2) {
+            hob.servosController.setFieldCentricSwivel(
+                    ((Math.atan2(gamepad2.right_stick_y, gamepad2.right_stick_x) + Math.PI / 2)
+                            / (Math.PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT)))
+                            + SWIVEL_STRAIGHT
+            );
 
         }
 
@@ -121,8 +110,8 @@ public class HobbesTele2 extends OpMode {
 
 
         // p2: slides motion
-        if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
-        if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper) hob.slidesController.driveSlides(0);
+      //  if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
+      //  if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper) hob.slidesController.driveSlides(0);
         // p2: run to deposit
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
             hob.runMacro(SLIDES_DEPOSIT);}
