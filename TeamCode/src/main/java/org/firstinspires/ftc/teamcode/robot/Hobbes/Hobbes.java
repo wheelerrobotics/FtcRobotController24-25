@@ -31,6 +31,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SLIDES_WRIST_TRANSFER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SWIVEL_STRAIGHT;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.SWIVEL_STRAIGHT_SPEC;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPEC_ALMOST_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static java.lang.Math.E;
@@ -53,6 +54,7 @@ import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.ftccommon.SoundPlayer;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -70,7 +72,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Link;
@@ -90,6 +96,9 @@ import java.util.logging.Logger;
 public class Hobbes extends Meccanum implements Robot {
     protected HardwareMap hw = null;
 
+    private BNO055IMU imu;
+    private Orientation angle;
+
     public MotorAscentController motorAscentController = new MotorAscentController();
     public MotorSlideController slidesController = new MotorSlideController();
     public ServosController servosController = new ServosController();
@@ -98,6 +107,7 @@ public class Hobbes extends Meccanum implements Robot {
     public DcMotorImplEx slides, ascentLeft, ascentRight, slides2;
     public ServoImplEx slidesWrist;
     public PinpointDrive drive;
+
 
     // all relative to robot's reference frame with deposit as front:
     private ServoImplEx extendoLeft, extendoRight, extendoArm, extendoWrist, claw, slidesArm, extendoSwivel, extendoClaw;
@@ -204,6 +214,13 @@ public class Hobbes extends Meccanum implements Robot {
         bv.webcam.getExposureControl().setExposure(2, TimeUnit.MILLISECONDS);
         runtime.reset();
         inited = true;
+        // imu
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
     }
 
     public void strafe(double power){
@@ -761,6 +778,14 @@ public class Hobbes extends Meccanum implements Robot {
         public void setExtendoSwivel(double extendoswivelposition) {
             extendoSwivelPos = extendoswivelposition;
         }
+
+        public void setFieldCentricSwivel(double pos) {
+            angle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+            double heading = (angle.firstAngle + PI) % (2*PI)-PI;
+            double imuPos = ((heading + Math.PI / 2) / (Math.PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT))) + SWIVEL_STRAIGHT;
+            extendoSwivelPos = pos + imuPos;
+        }
+
         public void incrementSwivel(double increment) {
             if ( (extendoSwivelPos + increment) > 0.1)
                 extendoSwivelPos += increment;
