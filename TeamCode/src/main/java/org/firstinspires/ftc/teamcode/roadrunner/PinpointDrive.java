@@ -44,6 +44,10 @@ public class PinpointDrive extends MecanumDrive {
         public double xOffset = 3.3;
         public double yOffset = 4.4;
 
+       // public double xOffset = 3.625;
+        //public double yOffset = 5;
+        //public double yOffset = 4.1875;
+
         /*
         Set the kind of pods used by your robot. If you're using goBILDA odometry pods, select either
         the goBILDA_SWINGARM_POD or the goBILDA_4_BAR_POD.
