@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmodes.autonomous;
 
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.COLLAPSE_TO_SPECIMEN;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.EXTENDO_FULL_IN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TRANSFER_AUTO;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TRANSFER_AUTO5;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_DOWN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_BEFORE_PICKUP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_BEFORE_PICKUP_AUTO_DAN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW_FIRST;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_PICKUP;
@@ -54,30 +56,37 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
 
         //first sweep
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                .splineTo(new Vector2d(-25, 27), PI * 5 / 6);
+                .splineTo(new Vector2d(-25, 26), PI * 5 / 6);
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 25, 4*PI/16),
-                        0, null, new ProfileAccelConstraint(-80, 20));
+                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 20, 4*PI/16),
+                        0, null, new ProfileAccelConstraint(-30, 10));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-35, 37, PI*5/6), PI * 5 / 6);
+                .splineToLinearHeading(new Pose2d(-25, 36, PI*5/6), PI * 5 / 6);
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
                 .setTangent(0).splineToLinearHeading(new Pose2d(-15, 31, 4*PI/16),
-                        0,  null, new ProfileAccelConstraint(-80, 20));
+                        0,  null, new ProfileAccelConstraint(-30, 10));
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-59, 61, 0), 0)
-                .lineToX(1,
-                        null,
-                        new ProfileAccelConstraint(-80, 80));
+                .splineToLinearHeading(new Pose2d(-35, 42, PI*5/6), PI * 5 / 6);
 
+        TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
+                .setTangent(0).splineToLinearHeading(new Pose2d(-10, 40, 2*PI/16),
+                        0,  null, new ProfileAccelConstraint(-30, 10));
 
-        TrajectoryActionBuilder a5 = s4.endTrajectory().fresh().setTangent(PI)
+        TrajectoryActionBuilder s4_5_1 = s4_5.endTrajectory().fresh()
+                .setTangent(0).splineToLinearHeading(new Pose2d(4, 29, 0), PI,  null, new ProfileAccelConstraint(-30, 10));
+
+        TrajectoryActionBuilder a5 = s4_5_1.endTrajectory().fresh()
+                .setTangent(0)
+                .splineToSplineHeading(new Pose2d(4, 29, 0), 0)
+                .setTangent(PI)
                 .splineToConstantHeading(new Vector2d(-24, -10), PI)
                 .splineToConstantHeading(new Vector2d(-48, -10), PI);
+
         // wall specimen 2
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
                 .splineToConstantHeading(new Vector2d(-10, 0), PI/2)
@@ -116,7 +125,9 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
         Action sweep1 = a3.build();
         Action beforeSweep2 = s2.build();
         Action sweep2 = s3.build();
-        Action sweep3 = s4.build();
+        Action beforeSweep3 = s4.build();
+        Action sweep3 = s4_5.build();
+        Action spec2pick = s4_5_1.build();
         // cycling specimens
         Action specimen2 = a5.build();
         Action wall2 = a6.build();
@@ -139,34 +150,41 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
                                 hob.actionMacro(SPECIMEN_START),
                                 hob.actionMacro(FULL_TRANSFER_AUTO5),
                                 specimen1,
+                                hob.actionWait(100),
+
 
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
-                                hob.actionWait(50),
+                                hob.actionWait(100),
                                 // place preload specimen
-
-                                new ParallelAction(
-                                        hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 1),
-                                        beforeSweep1),
+                                hob.actionMacro(SAMPLE_SWEEP_UP),
+                                beforeSweep1,
 
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                hob.actionWait(100),
+                                hob.actionWait(600), // was 0
+
                                 sweep1,
 
                                 hob.actionMacro(SAMPLE_SWEEP_UP),
                                 beforeSweep2,
+                                hob.actionMacro(SAMPLE_SWEEP_DOWN),
+                                hob.actionWait(100), // was 0
+
+                                sweep2,
+                                hob.actionWait(100), // was 0
+
+                                hob.actionMacro(SAMPLE_SWEEP_UP),
+                                beforeSweep3,
 
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                hob.actionWait(100),
-                                sweep2,
-                                
-                                hob.actionMacro(SPEC_ALMOST_PICKUP),
-                                hob.actionWait(500),
+                                hob.actionWait(100), //was 100
                                 sweep3,
-//                                new ParallelAction( sweep3,
-//                                                    hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 300)),
 
+                                hob.actionMacro(SPECIMEN_BEFORE_PICKUP_AUTO_DAN),
+                                hob.actionWait(100), //was 100
+                                spec2pick,
+                                hob.actionWait(300),
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(500),
+                                hob.actionWait(100),
                                 specimen2, // get in position to deposit wall specimen 1
 
                                 hob.actionWait(200),
@@ -174,7 +192,7 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
 
                                 new ParallelAction( wall2, // get into position to pick up wall specimen 2
                                                     hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
-
+                                hob.actionWait(300),
                                 new ParallelAction(
                                         specimen3, // get into position to deposit wall specimen 2
                                         hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
@@ -183,7 +201,7 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
                                 new ParallelAction( wall3, // get into position to pick up wall specimen 3
                                                     hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
-
+                                hob.actionWait(300),
 
                                 new ParallelAction(
                                         specimen4, //get into position to deposit wall specimen 3
@@ -193,7 +211,7 @@ public class DanielStraigntAheadAuto extends LinearOpMode {
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
                                 new ParallelAction(  wall4, // get into position to pick up wall specimen 2
                                                      hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
-
+                                hob.actionWait(300),
 
                                 new ParallelAction(
                                         specimen5, // get into position to deposit wall specimen 2
