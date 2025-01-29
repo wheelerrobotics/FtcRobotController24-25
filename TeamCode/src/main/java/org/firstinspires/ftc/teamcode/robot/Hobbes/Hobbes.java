@@ -125,8 +125,8 @@ public class Hobbes extends Meccanum implements Robot {
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
 
-        bv = new BotVision();
-        bv.init(hardwareMap, p, "Webcam 1");
+        //bv = new BotVision();
+        //bv.init(hardwareMap, p, "Webcam 1");
 
         drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
 
@@ -209,18 +209,18 @@ public class Hobbes extends Meccanum implements Robot {
         // define hw as the hardware map for possible access later in this class
         hw = hardwareMap;
         // start runtime timer
-        while (!bv.inited);
-        bv.webcam.getExposureControl().setMode(ExposureControl.Mode.Manual);
-        bv.webcam.getExposureControl().setExposure(2, TimeUnit.MILLISECONDS);
+        //while (!bv.inited);
+        //bv.webcam.getExposureControl().setMode(ExposureControl.Mode.Manual);
+        //bv.webcam.getExposureControl().setExposure(2, TimeUnit.MILLISECONDS);
         runtime.reset();
         inited = true;
         // imu
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled = false;
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
+        //BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        //parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        //parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        //parameters.loggingEnabled = false;
+        //imu = hardwareMap.get(BNO055IMU.class, "imu");
+        //imu.initialize(parameters);
     }
 
     public void strafe(double power){
@@ -637,7 +637,7 @@ public class Hobbes extends Meccanum implements Robot {
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update();
-        specimenCorrector.specimenTick(); // run specimen corrector
+        //specimenCorrector.specimenTick(); // run specimen corrector
 
     }
 
@@ -647,10 +647,11 @@ public class Hobbes extends Meccanum implements Robot {
     }
 
     // slide/servo variables
-    public double extendoWristRezeroOffset = 0;
+    public static double extendoWristRezeroOffset = 0;
 
 
     // servos ticking
+    public static double offs = 0;
     public class ServosController {
         public double extendoPos = EXTENDO_IN;
         //public double intakeSpeed = INTAKE_OFF;
@@ -666,10 +667,11 @@ public class Hobbes extends Meccanum implements Robot {
             claw.setPosition(CLAW_CLOSED);
             extendoLeft.setPosition(EXTENDO_IN);
             extendoRight.setPosition(servosController.extendoLeftToRight(EXTENDO_IN));
-            extendoArm.setPosition(EXTENDO_ARM_START);
-            extendoWrist.setPosition(EXTENDO_WRIST_START + extendoWristRezeroOffset);
-            slidesArm.setPosition(SLIDES_ARM_START);
-            slidesWrist.setPosition(SLIDES_WRIST_START);
+
+            extendoArm.setPosition(EXTENDO_ARM_SPECIMEN_PICKUP);
+            extendoWrist.setPosition(SLIDES_WRIST_TRANSFER + extendoWristRezeroOffset);
+         //   slidesArm.setPosition(SLIDES_ARM_START);
+          //  slidesWrist.setPosition(SLIDES_WRIST_START);
             extendoSwivel.setPosition(SWIVEL_STRAIGHT);
             extendoClaw.setPosition(EXTENDO_CLAW_OPEN);
         }
@@ -852,7 +854,7 @@ public class Hobbes extends Meccanum implements Robot {
                 slides.setZeroPowerBehavior(BRAKE);
                 slides2.setZeroPowerBehavior(BRAKE);
             }
-            //slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
+            slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
             pos = -(slides.getCurrentPosition() - basePos);
 

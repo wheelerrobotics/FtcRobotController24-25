@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TR
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TRANSFER_AUTO5;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_DOWN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP_SETUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_BEFORE_PICKUP_AUTO_DAN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW;
@@ -56,18 +57,19 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
 
         //first sweep
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                .splineTo(new Vector2d(-25, 26), PI * 5 / 6);
+                .splineTo(new Vector2d(-25, 27), PI * 5 / 6);
+
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 20, 4*PI/16),
-                        0, null, new ProfileAccelConstraint(-30, 10));
+                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 25, .1+4*PI/16),
+                        0, null, new ProfileAccelConstraint(-80, 30));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-25, 36, PI*5/6), PI * 5 / 6);
+                .splineToLinearHeading(new Pose2d(-27, 38, PI*5/6), PI * 5 / 6);
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 31, 4*PI/16),
-                        0,  null, new ProfileAccelConstraint(-30, 10));
+                .setTangent(0).splineToLinearHeading(new Pose2d(-15, 33, 4*PI/16),
+                        0,  null, new ProfileAccelConstraint(-80, 30));
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(PI)
@@ -75,9 +77,9 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
 
         TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
                 .setTangent(0).splineToLinearHeading(new Pose2d(-10, 40, 2*PI/16),
-                        0,  null, new ProfileAccelConstraint(-30, 10))
-                .splineToLinearHeading(new Pose2d(4, 29, 0), 0,
-                        null, new ProfileAccelConstraint(-30, 80));
+                        0,  null, new ProfileAccelConstraint(-80, 30))
+                .splineToLinearHeading(new Pose2d(4, 40, 0), 0,
+                        null, new ProfileAccelConstraint(-20, 20));
 
 //                TrajectoryActionBuilder s4_5_1 = s4_5.endTrajectory().fresh()
 //                        .setTangent(0)
@@ -85,50 +87,84 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
 //                                null, new ProfileAccelConstraint(-30, 10));
 
         TrajectoryActionBuilder a5 = s4_5.endTrajectory().fresh()
-                .setTangent(PI)
-                .splineToConstantHeading(new Vector2d(-24, -10), PI)
-                .splineToConstantHeading(new Vector2d(-48, -10), PI);
+              //  .setTangent(PI)
+              //  .splineToConstantHeading(new Vector2d(-15, -10), PI)
+              //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
+                .setReversed(true)
+                .splineTo(new Vector2d(-40, -10), PI);
 
 
         // wall specimen 2
-        TrajectoryActionBuilder a6 = a5.endTrajectory().fresh().setTangent(0)
-                .splineToConstantHeading(new Vector2d(-40, -10), 0)
-                .splineToConstantHeading(new Vector2d(-8, 29), 0)
-                .splineToConstantHeading(new Vector2d(0, 29), 0)
-                .splineToConstantHeading(new Vector2d(4, 29), 0,
-                        null, new ProfileAccelConstraint(-10, 80));
+        TrajectoryActionBuilder a6 = a5.endTrajectory().fresh()
+//                .setTangent(0)
+//                .splineToConstantHeading(new Vector2d(-40, -10), 0)
+//                .splineToConstantHeading(new Vector2d(-8, 29), 0)
+//
+//                .splineToConstantHeading(new Vector2d(0, 29), 0,
+//                        null, new ProfileAccelConstraint(-20, 20))
+                .setReversed(false)
+                .splineTo(new Vector2d(-10, 29), 0,
+                        null, new ProfileAccelConstraint(-30, 80))
+               // .splineTo(new Vector2d(2, 29), 0)
+                .lineToX(1,null, new ProfileAccelConstraint(-30, 30))
+
+                ;
+
+              //  .splineToConstantHeading(new Vector2d(-40, -10), 0)
+              //  .splineToConstantHeading(new Vector2d(-15, 29), 0);
+              //  .lineToX(0,null, new ProfileAccelConstraint(-10, 10));
+
 
         TrajectoryActionBuilder a7 = a6.endTrajectory().fresh()
-                .setTangent(PI)
-                .splineToConstantHeading(new Vector2d(-24, -10), PI)
-                .splineToConstantHeading(new Vector2d(-48, -10), PI);
+       //         .setTangent(PI)
+       //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
+       //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
+                .setReversed(true)
+                .splineTo(new Vector2d(-40, -10), PI);
 
         // wall specimen 3
-        TrajectoryActionBuilder a8 = a7.endTrajectory().fresh().setTangent(0)
-                .splineToConstantHeading(new Vector2d(-40, -10), 0)
-                .splineToConstantHeading(new Vector2d(-8, 29), 0)
-                .splineToConstantHeading(new Vector2d(0, 29), 0)
-                .splineToConstantHeading(new Vector2d(4, 29), 0,
-                        null, new ProfileAccelConstraint(-10, 80));
+        TrajectoryActionBuilder a8 = a7.endTrajectory().fresh()
+                //.setTangent(0)
+               // .splineToConstantHeading(new Vector2d(-30, -10), 0)
+               // .splineToConstantHeading(new Vector2d(-15, 29), 0)
+                //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
+                .setReversed(false)
+                .splineTo(new Vector2d(-10, 29), 0,
+                        null, new ProfileAccelConstraint(-30, 80))
+                // .splineTo(new Vector2d(2, 29), 0)
+                .lineToX(1,null, new ProfileAccelConstraint(-30, 30))
 
-        TrajectoryActionBuilder a9 = a8.endTrajectory().fresh().setTangent(PI)
-                .splineToConstantHeading(new Vector2d(-24, -10), PI)
-                .splineToConstantHeading(new Vector2d(-48, -10), PI);
+                ;
+
+        TrajectoryActionBuilder a9 = a8.endTrajectory().fresh()
+               // .setTangent(PI)
+               // .splineToConstantHeading(new Vector2d(-15, -10), PI)
+               // .splineToConstantHeading(new Vector2d(-41, -10), PI);
+                .setReversed(true)
+                .splineTo(new Vector2d(-40, -10), PI);
 
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
-                .splineToConstantHeading(new Vector2d(-40, -10), 0)
-                .splineToConstantHeading(new Vector2d(-8, 29), 0)
-                .splineToConstantHeading(new Vector2d(0, 29), 0)
-                .splineToConstantHeading(new Vector2d(4, 29), 0,
-                        null, new ProfileAccelConstraint(-10, 80));
+               // .splineToConstantHeading(new Vector2d(-30, -10), 0)
+                //.splineToConstantHeading(new Vector2d(-15, 29), 0)
+                //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
+                .setReversed(false)
+                .splineTo(new Vector2d(-10, 29), 0,
+                        null, new ProfileAccelConstraint(-30, 80))
+                // .splineTo(new Vector2d(2, 29), 0)
+                .lineToX(1,null, new ProfileAccelConstraint(-30, 30))
 
-        TrajectoryActionBuilder a11 = a10.endTrajectory().fresh().setTangent(PI)
-                .splineToConstantHeading(new Vector2d(-24, -10), PI)
-                .splineToConstantHeading(new Vector2d(-48, -10), PI);
+                ;
+
+        TrajectoryActionBuilder a11 = a10.endTrajectory().fresh()
+              //  .setTangent(PI)
+               // .splineToConstantHeading(new Vector2d(-15, -10), PI)
+               // .splineToConstantHeading(new Vector2d(-41, -10), PI);
+                .setReversed(true)
+                .splineTo(new Vector2d(-40, -10), PI);
 
         // park
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
-                .splineTo(new Vector2d(-5,29),PI/2);
+                .splineTo(new Vector2d(-5,29),0);
 
         // preload
         Action specimen1 = a1.build();
@@ -162,17 +198,15 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
                                 hob.actionMacro(SPECIMEN_START),
                                 hob.actionMacro(FULL_TRANSFER_AUTO5),
                                 specimen1,
-                                hob.actionWait(100),
-
-
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
-                                hob.actionWait(100),
-                                // place preload specimen
+                                hob.actionWait(20),
                                 hob.actionMacro(SAMPLE_SWEEP_UP),
+                              //  hob.actionWait(100),
+                                // place preload specimen
                                 beforeSweep1,
 
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
-                                hob.actionWait(600), // was 0
+                                hob.actionWait(150), // was 0
 
                                 sweep1,
 
@@ -189,24 +223,29 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
 
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
                                 hob.actionWait(100), //was 100
-                                sweep3,
+                                new ParallelAction(
+                                        sweep3, // get into position to pick up wall specimen 2
+                                        hob.actionMacroTimeout(SPECIMEN_BEFORE_PICKUP_AUTO_DAN, 1300)),
 
-                                hob.actionMacro(SPECIMEN_BEFORE_PICKUP_AUTO_DAN),
-                                hob.actionWait(100), //was 100
+
+
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(100),
+                                hob.actionWait(400),
                                 specimen2, // get in position to deposit wall specimen 1
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
 
-                                new ParallelAction( wall2, // get into position to pick up wall specimen 2
+                                new ParallelAction(
+                                        wall2, // get into position to pick up wall specimen 2
                                         hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
                                 hob.actionWait(300),
-                                new ParallelAction(
-                                        specimen3, // get into position to deposit wall specimen 2
-                                        hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
+
+                                hob.actionMacro(FULL_TRANSFER_AUTO),
+                                hob.actionWait(400),
+                                specimen3, // get into position to deposit wall specimen 2
+
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
@@ -214,9 +253,9 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
                                         hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
                                 hob.actionWait(300),
 
-                                new ParallelAction(
-                                        specimen4, //get into position to deposit wall specimen 3
-                                        hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
+                                hob.actionMacro(FULL_TRANSFER_AUTO),
+                                hob.actionWait(400),
+                                specimen4,
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
@@ -224,13 +263,15 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
                                         hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
                                 hob.actionWait(300),
 
-                                new ParallelAction(
-                                        specimen5, // get into position to deposit wall specimen 2
-                                        hob.actionMacroTimeout(FULL_TRANSFER_AUTO, 100)),
+                                hob.actionMacro(FULL_TRANSFER_AUTO),
+                                hob.actionWait(400),
+                                specimen5,
 
                                 hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
-                                park,
+                                new ParallelAction(
+                                        hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 20),
+                                        park),
 
 
                                 hob.finishAction()),
