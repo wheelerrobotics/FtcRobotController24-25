@@ -231,10 +231,10 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
 
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(400),
+                                hob.actionWait(500),
                                 specimen2, // get in position to deposit wall specimen 1
 
-                                hob.actionWait(200),
+                           //     hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
 
                                 new ParallelAction(
@@ -243,31 +243,31 @@ public class DavidFiveSpecSweepClaw extends LinearOpMode {
                                 hob.actionWait(300),
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(400),
+                                hob.actionWait(500),
                                 specimen3, // get into position to deposit wall specimen 2
 
 
-                                hob.actionWait(200),
+                             //   hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
                                 new ParallelAction( wall3, // get into position to pick up wall specimen 3
                                         hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
                                 hob.actionWait(300),
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(400),
+                                hob.actionWait(500),
                                 specimen4,
 
-                                hob.actionWait(200),
+                                //hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
                                 new ParallelAction(  wall4, // get into position to pick up wall specimen 2
                                         hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
                                 hob.actionWait(300),
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(400),
+                                hob.actionWait(500),
                                 specimen5,
 
-                                hob.actionWait(200),
+                               // hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
                                 new ParallelAction(
                                         hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 20),

@@ -647,7 +647,7 @@ public class Hobbes extends Meccanum implements Robot {
     }
 
     // slide/servo variables
-    public static double extendoWristRezeroOffset = 0;
+    public static double extendoWristRezeroOffset = -0.04;
 
 
     // servos ticking

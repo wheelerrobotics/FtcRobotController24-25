@@ -159,7 +159,7 @@ public class HobbesConstants {
     public static double EXTENDO_CLAW_OPEN = .4;
     public static double EXTENDO_CLAW_IP = .53;
     public static double EXTENDO_CLAW_SWEEP = .6;
-    public static double EXTENDO_CLAW_CLOSED = .88;
+    public static double EXTENDO_CLAW_CLOSED = .9;
     public static double CLAW_ALMOST_CLOSED = .8;
 
     //extendo swivel
