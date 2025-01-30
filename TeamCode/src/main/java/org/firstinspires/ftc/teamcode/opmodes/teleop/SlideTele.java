@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstant
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -13,9 +14,10 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 
 import java.util.Deque;
 import java.util.LinkedList;
-
+@Disabled
 @TeleOp(name = "#slidesarefast")
 @Config
+
 public class SlideTele extends OpMode {
     public static int pos = 0;
     public static double kp = 0;

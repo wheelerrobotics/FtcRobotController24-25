@@ -35,7 +35,7 @@ public class HobbesConstants {
 
     //offsets
     public static double off = 0.02;
-
+    public static double op = -.4;
 
     //slides
     public static int SLIDES_MAX = 1100; //top of slides
@@ -141,9 +141,9 @@ public class HobbesConstants {
     public static int SLIDES_SPECIMEN_DEPOSITED = 200;
     public static int SLIDES_SPECIMEN_TO_DEPOSITED = 300;
     public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 350;
-    public static int SLIDES_SPEC_NEW = 350;
+    public static int SLIDES_SPEC_NEW = 360;
     public static int SLIDES_SPEC_DOWN = 230;
-    public static double SLIDES_WRIST_SPEC_NEW = .3;
+    public static double SLIDES_WRIST_SPEC_NEW = .25;
     public static double SLIDES_ARM_SPEC_NEW = .85;
 
 
@@ -157,11 +157,11 @@ public class HobbesConstants {
 
     // extendo claw
     //prev open value = .48
-    public static double EXTENDO_CLAW_OPEN = .4;
-    public static double EXTENDO_CLAW_IP = .52;
-    public static double EXTENDO_CLAW_SWEEP = .6;
-    public static double EXTENDO_CLAW_CLOSED = .9;
-    public static double CLAW_ALMOST_CLOSED = .84;
+    public static double EXTENDO_CLAW_OPEN = .4+op;
+    public static double EXTENDO_CLAW_IP = .52+op;
+    public static double EXTENDO_CLAW_SWEEP = .6+op;
+    public static double EXTENDO_CLAW_CLOSED = .9+op;
+    public static double CLAW_ALMOST_CLOSED = .82+op;
 
     //extendo swivel
     public static double SWIVEL_STRAIGHT = .305;
