@@ -14,6 +14,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIME
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPEC_ALMOST_PICKUP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPEC_ALMOST_PICKUP_LAST;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_DEPOSIT_AND_RESET;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_TO_DEPOSIT_START;
@@ -28,11 +29,12 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
-
+@Disabled
 @Autonomous(name = "FINAL Five Specimen Auto STATES")
 public class FinalFiveSpecimenStates extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.
@@ -57,10 +59,10 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
 
         //first sweep
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                .splineTo(new Vector2d(-25, 27), PI * 5 / 6);
+                .splineTo(new Vector2d(-25, 26), PI * 5 / 6);
 
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-13, 23, .1+4*PI/16),
+                .setTangent(0).splineToLinearHeading(new Pose2d(-13, 22, .2+4*PI/16),
                         0, null, new ProfileAccelConstraint(-80, 20));
 
         //second sweep
@@ -80,7 +82,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                         0,  null, new ProfileAccelConstraint(-80, 30));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
-                .splineToLinearHeading(new Pose2d(2, 40, 0), 0,
+                .splineToLinearHeading(new Pose2d(2, 29, 0), 0,
                         null, new ProfileAccelConstraint(-20, 20));
 
 //                TrajectoryActionBuilder s4_5_1 = s4_5.endTrajectory().fresh()
@@ -93,7 +95,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 //  .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-40, -5), PI);
+                .splineTo(new Vector2d(-36, -5), PI);
 
 
         // wall specimen 2
@@ -108,7 +110,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 .splineTo(new Vector2d(-10, 29), 0,
                         null, new ProfileAccelConstraint(-40, 80))
                 // .splineTo(new Vector2d(2, 29), 0)
-                .lineToX(4,null, new ProfileAccelConstraint(-40, 40))
+                .lineToX(3,null, new ProfileAccelConstraint(-40, 40))
 
                 ;
 
@@ -122,7 +124,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-40, -7), PI);
+                .splineTo(new Vector2d(-36, -7), PI);
 
         // wall specimen 3
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh()
@@ -134,7 +136,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 .splineTo(new Vector2d(-10, 29), 0,
                         null, new ProfileAccelConstraint(-40, 80))
                 // .splineTo(new Vector2d(2, 29), 0)
-                .lineToX(4,null, new ProfileAccelConstraint(-40, 40))
+                .lineToX(3,null, new ProfileAccelConstraint(-40, 40))
 
                 ;
 
@@ -143,7 +145,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-40, -9), PI);
+                .splineTo(new Vector2d(-36, -9), PI);
 
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
                 // .splineToConstantHeading(new Vector2d(-30, -10), 0)
@@ -153,7 +155,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 .splineTo(new Vector2d(-10, 29), 0,
                         null, new ProfileAccelConstraint(-40, 80))
                 // .splineTo(new Vector2d(2, 29), 0)
-                .lineToX(4,null, new ProfileAccelConstraint(-40, 40))
+                .lineToX(2,null, new ProfileAccelConstraint(-40, 40))
 
                 ;
 
@@ -162,12 +164,12 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-40, -11), PI);
+                .splineTo(new Vector2d(-36, -11), PI);
 
         // park
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh()
                 .setTangent(0)
-                .splineTo(new Vector2d(-15,20),PI/4);
+                .splineTo(new Vector2d(-15,29),PI/4);
 
         // preload
         Action specimen1 = a1.build();
@@ -229,14 +231,14 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
                                 hob.actionWait(100), //was 100
 
-                                sweep3,
-
-
-                                hob.actionMacro(SPECIMEN_BEFORE_PICKUP_AUTO_DAN),
+                                new ParallelAction(
+                                        sweep3,
+                                        hob.actionMacroTimeout(SPECIMEN_BEFORE_PICKUP_AUTO_DAN,1200)
+                                ),
 
                                 sweep3Align,
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(500),
+                                hob.actionWait(650),
                                 specimen2, // get in position to deposit wall specimen 1
 
                                 //     hob.actionWait(200),
@@ -249,7 +251,7 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                                 hob.actionWait(300),
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(500),
+                                hob.actionWait(650),
                                 specimen3, // get into position to deposit wall specimen 2
 
 
@@ -261,26 +263,29 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                                 hob.actionWait(300),
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(500),
+                                hob.actionWait(650),
                                 specimen4,
 
                                 //hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
                                 hob.actionWait(50),
                                 new ParallelAction(  wall4, // get into position to pick up wall specimen 2
-                                        hob.actionMacroTimeout(SPEC_ALMOST_PICKUP, 500)),
+                                        hob.actionMacroTimeout(SPEC_ALMOST_PICKUP_LAST, 500)),
                                 hob.actionWait(300),
 
                                 hob.actionMacro(FULL_TRANSFER_AUTO),
-                                hob.actionWait(500),
+                                hob.actionWait(650),
                                 specimen5,
 
                                 // hob.actionWait(200),
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
-                                hob.actionWait(50),
+                                hob.actionWait(70),
+
                                 new ParallelAction(
-                                        hob.actionMacroTimeout(SAMPLE_SWEEP_UP, 20),
-                                        park),
+                                        park,
+                                        hob.actionMacroTimeout(SAMPLE_SWEEP_UP,1)
+                                ),
+
 
 
                                 hob.finishAction()),

@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+@Disabled
 @TeleOp(name = "Specimen TeleOp")
 public class HobbesSpecimenTele extends OpMode {
     double integralSum = 0;

@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 import static java.lang.Math.PI;
 import static java.lang.Math.atan2;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
 import java.util.Deque;
 import java.util.LinkedList;
-
+@Disabled
 @TeleOp(name = "(RUN THIS) - Tele Op")
 public class HobbesTele extends OpMode {
 

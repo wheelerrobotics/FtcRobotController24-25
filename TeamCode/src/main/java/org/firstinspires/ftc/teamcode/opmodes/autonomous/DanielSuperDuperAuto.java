@@ -42,6 +42,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import javax.crypto.Mac;
+@Disabled
 @Autonomous
 public class DanielSuperDuperAuto extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.

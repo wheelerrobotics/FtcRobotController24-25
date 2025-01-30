@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 import java.util.Deque;
 import java.util.LinkedList;
 
-@TeleOp(name = "SINGLE PERSON - Tele Op")
+@TeleOp(name = "(RUN THIS) - Tele Op")
 public class singleTele extends OpMode {
 
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
