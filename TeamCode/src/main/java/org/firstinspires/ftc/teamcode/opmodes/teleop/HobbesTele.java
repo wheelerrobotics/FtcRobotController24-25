@@ -149,11 +149,9 @@ public class HobbesTele extends OpMode {
 
 
         // p2: extendo motion
-        hob.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED); //TODO: is it intentional that this doesn't check for button press?
-        // p2: extendo out
+        hob.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
         if (gamepad2.left_stick_button && !lastGamepad2.left_stick_button){
-            if (hob.servosController.slidesArmPos < SLIDES_ARM_UP) hob.servosController.setExtendo(EXTENDO_OUT_FULL);
-            else  hob.servosController.setExtendo(EXTENDO_OUT_SOME);
+             hob.servosController.setExtendo(EXTENDO_OUT_FULL);
         }
 
 

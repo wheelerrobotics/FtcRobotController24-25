@@ -762,12 +762,10 @@ public class Hobbes extends Meccanum implements Robot {
         }
 
         public void incrementExtendo(double increment) {
-            if (slidesArmPos < SLIDES_ARM_UP){
                 if ((extendoPos + increment) > EXTENDO_OUT_FULL_LIMIT && (extendoPos + increment) < EXTENDO_IN)
                     extendoPos += increment;}
-            else if ((extendoPos + increment) > EXTENDO_OUT_SOME && (extendoPos + increment) < EXTENDO_IN)
-                extendoPos += increment;
-        }
+
+
 
         public double extendoLeftToRight(double leftPosition) {
             return EXTENDO_OFFSET - leftPosition;
