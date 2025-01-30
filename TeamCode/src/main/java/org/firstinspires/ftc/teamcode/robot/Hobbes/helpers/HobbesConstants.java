@@ -97,7 +97,8 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_PUSH_DOWN = .09;
     public static double EXTENDO_ARM_OUTAKE = .5;
     public static double EXTENDO_ARM_SPEED = 0.01;
-    public static double EXTENDO_ARM_SPECIMEN_PICKUP = .43;
+    // prev = .43
+    public static double EXTENDO_ARM_SPECIMEN_PICKUP = .48;
     public static double EXTENDO_ARM_ABOVE_SUB_BARRIER = .43;
     public static double EXTENDO_ARM_ABOVE_PICKUP = .3;
     public static double EXTENDO_ARM_PICKUP = .25;
@@ -160,7 +161,7 @@ public class HobbesConstants {
     public static double EXTENDO_CLAW_IP = .52;
     public static double EXTENDO_CLAW_SWEEP = .6;
     public static double EXTENDO_CLAW_CLOSED = .9;
-    public static double CLAW_ALMOST_CLOSED = .8;
+    public static double CLAW_ALMOST_CLOSED = .84;
 
     //extendo swivel
     public static double SWIVEL_STRAIGHT = .305;

@@ -106,9 +106,9 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
 //                        null, new ProfileAccelConstraint(-20, 20))
                 .setReversed(false)
                 .splineTo(new Vector2d(-10, 29), 0,
-                        null, new ProfileAccelConstraint(-30, 80))
+                        null, new ProfileAccelConstraint(-40, 80))
                 // .splineTo(new Vector2d(2, 29), 0)
-                .lineToX(1,null, new ProfileAccelConstraint(-30, 30))
+                .lineToX(4,null, new ProfileAccelConstraint(-40, 40))
 
                 ;
 
@@ -132,9 +132,9 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
                 .setReversed(false)
                 .splineTo(new Vector2d(-10, 29), 0,
-                        null, new ProfileAccelConstraint(-30, 80))
+                        null, new ProfileAccelConstraint(-40, 80))
                 // .splineTo(new Vector2d(2, 29), 0)
-                .lineToX(1,null, new ProfileAccelConstraint(-30, 30))
+                .lineToX(4,null, new ProfileAccelConstraint(-40, 40))
 
                 ;
 
@@ -151,9 +151,9 @@ public class FinalFiveSpecimenStates extends LinearOpMode {
                 //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
                 .setReversed(false)
                 .splineTo(new Vector2d(-10, 29), 0,
-                        null, new ProfileAccelConstraint(-30, 80))
+                        null, new ProfileAccelConstraint(-40, 80))
                 // .splineTo(new Vector2d(2, 29), 0)
-                .lineToX(1,null, new ProfileAccelConstraint(-30, 30))
+                .lineToX(4,null, new ProfileAccelConstraint(-40, 40))
 
                 ;
 
