@@ -157,7 +157,7 @@ public class singleTele extends OpMode {
 
 
         // p2: extendo motion
-        hob.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED); //TODO: is it intentional that this doesn't check for button press?
+        hob.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
         // p2: extendo out
         if (gamepad2.left_stick_button && !lastGamepad2.left_stick_button){
             hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);

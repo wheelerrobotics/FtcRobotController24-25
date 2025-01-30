@@ -19,6 +19,8 @@ public class Macros {
 
     public static HobbesState EXTENDO_CLAW_OVER_SAMPLE = new HobbesState(null, EXTENDO_ARM_ABOVE_PICKUP, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, null, null);
 
+    public static HobbesState EXTENDO_CLAW_OVER_SAMPLE_AUTO = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_ABOVE_PICKUP, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, null, null);
+
     public static HobbesState EXTENDO_CLAW_OVER_SUB_BARRIER = new HobbesState(null, EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, null, null);
 
 
