@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 import java.util.Deque;
 import java.util.LinkedList;
 
-@TeleOp(name = "(RUN THIS) - Tele Op")
-public class HobbesTele extends OpMode {
+@TeleOp(name = "SINGLE PERSON - Tele Op")
+public class singleTele extends OpMode {
 
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
@@ -25,7 +25,7 @@ public class HobbesTele extends OpMode {
     boolean weRed = true;
     boolean forward = true;
 
-@Override
+    @Override
     // runs on init press
     public void init() {
         // define and init robot
@@ -34,7 +34,7 @@ public class HobbesTele extends OpMode {
         hob.specimenCorrector.setCorrectionOn(true);
 
 
-}
+    }
 
     @Override
     // runs on start press
@@ -76,8 +76,10 @@ public class HobbesTele extends OpMode {
 
 
         // p1: toggle intake claw
+        if (gamepad1.right_trigger > 0)
+            hob.runMacro(SLIDES_DOWN_S);
 
-        if (gamepad1.b && !lastGamepad1.b) {
+        if (gamepad1.a && !lastGamepad1.a) {
             hob.servosController.setExtendoClawIP(hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED);
         }
         // p1: Inside Pickup
@@ -86,11 +88,17 @@ public class HobbesTele extends OpMode {
         if (gamepad1.left_bumper && !lastGamepad1.left_bumper)
             hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
 
-        if (gamepad1.a && !lastGamepad1.a)
+        if (gamepad1.b && !lastGamepad1.b) {
+            hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
             hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_STRAIGHT);
-        if (gamepad1.y && !lastGamepad1.y)
+            hob.servosController.setExtendo(EXTENDO_OUT_FULL);
+        }
+        if (gamepad1.y && !lastGamepad1.y) {
+            hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
             hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_TRANSFER_IP);
-          // p2: swivel
+            hob.servosController.setExtendo(EXTENDO_OUT_FULL);
+        }
+        // p2: swivel
         //  if (gamepad2.left_bumper && !lastGamepad2.left_bumper) hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_STRAIGHT);
         //  if (gamepad2.left_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementSwivel(0.07); // 15 degrees?
         //  if (gamepad2.right_bumper && gamepad2.dpad_left && !lastGamepad2.dpad_left) hob.servosController.incrementSwivel(-0.07); // 15 degrees?
@@ -101,16 +109,16 @@ public class HobbesTele extends OpMode {
             hob.servosController.incrementSwivel(SWIVEL_SPEED * (-gamepad2.left_trigger));
 
         //p2: another swivel concept, using the joystick
-           if (( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad2.right_stick_x,2)) > .9 ) {
+        if (( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad2.right_stick_x,2)) > .9 ) {
 
-               // if (-PI/2 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)< PI/2) {
-               hob.servosController.setExtendoSwivel(
-                       ((Math.atan2(gamepad2.right_stick_y, gamepad2.right_stick_x) + Math.PI / 2)
-                               / (Math.PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT)))
-                               + SWIVEL_STRAIGHT
-               );
+            // if (-PI/2 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)< PI/2) {
+            hob.servosController.setExtendoSwivel(
+                    ((Math.atan2(gamepad2.right_stick_y, gamepad2.right_stick_x) + Math.PI / 2)
+                            / (Math.PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT)))
+                            + SWIVEL_STRAIGHT
+            );
 
-           }
+        }
 
 
 
@@ -120,7 +128,7 @@ public class HobbesTele extends OpMode {
 
         //  else hob.servosController.setExtendoSwivel(SWIVEL_STRAIGHT);
 
- //   }
+        //   }
 
 //        else if ( gamepad2.left_bumper && gamepad2.right_bumper && (gamepad2.right_stick_y > 0 || gamepad1.right_stick_x > 0 ) && ( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad1.right_stick_x,2)) > .9){
 //
@@ -139,8 +147,8 @@ public class HobbesTele extends OpMode {
 
 
         // p2: slides motion
-       // if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
-       // if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper) hob.slidesController.driveSlides(0);
+        // if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
+        // if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper) hob.slidesController.driveSlides(0);
         // p2: run to deposit
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
             hob.runMacro(SLIDES_DEPOSIT);}
@@ -152,8 +160,14 @@ public class HobbesTele extends OpMode {
         hob.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED); //TODO: is it intentional that this doesn't check for button press?
         // p2: extendo out
         if (gamepad2.left_stick_button && !lastGamepad2.left_stick_button){
-            if (hob.servosController.slidesArmPos < SLIDES_ARM_UP) hob.servosController.setExtendo(EXTENDO_OUT_FULL);
-            else  hob.servosController.setExtendo(EXTENDO_OUT_SOME);
+            hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
+            hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_STRAIGHT);
+            hob.servosController.setExtendo(EXTENDO_OUT_FULL);
+        }
+
+        if (gamepad1.x && !lastGamepad1.x){
+            if (hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED) hob.runMacro(FULL_TRANSFER_S);
+            else hob.runMacro(FULL_TRANSFER_IP_S);
         }
 
 

@@ -84,8 +84,9 @@ public class MeepMeepPaths {
                         .splineToLinearHeading(new Pose2d(-35, 42, PI*5/6), PI * 5 / 6);
 
                 TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                        .setTangent(0).splineToLinearHeading(new Pose2d(-10, 40, 2*PI/16),
-                                0,  null, new ProfileAccelConstraint(-30, 10))
+                        .setTangent(0).splineToLinearHeading(new Pose2d(-10, 40, 4*PI/16),
+                                0,  null, new ProfileAccelConstraint(-30, 10));
+                TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
                         .splineToLinearHeading(new Pose2d(4, 29, 0), 0,
                                 null, new ProfileAccelConstraint(-30, 80));
 
@@ -94,7 +95,7 @@ public class MeepMeepPaths {
 //                        .splineToLinearHeading(new Pose2d(4, 29, 0), 0,
 //                                null, new ProfileAccelConstraint(-30, 10));
 
-                TrajectoryActionBuilder a5 = s4_5.endTrajectory().fresh()
+                TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh()
                         .setReversed(true)
                         .splineTo(new Vector2d(-42, -10), PI);
 
@@ -151,6 +152,9 @@ public class MeepMeepPaths {
                 Action sweep2 = s3.build();
                 Action beforeSweep3 = s4.build();
                 Action sweep3 = s4_5.build();
+                Action sweep3Align = s4_5_5.build();
+
+
             //    Action spec2pick = s4_5_1.build();
                 // cycling specimens
                 Action specimen2 = a5.build();
@@ -165,7 +169,7 @@ public class MeepMeepPaths {
                         // hob.actionMacro(SPECIMEN_BEFORE_DEPOSIT),
                         // specimen sweep pos 1 - X: -23, Y: 29, R: 5pi/4
                         specimen1, beforeSweep1, sweep1, beforeSweep2, sweep2,
-                        beforeSweep3, sweep3,  specimen2, wall2, specimen3,
+                        beforeSweep3, sweep3, sweep3Align, specimen2, wall2, specimen3,
                         wall3, specimen4, wall4, specimen5/// notPark, yes, yes2, yes3, yes4, yes5
                         ));
 

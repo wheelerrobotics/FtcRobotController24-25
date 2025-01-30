@@ -61,7 +61,7 @@ public class HobbesConstants {
     public static double EXTENDO_WRIST_TRANSFER = .13+off;
     public static double EXTENDO_WRIST_CHAMBER_TRANSFER = .9+off;
     public static double SLIDES_ARM_TRANSFER = 0.00;
-    public static double SLIDES_ARM_TRANSFER_IP = 0.005;
+    public static double SLIDES_ARM_TRANSFER_IP = 0.005+.08;
 
     public static double SLIDES_WRIST_TRANSFER = 0.89;
     public static double EXTENDO_ARM_TRANSFER_SPEC = 0.58;
@@ -98,7 +98,7 @@ public class HobbesConstants {
     public static double EXTENDO_ARM_OUTAKE = .5;
     public static double EXTENDO_ARM_SPEED = 0.01;
     public static double EXTENDO_ARM_SPECIMEN_PICKUP = .43;
-    public static double EXTENDO_ARM_ABOVE_SUB_BARRIER = .4;
+    public static double EXTENDO_ARM_ABOVE_SUB_BARRIER = .43;
     public static double EXTENDO_ARM_ABOVE_PICKUP = .3;
     public static double EXTENDO_ARM_PICKUP = .25;
 
@@ -157,7 +157,7 @@ public class HobbesConstants {
     // extendo claw
     //prev open value = .48
     public static double EXTENDO_CLAW_OPEN = .4;
-    public static double EXTENDO_CLAW_IP = .53;
+    public static double EXTENDO_CLAW_IP = .52;
     public static double EXTENDO_CLAW_SWEEP = .6;
     public static double EXTENDO_CLAW_CLOSED = .9;
     public static double CLAW_ALMOST_CLOSED = .8;
