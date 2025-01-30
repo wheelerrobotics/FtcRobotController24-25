@@ -33,37 +33,38 @@ public class MeepMeepPaths {
                 DriveShim drive = myBot.getDrive();
 
                 TrajectoryActionBuilder b0 = drive.actionBuilder(new Pose2d(0, 0, 0))
-                        .setTangent(0)
-                        .splineTo(new Vector2d(10, -2),PI/6);
+                        .setTangent(PI)
+                        .lineToX(-11.5);
                 //Splines for first spike mark and first bucket
                 TrajectoryActionBuilder s1 = b0.endTrajectory().fresh()
-                        .setTangent(-PI)
-                        .splineToLinearHeading(new Pose2d(-10, -15, PI/2), -PI/2)
-                        .setTangent(-PI/2);
+                        .setTangent(0)
+                        .splineToLinearHeading(new Pose2d(-9, 16, PI/2), PI/2)
+                        ;
                 TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
-                        .setTangent(-PI/2)
-                        .splineToLinearHeading(new Pose2d(15, 0, PI/4), 5*PI/4)
-                        .setTangent(5*PI/4);
+                        .setTangent(PI)
+                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/4), PI/4)
+                        ;
                 //second spike mark
                 TrajectoryActionBuilder s2 = b1.endTrajectory().fresh()
-                        .setTangent(-PI)
-                        .splineToLinearHeading(new Pose2d(0, -15, PI/2), -PI/2)
-                        .setTangent(-PI/2);
+                        .setTangent(0)
+                        .splineToLinearHeading(new Pose2d(-20, 15, PI/2), PI/2)
+                        ;
                 TrajectoryActionBuilder b2 = s2.endTrajectory().fresh()
-                        .setTangent(-PI/2)
-                        .splineToLinearHeading(new Pose2d(15, 0, PI/4), 5*PI/4)
-                        .setTangent(5*PI/4);
+                        .setTangent(PI)
+                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/4), PI/4);
+
                 TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
-                        .setTangent(-PI)
-                        .splineToLinearHeading(new Pose2d(15, -15, PI/2+PI/4), -PI/2)
-                        .setTangent(-PI/2);
+                        .setTangent(0)
+                        .splineToLinearHeading(new Pose2d(-24, 17, Math.toRadians(102)), Math.toRadians(102))
+                        .setTangent(Math.toRadians(102));
+
                 TrajectoryActionBuilder b3 = s3.endTrajectory().fresh()
                         .setTangent(-PI/2)
-                        .splineToLinearHeading(new Pose2d(15, 0, PI/4), 5*PI/4)
-                        .setTangent(5*PI/4);
+                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/4), PI/4);
+
                 TrajectoryActionBuilder p1  =b3.endTrajectory().fresh()
-                        .setTangent(5*PI/4)
-                        .splineTo(new Vector2d(-15, -50), PI);
+                        .setTangent(-5*PI/4)
+                        .splineTo(new Vector2d(-15, 50), 0);
 
                 //build all of the splines
                 Action bu0 = b0.build();
