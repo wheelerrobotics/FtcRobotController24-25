@@ -109,16 +109,16 @@ public class singleTele extends OpMode {
             hob.servosController.incrementSwivel(SWIVEL_SPEED * (-gamepad2.left_trigger));
 
         //p2: another swivel concept, using the joystick
-        if (( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad2.right_stick_x,2)) > .9 ) {
-
-            // if (-PI/2 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)< PI/2) {
-            hob.servosController.setExtendoSwivel(
-                    ((Math.atan2(gamepad2.right_stick_y, gamepad2.right_stick_x) + Math.PI / 2)
-                            / (Math.PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT)))
-                            + SWIVEL_STRAIGHT
-            );
-
-        }
+//        if (( Math.pow(gamepad2.right_stick_y, 2) + Math.pow(gamepad2.right_stick_x,2)) > .9 ) {
+//
+//            // if (-PI/2 < atan2(gamepad2.right_stick_y, gamepad1.right_stick_x) && atan2(gamepad2.right_stick_y, gamepad1.right_stick_x)< PI/2) {
+//            hob.servosController.setExtendoSwivel(
+//                    ((Math.atan2(gamepad2.right_stick_y, gamepad2.right_stick_x) + Math.PI / 2)
+//                            / (Math.PI / (SWIVEL_STRAIGHT_SPEC - SWIVEL_STRAIGHT)))
+//                            + SWIVEL_STRAIGHT
+//            );
+//
+//        }
 
 
 
@@ -147,8 +147,8 @@ public class singleTele extends OpMode {
 
 
         // p2: slides motion
-        // if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
-        // if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper) hob.slidesController.driveSlides(0);
+         if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
+         if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper) hob.slidesController.driveSlides(0);
         // p2: run to deposit
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
             hob.runMacro(SLIDES_DEPOSIT);}

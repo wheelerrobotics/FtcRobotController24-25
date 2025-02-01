@@ -6,11 +6,13 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TR
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.FULL_TRANSFER_AUTO5;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_DOWN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP_FIRST;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SAMPLE_SWEEP_UP_SETUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_BEFORE_PICKUP_AUTO_DAN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW_FIRST;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_DEPOSIT_AND_RESET_NEW_last;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPECIMEN_START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPEC_ALMOST_PICKUP;
@@ -58,26 +60,26 @@ public class statesFiveSpecimen extends LinearOpMode {
 
         //first sweep
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                .splineTo(new Vector2d(-25, 26), PI * 5 / 6);
+                .splineTo(new Vector2d(-26, 29), PI * 5 / 6);
 
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-13, 22, .2+4*PI/16),
-                        0, null, new ProfileAccelConstraint(-80, 20));
+                .setTangent(0).splineToLinearHeading(new Pose2d(-13, 20, .2+4*PI/16),
+                        0, null, new ProfileAccelConstraint(-80, 60));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-26, 37, PI*5/6), PI * 5 / 6);
+                .splineToLinearHeading(new Pose2d(-27, 39, PI*5/6), PI * 5 / 6);
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-14, 32, 4*PI/16),
-                        0,  null, new ProfileAccelConstraint(-80, 30));
+                .setTangent(0).splineToLinearHeading(new Pose2d(-14, 30, 4*PI/16),
+                        0,  null, new ProfileAccelConstraint(-80, 60));
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(PI)
                 .splineToLinearHeading(new Pose2d(-35, 42, PI*4/6), PI * 4 / 6);
 
         TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                .setTangent(0).splineToLinearHeading(new Pose2d(-10, 40, 4*PI/16),
+                .setTangent(0).splineToLinearHeading(new Pose2d(-10, 39, 4*PI/16),
                         0,  null, new ProfileAccelConstraint(-80, 30));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
@@ -168,7 +170,7 @@ public class statesFiveSpecimen extends LinearOpMode {
         // park
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh()
                 .setTangent(0)
-                .splineTo(new Vector2d(-15,29),PI/4);
+                .splineTo(new Vector2d(-14,27),PI/4);
 
         // preload
         Action specimen1 = a1.build();
@@ -206,10 +208,10 @@ public class statesFiveSpecimen extends LinearOpMode {
                                 specimen1,
                                 hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
                                 hob.actionWait(20),
-                                hob.actionMacro(SAMPLE_SWEEP_UP),
-                                //  hob.actionWait(100),
-                                // place preload specimen
-                                beforeSweep1,
+                                hob.actionMacro(SAMPLE_SWEEP_UP_FIRST),
+
+                                        beforeSweep1,
+
 
                                 hob.actionMacro(SAMPLE_SWEEP_DOWN),
                                 hob.actionWait(150), // was 0
@@ -277,13 +279,10 @@ public class statesFiveSpecimen extends LinearOpMode {
                                 specimen5,
 
                                 // hob.actionWait(200),
-                                hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW),
+                                hob.actionMacro(SPECIMEN_DEPOSIT_AND_RESET_NEW_last),
                                 hob.actionWait(70),
 
-                                new ParallelAction(
                                         park,
-                                        hob.actionMacroTimeout(SAMPLE_SWEEP_UP,1)
-                                ),
 
 
 
