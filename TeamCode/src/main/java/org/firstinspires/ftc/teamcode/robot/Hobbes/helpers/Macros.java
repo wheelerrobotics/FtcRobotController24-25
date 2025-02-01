@@ -24,14 +24,14 @@ public class Macros {
     public static HobbesState EXTENDO_CLAW_OVER_SUB_BARRIER = new HobbesState(null, EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, null, null);
 
 
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP3 = new HobbesState(null, EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_SPECIMEN_PICKUP, null, null, EXTENDO_CLAW_CLOSED, null, null, null,null, null);
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP2 = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_CLOSED, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP3, 20));
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_OPEN, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP2, 100));
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP3 = new HobbesState(null, EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_CLOSED, null, null, null,null, null);
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP2 = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_CLOSED, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP3, 45));
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_OPEN, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP2, 25));
 
 
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_INSIDE3 = new HobbesState(null, EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_SPECIMEN_PICKUP, null, null, EXTENDO_CLAW_IP, null, null, null,null, null);
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_INSIDE2 = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_IP, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE3, 100));
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_INSIDE = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_CLOSED, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE2, 200));
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_INSIDE3 = new HobbesState(null, EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_IP, null, null, null,null, null);
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_INSIDE2 = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_IP, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE3, 120));
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_INSIDE = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_CLOSED, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE2, 80));
 
 
 
