@@ -76,6 +76,9 @@ public class AaronBucketAuto extends LinearOpMode {
         Action park = p1.build();
 
         hob.runMacro(FULL_TRANSFER4);
+        while (opModeInInit()) {
+            hob.tick();
+        }
         waitForStart();
 
         Actions.runBlocking(
@@ -86,15 +89,14 @@ public class AaronBucketAuto extends LinearOpMode {
                                         bucket0, hob.actionMacroTimeout(SLIDES_DEPOSIT, 2)),
                                 hob.actionWait(1000),
                                 hob.actionMacro(OPEN_CLAW),
-                                hob.actionWait(300),
+                                hob.actionWait(1000),
 
 
                                 new ParallelAction(
                                         pickup1,
                                         hob.actionMacroTimeout(SLIDES_DOWN,300),
                                         hob.actionMacroTimeout(EXTENDO_CLAW_OVER_SAMPLE_AUTO,800)
-
-                                ,
+                                ),
                                 hob.actionWait(1500),
                                 hob.actionMacro(EXTENDO_CLAW_BEFORE_PICKUP),
 
@@ -103,7 +105,9 @@ public class AaronBucketAuto extends LinearOpMode {
                                         new SequentialAction(
                                                 hob.actionMacro(FULL_TRANSFER),
                                                 hob.actionWait(1000),
-                                                hob.actionMacro(SLIDES_DEPOSIT)))),
+                                                hob.actionMacro(SLIDES_DEPOSIT)
+                                        )
+                                ),
                                 hob.actionWait(1500),
                                 hob.actionMacro(OPEN_CLAW),
                                 hob.actionWait(300),
@@ -131,6 +135,7 @@ public class AaronBucketAuto extends LinearOpMode {
                                         hob.actionMacroTimeout(SLIDES_DOWN,300),
                                         hob.actionMacroTimeout(EXTENDO_CLAW_OVER_SAMPLE_AUTO,800)
                                 ),
+
                                 hob.actionWait(1500),
                                 hob.actionMacro(EXTENDO_CLAW_BEFORE_PICKUP),
 

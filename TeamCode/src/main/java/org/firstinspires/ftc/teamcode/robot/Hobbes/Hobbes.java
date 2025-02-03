@@ -882,7 +882,7 @@ public class Hobbes extends Meccanum implements Robot {
                 //slides 2 reversed relative to slides (look in init), so same power
                 slides2.setPower(minMaxScaler(pos, power));
             }
-            else{
+            else {
                 slides.setPower(0.3);
                 slides2.setPower(0.3);
             }
@@ -906,6 +906,9 @@ public class Hobbes extends Meccanum implements Robot {
             tele.update();
             SLIDE_TARGETING = false;
             power = -p;
+        }
+        public void setRunToBottom(boolean on) {
+            runToBottom = on;
         }
 
         public void setTargeting(boolean targeting) {
@@ -959,12 +962,12 @@ public class Hobbes extends Meccanum implements Robot {
                     ascentRight.setPower(0);
                     ascentLeft.setPower(0);
                 case TOP:
-                    if (spd < 50 && switchTime.milliseconds() > 100) mode = ASCENT_MODE.OFF;
+                    if (spd < 20 && switchTime.milliseconds() > 300) mode = ASCENT_MODE.OFF;
                     if (mode != ASCENT_MODE.TOP) return;
                     ascentRight.setPower(1); // idk if this goes the right way
                     ascentLeft.setPower(1); // idk if this goes the right way
                 case BOTTOM:
-                    if (spd < 50 && switchTime.milliseconds() > 100) {
+                    if (spd < 20 && switchTime.milliseconds() > 300) {
                         ascentLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                         ascentRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                         ascentLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

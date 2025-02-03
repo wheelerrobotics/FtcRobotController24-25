@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes.ASCENT_MODE.BOTTOM;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes.ASCENT_MODE.TOP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.*;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 
@@ -148,7 +150,7 @@ public class singleTele extends OpMode {
 
         // p2: slides motion
          if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
-         if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper) hob.slidesController.driveSlides(0);
+         if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper && !gamepad2.guide) hob.slidesController.driveSlides(0);
         // p2: run to deposit
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
             hob.runMacro(SLIDES_DEPOSIT);}
@@ -186,6 +188,14 @@ public class singleTele extends OpMode {
         // p2: toggle claw
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) hob.servosController.setClaw(hob.servosController.clawPos == CLAW_CLOSED);
 
+        if (gamepad2.guide && !lastGamepad2.guide) {
+            if (!ascentUp) hob.runMacro(ASCENT_UP);
+            else {
+                hob.slidesController.setRunToBottom(true);
+                hob.runMacro(ASCENT_DOWN);
+            }
+            ascentUp = !ascentUp;
+        }
 
         //p2: Specimen pickup
         if (gamepad2.right_bumper && !gamepad2.right_stick_button && gamepad2.a) hob.runMacro(TELE_SPECIMEN_PICKUP);

@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -31,10 +32,9 @@ public class MeepMeepPaths {
                         .setConstraints(80, 80, Math.PI*3,Math.PI*2, 15)
                         .build();
                 DriveShim drive = myBot.getDrive();
-
                 TrajectoryActionBuilder b0 = drive.actionBuilder(new Pose2d(0, 0, 0))
                         .setTangent(PI)
-                        .lineToX(-11.5);
+                        .lineToX(-10);
                 //Splines for first spike mark and first bucket
                 TrajectoryActionBuilder s1 = b0.endTrajectory().fresh()
                         .setTangent(0)
@@ -60,22 +60,49 @@ public class MeepMeepPaths {
 
                 TrajectoryActionBuilder b3 = s3.endTrajectory().fresh()
                         .setTangent(-PI/2)
-                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/4), PI/4);
+                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/2), PI/4);
 
-                TrajectoryActionBuilder p1  =b3.endTrajectory().fresh()
+
+
+                TrajectoryActionBuilder s4 = b3.endTrajectory().fresh()
+                        .setTangent(PI/2)
+                        .splineTo(new Vector2d(0, 35), 0);
+
+                TrajectoryActionBuilder b4 = s4.endTrajectory().fresh()
+                        .setTangent(PI)
+                        .splineTo(new Vector2d(-20.5, 10.7), -3*PI/4);
+
+                TrajectoryActionBuilder s5 = b4.endTrajectory().fresh()
+                        .setTangent(PI/4)
+                        .splineTo(new Vector2d(0, 35), 0);
+
+                TrajectoryActionBuilder b5 = s5.endTrajectory().fresh()
+                        .setTangent(PI)
+                        .splineTo(new Vector2d(-20.5, 10.7), -3*PI/4);
+
+
+
+
+                TrajectoryActionBuilder p1  =b5.endTrajectory().fresh()
                         .setTangent(-5*PI/4)
                         .splineTo(new Vector2d(-15, 50), 0);
 
                 //build all of the splines
-                Action bu0 = b0.build();
-                Action sa1 = s1.build();
-                Action bu1 = b1.build();
-                Action sa2 = s2.build();
-                Action bu2 = b2.build();
-                Action sa3 = s3.build();
-                Action bu3 = b3.build();
+                Action bucket0 = b0.build();
+                Action pickup1 = s1.build();
+                Action bucket1 = b1.build();
+                Action pickup2 = s2.build();
+                Action bucket2 = b2.build();
+                Action pickup3 = s3.build();
+                Action bucket3 = b3.build();
+                Action submer4 = s4.build();
+                Action bucket4 = b4.build();
+                Action submer5 = s5.build();
+                Action bucket5 = b5.build();
                 Action park = p1.build();
-                myBot.runAction(new SequentialAction(bu0, sa1, bu1, sa2, bu2, sa3, bu3, park
+                myBot.runAction(new SequentialAction(bucket0, pickup1, bucket1, pickup2, bucket2, pickup3, bucket3,
+                        submer4, bucket4, submer5, bucket5,
+                        park
                         ));
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
