@@ -32,41 +32,45 @@ public class MeepMeepPaths {
                         .setConstraints(80, 80, Math.PI*3,Math.PI*2, 15)
                         .build();
                 DriveShim drive = myBot.getDrive();
+
                 TrajectoryActionBuilder b0 = drive.actionBuilder(new Pose2d(0, 0, 0))
                         .setTangent(PI)
                         .lineToX(-10);
                 //Splines for first spike mark and first bucket
                 TrajectoryActionBuilder s1 = b0.endTrajectory().fresh()
-                        .setTangent(0)
-                        .splineToLinearHeading(new Pose2d(-9, 16, PI/2), PI/2)
+                        .setTangent(PI/2)
+                        .splineToConstantHeading(new Vector2d(-10, 10), PI/2)
+                        .splineToSplineHeading(new Pose2d(-10, 20, PI/2), PI/2)
+                        .splineToConstantHeading(new Vector2d(-10, 23), PI/2)
                         ;
+
                 TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
-                        .setTangent(PI)
-                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/4), PI/4)
+                        .setTangent(-PI/2)
+                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/4), -3*PI/4)
                         ;
                 //second spike mark
                 TrajectoryActionBuilder s2 = b1.endTrajectory().fresh()
-                        .setTangent(0)
-                        .splineToLinearHeading(new Pose2d(-20, 15, PI/2), PI/2)
+                        .setTangent(PI/2)
+                        .splineToLinearHeading(new Pose2d(-21, 20, PI/2), PI/2)
                         ;
+
                 TrajectoryActionBuilder b2 = s2.endTrajectory().fresh()
-                        .setTangent(PI)
-                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/4), PI/4);
+                        .setTangent(-PI/2)
+                        .splineToLinearHeading(new Pose2d(-24, 15, PI/2), -PI/2);
 
                 TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
                         .setTangent(0)
-                        .splineToLinearHeading(new Pose2d(-24, 17, Math.toRadians(102)), Math.toRadians(102))
-                        .setTangent(Math.toRadians(102));
+                        .splineToLinearHeading(new Pose2d(-20, 20, Math.toRadians(130)), Math.toRadians(130));
 
                 TrajectoryActionBuilder b3 = s3.endTrajectory().fresh()
                         .setTangent(-PI/2)
-                        .splineToLinearHeading(new Pose2d(-13.5, 10.7, PI/2), PI/4);
+                        .splineToLinearHeading(new Pose2d(-15, 15, PI/3), -4*PI/6);
 
 
 
                 TrajectoryActionBuilder s4 = b3.endTrajectory().fresh()
-                        .setTangent(PI/2)
-                        .splineTo(new Vector2d(0, 35), 0);
+                        .setTangent(PI/4)
+                        .splineToLinearHeading(new Pose2d(5, 50, 0), 0);
 
                 TrajectoryActionBuilder b4 = s4.endTrajectory().fresh()
                         .setTangent(PI)
@@ -74,7 +78,7 @@ public class MeepMeepPaths {
 
                 TrajectoryActionBuilder s5 = b4.endTrajectory().fresh()
                         .setTangent(PI/4)
-                        .splineTo(new Vector2d(0, 35), 0);
+                        .splineTo(new Vector2d(5, 50), 0);
 
                 TrajectoryActionBuilder b5 = s5.endTrajectory().fresh()
                         .setTangent(PI)
@@ -95,14 +99,13 @@ public class MeepMeepPaths {
                 Action bucket2 = b2.build();
                 Action pickup3 = s3.build();
                 Action bucket3 = b3.build();
+
                 Action submer4 = s4.build();
                 Action bucket4 = b4.build();
                 Action submer5 = s5.build();
                 Action bucket5 = b5.build();
                 Action park = p1.build();
-                myBot.runAction(new SequentialAction(bucket0, pickup1, bucket1, pickup2, bucket2, pickup3, bucket3,
-                        submer4, bucket4, submer5, bucket5,
-                        park
+                myBot.runAction(new SequentialAction(bucket0, pickup1, bucket1, pickup2, bucket2, pickup3, bucket3, submer4, bucket4, submer5, bucket5
                         ));
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
