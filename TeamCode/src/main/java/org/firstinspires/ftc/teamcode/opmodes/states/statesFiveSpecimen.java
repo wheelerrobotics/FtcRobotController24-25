@@ -20,6 +20,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SPEC_AL
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.START;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_DEPOSIT_AND_RESET;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.STUPID_SPECIMEN_TO_DEPOSIT_START;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.TELE_START;
 import static java.lang.Math.PI;
 
 import com.acmerobotics.roadrunner.Action;

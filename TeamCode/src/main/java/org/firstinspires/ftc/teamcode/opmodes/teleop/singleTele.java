@@ -26,6 +26,7 @@ public class singleTele extends OpMode {
     boolean ascentUp = false;
     boolean weRed = true;
     boolean forward = true;
+    boolean rezeroing = false;
 
     @Override
     // runs on init press
@@ -188,13 +189,26 @@ public class singleTele extends OpMode {
         // p2: toggle claw
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) hob.servosController.setClaw(hob.servosController.clawPos == CLAW_CLOSED);
 
+        // ascent code
         if (gamepad2.guide && !lastGamepad2.guide) {
-            if (!ascentUp) hob.runMacro(ASCENT_UP);
+            if (!ascentUp) {
+                hob.slidesController.setRunToBottom(false);
+                hob.runMacro(ASCENT_UP);
+            }
             else {
                 hob.slidesController.setRunToBottom(true);
                 hob.runMacro(ASCENT_DOWN);
             }
             ascentUp = !ascentUp;
+        }
+
+        // rezero code
+        if (gamepad1.guide) {
+                hob.slidesController.setRunToBottom(true);
+        }
+        if (!gamepad1.guide && lastGamepad1.guide) {
+            hob.slidesController.resetSlideBasePos();
+            hob.slidesController.setRunToBottom(false);
         }
 
         //p2: Specimen pickup

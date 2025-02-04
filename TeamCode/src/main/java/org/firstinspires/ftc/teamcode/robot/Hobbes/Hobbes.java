@@ -121,19 +121,22 @@ public class Hobbes extends Meccanum implements Robot {
     Telemetry tele = FtcDashboard.getInstance().getTelemetry();
     public boolean inited = false;
     public ColorIsolationPipeline p = new ColorIsolationPipeline();
+
+    public void webcamInit(HardwareMap hardwareMap) {
+        bv = new BotVision();
+        bv.init(hardwareMap, p, "Webcam 1");
+    }
     @Override
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
 
-        //bv = new BotVision();
-        //bv.init(hardwareMap, p, "Webcam 1");
 
         drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
 
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        tele.setMsTransmissionInterval(11);
-        limelight.pipelineSwitch(3);
-        limelight.start();
+        //limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        //tele.setMsTransmissionInterval(11);
+        //limelight.pipelineSwitch(3);
+        //limelight.start();
 
         specimenCorrector = new SpecimenCorrector(drive);
 
@@ -286,14 +289,15 @@ public class Hobbes extends Meccanum implements Robot {
             specimenForwardPID.setTarget(0); // TODO: CHANGE TO ACTUAL DESIRED PIXELS (might be zero, not sure what limelight likes)
             specimenForwardPID.setDoneThresholds(0, 0); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
 
-            specimenForwardNonDetectionPID.init(drive.pose.position.x);
+            specimenForwardNonDetectionPID.init(0); //drive.pose.position.x);
             specimenForwardNonDetectionPID.setTarget(-1.5); // TODO: CHANGE TO ACTUAL DESIRED Y POSITION (should be about -1)
             specimenForwardNonDetectionPID.setDoneThresholds(0.5, 1); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
 
 
-            specimenRotationPID.init(drive.pose.heading.toDouble());
+            specimenRotationPID.init(0); //drive.pose.heading.toDouble());
             specimenRotationPID.setTarget(PI); // TODO: CHANGE TO ACTUAL DESIRED ROTATION (like 80% sure this is right tho)
             specimenRotationPID.setDoneThresholds(0.1, 0.2); // TODO: SET THESE TO ACTUAL VALUES (ZEROED FOR DEBUGGING, WILL NEVER STOP)
+
         }
         // just because all of these are defined doesnt mean they have to be used
         // teleop will likely only use "getStrafePower" and the rest will be done by the driver
@@ -343,8 +347,8 @@ public class Hobbes extends Meccanum implements Robot {
             specimenRotationPID.setTarget(rotTar);
 
 
-            rotationPower = specimenRotationPID.tick(abs(drive.pose.heading.toDouble())); // doesnt depend on knowing where a specimen is
-            forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(drive.pose.position.x); // doesnt depend on knowing where a specimen is
+            rotationPower = specimenRotationPID.tick(0); //abs(drive.pose.heading.toDouble())); // doesnt depend on knowing where a specimen is
+            forwardNonDetectionPower = specimenForwardNonDetectionPID.tick(0); //drive.pose.position.x); // doesnt depend on knowing where a specimen is
 
             if (correctionOn) {
                 if (LIMELIGHT_USED) {
@@ -366,15 +370,18 @@ public class Hobbes extends Meccanum implements Robot {
                 }
                 strafePower = specimenStrafePID.tick(angle);
                 forwardPower = specimenForwardPID.tick(forwardDistance);
-                }else {
+                }
+                else {
                     angle = p.getAngle();
                     strafePower = specimenStrafePID.tick(angle * webcamScaler);
+                    tele.addData("SPECIMENV_strafe", strafePower);
                 }
             } else {
                 strafePower = 0;
                 forwardPower = 0;
                 tele.addData("SPECIMENV_strafe", "not on");
             }
+
             tele.addData("SPECIMEND_strafe", specimenStrafePID.isFinished());
             tele.addData("SPECIMEND_forward", specimenForwardNonDetectionPID.isFinished());
             tele.addData("SPECIMEND_rotation", specimenRotationPID.isFinished());
@@ -688,6 +695,7 @@ public class Hobbes extends Meccanum implements Robot {
 
             extendoSwivel.setPosition(SWIVEL_STRAIGHT);
             extendoClaw.setPosition(EXTENDO_CLAW_OPEN);
+            motorAscentController.setMode(ASCENT_MODE.BOTTOM);
         }
 
         public void autoSetup() {
@@ -836,6 +844,7 @@ public class Hobbes extends Meccanum implements Robot {
             slidePID.setConsts(kp, ki, kd);
         }
         public void slidesTick() {
+
             if (disabled == 0) {
                 slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 slides.setPower(0);
@@ -956,7 +965,13 @@ public class Hobbes extends Meccanum implements Robot {
             currentL = ascentLeft.getCurrent(CurrentUnit.MILLIAMPS);
             currentR = ascentRight.getCurrent(CurrentUnit.MILLIAMPS);
             currentSpike = currentL + currentR - lastCurrent;
-
+            tele.addData("AAmode", mode);
+            tele.addData("AAspd", spd);
+            tele.addData("AAcurSpi", currentSpike);
+            tele.addData("AAcur", currentR+currentL);
+            tele.addData("AApos", pos);
+            tele.addData("AApos", target);
+            tele.update();
             switch (mode) {
                 case OFF:
                     ascentRight.setPower(0);

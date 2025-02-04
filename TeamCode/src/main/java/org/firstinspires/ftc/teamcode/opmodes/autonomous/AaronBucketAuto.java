@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.autonomous;
 
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_ABOVE_PICKUP;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_ARM_ABOVE_SUB_BARRIER;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_OUT_FULL;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.EXTENDO_WRIST_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
@@ -220,8 +221,10 @@ public class AaronBucketAuto extends LinearOpMode {
                                         hob.actionMacroTimeout(SLIDES_DOWN,300)
                                 ),
                                 //hob.actionWait(1000), // tune
-                                hob.actionMacro(new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_ABOVE_PICKUP, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, 0.3+swiv, null)),
+                                hob.actionMacro(new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, 0.3+swiv, null)),
                                 hob.actionWait(500),
+                                hob.actionMacro(new HobbesState(null, EXTENDO_ARM_ABOVE_PICKUP, null, null, null, null, null, null, null, null, null)),
+                                hob.actionWait(200),
                                 hob.actionMacro(EXTENDO_CLAW_BEFORE_PICKUP), // CHANGE MACRO FOR SWIVEL
                                 hob.actionWait(200), // tune
 
