@@ -88,7 +88,8 @@ public class singleTele extends OpMode {
         if (gamepad1.left_trigger > 0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
         // p1: Outside Pickup
         if (gamepad1.left_bumper && !lastGamepad1.left_bumper)
-            hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
+            if (hob.servosController.extendoClawPos == EXTENDO_WRIST_FAR_PICKUP) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
+            else hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_FAR);
 
         if (gamepad1.b && !lastGamepad1.b) {
             hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
@@ -166,6 +167,12 @@ public class singleTele extends OpMode {
             hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, SWIVEL_STRAIGHT);
             hob.servosController.setExtendo(EXTENDO_OUT_FULL);
         }
+        if (gamepad2.right_stick_button && !lastGamepad2.right_stick_button)
+        {hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
+            hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_CLOSED, SWIVEL_STRAIGHT);
+            hob.servosController.setExtendo(EXTENDO_OUT_FULL);
+        }
+
 
         if (gamepad1.x && !lastGamepad1.x){
             if (hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED) hob.runMacro(FULL_TRANSFER_S);
