@@ -40,6 +40,10 @@ public class HobbesConstants {
     public static double off1 = .05;
     public static double off2 = .02;
 
+//far pickup
+    public static double EXTENDO_ARM_FAR_PICKUP = .21;
+    public static double EXTENDO_WRIST_FAR_PICKUP = .8;
+    public static double EXTENDO_ARM_ABOVE_FAR_PICKUP = .25;
 
     //slides
     public static int SLIDES_MAX = 1100; //top of slides
