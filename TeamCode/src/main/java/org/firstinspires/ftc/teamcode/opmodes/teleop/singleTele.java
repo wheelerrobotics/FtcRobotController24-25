@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes.ASCENT_MODE.BOTTOM;
+import static org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes.ASCENT_MODE.OFF;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes.ASCENT_MODE.TOP;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesConstants.*;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
@@ -13,6 +14,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
+import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
+import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.LinkedState;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -34,6 +37,7 @@ public class singleTele extends OpMode {
         // define and init robot
         hob = new Hobbes();
         hob.init(hardwareMap);
+        hob.webcamInit(hardwareMap);
         hob.specimenCorrector.setCorrectionOn(true);
 
 
@@ -45,6 +49,7 @@ public class singleTele extends OpMode {
         //hob.runMacro(SPEC_AUTO_PARK);
         // run everything to start positions
         hob.servosController.teleSetup();
+        hob.runMacro(new HobbesState(null, null, null, null, null, null, null, null, null, null, new LinkedState(ASCENT_DOWN, 300)));
 
     }
 
@@ -56,12 +61,12 @@ public class singleTele extends OpMode {
 
 
         // p1: motion
-        if (!gamepad1.right_bumper && forward)
+        if (gamepad1.dpad_left)
+            hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
+        else if (!gamepad1.right_bumper && forward)
             hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
         else if (gamepad1.right_bumper && forward)
             hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
-        else if (gamepad1.left_bumper)
-            hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
         else if (!gamepad1.right_bumper && !forward)
             hob.motorDriveXYVectors(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
         else if (gamepad1.right_bumper && !forward)
@@ -70,13 +75,6 @@ public class singleTele extends OpMode {
         if (gamepad1.back && !lastGamepad1.back) {
             forward = !forward;
         }
-
-
-        // p1: zero slides
-        if (gamepad1.dpad_down) {
-            hob.slidesController.resetSlideBasePos();
-        }
-
 
         // p1: toggle intake claw
         if (gamepad1.right_trigger > 0)
@@ -88,9 +86,14 @@ public class singleTele extends OpMode {
         // p1: Inside Pickup
         if (gamepad1.left_trigger > 0) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_INSIDE);
         // p1: Outside Pickup
-        if (gamepad1.left_bumper && !lastGamepad1.left_bumper)
-            if (hob.servosController.extendoClawPos == EXTENDO_WRIST_FAR_PICKUP) hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
-            else hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_FAR);
+        if (gamepad1.left_bumper && !lastGamepad1.left_bumper) {
+            if (hob.servosController.extendoWristPos == EXTENDO_WRIST_PICKUP){
+                hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP);
+            }
+            else {
+                hob.runMacro(EXTENDO_CLAW_BEFORE_PICKUP_FAR);
+            }
+        }
 
         if (gamepad1.b && !lastGamepad1.b) {
             hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
@@ -183,6 +186,8 @@ public class singleTele extends OpMode {
 
         // p2: up but low
         if (gamepad2.a && !lastGamepad2.a && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
+        // p2:far pickup
+        if (gamepad2.b && !lastGamepad2.b && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE_FAR);
         // p2: up
         if (gamepad2.x && !lastGamepad2.x && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SUB_BARRIER);
         // p2: transfer macro
@@ -195,27 +200,24 @@ public class singleTele extends OpMode {
 
         // p2: toggle claw
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) hob.servosController.setClaw(hob.servosController.clawPos == CLAW_CLOSED);
-
-        // ascent code
-        if (gamepad2.guide && !lastGamepad2.guide) {
-            if (!ascentUp) {
-                hob.slidesController.setRunToBottom(false);
-                hob.runMacro(ASCENT_UP);
-            }
-            else {
+// ascent code
+        if (gamepad2.guide) {
+            if (gamepad2.dpad_down && !lastGamepad2.dpad_down) {
                 hob.slidesController.setRunToBottom(true);
                 hob.runMacro(ASCENT_DOWN);
             }
-            ascentUp = !ascentUp;
+            else if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
+                hob.slidesController.setRunToBottom(false);
+                hob.runMacro(ASCENT_UP);
+            }
         }
-
-        // rezero code
+        if (!gamepad2.guide) {
+            hob.motorAscentController.setMode(OFF);
+        }
+        
+        // p1: zero slides
         if (gamepad1.guide) {
-                hob.slidesController.setRunToBottom(true);
-        }
-        if (!gamepad1.guide && lastGamepad1.guide) {
-            hob.slidesController.resetSlideBasePos();
-            hob.slidesController.setRunToBottom(false);
+            hob.slidesController.rezero();
         }
 
         //p2: Specimen pickup

@@ -258,7 +258,7 @@ public class Hobbes extends Meccanum implements Robot {
         public double rotationI = 0;
         public double rotationD = 0;
     }
-    public static double webcamScaler = -0.003; // TODO: TUNE THIS
+    public static double webcamScaler = -0.002; // TODO: TUNE THIS
     public class SpecimenCorrector {
         // 3 goals, 3 PIDs
         // 1: follow sample
@@ -322,8 +322,8 @@ public class Hobbes extends Meccanum implements Robot {
         }
         public void setCorrectionOn(boolean on) {
             correctionOn = on;
-            if (on) limelight.start();
-            else limelight.stop();
+            //if (on) limelight.start();
+            //else limelight.stop();
         }
         public void setRotationTarget(double rotationTarget) {
             rotTar = rotationTarget;
@@ -642,9 +642,9 @@ public class Hobbes extends Meccanum implements Robot {
         motorAscentController.ascentTick();
         slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
+        specimenCorrector.specimenTick();
         tele.addData("voltage", vs.getVoltage());
-        tele.update();
-        //specimenCorrector.specimenTick(); // run specimen corrector
+        tele.update(); // run specimen corrector
 
     }
 
@@ -695,7 +695,6 @@ public class Hobbes extends Meccanum implements Robot {
 
             extendoSwivel.setPosition(SWIVEL_STRAIGHT);
             extendoClaw.setPosition(EXTENDO_CLAW_OPEN);
-            motorAscentController.setMode(ASCENT_MODE.BOTTOM);
         }
 
         public void autoSetup() {
@@ -840,6 +839,11 @@ public class Hobbes extends Meccanum implements Robot {
             slidePID = new PID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
         }
+        public boolean rezeroing = false;
+        public ElapsedTime rezeroTimer = new ElapsedTime();
+        public void rezero() {
+            rezeroing = true;
+        }
         public void setConsts(double kp, double ki, double kd) {
             slidePID.setConsts(kp, ki, kd);
         }
@@ -885,8 +889,13 @@ public class Hobbes extends Meccanum implements Robot {
 
             tele.addData("drivingPower", !runToBottom ? minMaxScaler(pos, power) : 0.4);
             tele.update();
+            if (rezeroing) {
+                slides.setPower(0.3);
+                slides2.setPower(0.3);
+                resetSlideBasePos();
+            }
+            else if (!runToBottom) {
 
-            if (!runToBottom) {
                 slides.setPower(minMaxScaler(pos, power));
                 //slides 2 reversed relative to slides (look in init), so same power
                 slides2.setPower(minMaxScaler(pos, power));
@@ -895,6 +904,7 @@ public class Hobbes extends Meccanum implements Robot {
                 slides.setPower(0.3);
                 slides2.setPower(0.3);
             }
+            rezeroing = false;
 
         }
 
@@ -945,8 +955,12 @@ public class Hobbes extends Meccanum implements Robot {
 
     public static double ASCENT_KP = 0.01;
     public enum ASCENT_MODE {OFF, TOP, BOTTOM, ENCODED}
+    public static double speedThreshUp = 50;
+    public static double speedThreshDown = 3;
     // NOTE: THIS ASSUMES DRIVING BOTH MOTORS AT +1 POWER MAKES THEM GO UP
     public class MotorAscentController {
+        public double lpos = 0, lastlPos = 0, lspd = 0;
+        public double rpos = 0, lastrPos = 0, rspd = 0;
         public double pos = 0, lastPos = 0, spd = 0;
         public int target;
         public double currentL=0, currentR=0, lastCurrent=0, currentSpike=0;
@@ -957,8 +971,14 @@ public class Hobbes extends Meccanum implements Robot {
         }
         public void ascentTick() {
             lastPos = pos;
-            pos = (ascentRight.getCurrentPosition() + ascentLeft.getCurrentPosition());
-            spd = abs(pos-lastPos);
+            lastrPos = rpos;
+            lastlPos = lpos;
+            rpos = ascentRight.getCurrentPosition();
+            lpos = ascentLeft.getCurrentPosition();
+            lspd = abs(lpos-lastlPos);
+            rspd = abs(rpos-lastrPos);
+            pos = lpos + rpos;
+            spd = abs(pos - lastPos);
 
             // could try some endpoint detection with a current detector ??   just an idea for now
             lastCurrent = currentL + currentR;
@@ -966,32 +986,30 @@ public class Hobbes extends Meccanum implements Robot {
             currentR = ascentRight.getCurrent(CurrentUnit.MILLIAMPS);
             currentSpike = currentL + currentR - lastCurrent;
             tele.addData("AAmode", mode);
-            tele.addData("AAspd", spd);
-            tele.addData("AAcurSpi", currentSpike);
-            tele.addData("AAcur", currentR+currentL);
-            tele.addData("AApos", pos);
-            tele.addData("AApos", target);
+            tele.addData("AAlspd", lspd);
+            tele.addData("AAlpos", lpos);
+            tele.addData("AArspd", rspd);
+            tele.addData("AArpos", rpos);
+            tele.addData("AAtar", target);
             tele.update();
             switch (mode) {
                 case OFF:
                     ascentRight.setPower(0);
                     ascentLeft.setPower(0);
                 case TOP:
-                    if (spd < 20 && switchTime.milliseconds() > 300) mode = ASCENT_MODE.OFF;
+                    if (switchTime.milliseconds() > 1900) mode = ASCENT_MODE.OFF;
                     if (mode != ASCENT_MODE.TOP) return;
-                    ascentRight.setPower(1); // idk if this goes the right way
                     ascentLeft.setPower(1); // idk if this goes the right way
+                    ascentRight.setPower(1); // idk if this goes the right way
                 case BOTTOM:
-                    if (spd < 20 && switchTime.milliseconds() > 300) {
-                        ascentLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                        ascentRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    if (switchTime.milliseconds() > 1900) {
                         ascentLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         ascentRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         mode = ASCENT_MODE.OFF;
                     }
                     if (mode != ASCENT_MODE.BOTTOM) return;
-                    ascentRight.setPower(-1); // idk if this goes the right way
                     ascentLeft.setPower(-1); // idk if this goes the right way
+                    ascentRight.setPower(-1); // idk if this goes the right way
                 case ENCODED:
                     if (target>=2000) mode = ASCENT_MODE.TOP;
                     if (target<=0) mode = ASCENT_MODE.BOTTOM;

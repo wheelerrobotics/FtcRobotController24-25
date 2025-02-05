@@ -150,7 +150,7 @@ public class HobbesConstants {
     public static int SLIDES_SPECIMEN_DEPOSITED = 200;
     public static int SLIDES_SPECIMEN_TO_DEPOSITED = 300;
     public static int STUPID_SLIDES_SPECIMEN_TO_DEPOSITED_START = 350;
-    public static int SLIDES_SPEC_NEW = 380;
+    public static int SLIDES_SPEC_NEW = 370;
     public static int SLIDES_SPEC_DOWN = 230;
     public static double SLIDES_WRIST_SPEC_NEW = .3;
     public static double SLIDES_ARM_SPEC_NEW = .85 + off1;

@@ -18,6 +18,7 @@ public class Macros {
 
 
     public static HobbesState EXTENDO_CLAW_OVER_SAMPLE = new HobbesState(null, EXTENDO_ARM_ABOVE_PICKUP, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, null, null);
+    public static HobbesState EXTENDO_CLAW_OVER_SAMPLE_FAR = new HobbesState(null, EXTENDO_ARM_ABOVE_FAR_PICKUP, EXTENDO_WRIST_FAR_PICKUP, null, null, null, null, null, null, null, null);
 
     public static HobbesState EXTENDO_CLAW_OVER_SAMPLE_AUTO = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_ABOVE_PICKUP, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, null, null);
     public static HobbesState EXTENDO_CLAW_OVER_SAMPLE_AUTO_THIRD = new HobbesState(EXTENDO_OUT_FULL, EXTENDO_ARM_ABOVE_PICKUP, EXTENDO_WRIST_PICKUP, null, null, null, null, null, null, 0.45, null);
@@ -30,8 +31,8 @@ public class Macros {
     public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_OPEN, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP2, 25));
 
     public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_FAR3 = new HobbesState(null, EXTENDO_ARM_ABOVE_FAR_PICKUP, EXTENDO_WRIST_FAR_PICKUP, null, null, EXTENDO_CLAW_CLOSED, null, null, null,null, null);
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_FAR2 = new HobbesState(null, EXTENDO_ARM_FAR_PICKUP, EXTENDO_WRIST_FAR_PICKUP, null, null, EXTENDO_CLAW_CLOSED-.07, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP3, 100));
-    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_FAR = new HobbesState(null, EXTENDO_ARM_ABOVE_FAR_PICKUP, EXTENDO_WRIST_FAR_PICKUP, null, null, EXTENDO_CLAW_OPEN, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP2, 100));
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_FAR2 = new HobbesState(null, EXTENDO_ARM_FAR_PICKUP, EXTENDO_WRIST_FAR_PICKUP, null, null, EXTENDO_CLAW_CLOSED-.07, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP_FAR3, 100));
+    public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_FAR = new HobbesState(null, EXTENDO_ARM_ABOVE_FAR_PICKUP, EXTENDO_WRIST_FAR_PICKUP, null, null, EXTENDO_CLAW_OPEN, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP_FAR2, 100));
 
     public static HobbesState EXTENDO_CLAW_BEFORE_PICKUP_AUTO = new HobbesState(null, EXTENDO_ARM_PICKUP, EXTENDO_WRIST_PICKUP, null, null, EXTENDO_CLAW_OPEN, null, null, null,null, new LinkedState(EXTENDO_CLAW_BEFORE_PICKUP2, 100));
 

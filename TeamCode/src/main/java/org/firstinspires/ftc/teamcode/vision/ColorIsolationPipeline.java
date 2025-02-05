@@ -30,10 +30,14 @@ import java.util.List;
 
 @Config
 public class ColorIsolationPipeline extends OpenCvPipeline {
-    public static int hMax = 20, hMin=0, sMax=255, sMin=100, lMax=100, lMin=10; // blue
-    public static int hMax2 = 135, hMin2=120, sMax2=225, sMin2=100, lMax2=100, lMin2=10; // red
+    public static int val = 0;
+    public static int bhMax = 14, bhMin=0, bsMax=255, bsMin=100, blMax=255, blMin=50; // blue
+    public static int rhMax = 120, rhMin=100, rsMax=255, rsMin=100, rlMax=255, rlMin=150; // red
+    public static int yhMax = 105, yhMin=90, ysMax=255, ysMin=150, ylMax=255, ylMin=100; // red
+
     public static int sizeTresh = 200;
-    public static double powerer = 1.05; // make more weighted at edge of frame to offset bad fov/framerate? could fix with better framerate.
+    public static int centerOffset = 140;
+    public static double powerer = 1; // make more weighted at edge of frame to offset bad fov/framerate? could fix with better framerate.
     public double angle = 0;
 
     public double getAngle() {
@@ -55,17 +59,18 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
     Mat mask1 = new Mat();
     Mat temp = new Mat();
 
-    Scalar lowR = new Scalar(hMin, sMin, lMin);
-    Scalar highR = new Scalar(hMax, sMax, lMax);
-
-    Scalar lowB = new Scalar(hMin2, sMin2, lMin2);
-    Scalar highB = new Scalar(hMax2, sMax2, lMax2);
 
     double maxArea = 0;
     int maxIdx = 0;
     public Mat isolate(Mat input) {
+        Scalar lowB = new Scalar(bhMin, bsMin, blMin);
+        Scalar highB = new Scalar(bhMax, bsMax, blMax);
+
+        Scalar lowR = new Scalar(rhMin, rsMin, rlMin);
+        Scalar highR = new Scalar(rhMax, rsMax, rlMax);
+
         Imgproc.cvtColor(input, temp, COLOR_BGR2HSV);
-        Imgproc.GaussianBlur(temp, temp, new Size(5.0, 5.0), 0.00);
+        //Imgproc.GaussianBlur(temp, temp, new Size(5.0, 5.0), 0.00);
 
         inRange(temp, lowR, highR, mask1);
         inRange(temp, lowB, highB, temp);
@@ -73,26 +78,23 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
 
         maxArea = 0;
         maxIdx = 0;
+        contours.clear();
 
         Imgproc.findContours(temp, contours, hierarchey, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
-        if (contours.isEmpty()) return input;
+        if (contours.isEmpty()) return val == 0 ? input : temp;
 
-        for (MatOfPoint contour : contours) {
-            double area = contourArea(contour);
-            if (area > maxArea) {
-                maxArea = area;
-                maxIdx = contours.indexOf(contour);
-            }
-        }
+        Collections.sort(contours, (a, b) -> Double.compare(contourArea(b), contourArea(a)));
 
-        if (maxArea < sizeTresh) return input;
+        maxArea = contourArea(contours.get(0));
+
+        if (maxArea < sizeTresh) return val == 0 ? input : temp;
 
         Imgproc.drawContours(input, contours, maxIdx, new Scalar(0, 255, 0));
 
         RotatedRect wallpos = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(maxIdx).toArray()));
         Imgproc.drawMarker(input, wallpos.center, new Scalar(0, 255, 255));
-        setAngle(pow(abs(wallpos.center.x-60), powerer) * (abs(wallpos.center.x-60)/(wallpos.center.x-60)));
+        setAngle(pow(abs(wallpos.center.x-centerOffset), powerer) * (abs(wallpos.center.x-centerOffset)/(wallpos.center.x-centerOffset)));
         return input;
     }
     @Override
