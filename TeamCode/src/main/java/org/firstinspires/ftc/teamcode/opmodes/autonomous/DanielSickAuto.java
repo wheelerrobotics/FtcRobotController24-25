@@ -31,6 +31,7 @@ public class DanielSickAuto extends LinearOpMode {
         public void runOpMode() {
                 // define and init robot
                 hob = new Hobbes();
+                hob.autoInit(hardwareMap);
                 hob.init(hardwareMap);
                 drive = hob.drive;
 

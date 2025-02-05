@@ -44,6 +44,7 @@ public class AaronBucketAuto extends LinearOpMode {
         Telemetry tele = FtcDashboard.getInstance().getTelemetry();
         // define and init robot
         hob = new Hobbes();
+        hob.autoInit(hardwareMap);
         hob.init(hardwareMap);
         drive = hob.drive;
         MecanumDrive.PARAMS.headingGain = 16;

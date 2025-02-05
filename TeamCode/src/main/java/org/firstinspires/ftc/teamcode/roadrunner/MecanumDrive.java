@@ -251,11 +251,11 @@ public class MecanumDrive {
 
         // TODO: make sure your config has an IMU with this name (can be BNO or BHI)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        //lazyImu = new LazyImu(hardwareMap, "odo", new RevHubOrientationOnRobot(zyxOrientation(0, 0, 0)));
+        lazyImu = new LazyImu(hardwareMap, "imu", new RevHubOrientationOnRobot(zyxOrientation(0, 0, 0)));
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        //localizer = new DriveLocalizer();
+        localizer = new DriveLocalizer();
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }

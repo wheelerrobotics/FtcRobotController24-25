@@ -126,19 +126,22 @@ public class Hobbes extends Meccanum implements Robot {
         bv = new BotVision();
         bv.init(hardwareMap, p, "Webcam 1");
     }
+    public void autoInit(HardwareMap hardwareMap) {
+        drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
+    }
     @Override
     public void init(HardwareMap hardwareMap) {
         super.init(hardwareMap);
 
 
-        drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
+
 
         //limelight = hardwareMap.get(Limelight3A.class, "limelight");
         //tele.setMsTransmissionInterval(11);
         //limelight.pipelineSwitch(3);
         //limelight.start();
 
-        specimenCorrector = new SpecimenCorrector(drive);
+        specimenCorrector = new SpecimenCorrector();
 
         // no imu needed right now
         // imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -279,7 +282,7 @@ public class Hobbes extends Meccanum implements Robot {
         double forwardNonDetectionPower = 0;
 
         double rotTar = PI;
-        public SpecimenCorrector(PinpointDrive drive) {
+        public SpecimenCorrector() {
             // to figure these out they should prob be copied into tick and given config vars
             specimenStrafePID.init(0);
             specimenStrafePID.setTarget(0); // TODO: CHANGE TO ACTUAL DESIRED ANGLE (might be zero, not sure what limelight likes)
@@ -639,7 +642,7 @@ public class Hobbes extends Meccanum implements Robot {
         //drive.updatePoseEstimate(); // update localizer
         //failsafeCheck(); // empty
         tickMacros(); // check macros
-        //motorAscentController.ascentTick();
+        motorAscentController.ascentTick();
         slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
         specimenCorrector.specimenTick();
