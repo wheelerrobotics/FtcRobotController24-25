@@ -61,7 +61,7 @@ public class singleTele extends OpMode {
 
 
         // p1: motion
-        if (gamepad1.dpad_left)
+        if (gamepad1.left_stick_button)
             hob.motorDriveXYVectors(hob.specimenCorrector.getStrafePower(), -gamepad1.left_stick_y, gamepad1.right_stick_x);
         else if (!gamepad1.right_bumper && forward)
             hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
@@ -75,6 +75,7 @@ public class singleTele extends OpMode {
         if (gamepad1.back && !lastGamepad1.back) {
             forward = !forward;
         }
+
 
         // p1: toggle intake claw
         if (gamepad1.right_trigger > 0)
@@ -157,10 +158,10 @@ public class singleTele extends OpMode {
          if (gamepad2.right_stick_y != 0 && !gamepad1.dpad_down && !gamepad2.left_bumper) hob.slidesController.driveSlides(-gamepad2.right_stick_y);
          if (gamepad2.right_stick_y == 0 && lastGamepad2.right_stick_y != 0 && !gamepad2.left_bumper && !gamepad2.guide) hob.slidesController.driveSlides(0);
         // p2: run to deposit
-        if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
+        if (gamepad2.dpad_up && !lastGamepad2.dpad_up && !gamepad2.guide) {
             hob.runMacro(SLIDES_DEPOSIT);}
         // p2: slides down, arm above sample
-        if (gamepad2.dpad_down && !lastGamepad2.dpad_down) hob.runMacro(SLIDES_DOWN);
+        if (gamepad2.dpad_down && !lastGamepad2.dpad_down && !gamepad2.guide) hob.runMacro(SLIDES_DOWN);
 
 
         // p2: extendo motion
@@ -214,7 +215,7 @@ public class singleTele extends OpMode {
         if (!gamepad2.guide) {
             hob.motorAscentController.setMode(OFF);
         }
-        
+
         // p1: zero slides
         if (gamepad1.guide) {
             hob.slidesController.rezero();

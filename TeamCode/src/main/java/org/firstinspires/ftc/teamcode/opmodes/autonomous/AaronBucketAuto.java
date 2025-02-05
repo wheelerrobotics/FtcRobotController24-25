@@ -78,7 +78,8 @@ public class AaronBucketAuto extends LinearOpMode {
         TrajectoryActionBuilder s1 = b0.endTrajectory().fresh()
                 .setTangent(PI/2)
                 .splineToConstantHeading(new Vector2d(-11, 10), PI/2)
-                .splineToLinearHeading(new Pose2d(-11, 18, PI/2), PI/2, null, new ProfileAccelConstraint(-20, 20));
+                .splineToLinearHeading(new Pose2d(-11, 18, PI/2),
+                        PI/2, null, new ProfileAccelConstraint(-20, 20));
 
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
                 .setTangent(-PI/2)

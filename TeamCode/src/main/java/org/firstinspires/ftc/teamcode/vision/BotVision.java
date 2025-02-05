@@ -34,7 +34,7 @@ public class BotVision {
             @Override
             public void onOpened() {
                 FtcDashboard.getInstance().startCameraStream(webcam, 20);
-                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
                 tele.addLine("Opened!");
                 tele.update();
                 opened = true;
@@ -59,7 +59,7 @@ public class BotVision {
             @Override
             public void onOpened() {
                 FtcDashboard.getInstance().startCameraStream(webcam, 20);
-                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
                 tele.addLine("Opened!");
                 tele.update();
             }
