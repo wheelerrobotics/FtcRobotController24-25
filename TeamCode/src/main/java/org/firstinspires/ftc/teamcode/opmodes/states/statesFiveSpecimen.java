@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
-@Autonomous(name = "(RUN THIS) ----- Five Specimen Auto ----- ")
+@Autonomous(name = " ---- Five Specimen Auto ---- ")
 public class statesFiveSpecimen extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.
     Hobbes hob = null;
@@ -285,6 +285,7 @@ public class statesFiveSpecimen extends LinearOpMode {
                                 hob.actionWait(70),
 
                                         park,
+                                hob.actionWait(3000),
 
 
 
