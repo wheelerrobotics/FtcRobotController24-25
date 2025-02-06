@@ -123,8 +123,8 @@ public class Hobbes extends Meccanum implements Robot {
     public ColorIsolationPipeline p = new ColorIsolationPipeline();
 
     public void webcamInit(HardwareMap hardwareMap) {
-        bv = new BotVision();
-        bv.init(hardwareMap, p, "Webcam 1");
+        //bv = new BotVision();
+        //bv.init(hardwareMap, p, "Webcam 1");
     }
     public void autoInit(HardwareMap hardwareMap) {
         drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
@@ -641,6 +641,7 @@ public class Hobbes extends Meccanum implements Robot {
     public void tick() {
         //drive.updatePoseEstimate(); // update localizer
         //failsafeCheck(); // empty
+        Logger.getLogger("FUCK").log(new LogRecord(Level.INFO, "BANG"));
         tickMacros(); // check macros
         motorAscentController.ascentTick();
         slidesController.slidesTick(); // update slides

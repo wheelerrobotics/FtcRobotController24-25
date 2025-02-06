@@ -37,10 +37,8 @@ public class singleTele extends OpMode {
         // define and init robot
         hob = new Hobbes();
         hob.init(hardwareMap);
-        hob.webcamInit(hardwareMap);
-        hob.specimenCorrector.setCorrectionOn(true);
-
-
+        //hob.webcamInit(hardwareMap);
+        hob.specimenCorrector.setCorrectionOn(false);
     }
 
     @Override

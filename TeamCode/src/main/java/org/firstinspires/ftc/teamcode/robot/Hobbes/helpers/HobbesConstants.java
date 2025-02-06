@@ -109,7 +109,7 @@ public class HobbesConstants {
     // prev = .43
     public static double EXTENDO_ARM_SPECIMEN_PICKUP = .48;
     public static double EXTENDO_ARM_ABOVE_SUB_BARRIER = .38;
-    public static double EXTENDO_ARM_ABOVE_PICKUP = .29;
+    public static double EXTENDO_ARM_ABOVE_PICKUP = .3;
     public static double EXTENDO_ARM_PICKUP = .25;
 
     // extendo wrist
