@@ -64,11 +64,11 @@ public class singleTele extends OpMode {
         else if (!gamepad1.right_bumper && forward)
             hob.motorDriveXYVectors(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
         else if (gamepad1.right_bumper && forward)
-            hob.motorDriveXYVectors(0.3 * gamepad1.left_stick_x, 0.3 * -gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
+            hob.motorDriveXYVectors(0.5 * gamepad1.left_stick_x, 0.5 * -gamepad1.left_stick_y, 0.5 * gamepad1.right_stick_x);
         else if (!gamepad1.right_bumper && !forward)
             hob.motorDriveXYVectors(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
         else if (gamepad1.right_bumper && !forward)
-            hob.motorDriveXYVectors(-0.3 * gamepad1.left_stick_x, 0.3 * gamepad1.left_stick_y, 0.3 * gamepad1.right_stick_x);
+            hob.motorDriveXYVectors(-0.5 * gamepad1.left_stick_x, 0.5 * gamepad1.left_stick_y, 0.5 * gamepad1.right_stick_x);
         //p1: switch which way is front
         if (gamepad1.back && !lastGamepad1.back) {
             forward = !forward;
@@ -184,11 +184,11 @@ public class singleTele extends OpMode {
 
 
         // p2: up but low
-        if (gamepad2.a && !lastGamepad2.a && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE);
+        if (gamepad2.a && !lastGamepad2.a && !gamepad2.right_bumper) hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, 0);
         // p2:far pickup
         if (gamepad2.b && !lastGamepad2.b && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE_FAR);
         // p2: up
-        if (gamepad2.x && !lastGamepad2.x && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SUB_BARRIER);
+        if (gamepad2.x && !lastGamepad2.x && !gamepad2.right_bumper) hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, .45);
         // p2: transfer macro
         if (gamepad2.y && !lastGamepad2.y && !gamepad2.right_bumper){
             if (hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED) hob.runMacro(FULL_TRANSFER);

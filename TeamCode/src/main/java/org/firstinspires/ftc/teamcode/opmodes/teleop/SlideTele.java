@@ -14,12 +14,11 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 
 import java.util.Deque;
 import java.util.LinkedList;
-@Disabled
 @TeleOp(name = "#slidesarefast")
 @Config
 
 public class SlideTele extends OpMode {
-    public static int pos = 0;
+    public static int pos =   0;
     public static double kp = 0;
     public static double ki = 0;
     public static double kd = 0;

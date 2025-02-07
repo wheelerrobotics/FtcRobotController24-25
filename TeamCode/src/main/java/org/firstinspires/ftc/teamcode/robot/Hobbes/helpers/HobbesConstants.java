@@ -35,20 +35,22 @@ public class HobbesConstants {
 
     //offsets
     public static double off = 0.02;
-    public static double op = -.02;
+    public static double op = -.06;
 
     public static double off1 = .05;
     public static double off2 = .02;
 
+    public static double offA = .02;
+
 //far pickup
-    public static double EXTENDO_ARM_FAR_PICKUP = .21;
+    public static double EXTENDO_ARM_FAR_PICKUP = .21 + offA ;
     public static double EXTENDO_WRIST_FAR_PICKUP = .8;
-    public static double EXTENDO_ARM_ABOVE_FAR_PICKUP = .25;
+    public static double EXTENDO_ARM_ABOVE_FAR_PICKUP = .25 + offA;
 
     //slides
-    public static int SLIDES_MAX = 1100; //top of slides
+    public static int SLIDES_MAX = 1200; //top of slides
     public static int SLIDES_MIN = 0; //bottom of slides
-    public static int SLIDES_OUT_TOP_SAMPLE = 1100; //bucket deposit
+    public static int SLIDES_OUT_TOP_SAMPLE = 1200; //bucket deposit
 
     public static double SLIDES_SIGMOID_SCALER = 0.01; // (DONEISH)
     public static double SLIDES_KP = 0.01;
@@ -65,7 +67,7 @@ public class HobbesConstants {
 
 
     //transfer
-    public static double EXTENDO_ARM_TRANSFER = 0.4;
+    public static double EXTENDO_ARM_TRANSFER = 0.4 + offA;
     public static double EXTENDO_WRIST_TRANSFER = .13+off;
     public static double EXTENDO_WRIST_CHAMBER_TRANSFER = .9+off;
     public static double SLIDES_ARM_TRANSFER = 0.00 + off1;
@@ -73,7 +75,7 @@ public class HobbesConstants {
     public static double SLIDES_ARM_TRANSFER_IP = 0.005+.08+ off1;
 
     public static double SLIDES_WRIST_TRANSFER = 0.89 + off2;
-    public static double EXTENDO_ARM_TRANSFER_SPEC = 0.58;
+    public static double EXTENDO_ARM_TRANSFER_SPEC = 0.58 + offA;
     public static double EXTENDO_WRIST_TRANSFER_SPEC = .5;
     public static double SLIDES_ARM_TRANSFER_SPEC = .065+ off1;
     public static double SLIDES_WRIST_TRANSFER_SPEC = 0.78 + off2;
@@ -81,8 +83,8 @@ public class HobbesConstants {
 
     // intake (arm / wrist)
     public static double EXTENDO_WRIST_INTAKE_FLAT = 0.6+off;
-    public static double EXTENDO_ARM_INTAKE = .23;
-    public static double EXTENDO_ARM_INTAKE_ANGLED = .3;
+    public static double EXTENDO_ARM_INTAKE = .23 + offA;
+    public static double EXTENDO_ARM_INTAKE_ANGLED = .3 + offA;
     public static double EXTENDO_WRIST_INTAKE_ANGLED = 0.83+off;
 
 
@@ -101,16 +103,16 @@ public class HobbesConstants {
 
 
     // extendo arm
-    public static double EXTENDO_ARM_UP = .37;
-    public static double EXTENDO_ARM_PUSH_UP = .25;
-    public static double EXTENDO_ARM_PUSH_DOWN = .09;
-    public static double EXTENDO_ARM_OUTAKE = .5;
-    public static double EXTENDO_ARM_SPEED = 0.01;
+    public static double EXTENDO_ARM_UP = .37 + offA;
+    public static double EXTENDO_ARM_PUSH_UP = .25 + offA;
+    public static double EXTENDO_ARM_PUSH_DOWN = .09 + offA;
+    public static double EXTENDO_ARM_OUTAKE = .5 + offA;
+    public static double EXTENDO_ARM_SPEED = 0.01 + offA;
     // prev = .43
-    public static double EXTENDO_ARM_SPECIMEN_PICKUP = .48;
-    public static double EXTENDO_ARM_ABOVE_SUB_BARRIER = .38;
-    public static double EXTENDO_ARM_ABOVE_PICKUP = .3;
-    public static double EXTENDO_ARM_PICKUP = .25;
+    public static double EXTENDO_ARM_SPECIMEN_PICKUP = .48 + offA;
+    public static double EXTENDO_ARM_ABOVE_SUB_BARRIER = .38 + offA;
+    public static double EXTENDO_ARM_ABOVE_PICKUP = .3 + offA;
+    public static double EXTENDO_ARM_PICKUP = .25 + offA;
 
     // extendo wrist
     public static double EXTENDO_WRIST_UP = 0.73+off;
@@ -133,7 +135,7 @@ public class HobbesConstants {
 
     // claw
     public static double CLAW_OPEN = 0.55;
-    public static double CLAW_CLOSED = .87;
+    public static double CLAW_CLOSED = .88;
 
 
 
@@ -159,18 +161,18 @@ public class HobbesConstants {
 
     //auto stupid start fix
     public static double EXTENDO_WRIST_START = .84;
-    public static double EXTENDO_ARM_START = .65;
+    public static double EXTENDO_ARM_START = .65 + offA;
     public static double SLIDES_ARM_START = .16 + off1;
     public static double SLIDES_WRIST_START  = .87 + off2;
 
 
     // extendo claw
     //prev open value = .48
-    public static double EXTENDO_CLAW_OPEN = .4+op;
+    public static double EXTENDO_CLAW_OPEN = .46+op;
     public static double EXTENDO_CLAW_IP = .52+op;
     public static double EXTENDO_CLAW_SWEEP = .6+op;
     public static double EXTENDO_CLAW_CLOSED = .9+op;
-    public static double CLAW_ALMOST_CLOSED = .82+op;
+    public static double CLAW_ALMOST_CLOSED = .84+op;
 
     //extendo swivel
     public static double SWIVEL_STRAIGHT = .305;
