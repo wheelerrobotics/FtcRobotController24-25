@@ -46,4 +46,5 @@ dependencies {
     implementation "page.j5155.roadrunner:ftc-otos:0.1.2+0.1.14"
 
     implementation group: 'org.ejml', name: 'ejml-all', version: '0.43'
+    implementation 'com.acmerobotics.dashboard:dashboard:0.4.15'
 }

@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.roadrunner;
 
-import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.zyxOrientation;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.canvas.Canvas;
@@ -130,7 +128,7 @@ public class MecanumDrive {
 
     public LazyImu lazyImu;
 
-    public Localizer localizer;
+    public final Localizer localizer;
     public Pose2d pose;
 
     public final LinkedList<Pose2d> poseHistory = new LinkedList<>();
@@ -251,7 +249,8 @@ public class MecanumDrive {
 
         // TODO: make sure your config has an IMU with this name (can be BNO or BHI)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        lazyImu = new LazyImu(hardwareMap, "imu", new RevHubOrientationOnRobot(zyxOrientation(0, 0, 0)));
+        lazyImu = new LazyImu(hardwareMap, "imu", new RevHubOrientationOnRobot(
+                PARAMS.logoFacingDirection, PARAMS.usbFacingDirection));
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 

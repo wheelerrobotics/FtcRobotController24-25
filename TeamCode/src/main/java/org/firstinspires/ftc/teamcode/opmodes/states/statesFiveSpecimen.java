@@ -57,7 +57,7 @@ public class statesFiveSpecimen extends LinearOpMode {
         TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0))
 
                 .setTangent(PI)
-                .splineTo(new Vector2d(-34,-1),PI);
+                .splineTo(new Vector2d(-33,2),PI);
 
 
         //first sweep
@@ -98,7 +98,7 @@ public class statesFiveSpecimen extends LinearOpMode {
                 //  .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-36, -5), PI);
+                .splineTo(new Vector2d(-36, -2), PI);
 
 
         // wall specimen 2
@@ -127,7 +127,7 @@ public class statesFiveSpecimen extends LinearOpMode {
                 //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-36, -7), PI);
+                .splineTo(new Vector2d(-36, -6), PI);
 
         // wall specimen 3
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh()
@@ -148,7 +148,7 @@ public class statesFiveSpecimen extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-36, -9), PI);
+                .splineTo(new Vector2d(-36, -11), PI);
 
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
                 // .splineToConstantHeading(new Vector2d(-30, -10), 0)
@@ -167,7 +167,7 @@ public class statesFiveSpecimen extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(-36, -11), PI);
+                .splineTo(new Vector2d(-36, -14.5), PI);
 
         // park
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh()
