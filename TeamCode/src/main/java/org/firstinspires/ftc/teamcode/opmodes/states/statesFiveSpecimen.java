@@ -66,7 +66,7 @@ public class statesFiveSpecimen extends LinearOpMode {
 
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
                 .setTangent(0).splineToLinearHeading(new Pose2d(-13, 20, .2+4*PI/16),
-                        0, null, new ProfileAccelConstraint(-80, 60));
+                        0, null, new ProfileAccelConstraint(-80, 30));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
@@ -74,7 +74,7 @@ public class statesFiveSpecimen extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-27, 39, PI*5/6), PI * 5 / 6);
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
                 .setTangent(0).splineToLinearHeading(new Pose2d(-14, 30, 4*PI/16),
-                        0,  null, new ProfileAccelConstraint(-80, 60));
+                        0,  null, new ProfileAccelConstraint(-80, 30));
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(PI)
@@ -236,7 +236,7 @@ public class statesFiveSpecimen extends LinearOpMode {
 
                                 new ParallelAction(
                                         sweep3,
-                                        hob.actionMacroTimeout(SPECIMEN_BEFORE_PICKUP_AUTO_DAN,1200)
+                                        hob.actionMacroTimeout(SPECIMEN_BEFORE_PICKUP_AUTO_DAN,1500)
                                 ),
 
                                 sweep3Align,

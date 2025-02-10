@@ -188,7 +188,7 @@ public class singleTele extends OpMode {
         // p2:far pickup
         if (gamepad2.b && !lastGamepad2.b && !gamepad2.right_bumper) hob.runMacro(EXTENDO_CLAW_OVER_SAMPLE_FAR);
         // p2: up
-        if (gamepad2.x && !lastGamepad2.x && !gamepad2.right_bumper) hob.servosController.setExtendoClawSwivel(EXTENDO_CLAW_OPEN, .45);
+        if (gamepad2.x && !lastGamepad2.x && !gamepad2.right_bumper) hob.servosController.setExtendoArmWrist(EXTENDO_ARM_ABOVE_SUB_BARRIER, EXTENDO_WRIST_PICKUP);
         // p2: transfer macro
         if (gamepad2.y && !lastGamepad2.y && !gamepad2.right_bumper){
             if (hob.servosController.extendoClawPos == EXTENDO_CLAW_CLOSED) hob.runMacro(FULL_TRANSFER);

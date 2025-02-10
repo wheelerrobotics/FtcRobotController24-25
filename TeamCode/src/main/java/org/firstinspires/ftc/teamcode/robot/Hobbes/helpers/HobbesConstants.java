@@ -122,6 +122,10 @@ public class HobbesConstants {
     public static double EXTENDO_WRIST_SPECIMEN_PICKUP = .645+off ;
     public static double EXTENDO_WRIST_SPECIMEN_PICKED_UP = .52 +off;
 
+    // backup_spec pickup
+
+    public static double SLIDES_ARM_PICKUP_BACKUP = 1;
+    public static double SLIDES_WRIST_PICKUP_BACKUP = .13;
 
 
     // slides arm/wrist

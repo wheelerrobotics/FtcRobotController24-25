@@ -9,6 +9,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 import static java.lang.Math.PI;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -28,11 +29,13 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 
 @Autonomous
-
+@Config
 public class AaronBucketAuto extends LinearOpMode {
     // 5 specimen
     Hobbes hob = null;
     PinpointDrive drive;
+    public static double startX = 0, startY = -1, startR = 0;
+    public static double offset = -2;
     boolean gamepadding = true;
     double x = 0;
     double y = 0;
@@ -72,64 +75,64 @@ public class AaronBucketAuto extends LinearOpMode {
             if (gamepad1.left_stick_button) gamepadding = false;
         }
         swiv = 0.05/15 * swiv;
-        TrajectoryActionBuilder b0 = drive.actionBuilder(new Pose2d(0, 0, 0))
+        TrajectoryActionBuilder b0 = drive.actionBuilder(new Pose2d(startX, startY, startR))
                 .setTangent(PI)
                 .lineToX(-10);
         //Splines for first spike mark and first bucket
         TrajectoryActionBuilder s1 = b0.endTrajectory().fresh()
                 .setTangent(PI/2)
-                .splineToConstantHeading(new Vector2d(-11, 10), PI/2)
-                .splineToLinearHeading(new Pose2d(-11, 18, PI/2),
+                .splineToConstantHeading(new Vector2d(-11+offset, 10), PI/2)
+                .splineToLinearHeading(new Pose2d(-11+offset, 18, PI/2),
                         PI/2, null, new ProfileAccelConstraint(-20, 20));
 
         TrajectoryActionBuilder b1 = s1.endTrajectory().fresh()
                 .setTangent(-PI/2)
-                .splineToLinearHeading(new Pose2d(-15, 8, PI/4), -3*PI/4);
+                .splineToLinearHeading(new Pose2d(-15+offset, 8, PI/4), -3*PI/4);
         //second spike mark
         TrajectoryActionBuilder s2 = b1.endTrajectory().fresh()
                 .setTangent(PI/2)
-                .splineToLinearHeading(new Pose2d(-20, 18, PI/2), PI/2, null, new ProfileAccelConstraint(-20, 20))
+                .splineToLinearHeading(new Pose2d(-20+offset, 18, PI/2), PI/2, null, new ProfileAccelConstraint(-20, 20))
                 ;
 
         TrajectoryActionBuilder b2 = s2.endTrajectory().fresh()
                 .setTangent(-PI/2)
-                .splineToLinearHeading(new Pose2d(-28, 12, PI/2), -PI/2);
+                .splineToLinearHeading(new Pose2d(-28+offset-2, 14, PI/2), -PI/2);
 
         TrajectoryActionBuilder s3 = b2.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(-12, 27, Math.toRadians(145)), Math.toRadians(145), null, new ProfileAccelConstraint(-20, 20));
+                .splineToLinearHeading(new Pose2d(-12+offset, 27, Math.toRadians(145)), Math.toRadians(145), null, new ProfileAccelConstraint(-20, 20));
 
         TrajectoryActionBuilder b3 = s3.endTrajectory().fresh()
                 .setTangent(-PI/2)
-                .splineToLinearHeading(new Pose2d(-15, 8, PI/4), -3*PI/4);
+                .splineToLinearHeading(new Pose2d(-15+offset-2, 8, PI/4), -3*PI/4);
 
 
         TrajectoryActionBuilder s4 = b3.endTrajectory().fresh()
                 .setTangent(PI/4)
-                .splineToLinearHeading(new Pose2d(0, 48, 0), 0, null, new ProfileAccelConstraint(-50, 50))
+                .splineToLinearHeading(new Pose2d(0+offset, 48, 0), 0, null, new ProfileAccelConstraint(-50, 50))
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(6+x, 43+y), PI, null, new ProfileAccelConstraint(-20, 20));
+                .splineToConstantHeading(new Vector2d(6+x+offset, 43+y), PI, null, new ProfileAccelConstraint(-20, 20));
 
         TrajectoryActionBuilder b4 = s4.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineToLinearHeading(new Pose2d(-13, 15, PI/4), -3*PI/4, null, new ProfileAccelConstraint(-40, 80));
+                .splineToLinearHeading(new Pose2d(-13+offset-1, 16, PI/4), -3*PI/4, null, new ProfileAccelConstraint(-40, 80));
 
 
         TrajectoryActionBuilder s5 = b4.endTrajectory().fresh()
                 .setTangent(PI/4)
-                .splineTo(new Vector2d(5, 50), 0);
+                .splineTo(new Vector2d(5+offset, 50), 0);
 
         TrajectoryActionBuilder b5 = s5.endTrajectory().fresh()
                 .setTangent(PI)
-                .splineTo(new Vector2d(-23, 13), -3*PI/4);
+                .splineTo(new Vector2d(-23+offset, 13), -3*PI/4);
 
 
 
 
         TrajectoryActionBuilder p1  = b4.endTrajectory().fresh()
                 .setTangent(PI/4)
-                .splineToLinearHeading(new Pose2d(0, 60, PI), PI)
-                .splineToConstantHeading(new Vector2d(20, 60), PI, null, new ProfileAccelConstraint(-20, 20));
+                .splineToLinearHeading(new Pose2d(0+offset, 60, PI), PI)
+                .splineToConstantHeading(new Vector2d(20+offset, 60), PI, null, new ProfileAccelConstraint(-20, 20));
 
         //build all of the splines
         Action bucket0 = b0.build();
@@ -246,7 +249,7 @@ public class AaronBucketAuto extends LinearOpMode {
                                 new ParallelAction(
                                         park,
                                         hob.actionMacro(ASCENT_UP_AUTO),
-                                        hob.actionMacroTimeout(SLIDES_DOWN, 300)
+                                        hob.actionMacroTimeout(SLIDES_DOWN_AUTO, 300)
                                 ),
 
                                 hob.finishAction()),
