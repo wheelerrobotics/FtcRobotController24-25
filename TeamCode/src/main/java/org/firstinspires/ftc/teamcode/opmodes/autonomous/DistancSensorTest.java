@@ -20,7 +20,6 @@ import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 
 @Autonomous
-@Disabled
 public class DistancSensorTest extends LinearOpMode {
     Hobbes hob = null;
     PinpointDrive drive;

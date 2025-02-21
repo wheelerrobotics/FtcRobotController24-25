@@ -206,7 +206,7 @@ public class Hobbes extends Meccanum implements Robot {
         extendoClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
         //define sensors
-        //wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
+        wallDistanceSensor = hardwareMap.get(AnalogInput.class, "wallDistanceSensor");
 
         // set slides base pos
         slidesController.start();
@@ -401,7 +401,7 @@ public class Hobbes extends Meccanum implements Robot {
     {
         return ( (wallDistanceSensor.getVoltage()*32.5)-2.6);
     }
-
+// was 32.5x - 2.6
     public class distanceSensing implements Action {
         private boolean initialized = false;
 
@@ -411,9 +411,9 @@ public class Hobbes extends Meccanum implements Robot {
                while (abs(wallDistance() - 10) > 0.01){
                    tele.addData("Distance From Wall" , wallDistance());
                    if ((wallDistance() - 10) > 0) {  //TODO: probably some sign errors here, and need to get actual wall distance
-                       motorDriveXYVectors(5, 0, 0);
+                       //motorDriveXYVectors(5, 0, 0);
                    } else {
-                       motorDriveXYVectors(-5, 0, 0);
+                       //motorDriveXYVectors(-5, 0, 0);
                    };
                 }
 

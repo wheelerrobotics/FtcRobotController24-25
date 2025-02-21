@@ -9,6 +9,8 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.*;
 import static java.lang.Math.PI;
 import static java.lang.Math.atan2;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -48,12 +50,18 @@ public class singleTele extends OpMode {
         // run everything to start positions
         hob.servosController.teleSetup();
         hob.runMacro(new HobbesState(null, null, null, null, null, null, null, null, null, null, new LinkedState(ASCENT_DOWN, 300)));
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
     }
 
     @Override
     // loops after start press
     public void loop() {
+
+        telemetry.addData("Distance", hob.wallDistance());
+
+
+
         // p1 & p2: start freeze (to ignore input while switching mode)
         if (gamepad2.start || gamepad1.start) return;
 
