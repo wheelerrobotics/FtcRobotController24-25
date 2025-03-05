@@ -25,7 +25,6 @@ public class BotVision {
 
     public void init(HardwareMap hardwareMap, OpenCvPipeline pipeline) {
         this.pipeline = pipeline;
-        if (true) return;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webcam.setPipeline(this.pipeline);
@@ -51,7 +50,7 @@ public class BotVision {
     }
     public void init(HardwareMap hardwareMap, OpenCvPipeline pipeline, String webcamName) {
         this.pipeline = pipeline;
-        if (true) return;
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
         webcam.setPipeline(this.pipeline);

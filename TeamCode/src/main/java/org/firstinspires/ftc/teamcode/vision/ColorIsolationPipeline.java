@@ -63,6 +63,7 @@ public class ColorIsolationPipeline extends OpenCvPipeline {
     double maxArea = 0;
     int maxIdx = 0;
     public Mat isolate(Mat input) {
+
         Scalar lowB = new Scalar(bhMin, bsMin, blMin);
         Scalar highB = new Scalar(bhMax, bsMax, blMax);
 
