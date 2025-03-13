@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.robot.Raz;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.INFINITY;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.depositArmStart;
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.DEPOSIT_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 import static java.lang.Math.E;
-import static java.lang.Math.PI;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import static java.lang.Math.signum;
@@ -19,12 +18,8 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.ftccommon.SoundPlayer;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,9 +33,6 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
@@ -50,7 +42,6 @@ import org.firstinspires.ftc.teamcode.robot.Meccanum.Meccanum;
 import org.firstinspires.ftc.teamcode.helpers.PID;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.vision.BotVision;
-import org.firstinspires.ftc.teamcode.vision.ColorIsolationPipeline;
 
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -130,7 +121,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         slidesLeft.setZeroPowerBehavior(BRAKE);
         slidesRight.setZeroPowerBehavior(BRAKE);
         slidesLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        slidesRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        slidesRight.setDirection(DcMotorSimple.Direction.FORWARD);
         slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -401,18 +392,18 @@ public class Razzmatazz extends Meccanum implements Robot {
     public static double offs = 0;
     public class ServosController {
         //set servo positions
-        public double depositArmPos = depositArmStart;
-        public double depositSwivelPos = depositSwivelStart;
-        public double depositClawPos = depositClawStart;
-        public double depositWristPos = depositWristStart;
-        public double extendoPos = extendoStart;
-        public double turretPos = turretStart;
-        public double intakeArmPos = intakeArmStart;
-        public double intakeSwivelPos = intakeSwivelStart;
-        public double intakeClawPos = intakeClawStart;
-        public double sweepPos = sweepStart;
-        public double ptoPos = ptoStart;
-        public double pushupPos = pushupStart;
+        public double depositArmPos = DEPOSIT_ARM_START;
+        public double depositSwivelPos = DEPOSIT_SWIVEL_START;
+        public double depositClawPos = DEPOSIT_CLAW_START;
+        public double depositWristPos = DEPOSIT_WRIST_START;
+        public double extendoPos = EXTENDO_START;
+        public double turretPos = TURRET_START;
+        public double intakeArmPos = INTAKE_ARM_START;
+        public double intakeSwivelPos = INTAKE_SWIVEL_START;
+        public double intakeClawPos = INTAKE_CLAW_START;
+        public double sweepPos = SWEEP_START;
+        public double ptoPos = PTO_START;
+        public double pushupPos = PUSHUP_START;
 
         public void setup() {
             //can set a set of initial servo positions here
@@ -481,7 +472,28 @@ public class Razzmatazz extends Meccanum implements Robot {
             intakeArmPos = intakeArmPosition;
             intakeSwivelPos = intakeSwivelPosition;
         }
+        public void setIntakeClaw(boolean open) {
+            intakeClawPos = open ? DEPOSIT_CLAW_OPEN : DEPOSIT_CLAW_CLOSED;
+        }
+        public void setSweep(double sweepPosition){
+            sweepPos = sweepPosition;
+        }
 
+        public void setPto(double ptoPosition){
+            ptoPos = ptoPosition;
+        }
+
+        public void setPushup(double pushupPosition){
+            pushupPos = pushupPosition;
+        }
+
+        public void setIntakeClawPrecise(double intakeClawPosition){
+            intakeClawPos = intakeClawPosition;
+        }
+
+        public void setDepositClawPrecise(double depositClawPosition){
+            depositClawPos = depositClawPosition;
+        }
     }
 
     // slide motor ticking (i have no clue how this works, i just know it worked
@@ -513,7 +525,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void start() {
-            basePos = slides.getCurrentPosition();
+            basePos = slidesLeft.getCurrentPosition();
 
             slidePID = new PID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
@@ -529,24 +541,24 @@ public class Razzmatazz extends Meccanum implements Robot {
         public void slidesTick() {
 
             if (disabled == 0) {
-                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slides.setPower(0);
-                slides2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slides2.setPower(0);
+                slidesLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slidesLeft.setPower(0);
+                slidesRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slidesRight.setPower(0);
                 return;
             } else if (disabled == 1) {
-                slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slides.setPower(0.2);
-                slides2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slides2.setPower(0.2);
+                slidesLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slidesLeft.setPower(0.2);
+                slidesRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                slidesRight.setPower(0.2);
                 return;
-            } else if (slides.getZeroPowerBehavior() != BRAKE) {
-                slides.setZeroPowerBehavior(BRAKE);
-                slides2.setZeroPowerBehavior(BRAKE);
+            } else if (slidesLeft.getZeroPowerBehavior() != BRAKE) {
+                slidesLeft.setZeroPowerBehavior(BRAKE);
+                slidesRight.setZeroPowerBehavior(BRAKE);
             }
             slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
-            pos = -(slides.getCurrentPosition() - basePos);
+            pos = -(slidesLeft.getCurrentPosition() - basePos);
 
             tele.addData("pos", pos);
             tele.addData("targeting", SLIDE_TARGETING);
@@ -569,19 +581,19 @@ public class Razzmatazz extends Meccanum implements Robot {
             tele.addData("drivingPower", !runToBottom ? minMaxScaler(pos, power) : 0.4);
             tele.update();
             if (rezeroing) {
-                slides.setPower(0.3);
-                slides2.setPower(0.3);
+                slidesLeft.setPower(0.3);
+                slidesRight.setPower(0.3);
                 resetSlideBasePos();
             }
             else if (!runToBottom) {
 
-                slides.setPower(minMaxScaler(pos, power));
+                slidesLeft.setPower(minMaxScaler(pos, power));
                 //slides 2 reversed relative to slides (look in init), so same power
-                slides2.setPower(minMaxScaler(pos, power));
+                slidesRight.setPower(minMaxScaler(pos, power));
             }
             else {
-                slides.setPower(0.3);
-                slides2.setPower(0.3);
+                slidesLeft.setPower(0.3);
+                slidesRight.setPower(0.3);
             }
             rezeroing = false;
 
@@ -619,9 +631,9 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void resetSlideBasePos() {
-            slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            basePos = slides.getCurrentPosition();
+            slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slidesLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            basePos = slidesLeft.getCurrentPosition();
         }
 
         public boolean isBusy() {
