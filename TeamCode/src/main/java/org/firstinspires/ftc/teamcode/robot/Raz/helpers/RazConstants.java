@@ -96,6 +96,22 @@ public class RazConstants {
         public static double EXTENDO_IN = 0;
 
 
+        //Transer
+
+        public static double DEPOSIT_ARM_ABOVE_TRANSFER = 0;
+        public static double DEPOSIT_WRIST_ABOVE_TRANSFER = 0;
+
+        public static double DEPOSIT_ARM_TRANSFER = 0;
+        public static double DEPOSIT_WRIST_TRANSFER = 0;
+        public static double INTAKE_ARM_TRANSFER = 0;
+        public static double TURRET_TRANSFER = 0;
+
+        //sweep
+
+        public static double SWEEP_IN = 0;
+        public static double SWEEP_DOWN = 0;
+
+
 
 
 }

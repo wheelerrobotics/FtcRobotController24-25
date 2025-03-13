@@ -23,5 +23,54 @@ public class Macros {
             null, null, null, null,
             null, null,DEPOSIT_SLIDES_SPEC_DEPOSITED , null, new LinkedState(SPEC_PICKUP , 500));
 
+    public static RazState ABOVE_SAMPLE_PICKUP = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, TURRET_MIDDLE,
+            INTAKE_ARM_ABOVE_PICKUP, INTAKE_SWIVEL_HORIZONTAL, INTAKE_CLAW_OPEN, null,
+            null, null,SLIDES_MIN , null, null);
+
+    //pickup macro
+
+    public static RazState SAMPLE_PICKUP3 = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, null,
+            INTAKE_ARM_ABOVE_PICKUP, null, INTAKE_CLAW_CLOSED, null,
+            null, null,null , null, null);
+
+    public static RazState SAMPLE_PICKUP2 = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, null,
+            INTAKE_ARM_PICKUP, null, INTAKE_CLAW_CLOSED, null,
+            null, null,null , null, new LinkedState(SAMPLE_PICKUP3 , 200));
+
+    public static RazState SAMPLE_PICKUP = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, null,
+            INTAKE_ARM_PICKUP, null, INTAKE_CLAW_OPEN, null,
+            null, null,null , null, new LinkedState(SAMPLE_PICKUP2 , 200));
+
+
+
+    public static RazState SAMPLE_DEPOSIT2 = new RazState(DEPOSIT_ARM_SAMPLE_DEPOSIT, null,
+            DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT, null, null,
+            null, null, INTAKE_CLAW_OPEN, null,
+            null, null,DEPOSIT_SLIDES_SAMPLE_DEPOSIT , null, null);
+
+    public static RazState SAMPLE_DEPOSIT = new RazState(DEPOSIT_ARM_HALFWAY_DEPOSIT, null,
+            DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_HALFWAY_DEPOSIT, null, null,
+            null, null, INTAKE_CLAW_OPEN, null,
+            null, null,DEPOSIT_SLIDES_SAMPLE_DEPOSIT , null, new LinkedState(SAMPLE_DEPOSIT2 , 800));
+
+
+
+    public static RazState AT_TRANSFER = new RazState(DEPOSIT_ARM_TRANSFER, DEPOSIT_SWIVEL_HORIZONTAL,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, EXTENDO_IN, TURRET_TRANSFER,
+            INTAKE_ARM_TRANSFER, INTAKE_SWIVEL_HORIZONTAL, INTAKE_CLAW_CLOSED, null,
+            null, null,SLIDES_MIN , null, null);
+
+    public static RazState COLLAPSED = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, DEPOSIT_SWIVEL_HORIZONTAL,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, EXTENDO_IN, TURRET_TRANSFER,
+            INTAKE_ARM_TRANSFER, INTAKE_SWIVEL_HORIZONTAL, INTAKE_CLAW_OPEN, SWEEP_IN,
+            null, null,SLIDES_MIN , null, null);
+
+
+
+
 
 }
