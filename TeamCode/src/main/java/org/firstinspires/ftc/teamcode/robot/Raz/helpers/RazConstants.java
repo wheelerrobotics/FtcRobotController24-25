@@ -94,6 +94,7 @@ public class RazConstants {
         //extendo
 
         public static double EXTENDO_IN = 0;
+        public static double EXTENDO_OUT = 0;
 
 
         //Transer

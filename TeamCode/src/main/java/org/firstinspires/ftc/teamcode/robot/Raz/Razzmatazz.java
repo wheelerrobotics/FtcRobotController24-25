@@ -410,6 +410,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
         public void teleSetup() {
             //can set initial tele servo positions here
+
         }
 
         public void autoSetup() {
