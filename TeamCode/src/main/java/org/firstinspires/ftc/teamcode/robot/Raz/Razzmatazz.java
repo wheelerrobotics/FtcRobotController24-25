@@ -101,8 +101,8 @@ public class Razzmatazz extends Meccanum implements Robot {
         motorBackRight = (DcMotorEx) hardwareMap.dcMotor.get("motorBackRight"); // CH0
 
 
-        ascentLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentLeft"); // CH2
-        ascentRight = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentRight"); // CH0
+//        ascentLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentLeft"); // CH2
+//        ascentRight = (DcMotorImplEx) hardwareMap.dcMotor.get("ascentRight"); // CH0
 
         // reverse left side motors
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -114,16 +114,16 @@ public class Razzmatazz extends Meccanum implements Robot {
         setZeroPowerBehavior(BRAKE);
 
         // define slides
-        slidesLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesLeft"); // EH3
-        slidesRight = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesRight"); // EH3
+//        slidesLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesLeft"); // EH3
+//        slidesRight = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesRight"); // EH3
 
         // configure slides
-        slidesLeft.setZeroPowerBehavior(BRAKE);
-        slidesRight.setZeroPowerBehavior(BRAKE);
-        slidesLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        slidesRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        slidesLeft.setZeroPowerBehavior(BRAKE);
+//        slidesRight.setZeroPowerBehavior(BRAKE);
+//        slidesLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+//        slidesRight.setDirection(DcMotorSimple.Direction.FORWARD);
+//        slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         // define limited servos
@@ -371,8 +371,8 @@ public class Razzmatazz extends Meccanum implements Robot {
         //failsafeCheck(); // empty
         Logger.getLogger("FUCK").log(new LogRecord(Level.INFO, "BANG"));
         tickMacros(); // check macros
-        motorAscentController.ascentTick();
-        slidesController.slidesTick(); // update slides
+        //motorAscentController.ascentTick();
+        //slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update(); // run specimen corrector
@@ -526,7 +526,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void start() {
-            basePos = slidesLeft.getCurrentPosition();
+            //basePos = slidesLeft.getCurrentPosition();
 
             slidePID = new PID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
