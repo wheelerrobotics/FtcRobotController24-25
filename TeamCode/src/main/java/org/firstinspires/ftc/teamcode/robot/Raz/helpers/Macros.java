@@ -43,7 +43,7 @@ public class Macros {
     public static RazState SAMPLE_PICKUP = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
             DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, null,
             INTAKE_ARM_PICKUP, null, INTAKE_CLAW_OPEN, null,
-            null, null,null , null, new LinkedState(SAMPLE_PICKUP2 , 200));
+            null, null,null , null, new LinkedState(SAMPLE_PICKUP2 , 150));
 
 
 
@@ -69,10 +69,14 @@ public class Macros {
             null, null,SLIDES_MIN , null, null);
 
     public static RazState COLLAPSED = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, DEPOSIT_SWIVEL_HORIZONTAL,
-            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, EXTENDO_IN, TURRET_TRANSFER,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, EXTENDO_IN, TURRET_MIDDLE,
             INTAKE_ARM_TRANSFER, INTAKE_SWIVEL_HORIZONTAL, INTAKE_CLAW_OPEN, SWEEP_IN,
             null, null,SLIDES_MIN , null, null);
 
+    public static RazState EXTENDO_PICKUP = new RazState(null, null,
+            null, null, EXTENDO_OUT, TURRET_MIDDLE,
+            INTAKE_ARM_ABOVE_PICKUP, INTAKE_SWIVEL_HORIZONTAL, INTAKE_CLAW_OPEN, null,
+            null, null,null , null, null);
 
 
 

@@ -65,6 +65,16 @@ public class RazTele extends OpMode {
             raz.runMacro(SAMPLE_PICKUP);
         }
 
+        //p1 get ready to pickup macro
+        if (gamepad1.b && !lastGamepad1.b){
+            raz.runMacro(EXTENDO_PICKUP);
+        }
+
+        //p2 collapse, but don't transfer
+        if (gamepad2.x && !lastGamepad2.x){
+            raz.runMacro(COLLAPSED);
+        }
+
         //p2 transfer macro
         if (gamepad2.y && !lastGamepad2.y) {
             raz.runMacro(AT_TRANSFER);
@@ -75,14 +85,17 @@ public class RazTele extends OpMode {
             raz.runMacro(SAMPLE_DEPOSIT);
         }
 
+        //p2 Manual swivel control
+
         //p2 togle deposit claw
-        if (gamepad2.dpad_left && !lastGamepad2.dpad_left){
-            raz.servosController.setDepositClaw(raz.servosController.depositClawPos == DEPOSIT_CLAW_CLOSED);
-        }
+//        if (gamepad2.dpad_left && !lastGamepad2.dpad_left){
+//            raz.servosController.setDepositClaw(raz.servosController.depositClawPos == DEPOSIT_CLAW_CLOSED);
+
 
         //p2 manual extendo control
+        raz.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
 
-        
+
 
 
         // tick robot
@@ -101,5 +114,6 @@ public class RazTele extends OpMode {
         lastGamepad1.copy(gamepad1);
         lastGamepad2.copy(gamepad2);
     }
-
 }
+
+

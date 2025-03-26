@@ -8,19 +8,7 @@ public class RazConstants {
         //Misc
         public static int INFINITY = 2000000000;
 
-        //Start positions (for servosController)
-        public static double DEPOSIT_ARM_START = 0;
-        public static double DEPOSIT_SWIVEL_START = 0;
-        public static double DEPOSIT_CLAW_START = 0;
-        public static double DEPOSIT_WRIST_START = 0;
-        public static double EXTENDO_START = 0;
-        public static double TURRET_START = 0;
-        public static double INTAKE_ARM_START = 0;
-        public static double INTAKE_SWIVEL_START = 0;
-        public static double INTAKE_CLAW_START = 0;
-        public static double SWEEP_START = 0;
-        public static double PTO_START = 0;
-        public static double PUSHUP_START = 0;
+
 
 
         //slides
@@ -36,9 +24,9 @@ public class RazConstants {
         public static double DEPOSIT_CLAW_CLOSED = 0;
 
         //deposit claw
-        public static double INTAKE_CLAW_OPEN = 0;
-        public static double INTAKE_CLAW_CLOSED = 0;
-        public static double INTAKE_CLAW_ALMOST_CLOSED = 0;
+        public static double INTAKE_CLAW_OPEN = .134;
+        public static double INTAKE_CLAW_CLOSED = .334;
+        public static double INTAKE_CLAW_ALMOST_CLOSED = 0; //TODO Need sample to do this
 
         //ascent
         public static int ASCENT_MIN = 0;
@@ -71,17 +59,17 @@ public class RazConstants {
 
         //Sample Pickup
 
-        public static double INTAKE_ARM_ABOVE_PICKUP = 0;
-        public static double INTAKE_ARM_PICKUP = 0;
+        public static double INTAKE_ARM_ABOVE_PICKUP = .4;
+        public static double INTAKE_ARM_PICKUP = 0.3;
 
 
         //turret
-        public static double TURRET_MIDDLE = 0;
+        public static double TURRET_MIDDLE = .775;
 
         //intake swivel
 
-        public static double INTAKE_SWIVEL_HORIZONTAL = 0;
-        public static double INTAKE_SWIVEL_VERTICAL = 0;
+        public static double INTAKE_SWIVEL_HORIZONTAL = .2;
+        public static double INTAKE_SWIVEL_VERTICAL = .54;
 
         //deposit swivel
 
@@ -93,8 +81,9 @@ public class RazConstants {
 
         //extendo
 
-        public static double EXTENDO_IN = 0;
-        public static double EXTENDO_OUT = 0;
+        public static double EXTENDO_IN = .945;
+        public static double EXTENDO_OUT = .39;
+        public static double EXTENDO_SPEED = .01;
 
 
         //Transer
@@ -104,15 +93,31 @@ public class RazConstants {
 
         public static double DEPOSIT_ARM_TRANSFER = 0;
         public static double DEPOSIT_WRIST_TRANSFER = 0;
-        public static double INTAKE_ARM_TRANSFER = 0;
-        public static double TURRET_TRANSFER = 0;
+        public static double INTAKE_ARM_TRANSFER = .84;
+        public static double TURRET_TRANSFER = .11;
 
         //sweep
 
         public static double SWEEP_IN = 0;
         public static double SWEEP_DOWN = 0;
 
+        //waits
+
+        public static double ARM_UP_WAIT = 300;
 
 
+        //Start positions (for servosController)
+        public static double DEPOSIT_ARM_START = 0;
+        public static double DEPOSIT_SWIVEL_START = 0;
+        public static double DEPOSIT_CLAW_START = 0;
+        public static double DEPOSIT_WRIST_START = 0;
+        public static double EXTENDO_START = EXTENDO_IN;
+        public static double TURRET_START = TURRET_MIDDLE;
+        public static double INTAKE_ARM_START = .5;
+        public static double INTAKE_SWIVEL_START = INTAKE_SWIVEL_HORIZONTAL;
+        public static double INTAKE_CLAW_START = INTAKE_CLAW_CLOSED;
+        public static double SWEEP_START = 0;
+        public static double PTO_START = 0;
+        public static double PUSHUP_START = 0;
 
 }

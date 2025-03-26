@@ -114,16 +114,16 @@ public class Razzmatazz extends Meccanum implements Robot {
         setZeroPowerBehavior(BRAKE);
 
         // define slides
-//        slidesLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesLeft"); // EH3
-//        slidesRight = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesRight"); // EH3
+        slidesLeft = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesLeft"); // EH3
+        slidesRight = (DcMotorImplEx) hardwareMap.dcMotor.get("slidesRight"); // EH3
 
         // configure slides
-//        slidesLeft.setZeroPowerBehavior(BRAKE);
-//        slidesRight.setZeroPowerBehavior(BRAKE);
-//        slidesLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-//        slidesRight.setDirection(DcMotorSimple.Direction.FORWARD);
-//        slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slidesLeft.setZeroPowerBehavior(BRAKE);
+        slidesRight.setZeroPowerBehavior(BRAKE);
+        slidesLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        slidesRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         // define limited servos
@@ -132,29 +132,29 @@ public class Razzmatazz extends Meccanum implements Robot {
         intakeArm = hardwareMap.get(ServoImplEx.class, "intakeArm");
         intakeSwivel = hardwareMap.get(ServoImplEx.class, "intakeSwivel");
         turret = hardwareMap.get(ServoImplEx.class, "turret");
-        diffyLeft = hardwareMap.get(ServoImplEx.class, "diffyLeft");
-        diffyRight = hardwareMap.get(ServoImplEx.class, "diffyRight");
-        depositWrist = hardwareMap.get(ServoImplEx.class, "depositWrist");
-        depositClaw = hardwareMap.get(ServoImplEx.class, "depositClaw");
-        sweep = hardwareMap.get(ServoImplEx.class, "sweep");
-        pto = hardwareMap.get(ServoImplEx.class, "pto");
-        pushup = hardwareMap.get(ServoImplEx.class, "pushup");
+//        diffyLeft = hardwareMap.get(ServoImplEx.class, "diffyLeft");
+//        diffyRight = hardwareMap.get(ServoImplEx.class, "diffyRight");
+//        depositWrist = hardwareMap.get(ServoImplEx.class, "depositWrist");
+//        depositClaw = hardwareMap.get(ServoImplEx.class, "depositClaw");
+//        sweep = hardwareMap.get(ServoImplEx.class, "sweep");
+//        pto = hardwareMap.get(ServoImplEx.class, "pto");
+//        pushup = hardwareMap.get(ServoImplEx.class, "pushup");
 
         // define continous servos
 
         // give servos full range of motion
-        diffyLeft.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        diffyRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        depositClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        depositWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        diffyLeft.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        diffyRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        depositClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        depositWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendo.setPwmRange(new PwmControl.PwmRange(500, 2500));
         turret.setPwmRange(new PwmControl.PwmRange(500, 2500));
         intakeArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
         intakeSwivel.setPwmRange(new PwmControl.PwmRange(500, 2500));
         intakeClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        sweep.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        pto.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        pushup.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        sweep.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        pto.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        pushup.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
         slidesController.start();
         motorAscentController.start();
@@ -322,20 +322,19 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
         if (MACROING) {
             RazState m = macroState;
-            if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
-            if (m.extendoPos != null) servosController.setExtendo(m.extendoPos);
-            if (m.depositArmPos != null) servosController.depositArmPos = m.depositArmPos;
-            if (m.depositSwivelPos != null) servosController.depositSwivelPos = m.depositSwivelPos;
-            if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
-            if (m.depositWristPos != null) servosController.depositWristPos = m.depositWristPos;
+//            if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
+//            if (m.depositArmPos != null) servosController.depositArmPos = m.depositArmPos;
+//            if (m.depositSwivelPos != null) servosController.depositSwivelPos = m.depositSwivelPos;
+//            if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
+//            if (m.depositWristPos != null) servosController.depositWristPos = m.depositWristPos;
             if (m.extendoPos != null) servosController.extendoPos = m.extendoPos;
             if (m.turretPos != null) servosController.turretPos = m.turretPos;
             if (m.intakeArmPos != null) servosController.intakeArmPos = m.intakeArmPos;
             if (m.intakeSwivelPos != null) servosController.intakeSwivelPos = m.intakeSwivelPos;
             if (m.intakeClawPos != null) servosController.intakeClawPos = m.intakeClawPos;
-            if (m.sweepPos != null) servosController.sweepPos = m.sweepPos;
-            if (m.ptoPos != null) servosController.ptoPos = m.ptoPos;
-            if (m.pushupPos != null) servosController.pushupPos = m.pushupPos;
+//            if (m.sweepPos != null) servosController.sweepPos = m.sweepPos;
+//            if (m.ptoPos != null) servosController.ptoPos = m.ptoPos;
+//            if (m.pushupPos != null) servosController.pushupPos = m.pushupPos;
 
 
             if (m.linkedState != null) {
@@ -392,18 +391,18 @@ public class Razzmatazz extends Meccanum implements Robot {
     public static double offs = 0;
     public class ServosController {
         //set servo positions
-        public double depositArmPos = DEPOSIT_ARM_START;
-        public double depositSwivelPos = DEPOSIT_SWIVEL_START;
-        public double depositClawPos = DEPOSIT_CLAW_START;
-        public double depositWristPos = DEPOSIT_WRIST_START;
+//        public double depositArmPos = DEPOSIT_ARM_START;
+//        public double depositSwivelPos = DEPOSIT_SWIVEL_START;
+//        public double depositClawPos = DEPOSIT_CLAW_START;
+//        public double depositWristPos = DEPOSIT_WRIST_START;
         public double extendoPos = EXTENDO_START;
         public double turretPos = TURRET_START;
         public double intakeArmPos = INTAKE_ARM_START;
         public double intakeSwivelPos = INTAKE_SWIVEL_START;
         public double intakeClawPos = INTAKE_CLAW_START;
-        public double sweepPos = SWEEP_START;
-        public double ptoPos = PTO_START;
-        public double pushupPos = PUSHUP_START;
+//        public double sweepPos = SWEEP_START;
+//        public double ptoPos = PTO_START;
+//        public double pushupPos = PUSHUP_START;
 
         public void setup() {
             //can set a set of initial servo positions here
@@ -418,37 +417,37 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void servosTick() {
-            tele.addData("depositArmPos", depositArmPos);
-            tele.addData("depositSwivelPos", depositSwivelPos);
-            tele.addData("depositClawPos", depositClawPos);
-            tele.addData("depositWristPos", depositWristPos);
+//            tele.addData("depositArmPos", depositArmPos);
+//            tele.addData("depositSwivelPos", depositSwivelPos);
+//            tele.addData("depositClawPos", depositClawPos);
+//            tele.addData("depositWristPos", depositWristPos);
             tele.addData("extendoPos", extendoPos);
             tele.addData("turretPos", turretPos);
             tele.addData("intakeArmPos", intakeArmPos);
             tele.addData("intakeSwivelPos" , intakeSwivelPos);
             tele.addData("intakeClawPos" , intakeClawPos);
-            tele.addData("sweepPos" , sweepPos);
-            tele.addData("ptoPos" , ptoPos);
-            tele.addData("pushupPos" , pushupPos);
+//            tele.addData("sweepPos" , sweepPos);
+//            tele.addData("ptoPos" , ptoPos);
+//            tele.addData("pushupPos" , pushupPos);
 
 
             // need to make this be an equation
             // diffyLeft.setPosition();
             // diffyRight.setPosition();
 
-            depositClaw.setPosition(depositClawPos);
-            depositWrist.setPosition(depositWristPos);
-
-            extendo.setPosition(extendoPos);
+//           depositClaw.setPosition(depositClawPos);
+//           depositWrist.setPosition(depositWristPos);
+//
+           extendo.setPosition(extendoPos);
 
            turret.setPosition(turretPos);
            intakeArm.setPosition(intakeArmPos);
            intakeSwivel.setPosition(intakeSwivelPos);
            intakeClaw.setPosition(intakeClawPos);
 
-           sweep.setPosition(sweepPos);
-           pto.setPosition(ptoPos);
-           pushup.setPosition(pushupPos);
+//           sweep.setPosition(sweepPos);
+//           pto.setPosition(ptoPos);
+//           pushup.setPosition(pushupPos);
 
         }
 
@@ -459,41 +458,44 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void setDepositClaw(boolean open) {
-            depositClawPos = open ? DEPOSIT_CLAW_OPEN : DEPOSIT_CLAW_CLOSED;
+//            depositClawPos = open ? DEPOSIT_CLAW_OPEN : DEPOSIT_CLAW_CLOSED;
         }
 
         public void setDepositWrist (double depositWristPosition) {
-            depositWristPos = depositWristPosition;
+//            depositWristPos = depositWristPosition;
         }
         public void setExtendo(double extendoPosition) {
             extendoPos = extendoPosition;
         }
+        public void incrementExtendo(double increment) {
+            if ((extendoPos + increment) > EXTENDO_OUT && (extendoPos + increment) < EXTENDO_IN)
+                extendoPos += increment;}
         public void setTurretArmSwivel(double turretPosition, double intakeArmPosition, double intakeSwivelPosition) {
             turretPos = turretPosition;
             intakeArmPos = intakeArmPosition;
             intakeSwivelPos = intakeSwivelPosition;
         }
         public void setIntakeClaw(boolean open) {
-            intakeClawPos = open ? DEPOSIT_CLAW_OPEN : DEPOSIT_CLAW_CLOSED;
+            intakeClawPos = open ? INTAKE_CLAW_OPEN : INTAKE_CLAW_CLOSED;
         }
-        public void setSweep(double sweepPosition){
-            sweepPos = sweepPosition;
-        }
-
-        public void setPto(double ptoPosition){
-            ptoPos = ptoPosition;
-        }
-
-        public void setPushup(double pushupPosition){
-            pushupPos = pushupPosition;
-        }
+//        public void setSweep(double sweepPosition){
+//            sweepPos = sweepPosition;
+//        }
+//
+//        public void setPto(double ptoPosition){
+//            ptoPos = ptoPosition;
+//        }
+//
+//        public void setPushup(double pushupPosition){
+//            pushupPos = pushupPosition;
+//        }
 
         public void setIntakeClawPrecise(double intakeClawPosition){
             intakeClawPos = intakeClawPosition;
         }
 
         public void setDepositClawPrecise(double depositClawPosition){
-            depositClawPos = depositClawPosition;
+//            depositClawPos = depositClawPosition;
         }
     }
 

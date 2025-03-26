@@ -37,28 +37,26 @@ public class Razeroer extends OpMode {
 
     @Override
     public void loop() {
-        if (extendoON)
-            raz.servosController.setExtendo(extendo);
-        if (diffyON)
-            raz.servosController.setDiffy(depositArm, depositSwivel);
-        if (depositWristON)
-            raz.servosController.setDepositWrist(depositWrist);
-        if (slidesON)
-            raz.slidesController.setTarget(slides);
+//        if (diffyON)
+//            raz.servosController.setDiffy(depositArm, depositSwivel);
+//        if (depositWristON)
+//            raz.servosController.setDepositWrist(depositWrist);
+//        if (slidesON)
+//            raz.slidesController.setTarget(slides);
         if (extendoON)
             raz.servosController.setExtendo(extendo);
         if (turretArmSwivelON)
             raz.servosController.setTurretArmSwivel(turret, intakeArm, intakeSwivel);
         if (intakeClawON)
             raz.servosController.setIntakeClawPrecise(intakeClaw);
-        if (depositClawON)
-            raz.servosController.setDepositClawPrecise(depositClaw);
-        if (sweepON)
-            raz.servosController.setSweep(sweep);
-        if (ptoON)
-            raz.servosController.setPto(pto);
-        if (pushupON)
-            raz.servosController.setPushup(pushup);
+//        if (depositClawON)
+//            raz.servosController.setDepositClawPrecise(depositClaw);
+//        if (sweepON)
+//            raz.servosController.setSweep(sweep);
+//        if (ptoON)
+//            raz.servosController.setPto(pto);
+//        if (pushupON)
+//            raz.servosController.setPushup(pushup);
         raz.tick();
     }
 }
