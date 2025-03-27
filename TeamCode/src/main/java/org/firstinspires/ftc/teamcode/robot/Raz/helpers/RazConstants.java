@@ -25,8 +25,10 @@ public class RazConstants {
 
         //deposit claw
         public static double INTAKE_CLAW_OPEN = .134;
-        public static double INTAKE_CLAW_CLOSED = .334;
-        public static double INTAKE_CLAW_ALMOST_CLOSED = 0; //TODO Need sample to do this
+        public static double INTAKE_CLAW_CLOSED = .328;
+        public static double INTAKE_CLAW_ALMOST_CLOSED = .29;
+        public static double INTAKE_CLAW_IP = .17;
+
 
         //ascent
         public static int ASCENT_MIN = 0;
@@ -59,17 +61,24 @@ public class RazConstants {
 
         //Sample Pickup
 
-        public static double INTAKE_ARM_ABOVE_PICKUP = .4;
-        public static double INTAKE_ARM_PICKUP = 0.3;
+        public static double INTAKE_ARM_ABOVE_PICKUP = .13;
+        public static double INTAKE_ARM_PICKUP = 0.07;
+        public static double INTAKE_ARM_UP = .6;
 
 
         //turret
         public static double TURRET_MIDDLE = .775;
 
+        public static double turretSpeed = .002;
+
         //intake swivel
 
         public static double INTAKE_SWIVEL_HORIZONTAL = .2;
         public static double INTAKE_SWIVEL_VERTICAL = .54;
+        public static double INTAKE_SWIVEL_SPEED = .01;
+        public static double INTAKE_SWIVEL_45 = .35;
+        public static double INTAKE_SWIVEL_135 = 0;
+
 
         //deposit swivel
 
@@ -82,8 +91,10 @@ public class RazConstants {
         //extendo
 
         public static double EXTENDO_IN = .945;
-        public static double EXTENDO_OUT = .39;
-        public static double EXTENDO_SPEED = .01;
+        public static double EXTENDO_OUT = .36;
+        public static double EXTENDO_SPEED = .005;
+
+        public static double EXTENDO_TRANSFER = .7;
 
 
         //Transer
@@ -93,8 +104,9 @@ public class RazConstants {
 
         public static double DEPOSIT_ARM_TRANSFER = 0;
         public static double DEPOSIT_WRIST_TRANSFER = 0;
-        public static double INTAKE_ARM_TRANSFER = .84;
-        public static double TURRET_TRANSFER = .11;
+        public static double INTAKE_ARM_TRANSFER = .95;
+        public static double TURRET_TRANSFER = .68;
+        public static double INTAKE_SWIVEL_TRANSFER = .29;
 
         //sweep
 
@@ -113,7 +125,7 @@ public class RazConstants {
         public static double DEPOSIT_WRIST_START = 0;
         public static double EXTENDO_START = EXTENDO_IN;
         public static double TURRET_START = TURRET_MIDDLE;
-        public static double INTAKE_ARM_START = .5;
+        public static double INTAKE_ARM_START = .35;
         public static double INTAKE_SWIVEL_START = INTAKE_SWIVEL_HORIZONTAL;
         public static double INTAKE_CLAW_START = INTAKE_CLAW_CLOSED;
         public static double SWEEP_START = 0;

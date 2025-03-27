@@ -478,6 +478,22 @@ public class Razzmatazz extends Meccanum implements Robot {
         public void setIntakeClaw(boolean open) {
             intakeClawPos = open ? INTAKE_CLAW_OPEN : INTAKE_CLAW_CLOSED;
         }
+
+        public void incrementSwivel(double increment) {
+            //if ( (intakeSwivelPos + increment) > 0.1)
+                intakeSwivelPos += increment;
+        }
+
+        public void incrementTurret(double increment){
+            if ((turretPos + increment)> .57)
+                turretPos += increment;
+
+        }
+
+        public void setIntakeArm(double intakeArmPosition){
+            intakeArmPos = intakeArmPosition;
+        }
+
 //        public void setSweep(double sweepPosition){
 //            sweepPos = sweepPosition;
 //        }

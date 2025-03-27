@@ -65,9 +65,28 @@ public class RazTele extends OpMode {
             raz.runMacro(SAMPLE_PICKUP);
         }
 
+        //p1 inside pickup
+
+
+
         //p1 get ready to pickup macro
         if (gamepad1.b && !lastGamepad1.b){
             raz.runMacro(EXTENDO_PICKUP);
+        }
+
+        //p1 pickup, swivel 45
+        if (gamepad1.x && !lastGamepad1.x){
+            raz.runMacro(EXTENDO_PICKUP_45);
+        }
+
+        //p1 pickup, swivel 90+45 = 135 (the other 45)
+        if (gamepad1.y && !lastGamepad1.y){
+            raz.runMacro(EXTENDO_PICKUP_135);
+        }
+
+        //p1: transfer macro
+        if ((gamepad1.left_trigger !=0 ) && (lastGamepad1.left_trigger == 0)) {
+            raz.runMacro(AT_TRANSFER);
         }
 
         //p2 collapse, but don't transfer
@@ -77,7 +96,7 @@ public class RazTele extends OpMode {
 
         //p2 transfer macro
         if (gamepad2.y && !lastGamepad2.y) {
-            raz.runMacro(AT_TRANSFER);
+                raz.runMacro(AT_TRANSFER);
         }
 
         //p2 Sample Deposit
@@ -86,6 +105,18 @@ public class RazTele extends OpMode {
         }
 
         //p2 Manual swivel control
+        if (gamepad2.right_trigger > 0)
+            raz.servosController.incrementSwivel(INTAKE_SWIVEL_SPEED * gamepad2.right_trigger);
+        if (gamepad2.left_trigger > 0)
+            raz.servosController.incrementSwivel(INTAKE_SWIVEL_SPEED * (-gamepad2.left_trigger));
+
+        //p2 Manuel turret control
+        if (gamepad2.right_bumper)
+            raz.servosController.incrementTurret(-turretSpeed);
+        if (gamepad2.left_bumper)
+            raz.servosController.incrementTurret(turretSpeed);
+
+
 
         //p2 togle deposit claw
 //        if (gamepad2.dpad_left && !lastGamepad2.dpad_left){
@@ -94,6 +125,11 @@ public class RazTele extends OpMode {
 
         //p2 manual extendo control
         raz.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
+
+        //p2 before pickup macro
+        if (gamepad2.b && !lastGamepad2.b){
+            raz.runMacro(ABOVE_SAMPLE_PICKUP);
+        }
 
 
 
