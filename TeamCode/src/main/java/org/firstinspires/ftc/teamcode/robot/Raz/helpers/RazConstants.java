@@ -44,6 +44,10 @@ public class RazConstants {
         public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = 0;
         public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 0;
 
+        public static double DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT_OPPOSITE = 0;
+        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT_OPPOSITE = 0;
+        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT_OPPOSITE = 0;
+
         //Spec Deposit
 
         public static double DEPOSIT_ARM_SPEC_DEPOSITED = 0;
@@ -57,6 +61,13 @@ public class RazConstants {
 
         public static double DEPOSIT_ARM_HALFWAY_DEPOSIT = 0;
         public static double DEPOSIT_WRIST_HALFWAY_DEPOSIT = 0;
+
+        public static double DEPOSIT_ARM_SAMPLE_DEPOSIT_OPPOSITE = 0;
+        public static double DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE = 0;
+        public static int DEPOSIT_SLIDES_SAMPLE_DEPOSIT_OPPOSITE = 0;
+
+        public static double DEPOSIT_ARM_HALFWAY_DEPOSIT_OPPOSITE = 0;
+        public static double DEPOSIT_WRIST_HALFWAY_DEPOSIT_OPPOSITE = 0;
 
 
         //Sample Pickup

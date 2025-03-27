@@ -14,6 +14,12 @@ public class Macros {
             null, null, null, null,
             null, null,DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT , null, null);
 
+    public static RazState SPEC_BEFORE_DEPOSIT_OPPOSITE = new RazState(DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT_OPPOSITE, DEPOSIT_SWIVEL_HORIZONTAL_SPEC_DEPOSIT,
+            DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT_OPPOSITE, null, null,
+            null, null, null, null,
+            null, null,DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT_OPPOSITE , null, null);
+
+
     public static RazState SPEC_PICKUP = new RazState(DEPOSIT_ARM_SPEC_PICKUP, DEPOSIT_SWIVEL_HORIZONTAL,
             DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, EXTENDO_IN, null,
             null, null, null, null,
@@ -45,6 +51,21 @@ public class Macros {
             INTAKE_ARM_PICKUP, null, INTAKE_CLAW_OPEN, null,
             null, null,null , null, new LinkedState(SAMPLE_PICKUP2 , 150));
 
+    public static RazState SAMPLE_PICKUP_IP3 = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, null,
+            INTAKE_ARM_ABOVE_PICKUP, null, INTAKE_CLAW_IP, null,
+            null, null,null , null, null);
+
+    public static RazState SAMPLE_PICKUP_IP2 = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, null,
+            INTAKE_ARM_PICKUP, null, INTAKE_CLAW_IP, null,
+            null, null,null , null, new LinkedState(SAMPLE_PICKUP_IP3 , 200));
+
+    public static RazState SAMPLE_PICKUP_IP = new RazState(DEPOSIT_ARM_ABOVE_TRANSFER, null,
+            DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_ABOVE_TRANSFER, null, null,
+            INTAKE_ARM_PICKUP, null, INTAKE_CLAW_CLOSED, null,
+            null, null,null , null, new LinkedState(SAMPLE_PICKUP_IP2 , 150));
+
 
 
     public static RazState SAMPLE_DEPOSIT2 = new RazState(DEPOSIT_ARM_SAMPLE_DEPOSIT, null,
@@ -61,6 +82,25 @@ public class Macros {
             DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_TRANSFER, EXTENDO_TRANSFER, TURRET_TRANSFER,
             INTAKE_ARM_TRANSFER, INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null,
             null, null,SLIDES_MIN , null, new LinkedState(SAMPLE_DEPOSIT1 , 800));
+
+
+
+    public static RazState SAMPLE_DEPOSIT_OPPOSITE2 = new RazState(DEPOSIT_ARM_SAMPLE_DEPOSIT_OPPOSITE, null,
+            DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE, null, null,
+            null, null, INTAKE_CLAW_OPEN, null,
+            null, null,DEPOSIT_SLIDES_SAMPLE_DEPOSIT_OPPOSITE , null, null);
+
+    public static RazState SAMPLE_DEPOSIT_OPPOSITE1 = new RazState(DEPOSIT_ARM_HALFWAY_DEPOSIT_OPPOSITE, null,
+            DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_HALFWAY_DEPOSIT_OPPOSITE, null, null,
+            null, null, INTAKE_CLAW_OPEN, null,
+            null, null,DEPOSIT_SLIDES_SAMPLE_DEPOSIT_OPPOSITE , null, new LinkedState(SAMPLE_DEPOSIT_OPPOSITE2 , 800));
+
+    public static RazState SAMPLE_DEPOSIT_OPPOSITE = new RazState(DEPOSIT_ARM_TRANSFER, DEPOSIT_SWIVEL_HORIZONTAL,
+            DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_TRANSFER, EXTENDO_TRANSFER, TURRET_TRANSFER,
+            INTAKE_ARM_TRANSFER, INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null,
+            null, null,SLIDES_MIN , null, new LinkedState(SAMPLE_DEPOSIT_OPPOSITE1 , 800));
+
+
 
 
     public static RazState AT_TRANSFER = new RazState(DEPOSIT_ARM_TRANSFER, DEPOSIT_SWIVEL_HORIZONTAL,

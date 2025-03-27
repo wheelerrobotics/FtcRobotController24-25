@@ -66,7 +66,9 @@ public class RazTele extends OpMode {
         }
 
         //p1 inside pickup
-
+        if (gamepad1.right_trigger !=0 && lastGamepad1.right_trigger == 0){
+            raz.runMacro(SAMPLE_PICKUP_IP);
+        }
 
 
         //p1 get ready to pickup macro
@@ -89,46 +91,65 @@ public class RazTele extends OpMode {
             raz.runMacro(AT_TRANSFER);
         }
 
-        //p2 collapse, but don't transfer
-        if (gamepad2.x && !lastGamepad2.x){
-            raz.runMacro(COLLAPSED);
-        }
+
 
         //p2 transfer macro
         if (gamepad2.y && !lastGamepad2.y) {
                 raz.runMacro(AT_TRANSFER);
         }
 
-        //p2 Sample Deposit
-        if (gamepad2.dpad_up && !lastGamepad2.dpad_up){
-            raz.runMacro(SAMPLE_DEPOSIT);
-        }
-
-        //p2 Manual swivel control
-        if (gamepad2.right_trigger > 0)
-            raz.servosController.incrementSwivel(INTAKE_SWIVEL_SPEED * gamepad2.right_trigger);
-        if (gamepad2.left_trigger > 0)
-            raz.servosController.incrementSwivel(INTAKE_SWIVEL_SPEED * (-gamepad2.left_trigger));
-
-        //p2 Manuel turret control
-        if (gamepad2.right_bumper)
-            raz.servosController.incrementTurret(-turretSpeed);
-        if (gamepad2.left_bumper)
-            raz.servosController.incrementTurret(turretSpeed);
-
-
-
-        //p2 togle deposit claw
-//        if (gamepad2.dpad_left && !lastGamepad2.dpad_left){
-//            raz.servosController.setDepositClaw(raz.servosController.depositClawPos == DEPOSIT_CLAW_CLOSED);
-
-
-        //p2 manual extendo control
-        raz.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
-
-        //p2 before pickup macro
+        //p2 over pickup
         if (gamepad2.b && !lastGamepad2.b){
             raz.runMacro(ABOVE_SAMPLE_PICKUP);
+        }
+
+
+        //p2: joysticks
+        //p2 Manual swivel control TODO this takes up the space for manual slides control
+        raz.servosController.incrementSwivel(INTAKE_SWIVEL_SPEED * gamepad2.right_stick_x);
+        //p2 Manuel turret control
+        raz.servosController.incrementTurret(-gamepad2.left_stick_x*turretSpeed);
+        //p2 manual extendo control
+        raz.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
+        if (gamepad2.left_stick_button && !lastGamepad2.left_stick_button){
+            raz.servosController.setExtendo(EXTENDO_OUT);
+        }
+
+
+        //p2: dpad
+        //p2 sample and spec open claw TODO it may be confusing that for spec pickup you'll need to let go of bumper to toggle claw
+        if (gamepad2.dpad_left && !lastGamepad2.dpad_left) {
+            if (gamepad2.right_bumper){
+                raz.runMacro(SPEC_DEPOSITED);
+            }
+            else {
+                //raz.servosController.setDepositClaw(raz.servosController.depositClawPos == DEPOSIT_CLAW_CLOSED); TODO:turn this back on when claw is on robot
+            }
+        }
+        //p2 deposits
+        if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
+            if (gamepad2.right_bumper){
+                if (gamepad2.left_bumper){
+                    raz.runMacro(SPEC_BEFORE_DEPOSIT_OPPOSITE);
+                }
+                else {
+                    raz.runMacro(SPEC_BEFORE_DEPOSIT);
+                }
+            }
+            else if (gamepad2.left_bumper){
+                raz.runMacro(SAMPLE_DEPOSIT_OPPOSITE);
+            }
+            else {
+                raz.runMacro(SAMPLE_DEPOSIT);
+            }
+        }
+        //p2 spec pickup
+        if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
+            raz.runMacro(SPEC_PICKUP);
+        }
+        //p2 slides down (collapse)
+        if (gamepad2.dpad_down && !lastGamepad2.dpad_down) {
+            raz.runMacro(COLLAPSED);
         }
 
 
