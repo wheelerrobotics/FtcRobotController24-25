@@ -106,6 +106,8 @@ public class RazConstants {
         public static double EXTENDO_SPEED = .005;
 
         public static double EXTENDO_TRANSFER = .7;
+        public static double EXTENDO_TRANSFER_IP = .7;
+
 
 
         //Transer
@@ -119,6 +121,13 @@ public class RazConstants {
         public static double TURRET_TRANSFER = .68;
         public static double INTAKE_SWIVEL_TRANSFER = .29;
 
+        //IP transfer
+
+        public static double DEPOSIT_ARM_TRANSFER_IP = 0;
+        public static double DEPOSIT_WRIST_TRANSFER_IP = 0;
+        public static double INTAKE_ARM_TRANSFER_IP = .95;
+        public static double TURRET_TRANSFER_IP = .68;
+        public static double INTAKE_SWIVEL_TRANSFER_IP = .29;
         //sweep
 
         public static double SWEEP_IN = 0;

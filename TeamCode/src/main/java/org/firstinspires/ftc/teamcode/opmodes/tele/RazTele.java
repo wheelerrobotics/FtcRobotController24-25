@@ -61,8 +61,10 @@ public class RazTele extends OpMode {
         }
 
         //p1 pickup macro
-        if (gamepad1.left_bumper && !lastGamepad1.left_bumper){
+        if (gamepad1.left_bumper && !lastGamepad1.left_bumper) {
             raz.runMacro(SAMPLE_PICKUP);
+
+
         }
 
         //p1 inside pickup
@@ -87,8 +89,10 @@ public class RazTele extends OpMode {
         }
 
         //p1: transfer macro
-        if ((gamepad1.left_trigger !=0 ) && (lastGamepad1.left_trigger == 0)) {
-            raz.runMacro(AT_TRANSFER);
+        if (gamepad1.x  && !lastGamepad1.x) {
+            if (raz.servosController.intakeClawPos == INTAKE_CLAW_CLOSED) raz.runMacro(AT_TRANSFER);
+            else raz.runMacro(AT_TRANSFER_IP);
+
         }
 
 
