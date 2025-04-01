@@ -6,8 +6,11 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.DEPO
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 import static java.lang.Math.E;
 import static java.lang.Math.abs;
+import static java.lang.Math.acos;
+import static java.lang.Math.asin;
 import static java.lang.Math.pow;
 import static java.lang.Math.signum;
+import static java.lang.Math.sin;
 
 import android.content.Context;
 
@@ -455,6 +458,15 @@ public class Razzmatazz extends Meccanum implements Robot {
         public void setDiffy(double depositArmPos, double depositSwivelPos) {
             //diffyLeft =
             //diffyRight =
+        }
+
+        double turretArmLength = 7;
+        double angleOffset = 0.02;
+        public void setIntakePos(double x, double y) {
+            double theta = acos(y/turretArmLength)+angleOffset;
+            turretPos = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
+            x-=turretArmLength*sin(theta);
+            extendoPos = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
         }
 
         public void setDepositClaw(boolean open) {
