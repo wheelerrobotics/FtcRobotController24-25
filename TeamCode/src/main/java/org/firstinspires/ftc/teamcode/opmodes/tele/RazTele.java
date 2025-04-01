@@ -149,7 +149,7 @@ public class RazTele extends OpMode {
         }
         //p2 spec pickup
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
-            raz.runMacro(SPEC_PICKUP);
+            raz.runMacro(SPEC_PICKUP); //TODO: opposite side pickup
         }
         //p2 slides down (collapse)
         if (gamepad2.dpad_down && !lastGamepad2.dpad_down) {

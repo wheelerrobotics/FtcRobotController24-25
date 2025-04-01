@@ -132,10 +132,10 @@ public class Razzmatazz extends Meccanum implements Robot {
         intakeArm = hardwareMap.get(ServoImplEx.class, "intakeArm");
         intakeSwivel = hardwareMap.get(ServoImplEx.class, "intakeSwivel");
         turret = hardwareMap.get(ServoImplEx.class, "turret");
-//        diffyLeft = hardwareMap.get(ServoImplEx.class, "diffyLeft");
-//        diffyRight = hardwareMap.get(ServoImplEx.class, "diffyRight");
-//        depositWrist = hardwareMap.get(ServoImplEx.class, "depositWrist");
-//        depositClaw = hardwareMap.get(ServoImplEx.class, "depositClaw");
+        diffyLeft = hardwareMap.get(ServoImplEx.class, "diffyLeft");
+        diffyRight = hardwareMap.get(ServoImplEx.class, "diffyRight");
+        depositWrist = hardwareMap.get(ServoImplEx.class, "depositWrist");
+        depositClaw = hardwareMap.get(ServoImplEx.class, "depositClaw");
 //        sweep = hardwareMap.get(ServoImplEx.class, "sweep");
 //        pto = hardwareMap.get(ServoImplEx.class, "pto");
 //        pushup = hardwareMap.get(ServoImplEx.class, "pushup");
@@ -143,10 +143,10 @@ public class Razzmatazz extends Meccanum implements Robot {
         // define continous servos
 
         // give servos full range of motion
-//        diffyLeft.setPwmRange(new PwmControl.PwmRange(500, 2500));
-//        diffyRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
-//        depositClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
-//        depositWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        diffyLeft.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        diffyRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        depositClaw.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        depositWrist.setPwmRange(new PwmControl.PwmRange(500, 2500));
         extendo.setPwmRange(new PwmControl.PwmRange(500, 2500));
         turret.setPwmRange(new PwmControl.PwmRange(500, 2500));
         intakeArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
@@ -323,10 +323,10 @@ public class Razzmatazz extends Meccanum implements Robot {
         if (MACROING) {
             RazState m = macroState;
 //            if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
-//            if (m.depositArmPos != null) servosController.depositArmPos = m.depositArmPos;
-//            if (m.depositSwivelPos != null) servosController.depositSwivelPos = m.depositSwivelPos;
-//            if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
-//            if (m.depositWristPos != null) servosController.depositWristPos = m.depositWristPos;
+            if (m.depositArmPos != null) servosController.depositArmPos = m.depositArmPos;
+            if (m.depositSwivelPos != null) servosController.depositSwivelPos = m.depositSwivelPos;
+            if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
+            if (m.depositWristPos != null) servosController.depositWristPos = m.depositWristPos;
             if (m.extendoPos != null) servosController.extendoPos = m.extendoPos;
             if (m.turretPos != null) servosController.turretPos = m.turretPos;
             if (m.intakeArmPos != null) servosController.intakeArmPos = m.intakeArmPos;
@@ -391,10 +391,10 @@ public class Razzmatazz extends Meccanum implements Robot {
     public static double offs = 0;
     public class ServosController {
         //set servo positions
-//        public double depositArmPos = DEPOSIT_ARM_START;
-//        public double depositSwivelPos = DEPOSIT_SWIVEL_START;
-//        public double depositClawPos = DEPOSIT_CLAW_START;
-//        public double depositWristPos = DEPOSIT_WRIST_START;
+        public double depositArmPos = DEPOSIT_ARM_START;
+        public double depositSwivelPos = DEPOSIT_SWIVEL_START;
+        public double depositClawPos = DEPOSIT_CLAW_START;
+        public double depositWristPos = DEPOSIT_WRIST_START;
         public double extendoPos = EXTENDO_START;
         public double turretPos = TURRET_START;
         public double intakeArmPos = INTAKE_ARM_START;
@@ -417,10 +417,10 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void servosTick() {
-//            tele.addData("depositArmPos", depositArmPos);
-//            tele.addData("depositSwivelPos", depositSwivelPos);
-//            tele.addData("depositClawPos", depositClawPos);
-//            tele.addData("depositWristPos", depositWristPos);
+            tele.addData("depositArmPos", "equation");
+            tele.addData("depositSwivelPos", "equation");
+            tele.addData("depositClawPos", depositClawPos);
+            tele.addData("depositWristPos", depositWristPos);
             tele.addData("extendoPos", extendoPos);
             tele.addData("turretPos", turretPos);
             tele.addData("intakeArmPos", intakeArmPos);
@@ -432,12 +432,12 @@ public class Razzmatazz extends Meccanum implements Robot {
 
 
             // need to make this be an equation
-            // diffyLeft.setPosition();
-            // diffyRight.setPosition();
+            diffyLeft.setPosition(depositArmPos);
+            diffyRight.setPosition(depositSwivelPos);
 
-//           depositClaw.setPosition(depositClawPos);
-//           depositWrist.setPosition(depositWristPos);
-//
+           depositClaw.setPosition(depositClawPos);
+           depositWrist.setPosition(depositWristPos);
+
            extendo.setPosition(extendoPos);
 
            turret.setPosition(turretPos);
@@ -452,17 +452,17 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
 
-        public void setDiffy(double depositArmPos, double depositSwivelPos) {
-            //diffyLeft =
-            //diffyRight =
+        public void setDiffy(double depositArmPosition, double depositSwivelPosition) {
+            depositArmPos = (depositArmPosition + depositSwivelPosition)/2;
+            depositSwivelPos = (-depositArmPosition + depositSwivelPosition)/2;
         }
 
         public void setDepositClaw(boolean open) {
-//            depositClawPos = open ? DEPOSIT_CLAW_OPEN : DEPOSIT_CLAW_CLOSED;
+            depositClawPos = open ? DEPOSIT_CLAW_OPEN : DEPOSIT_CLAW_CLOSED;
         }
 
         public void setDepositWrist (double depositWristPosition) {
-//            depositWristPos = depositWristPosition;
+            depositWristPos = depositWristPosition;
         }
         public void setExtendo(double extendoPosition) {
             extendoPos = extendoPosition;
@@ -511,8 +511,10 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void setDepositClawPrecise(double depositClawPosition){
-//            depositClawPos = depositClawPosition;
+            depositClawPos = depositClawPosition;
         }
+
+
     }
 
     // slide motor ticking (i have no clue how this works, i just know it worked

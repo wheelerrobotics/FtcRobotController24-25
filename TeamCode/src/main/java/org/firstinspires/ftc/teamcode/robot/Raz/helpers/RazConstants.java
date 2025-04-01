@@ -20,8 +20,8 @@ public class RazConstants {
         public static int SLIDES_START = 0;
 
         //deposit claw
-        public static double DEPOSIT_CLAW_OPEN = 0;
-        public static double DEPOSIT_CLAW_CLOSED = 0;
+        public static double DEPOSIT_CLAW_OPEN = .59;
+        public static double DEPOSIT_CLAW_CLOSED = .8;
 
         //deposit claw
         public static double INTAKE_CLAW_OPEN = .134;
@@ -93,10 +93,10 @@ public class RazConstants {
 
         //deposit swivel
 
-        public static double DEPOSIT_SWIVEL_HORIZONTAL = 0;
-        public static double DEPOSIT_SWIVEL_HORIZONTAL_SPEC_DEPOSIT = 0;
+        public static double DEPOSIT_SWIVEL_HORIZONTAL = 1;
+        public static double DEPOSIT_SWIVEL_HORIZONTAL_SPEC_DEPOSIT = 1.2;
 
-        public static double DEPOSIT_SWIVEL_VERTICAL = 0;
+        public static double DEPOSIT_SWIVEL_VERTICAL = 1.1;
 
 
         //extendo
@@ -139,10 +139,10 @@ public class RazConstants {
 
 
         //Start positions (for servosController)
-        public static double DEPOSIT_ARM_START = 0;
-        public static double DEPOSIT_SWIVEL_START = 0;
-        public static double DEPOSIT_CLAW_START = 0;
-        public static double DEPOSIT_WRIST_START = 0;
+        public static double DEPOSIT_ARM_START = .5;
+        public static double DEPOSIT_SWIVEL_START = .5;
+        public static double DEPOSIT_CLAW_START = DEPOSIT_CLAW_CLOSED;
+        public static double DEPOSIT_WRIST_START = .5;
         public static double EXTENDO_START = EXTENDO_IN;
         public static double TURRET_START = TURRET_MIDDLE;
         public static double INTAKE_ARM_START = .35;
