@@ -8,6 +8,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
@@ -30,6 +31,7 @@ public class rerazeros extends OpMode {
     double angleOffset = 0.02;
     double turretPos = 0.5;
     double extendoPos = 0.6;
+
     public void setIntakePos(double x, double y) {
         double theta = acos(y/turretArmLength)+angleOffset;
         turretPos = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
@@ -37,6 +39,7 @@ public class rerazeros extends OpMode {
         extendoPos = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
     }
     ServoImplEx extendo, turret, intakeArm, diffyLeft, diffyRight;
+    DcMotorImplEx slidesLeft, slidesRight;
     @Override
     public void init() {
 
@@ -50,6 +53,10 @@ public class rerazeros extends OpMode {
         diffyRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
         turret.setPwmRange(new PwmControl.PwmRange(500, 2500));
         intakeArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
+
+        slidesLeft = hardwareMap.get(DcMotorImplEx.class, "slidesLeft");
+        slidesRight = hardwareMap.get(DcMotorImplEx.class, "slidesRight");
+
     }
 
     @Override
@@ -58,6 +65,9 @@ public class rerazeros extends OpMode {
         extendo.setPosition(extendoPos);
         turret.setPosition(turretPos);
         intakeArm.setPosition(intakeArmPos);
+
+        slidesLeft.setPower(-1);
+        slidesRight.setPower(1);
 
         diffyLeft.setPosition(diffyLeftPos);
         diffyRight.setPosition(diffyRightPos);

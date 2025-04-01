@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
 public class Razeroer extends OpMode {
 
     Razzmatazz raz = null;
-    public static double extendo, depositArm, depositSwivel, depositWrist, turret, intakeArm, intakeSwivel, sweep, pto, pushup, intakeClaw, depositClaw;
+    public static double extendo, diffyLeft, diffyRight, depositWrist, turret, intakeArm, intakeSwivel, sweep, pto, pushup, intakeClaw, depositClaw;
     public static int slides;
     public static int ascent;
     public static boolean extendoON = false;
@@ -38,11 +38,11 @@ public class Razeroer extends OpMode {
     @Override
     public void loop() {
         if (diffyON)
-            raz.servosController.setDiffy(depositArm, depositSwivel);
+            raz.servosController.setDiffy(diffyLeft, diffyRight);
         if (depositWristON)
             raz.servosController.setDepositWrist(depositWrist);
-//        if (slidesON)
-//            raz.slidesController.setTarget(slides);
+        if (slidesON)
+            raz.slidesController.setTarget(slides);
         if (extendoON)
             raz.servosController.setExtendo(extendo);
         if (turretArmSwivelON)
@@ -51,6 +51,7 @@ public class Razeroer extends OpMode {
             raz.servosController.setIntakeClawPrecise(intakeClaw);
         if (depositClawON)
             raz.servosController.setDepositClawPrecise(depositClaw);
+
 //        if (sweepON)
 //            raz.servosController.setSweep(sweep);
 //        if (ptoON)

@@ -34,13 +34,14 @@ public class RazConstants {
         public static int ASCENT_MIN = 0;
 
         //Spec Pickup
-        public static double DEPOSIT_ARM_SPEC_PICKUP = 0;
-        public static double DEPOSIT_SWIVEL_SPEC_PICKUP = 0;
+        public static double DIFFY_LEFT_SPEC_PICKUP = .975;
+        public static double DIFFY_RIGHT_SPEC_PICKUP = .035;
         public static double DEPOSIT_WRIST_SPEC_PICKUP = 0;
 
         //Spec Deposit
 
-        public static double DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT = 0;
+        public static double DIFFY_LEFT_SPEC_BEFORE_DEPOSIT = 0;
+        public static double DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT = 0;
         public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = 0;
         public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 0;
 
@@ -139,7 +140,7 @@ public class RazConstants {
 
 
         //Start positions (for servosController)
-        public static double DEPOSIT_ARM_START = .5;
+        public static double DEPOSIT_ARM_START = .3;
         public static double DEPOSIT_SWIVEL_START = .5;
         public static double DEPOSIT_CLAW_START = DEPOSIT_CLAW_CLOSED;
         public static double DEPOSIT_WRIST_START = .5;
