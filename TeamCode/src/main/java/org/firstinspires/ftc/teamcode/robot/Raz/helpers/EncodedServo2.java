@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.robot.Raz.helpers;
 
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.INFINITY;
-
 import static java.lang.Math.abs;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.teamcode.helpers.PID;
 
@@ -16,17 +14,19 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-public class EncodedServo {
+public class EncodedServo2 {
 
     CRServoImplEx servo;
     AnalogInput enc;
-    PID pid = new PID(0.01, 0, 0); // idk if these are good values
+    PID uppid = new PID(0, 0, 0); // idk if these are good values
+    PID downpid = new PID(0, 0, 0); // idk if these are good values
+
     private double lastPos = INFINITY;
     private double pos = 0;
     private int revs = 0;
     private double target = 0;
     private boolean engaged = true;
-    public EncodedServo(String servoName, String encoderName, HardwareMap hw) {
+    public EncodedServo2(String servoName, String encoderName, HardwareMap hw) {
         servo = hw.get(CRServoImplEx.class, servoName);
         enc = hw.get(AnalogInput.class, encoderName);
     }
@@ -64,11 +64,14 @@ public class EncodedServo {
 
         lastPos = pos;
 
-        pid.setTarget(target);
+        uppid.setTarget(target);
+        downpid.setTarget(target);
 
-        double power = pid.tick(pos + 360*revs);
+        double uppower = uppid.tick(pos + 360*revs);
 
-        servo.setPower(power);
+        double downpower = downpid.tick(pos + 360*revs);
+
+        servo.setPower((pos+360*revs)>target ? downpower : uppower);
 
         FtcDashboard.getInstance().getTelemetry().addData("target", target);
         FtcDashboard.getInstance().getTelemetry().addData("pos", pos+360*revs);
@@ -85,8 +88,12 @@ public class EncodedServo {
         engaged = true;
     }
 
-    public void setPIDConsts(double kp, double ki, double kd) {
-        pid.setConsts(kp, ki, kd);
+    public void setupPIDConsts(double kp, double ki, double kd) {
+        uppid.setConsts(kp, ki, kd);
+    }
+
+    public void setdownPIDConsts(double kp, double ki, double kd) {
+        downpid.setConsts(kp, ki, kd);
     }
 
 }
