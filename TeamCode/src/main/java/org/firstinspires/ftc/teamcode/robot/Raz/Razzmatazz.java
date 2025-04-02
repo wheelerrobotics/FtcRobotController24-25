@@ -326,8 +326,8 @@ public class Razzmatazz extends Meccanum implements Robot {
         if (MACROING) {
             RazState m = macroState;
 //            if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
-            if (m.depositArmPos != null) servosController.diffyLeftPos = m.depositArmPos;
-            if (m.depositSwivelPos != null) servosController.diffyRightPos = m.depositSwivelPos;
+            if (m.diffyLeftPos != null) servosController.diffyLeftPos = m.diffyLeftPos;
+            if (m.diffyRightPos != null) servosController.diffyRightPos = m.diffyRightPos;
             if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
             if (m.depositWristPos != null) servosController.depositWristPos = m.depositWristPos;
             if (m.extendoPos != null) servosController.extendoPos = m.extendoPos;
@@ -374,7 +374,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         Logger.getLogger("FUCK").log(new LogRecord(Level.INFO, "BANG"));
         tickMacros(); // check macros
         //motorAscentController.ascentTick();
-        //slidesController.slidesTick(); // update slides
+        slidesController.slidesTick(); // update slides
         servosController.servosTick(); // update servos
         tele.addData("voltage", vs.getVoltage());
         tele.update(); // run specimen corrector
@@ -455,9 +455,9 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
 
-        public void setDiffy(double depositArmPosition, double depositSwivelPosition) {
-            diffyLeftPos = (depositArmPosition + depositSwivelPosition)/2;
-            diffyRightPos = (-depositArmPosition + depositSwivelPosition)/2;
+        public void setDiffy(double diffyLeftPosition, double diffyRightPosition) {
+            diffyLeftPos = diffyLeftPosition;
+            diffyRightPos = diffyRightPosition;
         }
 
         double turretArmLength = 7;
@@ -534,7 +534,7 @@ public class Razzmatazz extends Meccanum implements Robot {
     public class MotorSlideController {
         public double slideTar = 0;
         public boolean runToBottom = false;
-        public boolean SLIDE_TARGETING = false;
+        public boolean SLIDE_TARGETING = true;
         public double basePos = 0;
         public double pos = 0;
         public double errorThreshold = 20;
@@ -558,7 +558,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void start() {
-            //basePos = slidesLeft.getCurrentPosition();
+            basePos = motorFrontLeft.getCurrentPosition();
 
             slidePID = new ServoPID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
@@ -591,7 +591,7 @@ public class Razzmatazz extends Meccanum implements Robot {
             }
             slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
-            pos = -(slidesLeft.getCurrentPosition() - basePos);
+            pos = (motorFrontLeft.getCurrentPosition() - basePos);
 
             tele.addData("pos", pos);
             tele.addData("targeting", SLIDE_TARGETING);
@@ -666,7 +666,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         public void resetSlideBasePos() {
             slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             slidesLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            basePos = slidesLeft.getCurrentPosition();
+            basePos = motorFrontLeft.getCurrentPosition();
         }
 
         public boolean isBusy() {
