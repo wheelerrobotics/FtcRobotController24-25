@@ -42,7 +42,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazState;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.Link;
 import org.firstinspires.ftc.teamcode.robot.Meccanum.Meccanum;
-import org.firstinspires.ftc.teamcode.helpers.PID;
+import org.firstinspires.ftc.teamcode.helpers.ServoPID;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.vision.BotVision;
 
@@ -543,7 +543,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         public double power = 0;
 
         // public double slideTar = 0;
-        public PID slidePID;
+        public ServoPID slidePID;
         public int disabled = 2;
 
         // public double maxHeight = 1000;
@@ -560,7 +560,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         public void start() {
             //basePos = slidesLeft.getCurrentPosition();
 
-            slidePID = new PID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
+            slidePID = new ServoPID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
         }
         public boolean rezeroing = false;
