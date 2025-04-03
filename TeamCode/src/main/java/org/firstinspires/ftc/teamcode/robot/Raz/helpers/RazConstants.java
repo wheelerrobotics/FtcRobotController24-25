@@ -20,8 +20,8 @@ public class RazConstants {
         public static int SLIDES_START = 0;
 
         //deposit claw
-        public static double DEPOSIT_CLAW_OPEN = .59;
-        public static double DEPOSIT_CLAW_CLOSED = .8;
+        public static double DEPOSIT_CLAW_OPEN = .61;
+        public static double DEPOSIT_CLAW_CLOSED = .81;
 
         //deposit claw
         public static double INTAKE_CLAW_OPEN = .134;
@@ -33,42 +33,40 @@ public class RazConstants {
         //ascent
         public static int ASCENT_MIN = 0;
 
+
+        //Intake Neutral Pickup
+        public static double INTAKE_ARM_NEUTRAL = 0.4;
+        public static double TURRET_NEUTRAL = 0.22;
+        public static double SWIVEL_NEUTRAL = 0.2;
+
         //Spec Pickup
-        public static double DIFFY_LEFT_SPEC_PICKUP = .975;
-        public static double DIFFY_RIGHT_SPEC_PICKUP = .035;
-        public static double DEPOSIT_WRIST_SPEC_PICKUP = 0;
+        public static double DIFFY_LEFT_SPEC_PICKUP = -0.155;
+        public static double DIFFY_RIGHT_SPEC_PICKUP = 1.17;
+        public static double DEPOSIT_WRIST_SPEC_PICKUP = 0.77;
+
 
         //Spec Deposit
 
-        public static double DIFFY_LEFT_SPEC_BEFORE_DEPOSIT = 0;
-        public static double DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT = 0;
-        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = 0;
+        public static double DIFFY_LEFT_SPEC_BEFORE_DEPOSIT = 0.06;
+        public static double DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT = .98;
+        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = .7;
         public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 0;
 
-        public static double DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT_OPPOSITE = 0;
-        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT_OPPOSITE = 0;
-        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT_OPPOSITE = 0;
-
-        //Spec Deposit
-
-        public static double DEPOSIT_ARM_SPEC_DEPOSITED = 0;
-        public static double DEPOSIT_WRIST_SPEC_DEPOSITED = 0;
-        public static int DEPOSIT_SLIDES_SPEC_DEPOSITED = 0;
         //Sample Deposit
 
-        public static double DEPOSIT_ARM_SAMPLE_DEPOSIT = 0;
-        public static double DEPOSIT_WRIST_SAMPLE_DEPOSIT = 0;
+        public static double DEPOSIT_ARM_SAMPLE_DEPOSIT = -0.05;
+        public static double DEPOSIT_SWIVEL_SAMPLE_DEPOSIT = 0.98;
+        public static double DEPOSIT_WRIST_SAMPLE_DEPOSIT = 0.7;
         public static int DEPOSIT_SLIDES_SAMPLE_DEPOSIT = 0;
 
         public static double DEPOSIT_ARM_HALFWAY_DEPOSIT = 0;
-        public static double DEPOSIT_WRIST_HALFWAY_DEPOSIT = 0;
 
-        public static double DEPOSIT_ARM_SAMPLE_DEPOSIT_OPPOSITE = 0;
-        public static double DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE = 0;
+        public static double DEPOSIT_ARM_SAMPLE_DEPOSIT_OPPOSITE = 0.02;
+        public static double DEPOSIT_SWIVEL_SAMPLE_DEPOSIT_OPPOSITE = 0.98;
+        public static double DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE = 0.3;
         public static int DEPOSIT_SLIDES_SAMPLE_DEPOSIT_OPPOSITE = 0;
 
-        public static double DEPOSIT_ARM_HALFWAY_DEPOSIT_OPPOSITE = 0;
-        public static double DEPOSIT_WRIST_HALFWAY_DEPOSIT_OPPOSITE = 0;
+        public static double DEPOSIT_ARM_HALFWAY_DEPOSIT_OPPOSITE = -0.015;
 
 
         //Sample Pickup
@@ -106,31 +104,31 @@ public class RazConstants {
         public static double EXTENDO_OUT = .36;
         public static double EXTENDO_SPEED = .005;
 
-        public static double EXTENDO_TRANSFER = .7;
         public static double EXTENDO_TRANSFER_IP = .7;
 
 
 
         //Transer
 
-        public static double DEPOSIT_ARM_ABOVE_TRANSFER = 0;
-        public static double DEPOSIT_WRIST_ABOVE_TRANSFER = 0;
+        public static double DIFFY_LEFT_ABOVE_TRANSFER = 0.07;
 
-        public static double DEPOSIT_ARM_TRANSFER = 0;
-        public static double DEPOSIT_WRIST_TRANSFER = 0;
-        public static double INTAKE_ARM_TRANSFER = .95;
-        public static double TURRET_TRANSFER = .68;
-        public static double INTAKE_SWIVEL_TRANSFER = .29;
+        public static double DIFFY_LEFT_TRANSFER = 0.09;
+        public static double DIFFY_RIGHT_TRANSFER = 0.98;
+        public static double DEPOSIT_WRIST_TRANSFER = 0.2;
+        public static double INTAKE_ARM_TRANSFER = 0.99;
+        public static double TURRET_TRANSFER = 0.5;
+        public static double INTAKE_SWIVEL_TRANSFER = 0.2;
+        public static double EXTENDO_TRANSFER = 0.7;
 
         //IP transfer
 
         public static double DEPOSIT_ARM_TRANSFER_IP = 0;
         public static double DEPOSIT_WRIST_TRANSFER_IP = 0;
-        public static double INTAKE_ARM_TRANSFER_IP = .95;
-        public static double TURRET_TRANSFER_IP = .68;
-        public static double INTAKE_SWIVEL_TRANSFER_IP = .29;
-        //sweep
+        public static double INTAKE_ARM_TRANSFER_IP = 0.95;
+        public static double TURRET_TRANSFER_IP = 0.68;
+        public static double INTAKE_SWIVEL_TRANSFER_IP = 0.29;
 
+        //sweep
         public static double SWEEP_IN = 0;
         public static double SWEEP_DOWN = 0;
 
@@ -140,13 +138,14 @@ public class RazConstants {
 
 
         //Start positions (for servosController)
+
         public static double DEPOSIT_ARM_START = .3;
         public static double DEPOSIT_SWIVEL_START = .5;
         public static double DEPOSIT_CLAW_START = DEPOSIT_CLAW_CLOSED;
         public static double DEPOSIT_WRIST_START = .5;
         public static double EXTENDO_START = EXTENDO_IN;
-        public static double TURRET_START = TURRET_MIDDLE;
-        public static double INTAKE_ARM_START = .35;
+        public static double TURRET_START = .5;
+        public static double INTAKE_ARM_START = .4;
         public static double INTAKE_SWIVEL_START = INTAKE_SWIVEL_HORIZONTAL;
         public static double INTAKE_CLAW_START = INTAKE_CLAW_CLOSED;
         public static double SWEEP_START = 0;
