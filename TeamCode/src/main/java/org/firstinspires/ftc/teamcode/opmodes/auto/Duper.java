@@ -20,17 +20,13 @@ import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
 @Autonomous
 public class Duper extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.
-    Razzmatazz raz = null;
     PinpointDrive drive;
 
     @Override
     // runs on init press
     public void runOpMode() {
         // define and init robot
-        raz = new Razzmatazz();
-        raz.init(hardwareMap);
-        raz.autoInit(hardwareMap);
-        drive = raz.drive;
+        drive = new PinpointDrive(hardwareMap, new Pose2d(0,0,0));
 
         //to deposit first specimen
 
