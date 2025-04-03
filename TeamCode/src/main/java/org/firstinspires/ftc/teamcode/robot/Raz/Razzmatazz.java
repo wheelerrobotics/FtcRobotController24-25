@@ -456,8 +456,8 @@ public class Razzmatazz extends Meccanum implements Robot {
 
 
         public void setDiffy(double diffyLeftPosition, double diffyRightPosition) {
-            diffyLeftPos = diffyLeftPosition;
-            diffyRightPos = diffyRightPosition;
+            diffyLeftPos = (diffyLeftPosition + diffyRightPosition)/2;
+            diffyRightPos = (-diffyLeftPosition + diffyRightPosition)/2;
         }
 
         double turretArmLength = 7;
