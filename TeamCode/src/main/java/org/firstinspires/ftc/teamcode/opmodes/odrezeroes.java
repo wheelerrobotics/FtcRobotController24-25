@@ -17,20 +17,37 @@ import org.firstinspires.ftc.teamcode.robot.Raz.helpers.EncodedServo;
 @TeleOp
 public class odrezeroes extends OpMode {
 
-    public static double target = 0;
+    public double targetr = 0;
+    public double targetl = 0;
+    public static double swivel = 0;
+    public static double arm = 0;
     public static double ki = 0;
     public static double kp = 0;
     public static double kd = 0;
 
+    public static double k2i = 0;
+    public static double k2p = 0;
+    public static double k2d = 0;
+
     EncodedServo s;
+    EncodedServo s2;
     @Override
     public void init() {
-        s = new EncodedServo("serv", "in", hardwareMap);
+        s = new EncodedServo("diffyLeft", "diffyLeftEnc", hardwareMap, "l");
+        s2 = new EncodedServo("diffyRight", "diffyRightEnc", hardwareMap, "r");
     }
     @Override
     public void loop() {
+        // arm diff
+        // swiv avg
+        targetl = swivel-arm;
+        targetr = swivel+arm;
         s.tick();
         s.setPIDConsts(kp,ki,kd);
-        s.setTarget(target);
+        s.setTarget(targetl);
+
+        s2.tick();
+        s2.setPIDConsts(k2p,k2i,k2d);
+        s2.setTarget(targetr);
     }
 }

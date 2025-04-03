@@ -26,9 +26,11 @@ public class EncodedServo {
     private int revs = 0;
     private double target = 0;
     private boolean engaged = true;
-    public EncodedServo(String servoName, String encoderName, HardwareMap hw) {
+    private String identifier;
+    public EncodedServo(String servoName, String encoderName, HardwareMap hw, String ident) {
         servo = hw.get(CRServoImplEx.class, servoName);
         enc = hw.get(AnalogInput.class, encoderName);
+        identifier = ident;
     }
     public double getPosition() {
         return pos + revs*360;
@@ -40,10 +42,10 @@ public class EncodedServo {
     public void tick() {
         if (!engaged) return;
         // update
-        FtcDashboard.getInstance().getTelemetry().addData("volt", enc.getVoltage()); // debug line
+        FtcDashboard.getInstance().getTelemetry().addData(identifier+"volt", enc.getVoltage()); // debug line
 
-        double pos = enc.getVoltage()/3.249 * 360;
-        FtcDashboard.getInstance().getTelemetry().addData("dif", abs(pos-lastPos)); // debug line
+        double pos = enc.getVoltage()/3.3 * 360;
+        FtcDashboard.getInstance().getTelemetry().addData(identifier+"dif", abs(pos-lastPos)); // debug line
 
         //Logger.getLogger("SERVOENCODERD").log(new LogRecord(Level.INFO, "1: " + String.valueOf(lastPos) + " " + String.valueOf(pos) + " " + String.valueOf(revs)));
 
@@ -54,12 +56,11 @@ public class EncodedServo {
         }
         else if (pos>220 && lastPos<140 && lastPos!=INFINITY) {
             revs--;
-            Logger.getLogger("SERVOENCODERD").log(new LogRecord(Level.INFO, "subrev"));
-        }else if (vel>20 && lastPos != INFINITY) {
-            Logger.getLogger("SERVOENCODERD").log(new LogRecord(Level.INFO, "went fast " + pos + " " + lastPos));
+            Logger.getLogger("SERVOENCODERD").log(new LogRecord(Level.INFO, identifier+"subrev"));
+        }else if (vel>300 && lastPos != INFINITY) {
+            Logger.getLogger("SERVOENCODERD").log(new LogRecord(Level.INFO, identifier+"went fast " + pos + " " + lastPos));
 
             pos = lastPos;
-
         }
 
         lastPos = pos;
@@ -70,9 +71,9 @@ public class EncodedServo {
 
         servo.setPower(power);
 
-        FtcDashboard.getInstance().getTelemetry().addData("target", target);
-        FtcDashboard.getInstance().getTelemetry().addData("pos", pos+360*revs);
-        FtcDashboard.getInstance().getTelemetry().addData("realpos", pos);
+        FtcDashboard.getInstance().getTelemetry().addData(identifier+"target", target);
+        FtcDashboard.getInstance().getTelemetry().addData(identifier+"pos", pos+360*revs);
+        FtcDashboard.getInstance().getTelemetry().addData(identifier+"realpos", pos);
         FtcDashboard.getInstance().getTelemetry().update();
     }
 
