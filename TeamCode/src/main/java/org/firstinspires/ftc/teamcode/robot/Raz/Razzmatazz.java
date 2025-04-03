@@ -123,10 +123,12 @@ public class Razzmatazz extends Meccanum implements Robot {
         // configure slides
         slidesLeft.setZeroPowerBehavior(BRAKE);
         slidesRight.setZeroPowerBehavior(BRAKE);
-        slidesLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        slidesLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         slidesRight.setDirection(DcMotorSimple.Direction.FORWARD);
         slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slidesLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slidesRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // define limited servos
@@ -533,8 +535,7 @@ public class Razzmatazz extends Meccanum implements Robot {
     // last year)
     public class MotorSlideController {
         public double slideTar = 0;
-        public boolean runToBottom = false;
-        public boolean SLIDE_TARGETING = true;
+        public boolean SLIDE_TARGETING = false;
         public double basePos = 0;
         public double pos = 0;
         public double errorThreshold = 20;
@@ -542,53 +543,20 @@ public class Razzmatazz extends Meccanum implements Robot {
 
         public double power = 0;
 
-        // public double slideTar = 0;
         public PID slidePID;
-        public int disabled = 2;
 
-        // public double maxHeight = 1000;
-        // public double minHeight = 0;
-
-        // public double differenceScalar = 0.0001;
-        // public double scaler = 50;
         Telemetry tele = FtcDashboard.getInstance().getTelemetry();
-
-        public void setTele(Telemetry t) {
-            tele = t;
-        }
 
         public void start() {
             basePos = motorFrontLeft.getCurrentPosition();
-
             slidePID = new PID(SLIDES_KP, SLIDES_KI, SLIDES_KD, false);
             tele = FtcDashboard.getInstance().getTelemetry();
-        }
-        public boolean rezeroing = false;
-        public ElapsedTime rezeroTimer = new ElapsedTime();
-        public void rezero() {
-            rezeroing = true;
         }
         public void setConsts(double kp, double ki, double kd) {
             slidePID.setConsts(kp, ki, kd);
         }
         public void slidesTick() {
 
-            if (disabled == 0) {
-                slidesLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slidesLeft.setPower(0);
-                slidesRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slidesRight.setPower(0);
-                return;
-            } else if (disabled == 1) {
-                slidesLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slidesLeft.setPower(0.2);
-                slidesRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                slidesRight.setPower(0.2);
-                return;
-            } else if (slidesLeft.getZeroPowerBehavior() != BRAKE) {
-                slidesLeft.setZeroPowerBehavior(BRAKE);
-                slidesRight.setZeroPowerBehavior(BRAKE);
-            }
             slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
             pos = (motorFrontLeft.getCurrentPosition() - basePos);
@@ -602,33 +570,23 @@ public class Razzmatazz extends Meccanum implements Robot {
                 SLIDE_TARGETING = true;
                 slideTar = SLIDES_MIN - 100;
             }
+
             if (pos > SLIDES_MAX && power > 0) {
                 SLIDE_TARGETING = true;
                 slideTar = SLIDES_MAX;
             }
+
             if (SLIDE_TARGETING) {
-                power = -slidePID.tick(pos);
+                power = slidePID.tick(pos);
                 tele.addData("pidpower", power);
             }
 
-            tele.addData("drivingPower", !runToBottom ? minMaxScaler(pos, power) : 0.4);
+            tele.addData("drivingPower", minMaxScaler(pos, power));
             tele.update();
-            if (rezeroing) {
-                slidesLeft.setPower(0.3);
-                slidesRight.setPower(0.3);
-                resetSlideBasePos();
-            }
-            else if (!runToBottom) {
+            slidesLeft.setPower(minMaxScaler(pos, power));
+            //slides 2 reversed relative to slides (look in init), so same power
+            slidesRight.setPower(minMaxScaler(pos, power));
 
-                slidesLeft.setPower(minMaxScaler(pos, power));
-                //slides 2 reversed relative to slides (look in init), so same power
-                slidesRight.setPower(minMaxScaler(pos, power));
-            }
-            else {
-                slidesLeft.setPower(0.3);
-                slidesRight.setPower(0.3);
-            }
-            rezeroing = false;
 
         }
 
@@ -650,9 +608,6 @@ public class Razzmatazz extends Meccanum implements Robot {
             SLIDE_TARGETING = false;
             power = -p;
         }
-        public void setRunToBottom(boolean on) {
-            runToBottom = on;
-        }
 
         public void setTargeting(boolean targeting) {
             SLIDE_TARGETING = targeting;
@@ -663,11 +618,6 @@ public class Razzmatazz extends Meccanum implements Robot {
             SLIDE_TARGETING = true;
         }
 
-        public void resetSlideBasePos() {
-            slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            slidesLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            basePos = motorFrontLeft.getCurrentPosition();
-        }
 
         public boolean isBusy() {
 

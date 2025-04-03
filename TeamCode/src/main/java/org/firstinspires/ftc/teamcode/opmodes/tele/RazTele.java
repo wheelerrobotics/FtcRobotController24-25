@@ -19,8 +19,8 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 @TeleOp(name = "(RUN THIS) - Tele Op")
-public class RazTele extends OpMode {
-
+public class RazTele {
+/*
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
     Razzmatazz raz = null;
@@ -175,6 +175,8 @@ public class RazTele extends OpMode {
         lastGamepad1.copy(gamepad1);
         lastGamepad2.copy(gamepad2);
     }
+
+ */
 }
 
 

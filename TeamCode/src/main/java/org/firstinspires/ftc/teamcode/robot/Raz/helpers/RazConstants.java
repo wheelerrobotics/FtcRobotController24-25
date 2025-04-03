@@ -12,8 +12,8 @@ public class RazConstants {
 
 
         //slides
-        public static double SLIDES_MAX = 0;
-        public static double SLIDES_KP = 0;
+        public static double SLIDES_MAX = 1000;
+        public static double SLIDES_KP = 0.05;
         public static double SLIDES_KI = 0;
         public static double SLIDES_KD = 0;
         public static int SLIDES_MIN = 0;
@@ -50,14 +50,14 @@ public class RazConstants {
         public static double DIFFY_LEFT_SPEC_BEFORE_DEPOSIT = 0.06;
         public static double DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT = .98;
         public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = .7;
-        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 0;
+        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 190;
 
         //Sample Deposit
 
         public static double DEPOSIT_ARM_SAMPLE_DEPOSIT = -0.05;
         public static double DEPOSIT_SWIVEL_SAMPLE_DEPOSIT = 0.98;
         public static double DEPOSIT_WRIST_SAMPLE_DEPOSIT = 0.7;
-        public static int DEPOSIT_SLIDES_SAMPLE_DEPOSIT = 0;
+        public static int DEPOSIT_SLIDES_SAMPLE_DEPOSIT = 1000;
 
         public static double DEPOSIT_ARM_HALFWAY_DEPOSIT = 0;
 

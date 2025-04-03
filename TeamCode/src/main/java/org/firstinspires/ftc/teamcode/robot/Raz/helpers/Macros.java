@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.Raz.helpers;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 
 public class Macros {
-
+/*
     public static RazState START = new RazState(DEPOSIT_ARM_START, DEPOSIT_SWIVEL_START,
             DEPOSIT_CLAW_START, DEPOSIT_WRIST_START, EXTENDO_START, TURRET_START,
             INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
@@ -134,6 +134,6 @@ public class Macros {
             INTAKE_ARM_ABOVE_PICKUP, INTAKE_SWIVEL_135, INTAKE_CLAW_OPEN, null,
             null, null,null , null, null);
 
-
+*/
 
 }
