@@ -38,34 +38,34 @@ public class Duper extends LinearOpMode {
         //first sweep
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(PI)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(20, -26), 0)
-                .splineToConstantHeading(new Vector2d(25, -26), 0)
+                .splineToConstantHeading(new Vector2d(20, -10), 0)
+                .splineToConstantHeading(new Vector2d(25, -10), 0)
 
                 ;
 
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                .setTangent(PI).splineToLinearHeading(new Pose2d(13, -22, PI+-.2+4*PI/16),
+                .setTangent(PI).splineToLinearHeading(new Pose2d(13, -14, PI+-.2+4*PI/16),
                         0, null, new ProfileAccelConstraint(-80, 80));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(26, -37, PI+PI*5/6), -PI * 5 / 6);
+                .splineToLinearHeading(new Pose2d(26, -20, PI+PI*5/6), -PI * 5 / 6);
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
                 .setTangent(PI).splineToLinearHeading(new Pose2d(14, -32, -PI * 5 / 6),
                         0,  null, new ProfileAccelConstraint(-80, 80));
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(35, -42, PI+PI*4/6), -PI * 4 / 6);
+                .splineToLinearHeading(new Pose2d(35, -26, PI+PI*4/6), -PI * 4 / 6);
 
         TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                .setTangent(PI).splineToLinearHeading(new Pose2d(10, -40, -PI * 5 / 6),
+                .setTangent(0).splineToLinearHeading(new Pose2d(24, -40, -PI * 5 / 6),
                         PI,  null, new ProfileAccelConstraint(-80, 80));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
-                .splineToLinearHeading(new Pose2d(2, -29, PI), 0,
-                        null, new ProfileAccelConstraint(-80, 80));
+                .splineToLinearHeading(new Pose2d(13, -29, 0), PI,
+                        null, new ProfileAccelConstraint(-40, 40));
 
 
         TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh()
@@ -73,15 +73,16 @@ public class Duper extends LinearOpMode {
                 //  .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(36, 5), 0);
+                .setTangent(PI/4 + PI/50)
+                .lineToX(43);
 
 
         // wall specimen 2
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh()
 
                 .setReversed(false)
-                .splineTo(new Vector2d(6, -29), PI,
-                        null, new ProfileAccelConstraint(-80, 80));
+                .setTangent(PI/4 + PI/50)
+                .lineToX(13);
 
 
 
@@ -91,50 +92,47 @@ public class Duper extends LinearOpMode {
                 //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(36, 7), 0);
+                .setTangent(PI/4 + PI/50)
+                .lineToX(43);
+
 
         // wall specimen 3
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh()
-                //.setTangent(0)
-                // .splineToConstantHeading(new Vector2d(-30, -10), 0)
-                // .splineToConstantHeading(new Vector2d(-15, 29), 0)
-                //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
                 .setReversed(false)
-                .splineTo(new Vector2d(6, -29), PI,
-                        null, new ProfileAccelConstraint(-80, 80))
-                // .splineTo(new Vector2d(2, 29), 0)
-
-                ;
+                .setTangent(PI/4 + PI/50)
+                .lineToX(13);
 
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh()
                 // .setTangent(PI)
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(36, 9), 0);
+                .setTangent(PI/4 + PI/50)
+                .lineToX(43);
+
 
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
                 // .splineToConstantHeading(new Vector2d(-30, -10), 0)
                 //.splineToConstantHeading(new Vector2d(-15, 29), 0)
                 //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
                 .setReversed(false)
-                .splineTo(new Vector2d(10, -29), PI,
-                        null, new ProfileAccelConstraint(-80, 80))
-                // .splineTo(new Vector2d(2, 29), 0)
-
-                ;
+                .setTangent(PI/4 + PI/50)
+                .lineToX(13);
 
         TrajectoryActionBuilder a11 = a10.endTrajectory().fresh()
                 //  .setTangent(PI)
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .splineTo(new Vector2d(36, 11), 0);
+                .setTangent(PI/4 + PI/50)
+                .lineToX(43);
+
 
         // park
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh()
-                .setTangent(0)
-                .splineTo(new Vector2d(15,-29),PI/4);
+                .setReversed(false)
+                .setTangent(PI/4 + PI/50)
+                .lineToX(15);
 
         // preload
         Action specimen1 = a1.build();

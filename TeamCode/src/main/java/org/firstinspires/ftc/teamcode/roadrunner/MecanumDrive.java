@@ -85,9 +85,9 @@ public class MecanumDrive {
       //  public double minProfileAccel = -50;
        // public double maxProfileAccel = 50;
 
-        public double maxWheelVel = 130;
+        public double maxWheelVel = 120;
         public double minProfileAccel = -80;
-        public double maxProfileAccel = 80;
+        public double maxProfileAccel = 60;
 
         //public double maxWheelVel = 130;
         //public double minProfileAccel = -80;
