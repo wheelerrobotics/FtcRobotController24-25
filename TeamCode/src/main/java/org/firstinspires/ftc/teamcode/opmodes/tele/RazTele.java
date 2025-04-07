@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmodes.tele;
 
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.EXTENDO_OUT;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.*;
 
@@ -128,7 +127,7 @@ public class RazTele extends OpMode{
                 raz.runMacro(SAMP_DEPOSIT_OPPOSITE);
             }
             else {
-                raz.runMacro(SAMPLE_DEPOSIT);
+                raz.runMacro(SAMP_DEPOSIT);
             }
         }
         //p2 spec pickup
@@ -137,7 +136,7 @@ public class RazTele extends OpMode{
         }
         //p2 slides down (collapse)
         if (gamepad2.dpad_down && !lastGamepad2.dpad_down) {
-            raz.runMacro(COLLAPSED);
+            raz.runMacro(BEFORE_TRANSFER);
         }
 
 
