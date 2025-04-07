@@ -30,39 +30,48 @@ public class Macros {
 
     // SPEC DEPOSIT
     // claw open, deposit arm at wall height ⤵
-    public static RazState SPEC_BEFORE_PICKUP = new RazState(DIFFY_LEFT_SPEC_PICKUP, DIFFY_RIGHT_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SPEC_BEFORE_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_PICKUP, DEPOSIT_ARM_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, null,null,null,null, null, null, null, null, null, null, null);
     // pickup sample, check that the claw actually closed around a spec ⤵
     public static RazState SPEC_CLOSE_CLAW = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, null);
     // get spec off wall (only if we KNOW we have a spec in the claw) ⤵
-    public static RazState SPEC_PICKUP = new RazState(DIFFY_LEFT_SPEC_BEFORE_DEPOSIT, DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SPEC_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
     // spec deposit position ⤵
-    public static RazState SPEC_TO_DEPOSIT = new RazState(DIFFY_LEFT_SPEC_BEFORE_DEPOSIT, DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SPEC_TO_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
     // release specimen after deposited ⤵
-    public static RazState SPEC_DEPOSITED = new RazState(DIFFY_LEFT_SPEC_BEFORE_DEPOSIT, DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SPEC_DEPOSITED = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
 
     // SAMPLE STUFF
     // intake to before transfer position ⤵
+    public static RazState EXTENDO_OUT_PICKUP = new RazState(null, null, null, null, 0.7,TURRET_MIDDLE,INTAKE_ARM_ABOVE_PICKUP,INTAKE_SWIVEL_HORIZONTAL, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
+
+    // intake to before transfer position ⤵
     public static RazState INTAKE_BEFORE_TRANSFER = new RazState(null, null, null, null, EXTENDO_TRANSFER,TURRET_TRANSFER,INTAKE_ARM_TRANSFER,INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
     // deposit to before transfer position ⤵
-    public static RazState DEPOSIT_BEFORE_TRANSFER = new RazState(null, null, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState DEPOSIT_BEFORE_TRANSFER = new RazState(DEPOSIT_SWIVEL_TRANSFER, DEPOSIT_ARM_ABOVE_TRANSFER, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, null,null,null,null, null, null, null, null, null, null, null);
     // intake and deposit to before transfer positions ⤵
-    public static RazState BEFORE_TRANSFER = new RazState(null, null, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, EXTENDO_TRANSFER,TURRET_TRANSFER,INTAKE_ARM_TRANSFER,INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
+    public static RazState BEFORE_TRANSFER = new RazState(DEPOSIT_SWIVEL_TRANSFER, DEPOSIT_ARM_ABOVE_TRANSFER, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, EXTENDO_TRANSFER,TURRET_TRANSFER,INTAKE_ARM_TRANSFER,INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
     // deposit arm up ⤵
-    public static RazState TRANSFER4 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState TRANSFER4 = new RazState(null, DEPOSIT_ARM_ABOVE_TRANSFER, null, null, null,null,null,null, null, null, null, null, null, null, null);
     // intake claw open ⤵
-    public static RazState TRANSFER3 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState TRANSFER3 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_OPEN, null, null, null, null, null, null);
     // deposit claw close ⤵
-    public final static RazState TRANSFER2 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public final static RazState TRANSFER2 = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, null);
     // deposit arm down ⤵
-    public static RazState TRANSFER = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState TRANSFER = new RazState(null, DEPOSIT_ARM_TRANSFER, null, null, null,null,null,null, null, null, null, null, null, null, null);
     // deposit arm fully over ready for deposit ⤵
-    public static RazState SAMP_DEPOSIT2 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SAMP_DEPOSIT2 = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT, DEPOSIT_ARM_SAMPLE_DEPOSIT, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
     // slides up, deposit arm mostly over the top but not hitting baskets ⤵
-    public static RazState SAMP_DEPOSIT = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SAMP_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT, DEPOSIT_ARM_HALFWAY_DEPOSIT, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
+
+    // deposit arm fully over ready for deposit ⤵
+    public static RazState SAMP_DEPOSIT_OPPOSITE2 = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT_OPPOSITE, DEPOSIT_ARM_SAMPLE_DEPOSIT_OPPOSITE, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
+    // slides up, deposit arm mostly over the top but not hitting baskets ⤵
+    public static RazState SAMP_DEPOSIT_OPPOSITE = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT_OPPOSITE, DEPOSIT_ARM_HALFWAY_DEPOSIT_OPPOSITE, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
+
     // drop sample ⤵
-    public static RazState DEPOSIT_CLAW_OPEN = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState DEPOSIT_CLAW_OPEN = new RazState(null, null, RazConstants.DEPOSIT_CLAW_OPEN, null, null,null,null,null, null, null, null, null, null, null, null);
     // reset slides for next ⤵
-    public static RazState SLIDES_DOWN = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SLIDES_DOWN = new RazState(DEPOSIT_SWIVEL_TRANSFER, DEPOSIT_ARM_ABOVE_TRANSFER, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, null,null,null,null, null, null, null, null, 0, null, null);
 
     // do the *push the bar with the deposit arm to even ourselves* out thing ⤵
     public static RazState ASCENT9 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);

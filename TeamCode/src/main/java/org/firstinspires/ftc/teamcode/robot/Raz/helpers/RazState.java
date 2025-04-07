@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.robot.Raz.helpers;
 
 public class RazState {
-    public Double diffyLeftPos, diffyRightPos, depositClawPos, depositWristPos, extendoPos, turretPos, intakeArmPos, intakeSwivelPos, intakeClawPos, sweepPos, ptoPos, pushupPos;
+    public Double diffySwivelPos, diffyArmPos, depositClawPos, depositWristPos, extendoPos, turretPos, intakeArmPos, intakeSwivelPos, intakeClawPos, sweepPos, ptoPos, pushupPos;
     public Integer slidesPos, ascentPos;
 
     public LinkedState linkedState;
-    public RazState(Double diffyLeftPos,
-                    Double diffyRightPos,
+    public RazState(Double diffySwivelPos,
+                    Double diffyArmPos,
                     Double depositClawPos,
                     Double depositWristPos,
                     Double extendoPos,
@@ -20,8 +20,8 @@ public class RazState {
                     Integer slidesPos,
                     Integer ascentPos,
                     LinkedState linkedState) {
-        this.diffyLeftPos = diffyLeftPos;
-        this.diffyRightPos = diffyRightPos;
+        this.diffySwivelPos = diffySwivelPos;
+        this.diffyArmPos = diffyArmPos;
         this.depositClawPos = depositClawPos;
         this.depositWristPos = depositWristPos;
         this.extendoPos = extendoPos;

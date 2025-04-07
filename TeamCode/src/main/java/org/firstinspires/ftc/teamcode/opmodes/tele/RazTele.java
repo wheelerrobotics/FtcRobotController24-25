@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes.tele;
 
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.EXTENDO_OUT;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.*;
 
@@ -12,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
+import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazState;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.LinkedState;
 
@@ -19,8 +22,8 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 @TeleOp(name = "(RUN THIS) - Tele Op")
-public class RazTele {
-/*
+public class RazTele extends OpMode{
+
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
     Razzmatazz raz = null;
@@ -62,36 +65,17 @@ public class RazTele {
 
         //p1 pickup macro
         if (gamepad1.left_bumper && !lastGamepad1.left_bumper) {
-            raz.runMacro(SAMPLE_PICKUP);
-
-
+            raz.runMacro(INTAKE_PICKUP);
         }
-
-        //p1 inside pickup
-        if (gamepad1.right_trigger !=0 && lastGamepad1.right_trigger == 0){
-            raz.runMacro(SAMPLE_PICKUP_IP);
-        }
-
 
         //p1 get ready to pickup macro
         if (gamepad1.b && !lastGamepad1.b){
-            raz.runMacro(EXTENDO_PICKUP);
-        }
-
-        //p1 pickup, swivel 45
-        if (gamepad1.x && !lastGamepad1.x){
-            raz.runMacro(EXTENDO_PICKUP_45);
-        }
-
-        //p1 pickup, swivel 90+45 = 135 (the other 45)
-        if (gamepad1.y && !lastGamepad1.y){
-            raz.runMacro(EXTENDO_PICKUP_135);
+            raz.runMacro(EXTENDO_OUT_PICKUP);
         }
 
         //p1: transfer macro
         if (gamepad1.x  && !lastGamepad1.x) {
-            if (raz.servosController.intakeClawPos == INTAKE_CLAW_CLOSED) raz.runMacro(AT_TRANSFER);
-            else raz.runMacro(AT_TRANSFER_IP);
+            raz.runMacro(BEFORE_TRANSFER);
 
         }
 
@@ -99,12 +83,12 @@ public class RazTele {
 
         //p2 transfer macro
         if (gamepad2.y && !lastGamepad2.y) {
-                raz.runMacro(AT_TRANSFER);
+                raz.runMacro(BEFORE_TRANSFER);
         }
 
         //p2 over pickup
         if (gamepad2.b && !lastGamepad2.b){
-            raz.runMacro(ABOVE_SAMPLE_PICKUP);
+            raz.runMacro(INTAKE_ABOVE_PICKUP);
         }
 
 
@@ -116,7 +100,7 @@ public class RazTele {
         //p2 manual extendo control
         raz.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
         if (gamepad2.left_stick_button && !lastGamepad2.left_stick_button){
-            raz.servosController.setExtendo(EXTENDO_OUT);
+            raz.servosController.setExtendo(RazConstants.EXTENDO_OUT);
         }
 
 
@@ -134,14 +118,14 @@ public class RazTele {
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
             if (gamepad2.right_bumper){
                 if (gamepad2.left_bumper){
-                    raz.runMacro(SPEC_BEFORE_DEPOSIT_OPPOSITE);
+                    raz.runMacro(SPEC_TO_DEPOSIT);
                 }
                 else {
-                    raz.runMacro(SPEC_BEFORE_DEPOSIT);
+                    raz.runMacro(SPEC_TO_DEPOSIT);
                 }
             }
             else if (gamepad2.left_bumper){
-                raz.runMacro(SAMPLE_DEPOSIT_OPPOSITE);
+                raz.runMacro(SAMP_DEPOSIT_OPPOSITE);
             }
             else {
                 raz.runMacro(SAMPLE_DEPOSIT);
@@ -176,7 +160,7 @@ public class RazTele {
         lastGamepad2.copy(gamepad2);
     }
 
- */
+
 }
 
 
