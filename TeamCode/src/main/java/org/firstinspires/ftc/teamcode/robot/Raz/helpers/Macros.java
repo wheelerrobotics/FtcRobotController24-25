@@ -2,8 +2,95 @@ package org.firstinspires.ftc.teamcode.robot.Raz.helpers;
 
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 
+import org.firstinspires.ftc.teamcode.R;
+
 public class Macros {
-/*
+
+    public static RazState NONE = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState START = new RazState(DEPOSIT_ARM_START, DEPOSIT_SWIVEL_START,
+            DEPOSIT_CLAW_START, DEPOSIT_WRIST_START, EXTENDO_START, TURRET_START,
+            INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
+            PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);
+
+
+    // SPEC PICKUP
+    // claw open, arm above samples ⤵
+    public static RazState INTAKE_ABOVE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP,null, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
+    // arm up ⤵ (after this, check for sample)
+    public static RazState INTAKE_PICKUP3 = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP,null, null, null, null, null, null, null, null);
+    // claw closed ⤵
+    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
+    // arm down ⤵
+    public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, null, null, null, null, null, null, null);
+    // keep sample somewhere before dropping at oz ⤵
+    public static RazState INTAKE_STORE = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // drop sample (at oz) ⤵
+    public static RazState INTAKE_OPEN = new RazState(null, null, null, null, null,null,null,null, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
+
+
+    // SPEC DEPOSIT
+    // claw open, deposit arm at wall height ⤵
+    public static RazState SPEC_BEFORE_PICKUP = new RazState(DIFFY_LEFT_SPEC_PICKUP, DIFFY_RIGHT_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, null,null,null,null, null, null, null, null, null, null, null);
+    // pickup sample, check that the claw actually closed around a spec ⤵
+    public static RazState SPEC_CLOSE_CLAW = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, null);
+    // get spec off wall (only if we KNOW we have a spec in the claw) ⤵
+    public static RazState SPEC_PICKUP = new RazState(DIFFY_LEFT_SPEC_BEFORE_DEPOSIT, DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+    // spec deposit position ⤵
+    public static RazState SPEC_TO_DEPOSIT = new RazState(DIFFY_LEFT_SPEC_BEFORE_DEPOSIT, DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+    // release specimen after deposited ⤵
+    public static RazState SPEC_DEPOSITED = new RazState(DIFFY_LEFT_SPEC_BEFORE_DEPOSIT, DIFFY_RIGHT_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+
+    // SAMPLE STUFF
+    // intake to before transfer position ⤵
+    public static RazState INTAKE_BEFORE_TRANSFER = new RazState(null, null, null, null, EXTENDO_TRANSFER,TURRET_TRANSFER,INTAKE_ARM_TRANSFER,INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
+    // deposit to before transfer position ⤵
+    public static RazState DEPOSIT_BEFORE_TRANSFER = new RazState(null, null, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, null,null,null,null, null, null, null, null, null, null, null);
+    // intake and deposit to before transfer positions ⤵
+    public static RazState BEFORE_TRANSFER = new RazState(null, null, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_TRANSFER, EXTENDO_TRANSFER,TURRET_TRANSFER,INTAKE_ARM_TRANSFER,INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
+    // deposit arm up ⤵
+    public static RazState TRANSFER4 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // intake claw open ⤵
+    public static RazState TRANSFER3 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // deposit claw close ⤵
+    public final static RazState TRANSFER2 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // deposit arm down ⤵
+    public static RazState TRANSFER = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // deposit arm fully over ready for deposit ⤵
+    public static RazState SAMP_DEPOSIT2 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // slides up, deposit arm mostly over the top but not hitting baskets ⤵
+    public static RazState SAMP_DEPOSIT = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // drop sample ⤵
+    public static RazState DEPOSIT_CLAW_OPEN = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // reset slides for next ⤵
+    public static RazState SLIDES_DOWN = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+
+    // do the *push the bar with the deposit arm to even ourselves* out thing ⤵
+    public static RazState ASCENT9 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // slides down for pullup to rung 2 ⤵
+    public static RazState ASCENT8 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // pto engage ⤵
+    public static RazState ASCENT7 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // slides up to rung 2 ⤵
+    public static RazState ASCENT6 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // pto disengage, pushup disengage ⤵
+    public static RazState ASCENT5 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // slides down for pullup to rung 1 ⤵
+    public static RazState ASCENT4 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // pto engage ⤵
+    public static RazState ASCENT3 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // slides up to rung 1 ⤵
+    public static RazState ASCENT2 = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // pushup engage ⤵
+    public static RazState ASCENT = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+
+    // sweep down ⤵
+    public static RazState SWEEP_DOWN = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // sweep up just enough to not hit sample ⤵
+    public static RazState SWEEP_UPISH = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    // sweep in resting position ⤵
+    public static RazState SWEEP_UP = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
+
+    /*
     public static RazState START = new RazState(DEPOSIT_ARM_START, DEPOSIT_SWIVEL_START,
             DEPOSIT_CLAW_START, DEPOSIT_WRIST_START, EXTENDO_START, TURRET_START,
             INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
