@@ -19,9 +19,9 @@ public class Macros {
     // arm up ⤵ (after this, check for sample)
     public static RazState INTAKE_PICKUP3 = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP,null, null, null, null, null, null, null, null);
     // claw closed ⤵
-    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
+    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 400));
     // arm down ⤵
-    public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, null, null, null, null, null, null, null);
+    public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, null, null, null, null, null, null, new LinkedState(INTAKE_PICKUP2, 400));
     // keep sample somewhere before dropping at oz ⤵
     public static RazState INTAKE_STORE = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
     // drop sample (at oz) ⤵
@@ -32,7 +32,10 @@ public class Macros {
     // claw open, deposit arm at wall height ⤵
     public static RazState SPEC_BEFORE_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_PICKUP, DEPOSIT_ARM_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, null,null,null,null, null, null, null, null, null, null, null);
     // pickup sample, check that the claw actually closed around a spec ⤵
-    public static RazState SPEC_CLOSE_CLAW = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SPEC_CLOSE_CLAW2 = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, null);
+
+    // pickup sample, check that the claw actually closed around a spec ⤵
+    public static RazState SPEC_CLOSE_CLAW = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, new LinkedState(SPEC_CLOSE_CLAW2, 200));
     // get spec off wall (only if we KNOW we have a spec in the claw) ⤵
     public static RazState SPEC_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
     // spec deposit position ⤵
@@ -53,20 +56,20 @@ public class Macros {
     // deposit arm up ⤵
     public static RazState TRANSFER4 = new RazState(null, DEPOSIT_ARM_ABOVE_TRANSFER, null, null, null,null,null,null, null, null, null, null, null, null, null);
     // intake claw open ⤵
-    public static RazState TRANSFER3 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_OPEN, null, null, null, null, null, null);
+    public static RazState TRANSFER3 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_OPEN, null, null, null, null, null, new LinkedState(TRANSFER4, 500));
     // deposit claw close ⤵
-    public final static RazState TRANSFER2 = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, null);
+    public final static RazState TRANSFER2 = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, new LinkedState(TRANSFER3, 500));
     // deposit arm down ⤵
-    public static RazState TRANSFER = new RazState(null, DEPOSIT_ARM_TRANSFER, null, null, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState TRANSFER = new RazState(null, DEPOSIT_ARM_TRANSFER, null, null, null,null,null,null, null, null, null, null, null, null, new LinkedState(TRANSFER2, 500));
     // deposit arm fully over ready for deposit ⤵
     public static RazState SAMP_DEPOSIT2 = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT, DEPOSIT_ARM_SAMPLE_DEPOSIT, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
     // slides up, deposit arm mostly over the top but not hitting baskets ⤵
-    public static RazState SAMP_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT, DEPOSIT_ARM_HALFWAY_DEPOSIT, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
+    public static RazState SAMP_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT, DEPOSIT_ARM_HALFWAY_DEPOSIT, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT, null,null,null,null, null, null, null, null, SLIDES_MAX, null, new LinkedState(SAMP_DEPOSIT2, 2000));
 
     // deposit arm fully over ready for deposit ⤵
     public static RazState SAMP_DEPOSIT_OPPOSITE2 = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT_OPPOSITE, DEPOSIT_ARM_SAMPLE_DEPOSIT_OPPOSITE, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
     // slides up, deposit arm mostly over the top but not hitting baskets ⤵
-    public static RazState SAMP_DEPOSIT_OPPOSITE = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT_OPPOSITE, DEPOSIT_ARM_HALFWAY_DEPOSIT_OPPOSITE, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE, null,null,null,null, null, null, null, null, SLIDES_MAX, null, null);
+    public static RazState SAMP_DEPOSIT_OPPOSITE = new RazState(DEPOSIT_SWIVEL_SAMPLE_DEPOSIT_OPPOSITE, DEPOSIT_ARM_HALFWAY_DEPOSIT_OPPOSITE, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SAMPLE_DEPOSIT_OPPOSITE, null,null,null,null, null, null, null, null, SLIDES_MAX, null, new LinkedState(SAMP_DEPOSIT_OPPOSITE2, 2000));
 
     // drop sample ⤵
     public static RazState DEPOSIT_CLAW_OPEN = new RazState(null, null, RazConstants.DEPOSIT_CLAW_OPEN, null, null,null,null,null, null, null, null, null, null, null, null);
