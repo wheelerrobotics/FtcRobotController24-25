@@ -23,6 +23,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.ftccommon.SoundPlayer;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -40,6 +41,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.helpers.PID;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
+import org.firstinspires.ftc.teamcode.robot.Raz.helpers.LinkedState;
+import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazState;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.Link;
 import org.firstinspires.ftc.teamcode.robot.Meccanum.Meccanum;
@@ -87,10 +90,11 @@ public class Razzmatazz extends Meccanum implements Robot {
 
 
 
-        //limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        //tele.setMsTransmissionInterval(11);
-        //limelight.pipelineSwitch(3);
-        //limelight.start();
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        tele.setMsTransmissionInterval(11);
+        limelight.pipelineSwitch(0);
+        limelight.start();
+
 
 
 
@@ -297,6 +301,35 @@ public class Razzmatazz extends Meccanum implements Robot {
         Logger.getLogger("FUCK").log(new LogRecord(Level.INFO, "action macro :)"));
         return new SequentialAction(new MacroAction(this, macro));
     }
+
+    double turretArmLength = 7;
+    double angleOffset = 0.02;
+    public double turretDetection(double x, double y) {
+        double theta = acos(y/turretArmLength)+angleOffset;
+        return (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
+
+    }
+    public double extendoDetection(double x, double y) {
+        double theta = acos(y/turretArmLength)+angleOffset;
+        double turret = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
+        x-=turretArmLength*sin(theta);
+        return 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
+
+    }
+    public Action actionLimelight() {
+        limelight.start();
+        new WaitAction(100);
+        double[] outputs = limelight.getLatestResult().getPythonOutput();
+        double xValue = outputs[0];
+        double yValue = outputs[1];
+       return new SequentialAction(new MacroAction(this,
+               new RazState(null, null,
+                       null, null,
+                       extendoDetection(xValue,yValue),turretDetection(xValue,yValue),
+                       null, null, null,
+                       null, null, null, null,
+                       null, null)));
+    }
     public Action actionMacroTimeout(RazState macro, int millis) {
         return new SequentialAction(new MacroActionTimeout(this, macro, millis));
     }
@@ -483,6 +516,8 @@ public class Razzmatazz extends Meccanum implements Robot {
             x-=turretArmLength*sin(theta);
             extendoPos = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
         }
+
+
 
         public void setDepositClaw(boolean open) {
             depositClawPos = open ? DEPOSIT_CLAW_OPEN : DEPOSIT_CLAW_CLOSED;
