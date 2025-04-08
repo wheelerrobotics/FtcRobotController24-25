@@ -35,13 +35,13 @@ public class Macros {
     public static RazState SPEC_CLOSE_CLAW2 = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, 140, null, null);
 
     // pickup sample, check that the claw actually closed around a spec ⤵
-    public static RazState SPEC_PICKUP = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, null, null, new LinkedState(SPEC_CLOSE_CLAW2, 200));
+    public static RazState SPEC_PICKUP = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, 70, null, new LinkedState(SPEC_CLOSE_CLAW2, 200));
     // get spec off wall (only if we KNOW we have a spec in the claw) ⤵
     //public static RazState SPEC_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, EXTENDO_IN,TURRET_NEUTRAL,INTAKE_ARM_NEUTRAL,SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, null);
     // spec deposit position ⤵
-    public static RazState SPEC_TO_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SPEC_TO_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, 110, null, null);
     // release specimen after deposited ⤵
-    public static RazState SPEC_DEPOSITED = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, null, null, null);
+    public static RazState SPEC_DEPOSITED = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, 0, null, new LinkedState(SPEC_BEFORE_PICKUP,500));
 
     // SAMPLE STUFF
     // intake to before transfer position ⤵
@@ -112,11 +112,13 @@ public class Macros {
     public static RazState ASCENT = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
 
     // sweep down ⤵
-    public static RazState SWEEP_DOWN = new RazState(null, null, null, null, null,null,null,null, null, RazConstants.SWEEP_DOWN, null, null, null, null, null);
+    public static RazState SWEEP_DOWN = new RazState(null, null, null, null, EXTENDO_OUT,null,null,null, null, 0.02, null, null, null, null, null);
     // sweep up just enough to not hit sample ⤵
-    public static RazState SWEEP_UPISH = new RazState(null, null, null, null, null,null,null,null, null, SWEEP_PART_UP, null, null, null, null, null);
+    public static RazState SWEEP_UPISH = new RazState(null, null, null, null, EXTENDO_OUT,null,null,null, null, SWEEP_PART_UP, null, null, null, null, null);
     // sweep in resting position ⤵
-    public static RazState SWEEP_UP = new RazState(null, null, null, null, null,null,null,null, null, SWEEP_IN, null, null, null, null, null);
+    public static RazState SWEEP_UP = new RazState(null, null, null, null, EXTENDO_OUT,null,null,null, null, SWEEP_IN, null, null, null, null, null);
+
+    public static RazState COLLAPSE = new RazState(null, null, null, null, EXTENDO_IN,null,null,null, null, SWEEP_IN, null, null, null, null, null);
 
     /*
     public static RazState START = new RazState(DEPOSIT_ARM_START, DEPOSIT_SWIVEL_START,

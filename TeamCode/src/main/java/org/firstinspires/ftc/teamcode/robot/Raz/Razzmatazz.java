@@ -421,6 +421,9 @@ public class Razzmatazz extends Meccanum implements Robot {
 
         public void autoSetup() {
             // can do servo.pwmenable here
+            depositArmPos = DEPOSIT_ARM_SPEC_PICKUP;
+            depositSwivelPos = DEPOSIT_SWIVEL_SPEC_PICKUP;
+
         }
 
         public void servosTick() {
