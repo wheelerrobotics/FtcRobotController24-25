@@ -52,8 +52,8 @@ public class Razeroer extends OpMode {
         if (depositClawON)
             raz.servosController.setDepositClawPrecise(depositClaw);
 
-//        if (sweepON)
-//            raz.servosController.setSweep(sweep);
+        if (sweepON)
+            raz.servosController.setSweep(sweep);
 //        if (ptoON)
 //            raz.servosController.setPto(pto);
 //        if (pushupON)

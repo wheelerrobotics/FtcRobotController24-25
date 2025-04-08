@@ -21,11 +21,11 @@ public class RazConstants {
 
         //deposit claw
         public static double DEPOSIT_CLAW_OPEN = .61;
-        public static double DEPOSIT_CLAW_CLOSED = .83;
+        public static double DEPOSIT_CLAW_CLOSED = .81;
 
         //deposit claw
-        public static double INTAKE_CLAW_OPEN = .15;
-        public static double INTAKE_CLAW_CLOSED = .328;
+        public static double INTAKE_CLAW_OPEN = 0;
+        public static double INTAKE_CLAW_CLOSED = .32;
         public static double INTAKE_CLAW_ALMOST_CLOSED = .29;
 
         //ascent
@@ -75,7 +75,7 @@ public class RazConstants {
         //turret
         public static double TURRET_MIDDLE = 0.48;
 
-        public static double turretSpeed = .002;
+        public static double TURRET_SPEED = .005;
 
         //intake swivel
 
@@ -87,7 +87,7 @@ public class RazConstants {
 
         //extendo
 
-        public static double EXTENDO_IN = .945;
+        public static double EXTENDO_IN = 0.96;
         public static double EXTENDO_OUT = .36;
         public static double EXTENDO_SPEED = .005;
 
@@ -106,8 +106,9 @@ public class RazConstants {
         public static double EXTENDO_TRANSFER = 0.7;
 
         //sweep
-        public static double SWEEP_IN = 0;
-        public static double SWEEP_DOWN = 0;
+        public static double SWEEP_IN = 0.62;
+        public static double SWEEP_PART_UP = 0.15;
+        public static double SWEEP_DOWN = 0.02;
 
         //waits
 
@@ -116,16 +117,16 @@ public class RazConstants {
 
         //Start positions (for servosController)
 
-        public static double DEPOSIT_ARM_START = .3;
-        public static double DEPOSIT_SWIVEL_START = .5;
+        public static double DEPOSIT_ARM_START = DEPOSIT_ARM_SPEC_PICKUP;
+        public static double DEPOSIT_SWIVEL_START = DEPOSIT_SWIVEL_SPEC_PICKUP;
         public static double DEPOSIT_CLAW_START = DEPOSIT_CLAW_CLOSED;
-        public static double DEPOSIT_WRIST_START = .5;
+        public static double DEPOSIT_WRIST_START = DEPOSIT_WRIST_SPEC_PICKUP;
         public static double EXTENDO_START = EXTENDO_IN;
-        public static double TURRET_START = .5;
-        public static double INTAKE_ARM_START = .4;
+        public static double TURRET_START = TURRET_MIDDLE;
+        public static double INTAKE_ARM_START = INTAKE_ARM_NEUTRAL;
         public static double INTAKE_SWIVEL_START = INTAKE_SWIVEL_HORIZONTAL;
         public static double INTAKE_CLAW_START = INTAKE_CLAW_CLOSED;
-        public static double SWEEP_START = 0;
+        public static double SWEEP_START = SWEEP_IN;
         public static double PTO_START = 0;
         public static double PUSHUP_START = 0;
 

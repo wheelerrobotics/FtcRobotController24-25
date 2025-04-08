@@ -41,6 +41,7 @@ public class RazTele extends OpMode{
     public void start() {
         // run everything to start positions
         raz.servosController.teleSetup();
+        raz.servosController.teleSetup();
 
     }
 
@@ -95,7 +96,7 @@ public class RazTele extends OpMode{
         //p2 Manual swivel control TODO this takes up the space for manual slides control
         raz.servosController.incrementSwivel(INTAKE_SWIVEL_SPEED * gamepad2.right_stick_x);
         //p2 Manuel turret control
-        raz.servosController.incrementTurret(-gamepad2.left_stick_x*turretSpeed);
+        raz.servosController.incrementTurret(-gamepad2.left_stick_x*TURRET_SPEED);
         //p2 manual extendo control
         raz.servosController.incrementExtendo(gamepad2.left_stick_y * EXTENDO_SPEED);
         if (gamepad2.left_stick_button && !lastGamepad2.left_stick_button){
@@ -105,38 +106,49 @@ public class RazTele extends OpMode{
 
         //p2: dpad
         //p2 sample and spec open claw TODO it may be confusing that for spec pickup you'll need to let go of bumper to toggle claw
+
         if (gamepad2.dpad_left && !lastGamepad2.dpad_left) {
             if (gamepad2.right_bumper){
-                raz.runMacro(SPEC_DEPOSITED);
+                raz.runMacro(SPEC_TO_DEPOSIT);
             }
             else {
-                //raz.servosController.setDepositClaw(raz.servosController.depositClawPos == DEPOSIT_CLAW_CLOSED); TODO:turn this back on when claw is on robot
+                raz.servosController.setDepositClaw(raz.servosController.depositClawPos == DEPOSIT_CLAW_CLOSED);
             }
         }
         //p2 deposits
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
             if (gamepad2.right_bumper){
-                if (gamepad2.left_bumper){
-                    raz.runMacro(SPEC_TO_DEPOSIT);
+                    raz.runMacro(SPEC_DEPOSITED);
+            } else {
+                if (gamepad2.left_bumper) {
+                    raz.runMacro(SAMP_DEPOSIT_OPPOSITE);
+                } else {
+                    raz.runMacro(SAMP_DEPOSIT);
                 }
-                else {
-                    raz.runMacro(SPEC_TO_DEPOSIT);
-                }
-            }
-            else if (gamepad2.left_bumper){
-                raz.runMacro(SAMP_DEPOSIT_OPPOSITE);
-            }
-            else {
-                raz.runMacro(SAMP_DEPOSIT);
+
             }
         }
         //p2 spec pickup
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
-            raz.runMacro(SPEC_PICKUP); //TODO: opposite side pickup
+            if (gamepad2.right_bumper) {
+                raz.runMacro(SPEC_BEFORE_PICKUP); //TODO: opposite side pickup
+            } else {
+                raz.runMacro(TRANSFER);
+            }
+
         }
         //p2 slides down (collapse)
         if (gamepad2.dpad_down && !lastGamepad2.dpad_down) {
-            raz.runMacro(BEFORE_TRANSFER);
+            if (gamepad2.right_bumper) {
+                raz.runMacro(SPEC_PICKUP);
+            }else{
+                if (gamepad2.left_bumper) {
+                    raz.runMacro(SLIDES_DOWN_OPPOSITE);
+
+                }else {
+                    raz.runMacro(SLIDES_DOWN);
+                }
+            }
         }
 
 

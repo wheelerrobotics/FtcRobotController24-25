@@ -141,7 +141,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         diffyRight = hardwareMap.get(ServoImplEx.class, "diffyRight");
         depositWrist = hardwareMap.get(ServoImplEx.class, "depositWrist");
         depositClaw = hardwareMap.get(ServoImplEx.class, "depositClaw");
-//        sweep = hardwareMap.get(ServoImplEx.class, "sweep");
+        sweep = hardwareMap.get(ServoImplEx.class, "sweep");
 //        pto = hardwareMap.get(ServoImplEx.class, "pto");
 //        pushup = hardwareMap.get(ServoImplEx.class, "pushup");
 
@@ -327,9 +327,9 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
         if (MACROING) {
             RazState m = macroState;
-//            if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
-            if (m.diffySwivelPos != null) servosController.depositArmPos = m.diffySwivelPos;
-            if (m.diffyArmPos != null) servosController.depositSwivelPos = m.diffyArmPos;
+            if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
+            if (m.diffySwivelPos != null) servosController.depositSwivelPos = m.diffySwivelPos;
+            if (m.diffyArmPos != null) servosController.depositArmPos = m.diffyArmPos;
             if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
             if (m.depositWristPos != null) servosController.depositWristPos = m.depositWristPos;
             if (m.extendoPos != null) servosController.extendoPos = m.extendoPos;
@@ -405,10 +405,9 @@ public class Razzmatazz extends Meccanum implements Robot {
         public double intakeArmPos = INTAKE_ARM_START;
         public double intakeSwivelPos = INTAKE_SWIVEL_START;
         public double intakeClawPos = INTAKE_CLAW_START;
-        public double diffyLeftPos = 0;
-        public double diffyRightPos = 0;
-
-//        public double sweepPos = SWEEP_START;
+        public double diffyLeftPos = (depositSwivelPos-depositArmPos)/2;
+        public double diffyRightPos = (depositSwivelPos+depositArmPos)/2;
+        public double sweepPos = SWEEP_START;
 //        public double ptoPos = PTO_START;
 //        public double pushupPos = PUSHUP_START;
 
@@ -425,6 +424,9 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void servosTick() {
+
+            diffyLeftPos = (depositSwivelPos-depositArmPos)/2;
+            diffyRightPos = (depositSwivelPos+depositArmPos)/2;
             tele.addData("depositArmPos", depositArmPos);
             tele.addData("depositSwivelPos", depositSwivelPos);
             tele.addData("diffyLeft", diffyLeftPos);
@@ -436,7 +438,7 @@ public class Razzmatazz extends Meccanum implements Robot {
             tele.addData("intakeArmPos", intakeArmPos);
             tele.addData("intakeSwivelPos" , intakeSwivelPos);
             tele.addData("intakeClawPos" , intakeClawPos);
-//            tele.addData("sweepPos" , sweepPos);
+            tele.addData("sweepPos" , sweepPos);
 //            tele.addData("ptoPos" , ptoPos);
 //            tele.addData("pushupPos" , pushupPos);
 
@@ -455,7 +457,7 @@ public class Razzmatazz extends Meccanum implements Robot {
            intakeSwivel.setPosition(intakeSwivelPos);
            intakeClaw.setPosition(intakeClawPos);
 
-//           sweep.setPosition(sweepPos);
+           sweep.setPosition(sweepPos);
 //           pto.setPosition(ptoPos);
 //           pushup.setPosition(pushupPos);
 
@@ -464,12 +466,10 @@ public class Razzmatazz extends Meccanum implements Robot {
 
         public void setDiffy(
                 double diffyArmPosition, double diffySwivelPosition) {
-            //depositArmPos = ((diffyLeftPosition + diffyRightPosition))/2;
-            //depositSwivelPos = (-diffyLeftPosition + diffyRightPosition)/2;
+            depositArmPos = diffyArmPosition;
+            depositSwivelPos = diffySwivelPosition;
             // a = l-r
             // s = (l+r)/2
-            diffyLeftPos = (diffySwivelPosition-diffyArmPosition)/2;
-            diffyRightPos = (diffySwivelPosition+diffyArmPosition)/2;
         }
 
         double turretArmLength = 7;
@@ -509,7 +509,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void incrementTurret(double increment){
-            if ((turretPos + increment)> .57)
+            //if ((turretPos + increment)> .57)
                 turretPos += increment;
 
         }
@@ -518,9 +518,9 @@ public class Razzmatazz extends Meccanum implements Robot {
             intakeArmPos = intakeArmPosition;
         }
 
-//        public void setSweep(double sweepPosition){
-//            sweepPos = sweepPosition;
-//        }
+        public void setSweep(double sweepPosition){
+            sweepPos = sweepPosition;
+        }
 //
 //        public void setPto(double ptoPosition){
 //            ptoPos = ptoPosition;
