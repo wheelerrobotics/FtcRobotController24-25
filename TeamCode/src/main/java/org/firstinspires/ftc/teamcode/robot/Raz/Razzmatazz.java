@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.INFI
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.DEPOSIT_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 import static java.lang.Math.E;
+import static java.lang.Math.PI;
 import static java.lang.Math.abs;
 import static java.lang.Math.acos;
 import static java.lang.Math.asin;
@@ -478,8 +479,9 @@ public class Razzmatazz extends Meccanum implements Robot {
 
         double turretArmLength = 7;
         double angleOffset = 0.02;
-        public void setIntakePos(double x, double y) {
+        public void setIntakePos(double x, double y, double r) {
             double theta = acos(y/turretArmLength)+angleOffset;
+            intakeSwivelPos = (INTAKE_SWIVEL_HORIZONTAL-INTAKE_SWIVEL_VERTICAL)/(PI/2) * (r - theta);
             turretPos = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
             x-=turretArmLength*sin(theta);
             extendoPos = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
