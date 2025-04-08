@@ -305,17 +305,13 @@ public class Razzmatazz extends Meccanum implements Robot {
 
     double turretArmLength = 7;
     double angleOffset = 0.02;
-    public double turretDetection(double x, double y) {
+    public double[] calculateIntakePos(double x, double y, double r) {
         double theta = acos(y/turretArmLength)+angleOffset;
-        return (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
-
-    }
-    public double extendoDetection(double x, double y) {
-        double theta = acos(y/turretArmLength)+angleOffset;
-        double turret = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
+        double swiv = (INTAKE_SWIVEL_HORIZONTAL-INTAKE_SWIVEL_VERTICAL)/(PI/2) * (r - theta);
+        double tur = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
         x-=turretArmLength*sin(theta);
-        return 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
-
+        double ext = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
+        return new double[]{swiv, tur, ext};
     }
     public Action actionLimelight() {
         limelight.start();
@@ -323,11 +319,13 @@ public class Razzmatazz extends Meccanum implements Robot {
         double[] outputs = limelight.getLatestResult().getPythonOutput();
         double xValue = outputs[0];
         double yValue = outputs[1];
-       return new SequentialAction(new MacroAction(this,
+        double[] swivTurExt = calculateIntakePos(outputs[0], outputs[1], outputs[2]);
+       return new SequentialAction(
+               new MacroAction(this,
                new RazState(null, null,
                        null, null,
-                       extendoDetection(xValue,yValue),turretDetection(xValue,yValue),
-                       null, null, null,
+                       swivTurExt[2],swivTurExt[1],
+                       null, swivTurExt[0], null,
                        null, null, null, null,
                        null, null)));
     }
