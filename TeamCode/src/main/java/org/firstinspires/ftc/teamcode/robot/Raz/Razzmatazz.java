@@ -328,6 +328,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         if (MACROING) {
             RazState m = macroState;
             if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
+            if (m.sweepPos != null) servosController.sweepPos = m.sweepPos;
             if (m.diffySwivelPos != null) servosController.depositSwivelPos = m.diffySwivelPos;
             if (m.diffyArmPos != null) servosController.depositArmPos = m.diffyArmPos;
             if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
