@@ -5,9 +5,7 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFOR
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_TO_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SWEEP_DOWN;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SWEEP_UP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SWEEP_UPISH;
 import static java.lang.Math.PI;
 
@@ -20,14 +18,13 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
 
 @Autonomous
-public class Duper extends LinearOpMode {
+public class FiveSpecimen extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.
     Razzmatazz raz = null;
     PinpointDrive drive;

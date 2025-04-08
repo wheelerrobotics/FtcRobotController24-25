@@ -311,7 +311,6 @@ public class Razzmatazz extends Meccanum implements Robot {
     }
     public double extendoDetection(double x, double y) {
         double theta = acos(y/turretArmLength)+angleOffset;
-        double turret = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
         x-=turretArmLength*sin(theta);
         return 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
 
