@@ -303,7 +303,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         return new SequentialAction(new MacroAction(this, macro));
     }
 
-    double turretArmLength = 7;
+    double turretArmLength = 6;
     double angleOffset = 0.02;
     public double[] calculateIntakePos(double x, double y, double r) {
         double theta = acos(y/turretArmLength)+angleOffset;
@@ -314,8 +314,6 @@ public class Razzmatazz extends Meccanum implements Robot {
         return new double[]{swiv, tur, ext};
     }
     public Action actionLimelight() {
-        limelight.start();
-        new WaitAction(100);
         double[] outputs = limelight.getLatestResult().getPythonOutput();
         double xValue = outputs[0];
         double yValue = outputs[1];
@@ -325,7 +323,7 @@ public class Razzmatazz extends Meccanum implements Robot {
                new RazState(null, null,
                        null, null,
                        swivTurExt[2],swivTurExt[1],
-                       null, swivTurExt[0], null,
+                       INTAKE_ARM_ABOVE_PICKUP, swivTurExt[0], INTAKE_CLAW_OPEN,
                        null, null, null, null,
                        null, null)));
     }
@@ -506,16 +504,6 @@ public class Razzmatazz extends Meccanum implements Robot {
             depositSwivelPos = diffySwivelPosition;
             // a = l-r
             // s = (l+r)/2
-        }
-
-        double turretArmLength = 7;
-        double angleOffset = 0.02;
-        public void setIntakePos(double x, double y, double r) {
-            double theta = acos(y/turretArmLength)+angleOffset;
-            intakeSwivelPos = (INTAKE_SWIVEL_HORIZONTAL-INTAKE_SWIVEL_VERTICAL)/(PI/2) * (r - theta);
-            turretPos = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
-            x-=turretArmLength*sin(theta);
-            extendoPos = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
         }
 
 
