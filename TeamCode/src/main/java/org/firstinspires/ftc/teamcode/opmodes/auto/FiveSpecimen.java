@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.AUTO_START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.COLLAPSE;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED;
@@ -175,9 +176,8 @@ public class FiveSpecimen extends LinearOpMode {
         Action specimen5 = a11.build();
         Action park = a12.build();
 
+        raz.runMacro(AUTO_START);
         raz.tick();
-        raz.servosController.autoSetup();
-
         waitForStart();
 
         Actions.runBlocking(
@@ -194,10 +194,10 @@ public class FiveSpecimen extends LinearOpMode {
                                 raz.actionMacro(SPEC_DEPOSITED),
                                 // place preload specimen
 
-                                beforeSweep1,
-                                raz.actionMacro(SWEEP_DOWN),
-                                raz.actionWait(500),
-
+                                new ParallelAction(
+                                        raz.actionMacroTimeout(SWEEP_DOWN,500),
+                                        beforeSweep1
+                                ),
 
                                 sweep1,
                                 raz.actionMacro(SWEEP_UPISH),
