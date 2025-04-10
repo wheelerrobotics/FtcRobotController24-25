@@ -23,7 +23,6 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.ftccommon.SoundPlayer;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -41,8 +40,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.helpers.PID;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
-import org.firstinspires.ftc.teamcode.robot.Raz.helpers.LinkedState;
-import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazState;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.Link;
 import org.firstinspires.ftc.teamcode.robot.Meccanum.Meccanum;
@@ -362,8 +359,7 @@ public class Razzmatazz extends Meccanum implements Robot {
             RazState m = macroState;
             if (m.slidesPos != null) slidesController.setTarget(m.slidesPos);
             if (m.sweepPos != null) servosController.sweepPos = m.sweepPos;
-            if (m.diffySwivelPos != null) servosController.depositSwivelPos = m.diffySwivelPos;
-            if (m.diffyArmPos != null) servosController.depositArmPos = m.diffyArmPos;
+            if (m.diffyArmPos != null) servosController.diffyArmPos = m.diffyArmPos;
             if (m.depositClawPos != null) servosController.depositClawPos = m.depositClawPos;
             if (m.depositWristPos != null) servosController.depositWristPos = m.depositWristPos;
             if (m.extendoPos != null) servosController.extendoPos = m.extendoPos;
@@ -430,8 +426,6 @@ public class Razzmatazz extends Meccanum implements Robot {
     public static double offs = 0;
     public class ServosController {
         //set servo positions
-        public double depositArmPos = DEPOSIT_ARM_START;
-        public double depositSwivelPos = DEPOSIT_SWIVEL_START;
         public double depositClawPos = DEPOSIT_CLAW_START;
         public double depositWristPos = DEPOSIT_WRIST_START;
         public double extendoPos = EXTENDO_START;
@@ -439,8 +433,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         public double intakeArmPos = INTAKE_ARM_START;
         public double intakeSwivelPos = INTAKE_SWIVEL_START;
         public double intakeClawPos = INTAKE_CLAW_START;
-        public double diffyLeftPos = (depositSwivelPos-depositArmPos)/2;
-        public double diffyRightPos = (depositSwivelPos+depositArmPos)/2;
+        public double diffyArmPos = DEPOSIT_ARM_START;
         public double sweepPos = SWEEP_START;
 //        public double ptoPos = PTO_START;
 //        public double pushupPos = PUSHUP_START;
@@ -455,19 +448,13 @@ public class Razzmatazz extends Meccanum implements Robot {
 
         public void autoSetup() {
             // can do servo.pwmenable here
-            depositArmPos = DEPOSIT_ARM_SPEC_PICKUP;
-            depositSwivelPos = DEPOSIT_SWIVEL_SPEC_PICKUP;
 
         }
 
         public void servosTick() {
 
-            diffyLeftPos = (depositSwivelPos-depositArmPos)/2;
-            diffyRightPos = (depositSwivelPos+depositArmPos)/2;
-            tele.addData("depositArmPos", depositArmPos);
-            tele.addData("depositSwivelPos", depositSwivelPos);
-            tele.addData("diffyLeft", diffyLeftPos);
-            tele.addData("diffyRight", diffyRightPos);
+
+            tele.addData("depositArmPos", diffyArmPos);
             tele.addData("depositClawPos", depositClawPos);
             tele.addData("depositWristPos", depositWristPos);
             tele.addData("extendoPos", extendoPos);
@@ -481,8 +468,8 @@ public class Razzmatazz extends Meccanum implements Robot {
 
 
             // need to make this be an equation
-            diffyLeft.setPosition(diffyLeftPos);
-            diffyRight.setPosition(diffyRightPos);
+            diffyLeft.setPosition(diffyArmPos);
+            diffyRight.setPosition(1-diffyArmPos);
 
            depositClaw.setPosition(depositClawPos);
            depositWrist.setPosition(depositWristPos);
@@ -502,9 +489,8 @@ public class Razzmatazz extends Meccanum implements Robot {
 
 
         public void setDiffy(
-                double diffyArmPosition, double diffySwivelPosition) {
-            depositArmPos = diffyArmPosition;
-            depositSwivelPos = diffySwivelPosition;
+                double diffyArmPosition) {
+            diffyArmPos = diffyArmPosition;
             // a = l-r
             // s = (l+r)/2
         }

@@ -12,7 +12,7 @@ public class Macros {
             INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);
 
-    public static RazState AUTO_START = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT-0.06,
+    public static RazState AUTO_START = new RazState(DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT-0.06,
             DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, EXTENDO_START, TURRET_NEUTRAL,
             INTAKE_ARM_NEUTRAL, SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, SWEEP_IN,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);
@@ -34,22 +34,22 @@ public class Macros {
 
     // SPEC DEPOSIT
     // claw open, deposit arm at wall height ⤵
-    public static RazState SPEC_BEFORE_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_PICKUP, DEPOSIT_ARM_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, EXTENDO_IN,TURRET_NEUTRAL,INTAKE_ARM_NEUTRAL,SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, null, null, null, 70, null, null);
-    public static RazState SPEC_BEFORE_PICKUP_AUTO = new RazState(DEPOSIT_SWIVEL_SPEC_PICKUP, DEPOSIT_ARM_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, EXTENDO_IN,TURRET_MIDDLE,INTAKE_ARM_NEUTRAL,SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, null, null, null, 70, null, null);
+    public static RazState SPEC_BEFORE_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_PICKUP, DEPOSIT_ARM_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, EXTENDO_IN,TURRET_NEUTRAL,INTAKE_ARM_NEUTRAL,SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, null, null, null, 0, null, null);
+    public static RazState SPEC_BEFORE_PICKUP_AUTO = new RazState(DEPOSIT_SWIVEL_SPEC_PICKUP, DEPOSIT_ARM_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, EXTENDO_IN,TURRET_MIDDLE,INTAKE_ARM_NEUTRAL,SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, null, null, null, 0, null, null);
 
     // pickup sample, check that the claw actually closed around a spec ⤵
 
     public static RazState SPEC_CLOSE_CLAW2 = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, 140, null, null);
 
     // pickup sample, check that the claw actually closed around a spec ⤵
-    public static RazState SPEC_PICKUP = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, 70, null, new LinkedState(SPEC_CLOSE_CLAW2, 200));
+    public static RazState SPEC_PICKUP = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, 0, null, new LinkedState(SPEC_CLOSE_CLAW2, 200));
     // get spec off wall (only if we KNOW we have a spec in the claw) ⤵
     //public static RazState SPEC_PICKUP = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, EXTENDO_IN,TURRET_NEUTRAL,INTAKE_ARM_NEUTRAL,SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, null);
     // spec deposit position ⤵
-    public static RazState SPEC_TO_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, 150, null, null);
+    public static RazState SPEC_TO_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, null);
     // release specimen after deposited ⤵
-    public static RazState SPEC_DEPOSITED = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, 0, null, new LinkedState(SPEC_BEFORE_PICKUP,500));
-    public static RazState SPEC_DEPOSITED_AUTO = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,TURRET_MIDDLE,null,null, null, null, null, null, 0, null, new LinkedState(SPEC_BEFORE_PICKUP_AUTO,300));
+    public static RazState SPEC_DEPOSITED = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, new LinkedState(SPEC_BEFORE_PICKUP,500));
+    public static RazState SPEC_DEPOSITED_AUTO = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,TURRET_MIDDLE,null,null, null, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, new LinkedState(SPEC_BEFORE_PICKUP_AUTO,300));
 
     // SAMPLE STUFF
     // intake to before transfer position ⤵

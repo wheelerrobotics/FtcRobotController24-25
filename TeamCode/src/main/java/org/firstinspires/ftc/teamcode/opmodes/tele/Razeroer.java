@@ -38,7 +38,7 @@ public class Razeroer extends OpMode {
     @Override
     public void loop() {
         if (diffyON)
-            raz.servosController.setDiffy(depositArm, depositSwivel);
+            raz.servosController.setDiffy(depositArm);
         if (depositWristON)
             raz.servosController.setDepositWrist(depositWrist);
         if (slidesON)

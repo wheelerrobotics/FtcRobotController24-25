@@ -31,23 +31,22 @@ public class RazConstants {
         //ascent
         public static int ASCENT_MIN = 0;
 
-
         //Intake Neutral Pickup
-        public static double INTAKE_ARM_NEUTRAL = 0.4;
-        public static double TURRET_NEUTRAL = 0.22;
+        public static double INTAKE_ARM_NEUTRAL = 0.45;
+        public static double TURRET_NEUTRAL = 0.65;
         public static double SWIVEL_NEUTRAL = 0.2;
 
         //Spec Pickup
-        public static double DEPOSIT_ARM_SPEC_PICKUP = 0.147;
+        public static double DEPOSIT_ARM_SPEC_PICKUP = 0.82;
         public static double DEPOSIT_SWIVEL_SPEC_PICKUP = 1.21;
-        public static double DEPOSIT_WRIST_SPEC_PICKUP = 0.73;
+        public static double DEPOSIT_WRIST_SPEC_PICKUP = 0.77;
 
 
         //Spec Deposit
-        public static double DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT = -0.07;
+        public static double DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT = 0.25;
         public static double DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT = 1.01;
-        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = .6;
-        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 110;
+        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = 0.77;
+        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 450;
 
         //Sample Deposit
 
@@ -69,7 +68,7 @@ public class RazConstants {
 
         public static double INTAKE_ARM_ABOVE_PICKUP = .13;
         public static double INTAKE_ARM_PICKUP = 0.07;
-        public static double INTAKE_ARM_UP = .6;
+        public static double INTAKE_ARM_UP = .37;
 
 
         //turret
@@ -117,7 +116,7 @@ public class RazConstants {
 
         //Start positions (for servosController)
 
-        public static double DEPOSIT_ARM_START = DEPOSIT_ARM_SPEC_PICKUP;
+        public static double DEPOSIT_ARM_START = 0.2;
         public static double DEPOSIT_SWIVEL_START = DEPOSIT_SWIVEL_SPEC_PICKUP;
         public static double DEPOSIT_CLAW_START = DEPOSIT_CLAW_CLOSED;
         public static double DEPOSIT_WRIST_START = DEPOSIT_WRIST_SPEC_PICKUP;

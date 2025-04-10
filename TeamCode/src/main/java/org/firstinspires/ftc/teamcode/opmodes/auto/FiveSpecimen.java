@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.AUTO_START
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.COLLAPSE;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED;
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED_AUTO;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_TO_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SWEEP_DOWN;
@@ -45,7 +46,7 @@ public class FiveSpecimen extends LinearOpMode {
 
         TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0))
                 .setTangent(0)
-                .splineTo(new Vector2d(38,6),0);
+                .splineTo(new Vector2d(37,6),0);
 
 
         //first sweep
@@ -57,29 +58,29 @@ public class FiveSpecimen extends LinearOpMode {
 
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
                 .setTangent(PI).splineToLinearHeading(new Pose2d(21, -7, -PI/2+-PI/5.5),
-                        0, null, new ProfileAccelConstraint(-40, 20));
+                        0, null, new ProfileAccelConstraint(-40, 40));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(28, -21, -PI/3), -PI * 5 / 6,  null, new ProfileAccelConstraint(-40, 20));
+                .splineToLinearHeading(new Pose2d(28, -21, -PI/3-PI/12), -PI * 5 / 6,  null, new ProfileAccelConstraint(-40, 60));
 
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
-                .setTangent(PI).splineToLinearHeading(new Pose2d(12, -14, -PI/2+-PI/5.5),
-                        0,  null, new ProfileAccelConstraint(-40, 20));
+                .setTangent(PI).splineToLinearHeading(new Pose2d(24, -19, -PI/2+-PI/6),
+                        0,  null, new ProfileAccelConstraint(-40, 60));
 
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(35, -23, -PI/3), -PI * 4 / 6,  null, new ProfileAccelConstraint(-40, 20));
+                .splineToLinearHeading(new Pose2d(35, -23, -PI/3-PI/12), -PI * 4 / 6,  null, new ProfileAccelConstraint(-40, 60));
 
         TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                .setTangent(-PI/4).splineToLinearHeading(new Pose2d(18, -20, -PI/2+-PI/5.5),
-                        PI,  null, new ProfileAccelConstraint(-40, 20));
+                .setTangent(-PI/4).splineToLinearHeading(new Pose2d(30, -20, -PI/2+-PI/4),
+                        PI,  null, new ProfileAccelConstraint(-40, 40));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
                 .splineToLinearHeading(new Pose2d(-1, -29, 0), PI,
-                        null, new ProfileAccelConstraint(-10, 30));
+                        null, new ProfileAccelConstraint(-30, 30));
 
 
         TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh()
@@ -89,7 +90,7 @@ public class FiveSpecimen extends LinearOpMode {
                 .setReversed(true)
                 .setTangent(PI/4 + PI/50)
                 .lineToX(37,
-                        null, new ProfileAccelConstraint(-60, 20));
+                        null, new ProfileAccelConstraint(-80, 80));
 
 
         // wall specimen 2
@@ -97,8 +98,8 @@ public class FiveSpecimen extends LinearOpMode {
 
                 .setReversed(false)
                 .setTangent(PI/4 + PI/20)
-                .lineToX(0,
-                        null, new ProfileAccelConstraint(-40, 30));
+                .lineToX(-1,
+                        null, new ProfileAccelConstraint(-60, 80));
 
 
 
@@ -110,7 +111,7 @@ public class FiveSpecimen extends LinearOpMode {
                 .setReversed(true)
                 .setTangent(PI/4 + PI/20)
                 .lineToX(37,
-                        null, new ProfileAccelConstraint(-60, 20));
+                        null, new ProfileAccelConstraint(-80, 80));
 
 
         // wall specimen 3
@@ -118,7 +119,7 @@ public class FiveSpecimen extends LinearOpMode {
                 .setReversed(false)
                 .setTangent(PI/4 + PI/20)
                 .lineToX(0,
-                        null, new ProfileAccelConstraint(-40, 30));
+                        null, new ProfileAccelConstraint(-80, 80));
 
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh()
                 // .setTangent(PI)
@@ -127,7 +128,7 @@ public class FiveSpecimen extends LinearOpMode {
                 .setReversed(true)
                 .setTangent(PI/4 + PI/20)
                 .lineToX(37,
-                        null, new ProfileAccelConstraint(-60, 20));
+                        null, new ProfileAccelConstraint(-80, 80));
 
 
         TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
@@ -137,7 +138,7 @@ public class FiveSpecimen extends LinearOpMode {
                 .setReversed(false)
                 .setTangent(PI/4 + PI/20)
                 .lineToX(0,
-                        null, new ProfileAccelConstraint(-40, 30));
+                        null, new ProfileAccelConstraint(-80, 80));
 
         TrajectoryActionBuilder a11 = a10.endTrajectory().fresh()
                 //  .setTangent(PI)
@@ -146,7 +147,7 @@ public class FiveSpecimen extends LinearOpMode {
                 .setReversed(true)
                 .setTangent(PI/4 + PI/20)
                 .lineToX(37,
-                        null, new ProfileAccelConstraint(-40, 30));
+                        null, new ProfileAccelConstraint(-80, 80));
 
 
         // park
@@ -184,7 +185,8 @@ public class FiveSpecimen extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         new SequentialAction(
-                                raz.actionMacroTimeout(SPEC_TO_DEPOSIT, 200),
+                                raz.actionMacro(SPEC_TO_DEPOSIT),
+                                raz.actionWait(100),
                                 specimen1,
                                 raz.actionWait(100),
                                 raz.actionMacro(SPEC_DEPOSITED),
@@ -195,56 +197,58 @@ public class FiveSpecimen extends LinearOpMode {
                                         raz.actionWait(100),
                                         beforeSweep1
                                 ),
-                                raz.actionWait(500),
+
+
+                                raz.actionWait(200),
                                 sweep1,
                                 raz.actionMacro(SWEEP_UPISH),
                                 beforeSweep2,
                                 raz.actionMacro(SWEEP_DOWN),
-                                raz.actionWait(500),
+                                raz.actionWait(100),
                                 sweep2,
                                 raz.actionMacro(SWEEP_UPISH),
                                 beforeSweep3,
                                 raz.actionMacro(SWEEP_DOWN),
-                                raz.actionWait(500),
+                                raz.actionWait(100),
                                 sweep3,
                                 raz.actionMacro(COLLAPSE),
                                 sweep3Align,
                                 raz.actionMacro(SPEC_BEFORE_PICKUP),
-                                raz.actionWait(500),
+                                raz.actionWait(100),
                                 raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(300),
+                                raz.actionWait(100),
                                 new ParallelAction(
                                         raz.actionMacroTimeout(SPEC_TO_DEPOSIT, 300),
                                         specimen2 // get in position to deposit wall specimen 1
                                 ),
 
-                                raz.actionMacro(SPEC_DEPOSITED),
+                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
 
 
                                 wall2, // get into position to pick up wall specimen 2
                                 raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(100),
+                                raz.actionWait(300),
 
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
                                 specimen3, // get into position to deposit wall specimen 2
 
-                                raz.actionMacro(SPEC_DEPOSITED),
+                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
                                 //   hob.actionWait(200),
                                 wall3, // get into position to pick up wall specimen 3
                                 raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(100),
+                                raz.actionWait(300),
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
                                 specimen4,
-                                raz.actionMacro(SPEC_DEPOSITED),
+                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
                                 wall4, // get into position to pick up wall specimen 2
 
                                 raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(100),
+                                raz.actionWait(300),
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
 
                                 specimen5,
-                                raz.actionMacro(SPEC_DEPOSITED),
-                                // hob.actionWait(200),
+                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
+
 
 
                                 park
