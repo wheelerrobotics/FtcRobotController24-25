@@ -548,7 +548,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void incrementTurret(double increment){
-            //if ((turretPos + increment)> .57)
+            if (((turretPos + increment)< .75) && ((turretPos + increment) > .25) )
                 turretPos += increment;
 
         }

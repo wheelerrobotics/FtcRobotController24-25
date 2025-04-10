@@ -40,13 +40,13 @@ public class RazConstants {
         //Spec Pickup
         public static double DEPOSIT_ARM_SPEC_PICKUP = 0.147;
         public static double DEPOSIT_SWIVEL_SPEC_PICKUP = 1.21;
-        public static double DEPOSIT_WRIST_SPEC_PICKUP = 0.77;
+        public static double DEPOSIT_WRIST_SPEC_PICKUP = 0.73;
 
 
         //Spec Deposit
         public static double DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT = -0.07;
         public static double DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT = 1.01;
-        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = .65;
+        public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = .6;
         public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 110;
 
         //Sample Deposit
@@ -106,9 +106,9 @@ public class RazConstants {
         public static double EXTENDO_TRANSFER = 0.7;
 
         //sweep
-        public static double SWEEP_IN = 0.62;
-        public static double SWEEP_PART_UP = 0.15;
-        public static double SWEEP_DOWN = 0.02;
+        public static double SWEEP_IN = 0.73;
+        public static double SWEEP_PART_UP = 0.31;
+        public static double SWEEP_DOWN = 0.2;
 
         //waits
 
