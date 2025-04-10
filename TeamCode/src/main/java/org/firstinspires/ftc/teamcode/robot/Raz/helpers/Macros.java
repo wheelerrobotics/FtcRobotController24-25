@@ -48,7 +48,7 @@ public class Macros {
     // spec deposit position ⤵
     public static RazState SPEC_TO_DEPOSIT = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, null);
     // release specimen after deposited ⤵
-    public static RazState SPEC_DEPOSITED = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, new LinkedState(SPEC_BEFORE_PICKUP,500));
+    public static RazState SPEC_DEPOSITED = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, null, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, new LinkedState(SPEC_BEFORE_PICKUP,300));
     public static RazState SPEC_DEPOSITED_AUTO = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,TURRET_MIDDLE,null,null, null, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, new LinkedState(SPEC_BEFORE_PICKUP_AUTO,300));
 
     // SAMPLE STUFF

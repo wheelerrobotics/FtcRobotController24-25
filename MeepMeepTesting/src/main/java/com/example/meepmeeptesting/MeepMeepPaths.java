@@ -37,42 +37,46 @@ public class MeepMeepPaths {
                 DriveShim drive = myBot.getDrive();
 
                 TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0))
-                        .setTangent(0)
-                        .splineTo(new Vector2d(34,-1),0);
+                     //   .setTangent(0)
+                       // .splineTo(new Vector2d(37,6),0);
+
+                        .setTangent(PI/35)
+                        .lineToX(37,
+                                null, new ProfileAccelConstraint(-80, 80));
 
 
                 //first sweep
                 TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(PI)
                         .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(25,-10,-PI/3),-PI/4)
-
+                        .splineToLinearHeading(new Pose2d(30,-9,-PI/3),-PI/4)
                         //  .splineToConstantHeading(new Vector2d(25, -10), 0)
-
                         ;
 
                 TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                        .setTangent(PI).splineToLinearHeading(new Pose2d(17, -7, -PI/2+-PI/5.5),
-                                0, null, new ProfileAccelConstraint(-80, 80));
+                        .setTangent(PI).splineToLinearHeading(new Pose2d(21, -7, -PI/2+-PI/5.5),
+                                0, null, new ProfileAccelConstraint(-40, 40));
 
                 //second sweep
                 TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                         .setTangent(0)
-                        .splineToLinearHeading(new Pose2d(26, -17, PI+PI*5/6), -PI * 5 / 6);
+                        .splineToLinearHeading(new Pose2d(28, -21, -PI/3-PI/12), -PI * 5 / 6,  null, new ProfileAccelConstraint(-40, 60));
+
                 TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
-                        .setTangent(PI).splineToLinearHeading(new Pose2d(18, -14, -PI/2+-PI/5.5),
-                                0,  null, new ProfileAccelConstraint(-80, 80));
+                        .setTangent(PI).splineToLinearHeading(new Pose2d(24, -19, -PI/2+-PI/6),
+                                0,  null, new ProfileAccelConstraint(-40, 60));
+
                 //third sweep
                 TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                         .setTangent(0)
-                        .splineToLinearHeading(new Pose2d(35, -23, PI+PI*4/6), -PI * 4 / 6);
+                        .splineToLinearHeading(new Pose2d(35, -23, -PI/3-PI/12), -PI * 4 / 6,  null, new ProfileAccelConstraint(-40, 60));
 
                 TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                        .setTangent(-PI/4).splineToLinearHeading(new Pose2d(24, -20, -PI/2+-PI/5.5),
-                                PI,  null, new ProfileAccelConstraint(-80, 80));
+                        .setTangent(-PI/4).splineToLinearHeading(new Pose2d(30, -20, -PI/2+-PI/4),
+                                PI,  null, new ProfileAccelConstraint(-40, 40));
 
                 TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
-                        .splineToLinearHeading(new Pose2d(5, -29, 0), PI,
-                                null, new ProfileAccelConstraint(-40, 40));
+                        .splineToLinearHeading(new Pose2d(-1, -29, 0), PI,
+                                null, new ProfileAccelConstraint(-30, 30));
 
 
                 TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh()
@@ -81,7 +85,8 @@ public class MeepMeepPaths {
                         //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
                         .setReversed(true)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(43);
+                        .lineToX(37,
+                                null, new ProfileAccelConstraint(-80, 80));
 
 
                 // wall specimen 2
@@ -89,7 +94,8 @@ public class MeepMeepPaths {
 
                         .setReversed(false)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(5);
+                        .lineToX(-1,
+                                null, new ProfileAccelConstraint(-60, 80));
 
 
 
@@ -100,14 +106,16 @@ public class MeepMeepPaths {
                         //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
                         .setReversed(true)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(43);
+                        .lineToX(37,
+                                null, new ProfileAccelConstraint(-80, 80));
 
 
                 // wall specimen 3
                 TrajectoryActionBuilder a8 = a7.endTrajectory().fresh()
                         .setReversed(false)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(5);
+                        .lineToX(0,
+                                null, new ProfileAccelConstraint(-80, 80));
 
                 TrajectoryActionBuilder a9 = a8.endTrajectory().fresh()
                         // .setTangent(PI)
@@ -115,7 +123,8 @@ public class MeepMeepPaths {
                         // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                         .setReversed(true)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(43);
+                        .lineToX(37,
+                                null, new ProfileAccelConstraint(-80, 80));
 
 
                 TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
@@ -124,7 +133,8 @@ public class MeepMeepPaths {
                         //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
                         .setReversed(false)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(5);
+                        .lineToX(0,
+                                null, new ProfileAccelConstraint(-80, 80));
 
                 TrajectoryActionBuilder a11 = a10.endTrajectory().fresh()
                         //  .setTangent(PI)
@@ -132,14 +142,16 @@ public class MeepMeepPaths {
                         // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                         .setReversed(true)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(43);
+                        .lineToX(37,
+                                null, new ProfileAccelConstraint(-80, 80));
 
 
                 // park
                 TrajectoryActionBuilder a12 = a11.endTrajectory().fresh()
                         .setReversed(false)
                         .setTangent(PI/4 + PI/50)
-                        .lineToX(5);
+                        .lineToX(2,
+                                null, new ProfileAccelConstraint(-80, 80));
 
                 // preload
                 Action specimen1 = a1.build();

@@ -46,7 +46,7 @@ public class RazConstants {
         public static double DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT = 0.25;
         public static double DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT = 1.01;
         public static double DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT = 0.77;
-        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 450;
+        public static int DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT = 475;
 
         //Sample Deposit
 
