@@ -40,6 +40,8 @@ public class rerazeros extends OpMode {
     public static double r = 90;
     public static double intakeArmPos = 0.15;
 
+    public static boolean notTargeting = true;
+
 
     double turretPos = 0.5;
     double extendoPos = 0.6;
@@ -49,8 +51,8 @@ public class rerazeros extends OpMode {
     public double[] calculateIntakePos(double x, double y, double r) {
         x+=2;
         double theta = acos(y/turretArmLength)+angleOffset;
-        double swiv = INTAKE_SWIVEL_HORIZONTAL + (INTAKE_SWIVEL_VERTICAL-INTAKE_SWIVEL_HORIZONTAL)/(PI/2) * (r - theta);
-        double tur = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
+        double swiv = INTAKE_SWIVEL_HORIZONTAL + (INTAKE_SWIVEL_VERTICAL-INTAKE_SWIVEL_HORIZONTAL)/(PI/2) * (theta-r);
+        double tur = (0.227 + (theta * ((0.727-0.227) / 3.14159265)));
         x-=turretArmLength*sin(theta);
         double ext = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
         return new double[]{swiv, tur, ext};
@@ -80,7 +82,7 @@ public class rerazeros extends OpMode {
         intakeArm.setPwmRange(new PwmControl.PwmRange(500, 2500));
         sweep.setPosition(SWEEP_IN);
     }
-
+    double[] swivTurExt;
     @Override
     public void loop() {
         LLStatus status = l.getStatus();
@@ -113,6 +115,9 @@ public class rerazeros extends OpMode {
             tele.addData("ll6", output[6]);
             tele.addData("ll7", output[7]);
             tele.addData("ll0", output[0]);
+
+            swivTurExt = calculateIntakePos(output[0]+1, output[1]-5.9, (output[4] + 22-90) * PI/180);
+
             if (result.isValid()) {
                 tele.addData("Broky", "false");
             }else {
@@ -138,7 +143,12 @@ public class rerazeros extends OpMode {
             tele.addData("brokeny", "True");
         }
 */
-        double[] swivTurExt = calculateIntakePos(x, y, r * PI/180);
+        // +53 angle
+        // +6.6 y
+        // -2.6 x
+        if (swivTurExt == null || notTargeting) swivTurExt = calculateIntakePos(x+1, y-5.9, (r) * PI/180);
+
+        //double[] swivTurExt = calculateIntakePos(x, y, r * PI/180);
         extendo.setPosition(swivTurExt[2]);
         turret.setPosition(swivTurExt[1]);
         intakeArm.setPosition(INTAKE_ARM_ABOVE_PICKUP);

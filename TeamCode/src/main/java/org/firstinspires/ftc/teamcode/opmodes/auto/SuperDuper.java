@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.AUTO_START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.COLLAPSE;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.INTAKE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFORE_PICKUP;
@@ -46,10 +47,11 @@ public class SuperDuper extends LinearOpMode {
 
         //to deposit first specimen
 
+        raz.runMacro(START);
         raz.tick();
-        raz.servosController.autoSetup();
 
         waitForStart();
+
 
         Actions.runBlocking(
                 new ParallelAction(

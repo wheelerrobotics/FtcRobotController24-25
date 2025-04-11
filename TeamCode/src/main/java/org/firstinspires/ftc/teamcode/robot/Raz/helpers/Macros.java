@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.R;
 public class Macros {
 
     public static RazState NONE = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
-    public static RazState START = new RazState(DEPOSIT_SWIVEL_START, DEPOSIT_ARM_START,
+    public static RazState START = new RazState(DEPOSIT_SWIVEL_START, DEPOSIT_ARM_SPEC_PICKUP,
             DEPOSIT_CLAW_START, DEPOSIT_WRIST_START, EXTENDO_START, TURRET_START,
             INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);

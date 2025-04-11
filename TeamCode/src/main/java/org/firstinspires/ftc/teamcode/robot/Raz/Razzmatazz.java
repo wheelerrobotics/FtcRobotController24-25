@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.INFI
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.DEPOSIT_ARM_START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
 import static java.lang.Math.E;
+import static java.lang.Math.PI;
 import static java.lang.Math.abs;
 import static java.lang.Math.acos;
 import static java.lang.Math.asin;
@@ -299,31 +300,45 @@ public class Razzmatazz extends Meccanum implements Robot {
         return new SequentialAction(new MacroAction(this, macro));
     }
 
-    double turretArmLength = 7;
+    double turretArmLength = 6;
     double angleOffset = 0.02;
-    public double turretDetection(double x, double y) {
-        double theta = acos(y/turretArmLength)+angleOffset;
-        return (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
-
+    public double[] calculateIntakePos(double x, double y, double r) {
+        x += 2;
+        double theta = acos(y / turretArmLength) + angleOffset;
+        double swiv = INTAKE_SWIVEL_HORIZONTAL + (INTAKE_SWIVEL_VERTICAL - INTAKE_SWIVEL_HORIZONTAL) / (PI / 2) * (r - theta);
+        double tur = -(0.727 - (theta * ((0.727 - 0.227) / 3.14159265)));
+        x -= turretArmLength * sin(theta);
+        double ext = 0.19 * asin(-0.093458 * (x - 2) + 0.85) + 0.67619;
+        return new double[]{swiv, tur, ext};
     }
-    public double extendoDetection(double x, double y) {
-        double theta = acos(y/turretArmLength)+angleOffset;
-        double turret = (0.727 - (theta * ((0.727-0.227) / 3.14159265)));
-        x-=turretArmLength*sin(theta);
-        return 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
+    public static double offsetX = 5;
+    public static double offsetY = 4;
+    public static double offsetR = 63;
 
-    }
     public Action actionLimelight() {
-        limelight.start();
-        new WaitAction(100);
         double[] outputs = limelight.getLatestResult().getPythonOutput();
-        double xValue = outputs[0];
-        double yValue = outputs[1];
+        ElapsedTime timeout = new ElapsedTime();
+        timeout.reset();
+        while (calculateIntakePos(outputs[0]+offsetX, outputs[1]+offsetY, (outputs[4]+offsetR)*PI/180) != null && timeout.milliseconds() < 10000) {
+            outputs = limelight.getLatestResult().getPythonOutput();
+            tele.addData("heek", outputs[0]);
+            tele.addData("heek1", outputs[1]);
+            tele.addData("heek5", outputs[5]);
+            tele.addData("heek6", timeout.milliseconds());
+            tele.update();
+        }
+        double[] swivTurExt = {};
+        if (calculateIntakePos(outputs[0]+offsetX, outputs[1]+offsetY, (outputs[4]+offsetR)*PI/180) != null) {
+            swivTurExt = calculateIntakePos(outputs[0]+offsetX, outputs[1]+offsetY, (outputs[4]+offsetR)*PI/180);
+        }else{
+            return new SequentialAction();
+        }
+
        return new SequentialAction(new MacroAction(this,
                new RazState(null, null,
                        null, null,
-                       extendoDetection(xValue,yValue),turretDetection(xValue,yValue),
-                       null, null, null,
+                       swivTurExt[2],swivTurExt[1],
+                       null, swivTurExt[0], null,
                        null, null, null, null,
                        null, null)));
     }
