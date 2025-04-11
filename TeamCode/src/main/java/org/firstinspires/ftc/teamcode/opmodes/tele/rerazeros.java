@@ -148,6 +148,8 @@ public class rerazeros extends OpMode {
         // -2.6 x
         if (swivTurExt == null || notTargeting) swivTurExt = calculateIntakePos(x+1, y-5.9, (r) * PI/180);
 
+
+
         //double[] swivTurExt = calculateIntakePos(x, y, r * PI/180);
         extendo.setPosition(swivTurExt[2]);
         turret.setPosition(swivTurExt[1]);

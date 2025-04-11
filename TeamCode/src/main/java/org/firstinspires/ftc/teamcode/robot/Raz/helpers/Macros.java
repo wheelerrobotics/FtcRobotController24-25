@@ -17,20 +17,26 @@ public class Macros {
             INTAKE_ARM_NEUTRAL, SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, SWEEP_IN,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);
 
+    public static RazState DROP2 = new RazState(null, null, null, null, null,0.25,.25,null, INTAKE_CLAW_OPEN, null, null, null, null, null, null);
+
+    public static RazState DROP = new RazState(null, null, null, null, null,0.25,.25,null, null, null, null, null, null, null, new LinkedState(DROP2,500));
+
     // SPEC PICKUP
     // claw open, arm above samples ⤵
     public static RazState INTAKE_ABOVE_PICKUP = new RazState(null, null, null, null, null,TURRET_MIDDLE,INTAKE_ARM_ABOVE_PICKUP,null, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
     // arm up ⤵ (after this, check for sample)
     public static RazState INTAKE_PICKUP3 = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP,null, null, null, null, null, null, null, null);
     // claw closed ⤵
-    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 400));
+    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 200));
     // arm down ⤵
-    public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, null, null, null, null, null, null, new LinkedState(INTAKE_PICKUP2, 400));
+    public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, INTAKE_CLAW_OPEN, null, null, null, null, null, new LinkedState(INTAKE_PICKUP2, 200));
     // keep sample somewhere before dropping at oz ⤵
     public static RazState INTAKE_STORE = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
     // drop sample (at oz) ⤵
     public static RazState INTAKE_OPEN = new RazState(null, null, null, null, null,null,null,null, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
 
+
+    public static RazState FIRST_MACRO = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,0.5,INTAKE_ARM_ABOVE_PICKUP,0.15, INTAKE_CLAW_OPEN, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT, null, null);
 
     // SPEC DEPOSIT
     // claw open, deposit arm at wall height ⤵

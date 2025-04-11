@@ -311,9 +311,9 @@ public class Razzmatazz extends Meccanum implements Robot {
         double ext = 0.19 * asin(-0.093458 * (x - 2) + 0.85) + 0.67619;
         return new double[]{swiv, tur, ext};
     }
-    public static double offsetX = 5;
-    public static double offsetY = 4;
-    public static double offsetR = 63;
+    public static double offsetX = 1;
+    public static double offsetY = -5.9;
+    public static double offsetR = 22-90;
 
     public Action actionLimelight() {
         double[] outputs = limelight.getLatestResult().getPythonOutput();
