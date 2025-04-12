@@ -33,7 +33,7 @@ public class RazConstants {
 
         //Intake Neutral Pickup
         public static double INTAKE_ARM_NEUTRAL = 0.45;
-        public static double TURRET_NEUTRAL = 0.65;
+        public static double TURRET_NEUTRAL = 0.25;
         public static double SWIVEL_NEUTRAL = 0.2;
 
         //Spec Pickup
@@ -87,7 +87,7 @@ public class RazConstants {
         //extendo
 
         public static double EXTENDO_IN = 0.96;
-        public static double EXTENDO_OUT = .45;
+        public static double EXTENDO_OUT = .55;
         public static double EXTENDO_SPEED = .005;
 
 
@@ -105,9 +105,10 @@ public class RazConstants {
         public static double EXTENDO_TRANSFER = 0.7;
 
         //sweep
-        public static double SWEEP_IN = 0.73;
+        public static double SWEEP_IN = 0.9;
         public static double SWEEP_PART_UP = 0.31;
         public static double SWEEP_DOWN = 0.2;
+
 
         //waits
 
