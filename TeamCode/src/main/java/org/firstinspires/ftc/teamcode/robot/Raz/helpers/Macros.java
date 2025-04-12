@@ -7,10 +7,14 @@ import org.firstinspires.ftc.teamcode.R;
 public class Macros {
 
     public static RazState NONE = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
-    public static RazState START = new RazState(DEPOSIT_SWIVEL_START, DEPOSIT_ARM_SPEC_PICKUP,
+    public static RazState START2 = new RazState(DEPOSIT_SWIVEL_START, DEPOSIT_ARM_SPEC_PICKUP,
             DEPOSIT_CLAW_START, DEPOSIT_WRIST_START, EXTENDO_START, TURRET_START,
             INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);
+    public static RazState START = new RazState(DEPOSIT_SWIVEL_START, DEPOSIT_ARM_SPEC_PICKUP,
+            DEPOSIT_CLAW_START, DEPOSIT_WRIST_START, EXTENDO_START, TURRET_MIDDLE,
+            INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
+            PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, new LinkedState(START2, 1000));
 
     public static RazState AUTO_START = new RazState(DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT-0.06,
             DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, EXTENDO_START, TURRET_NEUTRAL,
@@ -27,7 +31,7 @@ public class Macros {
     // arm up ⤵ (after this, check for sample)
     public static RazState INTAKE_PICKUP3 = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP+.04,null, null, null, null, null, null, null, null);
     // claw closed ⤵
-    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 100));
+    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 200));
     // arm down ⤵
     public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, INTAKE_CLAW_OPEN, null, null, null, null, null, new LinkedState(INTAKE_PICKUP2, 100));
     // keep sample somewhere before dropping at oz ⤵

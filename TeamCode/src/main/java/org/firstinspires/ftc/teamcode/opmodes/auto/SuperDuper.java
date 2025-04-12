@@ -48,7 +48,9 @@ public class SuperDuper extends LinearOpMode {
         //to deposit first specimen
 
         raz.runMacro(START);
-        raz.tick();
+        while (opModeInInit()) {
+            raz.tick();
+        }
 
         waitForStart();
 
@@ -56,10 +58,7 @@ public class SuperDuper extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         new SequentialAction(
-                                raz.actionLimelight(),
-                                raz.actionWait(3000),
-                                raz.actionLimelight(),
-                                raz.actionWait(3000),
+                                raz.actionLimelight(10000),
                                 raz.actionMacro(INTAKE_PICKUP)
                         ),
                         raz.actionTick() ))
