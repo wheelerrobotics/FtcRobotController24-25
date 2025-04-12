@@ -544,12 +544,12 @@ public class Razzmatazz extends Meccanum implements Robot {
         }
 
         public void incrementSwivel(double increment) {
-            //if ( (intakeSwivelPos + increment) > 0.1)
+            if ( ((intakeSwivelPos + increment) > 0)&&((intakeSwivelPos+increment)<1))
                 intakeSwivelPos += increment;
         }
 
         public void incrementTurret(double increment){
-            if (((turretPos + increment)< .75) && ((turretPos + increment) > .25) )
+            if (((turretPos + increment)< .67) && ((turretPos + increment) > .32) )
                 turretPos += increment;
 
         }

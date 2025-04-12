@@ -75,7 +75,7 @@ public class RazTele extends OpMode{
 
         //p1: transfer macro
         if (gamepad1.x  && !lastGamepad1.x) {
-            raz.runMacro(BEFORE_TRANSFER);
+            raz.runMacro(NEW_TRANSFER);
 
         }
 
@@ -83,7 +83,7 @@ public class RazTele extends OpMode{
 
         //p2 transfer macro
         if (gamepad2.y && !lastGamepad2.y) {
-                raz.runMacro(BEFORE_TRANSFER);
+                raz.runMacro(NEW_TRANSFER);
         }
 
         //p2 over pickup
@@ -93,7 +93,7 @@ public class RazTele extends OpMode{
 
 
         //p2: joysticks
-        //p2 Manual swivel control TODO this takes up the space for manual slides control
+        //p2 Manual swivel control
         raz.servosController.incrementSwivel(INTAKE_SWIVEL_SPEED * gamepad2.right_stick_x);
         //p2 Manuel turret control
         raz.servosController.incrementTurret(-gamepad2.left_stick_x*TURRET_SPEED);
@@ -105,7 +105,7 @@ public class RazTele extends OpMode{
 
 
         //p2: dpad
-        //p2 sample and spec open claw TODO it may be confusing that for spec pickup you'll need to let go of bumper to toggle claw
+        //p2 sample and spec open claw
 
         if (gamepad2.dpad_left && !lastGamepad2.dpad_left) {
             if (gamepad2.right_bumper){
@@ -121,9 +121,9 @@ public class RazTele extends OpMode{
                     raz.runMacro(SPEC_DEPOSITED);
             } else {
                 if (gamepad2.left_bumper) {
-                    raz.runMacro(SAMP_DEPOSIT_OPPOSITE);
+                    raz.runMacro(SAMP_DEPOSIT_OPPOSITE);//TODO
                 } else {
-                    raz.runMacro(SAMP_DEPOSIT);
+                    raz.runMacro(NEW_SAMP_DEPOSIT);
                 }
 
             }
@@ -131,9 +131,9 @@ public class RazTele extends OpMode{
         //p2 spec pickup
         if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
             if (gamepad2.right_bumper) {
-                raz.runMacro(SPEC_BEFORE_PICKUP); //TODO: opposite side pickup
+                raz.runMacro(SPEC_BEFORE_PICKUP);
             } else {
-                raz.runMacro(TRANSFER);
+                raz.runMacro(NEW_TRANSFER);
             }
 
         }
@@ -143,7 +143,7 @@ public class RazTele extends OpMode{
                 raz.runMacro(SPEC_PICKUP);
             }else{
                 if (gamepad2.left_bumper) {
-                    raz.runMacro(SLIDES_DOWN_OPPOSITE);
+                    raz.runMacro(SLIDES_DOWN_OPPOSITE);//TODO
 
                 }else {
                     raz.runMacro(SLIDES_DOWN);

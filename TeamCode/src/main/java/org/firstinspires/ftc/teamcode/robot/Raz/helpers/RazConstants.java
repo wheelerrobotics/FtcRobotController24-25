@@ -55,7 +55,7 @@ public class RazConstants {
         public static double DEPOSIT_WRIST_SAMPLE_DEPOSIT = 0.7;
         public static int DEPOSIT_SLIDES_SAMPLE_DEPOSIT = 1000;
 
-        public static double DEPOSIT_ARM_HALFWAY_DEPOSIT = -0.02;
+        public static double DEPOSIT_ARM_HALFWAY_DEPOSIT = .45;
 
         public static double DEPOSIT_ARM_SAMPLE_DEPOSIT_OPPOSITE = -0.05;
         public static double DEPOSIT_SWIVEL_SAMPLE_DEPOSIT_OPPOSITE = 1.01;
@@ -66,7 +66,7 @@ public class RazConstants {
 
         //Sample Pickup
 
-        public static double INTAKE_ARM_ABOVE_PICKUP = .17;
+        public static double INTAKE_ARM_ABOVE_PICKUP = .13;
         public static double INTAKE_ARM_PICKUP = 0.07;
         public static double INTAKE_ARM_UP = .37;
 
@@ -98,7 +98,7 @@ public class RazConstants {
 
         public static double DEPOSIT_SWIVEL_TRANSFER = 1.01;
         public static double DEPOSIT_ARM_TRANSFER = -0.11;
-        public static double DEPOSIT_WRIST_TRANSFER = 0.2;
+        public static double DEPOSIT_WRIST_TRANSFER = 0.8;
         public static double INTAKE_ARM_TRANSFER = 0.99;
         public static double TURRET_TRANSFER = 0.5;
         public static double INTAKE_SWIVEL_TRANSFER = 0.18;
@@ -116,13 +116,13 @@ public class RazConstants {
 
         //Start positions (for servosController)
 
-        public static double DEPOSIT_ARM_START = 0.2;
+        public static double DEPOSIT_ARM_START = 0.3;
         public static double DEPOSIT_SWIVEL_START = DEPOSIT_SWIVEL_SPEC_PICKUP;
         public static double DEPOSIT_CLAW_START = DEPOSIT_CLAW_CLOSED;
         public static double DEPOSIT_WRIST_START = DEPOSIT_WRIST_SPEC_PICKUP;
         public static double EXTENDO_START = EXTENDO_IN;
         public static double TURRET_START = TURRET_MIDDLE;
-        public static double INTAKE_ARM_START = INTAKE_ARM_NEUTRAL;
+        public static double INTAKE_ARM_START = INTAKE_ARM_NEUTRAL-.1;
         public static double INTAKE_SWIVEL_START = INTAKE_SWIVEL_HORIZONTAL;
         public static double INTAKE_CLAW_START = INTAKE_CLAW_CLOSED;
         public static double SWEEP_START = SWEEP_IN;
