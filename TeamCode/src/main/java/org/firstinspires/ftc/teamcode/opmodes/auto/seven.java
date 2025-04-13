@@ -106,8 +106,8 @@ public class seven extends LinearOpMode {
                         PI,  null, new ProfileAccelConstraint(-50, 50));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
-                .splineToLinearHeading(new Pose2d(-1, -29, 0), PI,
-                        null, new ProfileAccelConstraint(-30, 30));
+                .splineToLinearHeading(new Pose2d(-1, -31, 0), PI,
+                        null, new ProfileAccelConstraint(-80, 80));
 
 
         TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh()
@@ -239,14 +239,14 @@ public class seven extends LinearOpMode {
                                 raz.actionMacro(FIRST_MACRO),
                                 raz.actionWait(50),
                                 new ParallelAction(
-                                        raz.actionMacroTimeout(SPEC_DEPOSITED, 1000),
+                                        raz.actionMacroTimeout(SPEC_DEPOSITED, 800),
                                         specimen1
                                 ),
                                 raz.actionLimelight(300),
                                 raz.actionMacro(INTAKE_PICKUP),
                                 raz.actionWait(400),
                                 raz.actionMacro(PRE_DROP),
-                                raz.actionWait(200),
+                                raz.actionWait(400),
                                 // place preload specimen
                                 new ParallelAction(
                                         raz.actionMacroTimeout(DROP,800),
@@ -260,12 +260,12 @@ public class seven extends LinearOpMode {
                                         raz.actionMacroTimeout(SPEC_TO_DEPOSIT, 300),
                                         spec2_1 // get in position to deposit wall specimen 1
                                 ),
-                                raz.actionWait(300),
+                                raz.actionWait(1),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
 
 
                                 new ParallelAction(
-                                        raz.actionMacroTimeout(SWEEP_DOWN,900),
+                                        raz.actionMacroTimeout(SWEEP_DOWN,1100),
                                         beforeSweep1
                                 ),
 
@@ -290,7 +290,7 @@ public class seven extends LinearOpMode {
                                         raz.actionMacroTimeout(SPEC_TO_DEPOSIT, 300),
                                         specimen2 // get in position to deposit wall specimen 1
                                 ),
-                                raz.actionWait(300),
+                                raz.actionWait(100),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
 
 
@@ -301,7 +301,7 @@ public class seven extends LinearOpMode {
 
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
                                 specimen3, // get into position to deposit wall specimen 2
-                                raz.actionWait(200),
+                                raz.actionWait(1),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
 
                                 //   hob.actionWait(200),
@@ -312,7 +312,7 @@ public class seven extends LinearOpMode {
                                 raz.actionWait(300),
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
                                 specimen4,
-                                raz.actionWait(200),
+                                raz.actionWait(1),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
                                 wall4,
                                 raz.actionWait(200),
@@ -323,7 +323,7 @@ public class seven extends LinearOpMode {
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
 
                                 specimen5,
-                                raz.actionWait(200),
+                                raz.actionWait(1),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
 
 
@@ -338,7 +338,7 @@ public class seven extends LinearOpMode {
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
 
                                 specimen6,
-                                raz.actionWait(200),
+                                raz.actionWait(1),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
 
 
