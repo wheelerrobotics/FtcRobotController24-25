@@ -298,20 +298,21 @@ public class Razzmatazz extends Meccanum implements Robot {
         public double offsetr = -65;
 
         public double lloffsetx = 1.5;
-        public double lloffsetmx = 1.04;
+        public double lloffsetmx = 1;
         public double lloffsety = -2.5;
-        public double lloffsetmy = 0.95;
+        public double lloffsetmy = 1.1;
         public double lloffsetr = 0;
 
         public double lloffsetTime = 500;
-        public double lloffsetmTime = 50;
+        public double lloffsetmTime = 70;
 
         public Double[] calculateIntakePos(double x, double y, double r) {
             if (x == 0 && y == 0) return null;
+            double oldy = 0;
             x += offsetx + lloffsetx;
             x *= lloffsetmx;
             y += offsety + lloffsety;
-            y *= lloffsetmy;
+            y *= y<0 ? lloffsetmy : 1;
 
 
             try {
@@ -350,6 +351,8 @@ public class Razzmatazz extends Meccanum implements Robot {
                 tele.addData("llr", outputs[4]);
                 tele.update();
                 swivTurExt = calculateIntakePos(outputs[0], outputs[1], (outputs[4] + offsetr) * PI / 180);
+
+
                 if (swivTurExt != null) {
                     if (!Double.isNaN(swivTurExt[0]) && !Double.isNaN(swivTurExt[1]) && !Double.isNaN(swivTurExt[2])) {
                         bot.runMacro(new RazState(null, null,
@@ -363,6 +366,7 @@ public class Razzmatazz extends Meccanum implements Robot {
                         return true;
                     }
                 }
+
                 return true;
             }else {
                 return false;

@@ -45,9 +45,9 @@ public class Macros {
     // arm up ⤵ (after this, check for sample)
     public static RazState INTAKE_PICKUP3 = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP+.04,null, null, null, null, null, null, null, null);
     // claw closed ⤵
-    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 200));
+    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 150));
     // arm down ⤵
-    public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, INTAKE_CLAW_OPEN, null, null, null, null, null, new LinkedState(INTAKE_PICKUP2, 100));
+    public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, INTAKE_CLAW_OPEN, null, null, null, null, null, new LinkedState(INTAKE_PICKUP2, 250));
     // keep sample somewhere before dropping at oz ⤵
     public static RazState INTAKE_STORE = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
     // drop sample (at oz) ⤵
@@ -183,9 +183,9 @@ public class Macros {
     public static RazState ASCENT = new RazState(null, null, null, null, null,null,null,null, null, null, null, null, null, null, null);
 
     // sweep down ⤵
-    public static RazState SWEEP_DOWN = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,null,null, null, RazConstants.SWEEP_DOWN, null, null, null, null, null);
+    public static RazState SWEEP_DOWN = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,INTAKE_ARM_UP,null, null, RazConstants.SWEEP_DOWN, null, null, null, null, null);
     // sweep up just enough to not hit sample ⤵
-    public static RazState SWEEP_UPISH = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,null,null, null, SWEEP_PART_UP, null, null, null, null, null);
+    public static RazState SWEEP_UPISH = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,INTAKE_ARM_UP,null, null, SWEEP_PART_UP, null, null, null, null, null);
     // sweep in resting position ⤵
     public static RazState SWEEP_UP = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,null,null, null, SWEEP_IN, null, null, null, null, null);
 

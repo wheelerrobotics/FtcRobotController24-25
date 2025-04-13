@@ -30,7 +30,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
 
 @Autonomous
-public class six extends LinearOpMode {
+public class seven extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.
     Razzmatazz raz = null;
     PinpointDrive drive;
@@ -62,15 +62,24 @@ public class six extends LinearOpMode {
                 //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
                 .setReversed(false)
                 .setTangent(PI/4+PI/25)
-                .lineToX(3,
+                .lineToX(3, null, new ProfileAccelConstraint(-80, 80));
+
+        TrajectoryActionBuilder a1_6 = a1_5.endTrajectory().fresh()
+                //         .setTangent(PI)
+                //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
+                //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
+                .setReversed(true)
+                .setTangent(PI/4 + PI/25)
+                .lineToX(35,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
         //first sweep
-        TrajectoryActionBuilder a2 = a1_5.endTrajectory().fresh().setTangent(0)
+        TrajectoryActionBuilder a2 = a1_6.endTrajectory().fresh().setTangent(0)
                 .setReversed(false)
-
-                .splineToLinearHeading(new Pose2d(30,-14,-PI/3),-PI/4)
+                .setTangent(PI+PI/4)
+                .splineToSplineHeading(new Pose2d(23, -10, -PI/3), -PI/3)
+                .splineToLinearHeading(new Pose2d(30,-11, -PI/3),-PI/3)
                 //  .splineToConstantHeading(new Vector2d(25, -10), 0)
                 ;
 
@@ -94,7 +103,7 @@ public class six extends LinearOpMode {
 
         TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
                 .setTangent(-PI/4).splineToLinearHeading(new Pose2d(30, -22, -PI/2+-PI/4),
-                        PI,  null, new ProfileAccelConstraint(-40, 40));
+                        PI,  null, new ProfileAccelConstraint(-50, 50));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
                 .splineToLinearHeading(new Pose2d(-1, -29, 0), PI,
@@ -196,6 +205,7 @@ public class six extends LinearOpMode {
         // preload
         Action specimen1 = a1.build();
         Action drop = a1_5.build();
+        Action spec2_1 = a1_6.build();
         // sweeps
         Action beforeSweep1 = a2.build();
         Action sweep1 = a3.build();
@@ -229,27 +239,36 @@ public class six extends LinearOpMode {
                                 raz.actionMacro(FIRST_MACRO),
                                 raz.actionWait(50),
                                 new ParallelAction(
-                                    raz.actionMacroTimeout(SPEC_DEPOSITED, 1200),
-                                    specimen1
+                                        raz.actionMacroTimeout(SPEC_DEPOSITED, 1000),
+                                        specimen1
                                 ),
-                                raz.actionWait(1000),
-                                raz.actionLimelight(1000),
+                                raz.actionLimelight(300),
                                 raz.actionMacro(INTAKE_PICKUP),
-                                raz.actionWait(300),
+                                raz.actionWait(400),
                                 raz.actionMacro(PRE_DROP),
-                                raz.actionWait(1000),
+                                raz.actionWait(200),
                                 // place preload specimen
                                 new ParallelAction(
-                                raz.actionMacroTimeout(DROP,800),
-                                drop
-                                        ),
+                                        raz.actionMacroTimeout(DROP,800),
+                                        drop
+                                ),
+                                raz.actionMacro(SPEC_BEFORE_PICKUP),
+                                raz.actionWait(100),
+                                raz.actionMacro(SPEC_PICKUP),
+                                raz.actionWait(100),
+                                new ParallelAction(
+                                        raz.actionMacroTimeout(SPEC_TO_DEPOSIT, 300),
+                                        spec2_1 // get in position to deposit wall specimen 1
+                                ),
+                                raz.actionWait(300),
+                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
+
+
                                 new ParallelAction(
                                         raz.actionMacroTimeout(SWEEP_DOWN,900),
                                         beforeSweep1
                                 ),
 
-
-                                raz.actionWait(200),
                                 sweep1,
                                 raz.actionMacro(SWEEP_UPISH),
                                 beforeSweep2,

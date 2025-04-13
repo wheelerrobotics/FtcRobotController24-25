@@ -75,8 +75,8 @@ public class RazConstants {
 
         //Sample Pickup
 
-        public static double INTAKE_ARM_ABOVE_PICKUP = .13;
-        public static double INTAKE_ARM_PICKUP = 0.07;
+        public static double INTAKE_ARM_ABOVE_PICKUP = .10;
+        public static double INTAKE_ARM_PICKUP = 0.06;
         public static double INTAKE_ARM_UP = .37;
 
 
@@ -115,7 +115,7 @@ public class RazConstants {
 
         //sweep
         public static double SWEEP_IN = 0.9;
-        public static double SWEEP_PART_UP = 0.31;
+        public static double SWEEP_PART_UP = 0.34;
         public static double SWEEP_DOWN = 0.2;
 
 
