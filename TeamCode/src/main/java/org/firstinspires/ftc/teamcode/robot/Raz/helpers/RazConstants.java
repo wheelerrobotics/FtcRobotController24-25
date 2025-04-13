@@ -24,9 +24,9 @@ public class RazConstants {
         public static double DEPOSIT_CLAW_CLOSED = .81;
 
         //deposit claw
-        public static double INTAKE_CLAW_OPEN = 0;
-        public static double INTAKE_CLAW_CLOSED = .32;
-        public static double INTAKE_CLAW_ALMOST_CLOSED = .29;
+        public static double INTAKE_CLAW_OPEN = .48;
+        public static double INTAKE_CLAW_CLOSED = .87;
+        public static double INTAKE_CLAW_ALMOST_CLOSED = .55;
 
         //ascent
         public static int ASCENT_MIN = 0;
