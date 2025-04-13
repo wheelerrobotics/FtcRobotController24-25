@@ -40,8 +40,6 @@ public class RazTele extends OpMode{
     // runs on start press
     public void start() {
         // run everything to start positions
-        raz.servosController.teleSetup();
-        raz.servosController.teleSetup();
 
     }
 

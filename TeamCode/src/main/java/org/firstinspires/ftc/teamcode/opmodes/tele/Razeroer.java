@@ -54,8 +54,9 @@ public class Razeroer extends OpMode {
 
         if (sweepON)
             raz.servosController.setSweep(sweep);
-//        if (ptoON)
-//            raz.servosController.setPto(pto);
+        if (ptoON)
+            raz.servosController.setPto(pto);
+
 //        if (pushupON)
 //            raz.servosController.setPushup(pushup);
         raz.tick();
