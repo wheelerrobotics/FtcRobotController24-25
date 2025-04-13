@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.COLLAPSE;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.DROP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.FIRST_MACRO;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.INTAKE_PICKUP;
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.PRE_DROP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED_AUTO;
@@ -216,7 +217,9 @@ public class six extends LinearOpMode {
         Action park = a14.build();
 
         raz.runMacro(AUTO_START);
-        raz.tick();
+        while (opModeInInit()) {
+            raz.tick();
+        }
 
         waitForStart();
 
@@ -225,10 +228,16 @@ public class six extends LinearOpMode {
                         new SequentialAction(
                                 raz.actionMacro(FIRST_MACRO),
                                 raz.actionWait(50),
-                                specimen1,
-                                raz.actionMacro(INTAKE_PICKUP),
+                                new ParallelAction(
+                                    raz.actionMacroTimeout(SPEC_DEPOSITED, 1200),
+                                    specimen1
+                                ),
                                 raz.actionWait(1000),
-                                raz.actionMacro(SPEC_DEPOSITED),
+                                raz.actionLimelight(5000),
+                                raz.actionMacro(INTAKE_PICKUP),
+                                raz.actionWait(300),
+                                raz.actionMacro(PRE_DROP),
+                                raz.actionWait(1000),
                                 // place preload specimen
                                 new ParallelAction(
                                 raz.actionMacroTimeout(DROP,800),

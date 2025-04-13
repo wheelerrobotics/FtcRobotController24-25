@@ -7,6 +7,7 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.SWEE
 import static java.lang.Math.PI;
 import static java.lang.Math.acos;
 import static java.lang.Math.asin;
+import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -35,6 +36,14 @@ import java.util.logging.Logger;
 @TeleOp
 public class rerazeros extends OpMode {
 
+    public static double offsetx = -1;
+    public static double offsety = 0;
+    public static double offsetr = -65;
+
+    public static double lloffsetx = 1;
+    public static double lloffsety = -3.5;
+    public static double lloffsetr = 0;
+
     public static double x = 10;
     public static double y = 2;
     public static double r = 90;
@@ -49,12 +58,11 @@ public class rerazeros extends OpMode {
     public static double turretArmLength = 6;
     double angleOffset = 0.02;
     public double[] calculateIntakePos(double x, double y, double r) {
-        x+=2;
         double theta = acos(y/turretArmLength)+angleOffset;
         double swiv = INTAKE_SWIVEL_HORIZONTAL + (INTAKE_SWIVEL_VERTICAL-INTAKE_SWIVEL_HORIZONTAL)/(PI/2) * (theta-r);
         double tur = (0.227 + (theta * ((0.727-0.227) / 3.14159265)));
         x-=turretArmLength*sin(theta);
-        double ext = 0.19*asin(-0.093458*(x-2)+0.85)+0.67619;
+        double ext = 0.00000229695 * pow(x, 4) + -0.000133257*pow(x, 3) + 0.0019259*pow(x, 2) + -0.026447*x + 0.904197;
         return new double[]{swiv, tur, ext};
     }
     ServoImplEx extendo, turret, intakeArm, diffyLeft, diffyRight, swivel, sweep;
@@ -67,7 +75,7 @@ public class rerazeros extends OpMode {
         l = hardwareMap.get(Limelight3A.class,"limelight");
         //l.setPollRateHz(10);
         tele.setMsTransmissionInterval(11);
-        l.pipelineSwitch(0);
+        l.pipelineSwitch(1);
         l.start();
         peeb = Logger.getLogger("eek");
 
@@ -110,7 +118,7 @@ public class rerazeros extends OpMode {
             tele.addData("ll1", output[1]);
             tele.addData("ll2", output[2]);
             tele.addData("ll3", output[3]);
-            tele.addData("ll4", output[4]);
+            tele.addData("ll4", output[4]*-1);
             tele.addData("ll5", output[5]);
             tele.addData("ll6", output[6]);
             tele.addData("ll7", output[7]);
@@ -146,7 +154,7 @@ public class rerazeros extends OpMode {
         // +53 angle
         // +6.6 y
         // -2.6 x
-        if (swivTurExt == null || notTargeting) swivTurExt = calculateIntakePos(x+1, y-5.9, (r) * PI/180);
+        if (swivTurExt == null || notTargeting) swivTurExt = calculateIntakePos(x+offsetx+lloffsetx, y+offsety+lloffsety, ((r+offsetr)) * PI/180);
 
 
 

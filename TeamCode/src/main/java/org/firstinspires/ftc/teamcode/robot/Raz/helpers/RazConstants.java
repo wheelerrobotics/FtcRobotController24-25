@@ -16,8 +16,17 @@ public class RazConstants {
         public static double SLIDES_KP = 0.05;
         public static double SLIDES_KI = 0;
         public static double SLIDES_KD = 0;
+
+        public static double ASCENT_KP = 0.05;
+        public static double ASCENT_KI = 0;
+        public static double ASCENT_KD = 0;
+
         public static int SLIDES_MIN = 0;
         public static int SLIDES_START = 0;
+
+        // pto
+        public static double PTO_ENGAGED = 0.6;
+        public static double PTO_DISENGAGED = 0.45;
 
         //deposit claw
         public static double DEPOSIT_CLAW_OPEN = .61;
@@ -32,9 +41,9 @@ public class RazConstants {
         public static int ASCENT_MIN = 0;
 
         //Intake Neutral Pickup
-        public static double INTAKE_ARM_NEUTRAL = 0.45;
-        public static double TURRET_NEUTRAL = 0.25;
-        public static double SWIVEL_NEUTRAL = 0.2;
+        public static double INTAKE_ARM_NEUTRAL = 0.25;
+        public static double TURRET_NEUTRAL = 0.19;
+        public static double SWIVEL_NEUTRAL = 0.4;
 
         //Spec Pickup
         public static double DEPOSIT_ARM_SPEC_PICKUP = 0.82;
@@ -122,12 +131,12 @@ public class RazConstants {
         public static double DEPOSIT_CLAW_START = DEPOSIT_CLAW_CLOSED;
         public static double DEPOSIT_WRIST_START = DEPOSIT_WRIST_SPEC_PICKUP;
         public static double EXTENDO_START = EXTENDO_IN;
-        public static double TURRET_START = TURRET_MIDDLE;
-        public static double INTAKE_ARM_START = INTAKE_ARM_NEUTRAL-.1;
-        public static double INTAKE_SWIVEL_START = INTAKE_SWIVEL_HORIZONTAL;
+        public static double TURRET_START = TURRET_NEUTRAL;
+        public static double INTAKE_ARM_START = INTAKE_ARM_NEUTRAL;
+        public static double INTAKE_SWIVEL_START = SWIVEL_NEUTRAL;
         public static double INTAKE_CLAW_START = INTAKE_CLAW_CLOSED;
         public static double SWEEP_START = SWEEP_IN;
-        public static double PTO_START = 0;
+        public static double PTO_START = PTO_DISENGAGED;
         public static double PUSHUP_START = 0;
 
 }
