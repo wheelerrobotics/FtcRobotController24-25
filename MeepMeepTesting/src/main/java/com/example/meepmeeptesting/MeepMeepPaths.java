@@ -36,188 +36,52 @@ public class MeepMeepPaths {
                         .build();
                 DriveShim drive = myBot.getDrive();
 
-                TrajectoryActionBuilder a1 = drive.actionBuilder(new Pose2d(0, 0, 0))
+                TrajectoryActionBuilder s1 = drive.actionBuilder(new Pose2d(0, 0, 0))
                         //   .setTangent(0)
                         // .splineTo(new Vector2d(37,6),0);
-
-                        .setTangent(PI/35)
-                        .lineToX(34,
-                                null, new ProfileAccelConstraint(-80, 80));
-
-                TrajectoryActionBuilder a1_5 = a1.endTrajectory().fresh().setTangent(0)
-                        // .splineToConstantHeading(new Vector2d(-30, -10), 0)
-                        //.splineToConstantHeading(new Vector2d(-15, 29), 0)
-                        //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
-                        .setReversed(false)
-                        .setTangent(PI/4+PI/25)
-                        .lineToX(3, null, new ProfileAccelConstraint(-80, 80));
-
-                TrajectoryActionBuilder a1_6 = a1_5.endTrajectory().fresh()
-                        //         .setTangent(PI)
-                        //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
-                        //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                        .setReversed(true)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(35,
-                                null, new ProfileAccelConstraint(-80, 80));
-
-
-                //first sweep
-                TrajectoryActionBuilder a2 = a1_6.endTrajectory().fresh().setTangent(0)
-                        .setReversed(false)
-                        .setTangent(PI+PI/4)
-                        .splineToSplineHeading(new Pose2d(23, -10, -PI/3), -PI/3)
-                        .splineToLinearHeading(new Pose2d(30,-14, -PI/3),-PI/3)
-                        //  .splineToConstantHeading(new Vector2d(25, -10), 0)
-                        ;
-
-                TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                        .setTangent(PI).splineToLinearHeading(new Pose2d(21, -7, -PI/2+-PI/5.5),
-                                0, null, new ProfileAccelConstraint(-40, 40));
-
-                //second sweep
-                TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                         .setTangent(0)
-                        .splineToLinearHeading(new Pose2d(28, -25, -PI/3), -PI * 5 / 6,  null, new ProfileAccelConstraint(-40, 60));
+                        .lineToX(6,
+                                null, new ProfileAccelConstraint(-80, 80));
 
-                TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
-                        .setTangent(PI).splineToLinearHeading(new Pose2d(24, -19, -PI/2+-PI/6),
-                                0,  null, new ProfileAccelConstraint(-40, 60));
-
-                //third sweep
-                TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
+                TrajectoryActionBuilder s2 = s1.endTrajectory().fresh()
+                        .splineToLinearHeading(new Pose2d(20, -15, PI/2), 0);
+                TrajectoryActionBuilder s4 = s2.endTrajectory().fresh()
                         .setTangent(0)
-                        .splineToLinearHeading(new Pose2d(35, -31, -PI/3), -PI * 4 / 6,  null, new ProfileAccelConstraint(-40, 60));
-
-                TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                        .setTangent(-PI/4).splineToLinearHeading(new Pose2d(30, -22, -PI/2+-PI/4),
-                                PI,  null, new ProfileAccelConstraint(-40, 40));
-
-                TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
-                        .splineToLinearHeading(new Pose2d(-1, -29, 0), PI,
-                                null, new ProfileAccelConstraint(-30, 30));
-
-
-                TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh()
-                        //  .setTangent(PI)
-                        //  .splineToConstantHeading(new Vector2d(-15, -10), PI)
-                        //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
+                        .splineToLinearHeading(new Pose2d(18, -15, PI/2-PI/12), PI,
+                                null, new ProfileAccelConstraint(-80, 80));
+                TrajectoryActionBuilder su = s4.endTrajectory().fresh()
                         .setReversed(true)
-                        .setTangent(PI/4 + PI/50)
-                        .lineToX(35,
+                        .splineTo(new Vector2d(-12, -56), PI,
                                 null, new ProfileAccelConstraint(-80, 80));
-
-
-                // wall specimen 2
-                TrajectoryActionBuilder a6 = a5.endTrajectory().fresh()
-
+                TrajectoryActionBuilder s5 = su.endTrajectory().fresh()
                         .setReversed(false)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(1.5,
-                                null, new ProfileAccelConstraint(-60, 80));
-
-
-
-
-                TrajectoryActionBuilder a7 = a6.endTrajectory().fresh()
-                        //         .setTangent(PI)
-                        //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
-                        //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
+                        .splineTo(new Vector2d(16, -8), PI/4,
+                                null, new ProfileAccelConstraint(-80, 80));
+                TrajectoryActionBuilder su2 = s5.endTrajectory().fresh()
                         .setReversed(true)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(35,
+                        .splineTo(new Vector2d(-12, -56), PI,
                                 null, new ProfileAccelConstraint(-80, 80));
-
-
-                // wall specimen 3
-                TrajectoryActionBuilder a8 = a7.endTrajectory().fresh()
+                TrajectoryActionBuilder s6 = su.endTrajectory().fresh()
                         .setReversed(false)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(1.5,
+                        .splineTo(new Vector2d(16, -8), PI/4,
                                 null, new ProfileAccelConstraint(-80, 80));
-
-                TrajectoryActionBuilder a9 = a8.endTrajectory().fresh()
-                        // .setTangent(PI)
-                        // .splineToConstantHeading(new Vector2d(-15, -10), PI)
-                        // .splineToConstantHeading(new Vector2d(-41, -10), PI);
+                TrajectoryActionBuilder p = s6.endTrajectory().fresh()
                         .setReversed(true)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(35,
-                                null, new ProfileAccelConstraint(-80, 80));
-
-
-                TrajectoryActionBuilder a10 = a9.endTrajectory().fresh().setTangent(0)
-                        // .splineToConstantHeading(new Vector2d(-30, -10), 0)
-                        //.splineToConstantHeading(new Vector2d(-15, 29), 0)
-                        //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
-                        .setReversed(false)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(1.5,
-                                null, new ProfileAccelConstraint(-80, 80));
-
-                TrajectoryActionBuilder a11 = a10.endTrajectory().fresh()
-                        //  .setTangent(PI)
-                        // .splineToConstantHeading(new Vector2d(-15, -10), PI)
-                        // .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                        .setReversed(true)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(35,
-                                null, new ProfileAccelConstraint(-80, 80));
-
-                TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
-                        // .splineToConstantHeading(new Vector2d(-30, -10), 0)
-                        //.splineToConstantHeading(new Vector2d(-15, 29), 0)
-                        //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
-                        .setReversed(false)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(1.5,
-                                null, new ProfileAccelConstraint(-80, 80));
-
-                TrajectoryActionBuilder a13 = a12.endTrajectory().fresh()
-                        //  .setTangent(PI)
-                        // .splineToConstantHeading(new Vector2d(-15, -10), PI)
-                        // .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                        .setReversed(true)
-                        .setTangent(PI/4 + PI/25)
-                        .lineToX(35,
-                                null, new ProfileAccelConstraint(-80, 80));
-
-
-                // park
-                TrajectoryActionBuilder a14 = a13.endTrajectory().fresh()
-                        .setReversed(false)
-                        .setTangent(PI/4+PI/12)
-                        .lineToX(0,
+                        .splineTo(new Vector2d(-12, -56), PI,
                                 null, new ProfileAccelConstraint(-80, 80));
 
                 // preload
-                Action specimen1 = a1.build();
-                Action drop = a1_5.build();
-                Action spec2_1 = a1_6.build();
+                Action sample1 = s1.build();
+                Action sample23 = s2.build();
+                Action sample4 = s4.build();
                 // sweeps
-                Action beforeSweep1 = a2.build();
-                Action sweep1 = a3.build();
-                Action beforeSweep2 = s2.build();
-                Action sweep2 = s3.build();
-                Action beforeSweep3 = s4.build();
-                Action sweep3 = s4_5.build();
-                Action sweep3Align = s4_5_5.build();
+                Action sub = su.build();
+                Action sample5 = s5.build();
+                Action sub2 = su2.build();
+                Action sample6 = s6.build();
+                Action park = p.build();
 
-                Action specimen2 = a5.build();
-                Action wall2 = a6.build();
-                Action specimen3 = a7.build();
-                Action wall3 = a8.build();
-                Action specimen4 = a9.build();
-                Action wall4 = a10.build();
-                Action specimen5 = a11.build();
-                Action wall5 = a12.build();
-                Action specimen6 = a13.build();
-                Action park = a14.build();
-                // preload
-
-                myBot.runAction(new SequentialAction(specimen1, drop, spec2_1, beforeSweep1, sweep1, beforeSweep2, sweep2,
-                        beforeSweep3, sweep3, sweep3Align, specimen2, wall2, specimen3, wall3,
-                        specimen4, wall4,specimen5,wall5, specimen6, park
+                myBot.runAction(new SequentialAction(sample1, sample23, sample4, sub, sample5, sub2, sample6, park
                         ));
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
