@@ -11,6 +11,7 @@ public class RazConstants {
 
 
 
+
         //slides
         public static int SLIDES_MAX = 1000;
         public static double SLIDES_KP = 0.05;
@@ -41,7 +42,7 @@ public class RazConstants {
         public static int ASCENT_MIN = 0;
 
         //Intake Neutral Pickup
-        public static double INTAKE_ARM_NEUTRAL = 0.25;
+        public static double INTAKE_ARM_NEUTRAL = 0.25+.02;
         public static double TURRET_NEUTRAL = 0.19;
         public static double SWIVEL_NEUTRAL = 0.4;
 
@@ -75,9 +76,9 @@ public class RazConstants {
 
         //Sample Pickup
 
-        public static double INTAKE_ARM_ABOVE_PICKUP = .10;
-        public static double INTAKE_ARM_PICKUP = 0.06;
-        public static double INTAKE_ARM_UP = .37;
+        public static double INTAKE_ARM_ABOVE_PICKUP = .15;
+        public static double INTAKE_ARM_PICKUP = 0.06+.02;
+        public static double INTAKE_ARM_UP = .37+.02;
 
 
         //turret
@@ -114,7 +115,7 @@ public class RazConstants {
         public static double EXTENDO_TRANSFER = 0.7;
 
         //sweep
-        public static double SWEEP_IN = 0.9;
+        public static double SWEEP_IN = 0.85;
         public static double SWEEP_PART_UP = 0.34;
         public static double SWEEP_DOWN = 0.2;
 

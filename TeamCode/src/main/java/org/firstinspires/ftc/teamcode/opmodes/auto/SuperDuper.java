@@ -58,7 +58,7 @@ public class SuperDuper extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         new SequentialAction(
-                                raz.actionLimelight(5000),
+                                raz.actionLimelight(300),
                                 raz.actionMacro(INTAKE_PICKUP)
                         ),
                         raz.actionTick() ))

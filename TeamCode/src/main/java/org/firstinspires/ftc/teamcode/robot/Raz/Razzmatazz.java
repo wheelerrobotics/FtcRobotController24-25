@@ -26,6 +26,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.ftccommon.SoundPlayer;
+import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -282,6 +283,63 @@ public class Razzmatazz extends Meccanum implements Robot {
             }
         }
     }
+
+
+    double clturretArmLength = 6;
+    double clangleOffset = 0.02;
+
+    double cloffsetx = -1;
+    double cloffsety = 0;
+    double cloffsetr = -65;
+
+    double cllloffsetx = 1.5;
+    double cllloffsetmx = 1;
+    double cllloffsety = -2.5;
+    double cllloffsetmy = 1.1;
+    public Double[] calculateIntakePosCrunch(double x, double y, double r) {
+
+        if (x == 0 && y == 0) return null;
+        x += cloffsetx + cllloffsetx;
+        x *= cllloffsetmx;
+        y += cloffsety + cllloffsety;
+        y *= y<0 ? cllloffsetmy : 1;
+
+
+        try {
+            double theta = acos(y/clturretArmLength)+clangleOffset;
+            double swiv = INTAKE_SWIVEL_HORIZONTAL + (INTAKE_SWIVEL_VERTICAL-INTAKE_SWIVEL_HORIZONTAL)/(PI/2) * (theta-r);
+            double tur = (0.227 + (theta * ((0.727-0.227) / 3.14159265)));
+            x-=clturretArmLength*sin(theta);
+            double ext = 0.00000229695 * pow(x, 4) + -0.000133257*pow(x, 3) + 0.0019259*pow(x, 2) + -0.026447*x + 0.904197;
+            return new Double[]{swiv, tur, ext};
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public void crunchLimelight() {
+        Double[] swivTurExt;
+        double[] outputs;
+        LLResult result = limelight.getLatestResult();
+        if (result == null) return;
+        outputs = limelight.getLatestResult().getPythonOutput();
+        tele.addData("llPoses", Arrays.toString(calculateIntakePosCrunch(outputs[0], outputs[1], (outputs[4] + cloffsetr) * PI / 180)));
+        tele.addData("llx", outputs[0]);
+        tele.addData("lly", outputs[1]);
+        tele.addData("llr", outputs[4]);
+        tele.update();
+        swivTurExt = calculateIntakePosCrunch(outputs[0], outputs[1], (outputs[4] + cloffsetr) * PI / 180);
+        if (swivTurExt != null) {
+            if (!Double.isNaN(swivTurExt[0]) && !Double.isNaN(swivTurExt[1]) && !Double.isNaN(swivTurExt[2])) {
+                runMacro(new RazState(null, null,
+                        null, null,
+                        swivTurExt[2], swivTurExt[1],
+                        INTAKE_ARM_ABOVE_PICKUP, swivTurExt[0], INTAKE_CLAW_OPEN,
+                        SWEEP_IN, null, null, null,
+                        null, null));
+            }
+        }
+
+    }
     public class LimelightAction implements Action {
         Razzmatazz bot = null;
         RazState macro = null;
@@ -326,7 +384,6 @@ public class Razzmatazz extends Meccanum implements Robot {
                 return null;
             }
         }
-
         public LimelightAction(Razzmatazz h, int millis) {
             bot = h;
             et = new ElapsedTime();
@@ -594,6 +651,7 @@ public class Razzmatazz extends Meccanum implements Robot {
         public void incrementTurret(double increment){
             if (((turretPos + increment)< .67) && ((turretPos + increment) > .32) )
                 turretPos += increment;
+            if ((turretPos > .67 && increment < 0) || (turretPos < .32 && increment > 0)) turretPos += increment;
 
         }
 
