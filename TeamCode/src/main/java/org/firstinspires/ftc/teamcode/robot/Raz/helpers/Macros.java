@@ -189,7 +189,7 @@ public class Macros {
     // sweep down ⤵
     public static RazState SWEEP_DOWN = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,INTAKE_ARM_UP,null, null, RazConstants.SWEEP_DOWN, null, null, null, null, null);
     // sweep up just enough to not hit sample ⤵
-    public static RazState SWEEP_UPISH = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,INTAKE_ARM_UP,null, null, SWEEP_PART_UP, null, null, null, null, null);
+    public static RazState SWEEP_UPISH = new RazState(null, null, null, null, EXTENDO_HALF,TURRET_MIDDLE,INTAKE_ARM_UP,null, null, SWEEP_PART_UP, null, null, null, null, null);
     // sweep in resting position ⤵
     public static RazState SWEEP_UP = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,null,null, null, SWEEP_IN, null, null, null, null, null);
 

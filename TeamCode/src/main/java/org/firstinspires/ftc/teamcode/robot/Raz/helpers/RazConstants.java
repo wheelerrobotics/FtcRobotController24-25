@@ -47,7 +47,7 @@ public class RazConstants {
         public static double SWIVEL_NEUTRAL = 0.4;
 
         //Spec Pickup
-        public static double DEPOSIT_ARM_SPEC_PICKUP = 0.82;
+        public static double DEPOSIT_ARM_SPEC_PICKUP = 0.83;
         public static double DEPOSIT_SWIVEL_SPEC_PICKUP = 1.21;
         public static double DEPOSIT_WRIST_SPEC_PICKUP = 0.77;
 
@@ -76,7 +76,7 @@ public class RazConstants {
 
         //Sample Pickup
 
-        public static double INTAKE_ARM_ABOVE_PICKUP = .15;
+        public static double INTAKE_ARM_ABOVE_PICKUP = .135;
         public static double INTAKE_ARM_PICKUP = 0.06+.02;
         public static double INTAKE_ARM_UP = .37+.02;
 
@@ -99,6 +99,7 @@ public class RazConstants {
         public static double EXTENDO_IN = 0.96;
         public static double EXTENDO_OUT = .55;
         public static double EXTENDO_SPEED = .005;
+        public static double EXTENDO_HALF = 0.7;
 
 
 
@@ -117,7 +118,7 @@ public class RazConstants {
         //sweep
         public static double SWEEP_IN = 0.85;
         public static double SWEEP_PART_UP = 0.34;
-        public static double SWEEP_DOWN = 0.2;
+        public static double SWEEP_DOWN = 0.21;
 
 
         //waits
