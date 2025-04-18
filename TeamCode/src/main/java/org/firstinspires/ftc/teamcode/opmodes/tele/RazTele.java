@@ -8,10 +8,12 @@ import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.*;
 import static java.lang.Math.PI;
 import static java.lang.Math.atan2;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazState;
@@ -20,12 +22,12 @@ import org.firstinspires.ftc.teamcode.robot.Raz.helpers.LinkedState;
 import java.util.Deque;
 import java.util.LinkedList;
 
-@TeleOp(name = "(RUN THIS) - Tele Op")
-public class RazTele extends OpMode{
-
+public abstract class RazTele extends OpMode{
+    public boolean LIMELIGHT_SPECS = true;
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
     Razzmatazz raz = null;
+    abstract public void runPipelineSwitch(boolean specs_on);
 
 
     @Override
@@ -40,7 +42,7 @@ public class RazTele extends OpMode{
     // runs on start press
     public void start() {
         // run everything to start positions
-
+        raz.runMacro(TELE_START);
     }
 
     @Override
@@ -79,13 +81,24 @@ public class RazTele extends OpMode{
         if (gamepad1.b && !lastGamepad1.b){
             raz.runMacro(EXTENDO_OUT_PICKUP);
         }
+        if (gamepad1.dpad_up && !lastGamepad1.dpad_up){
+            raz.runMacro(INTAKE_ARM_HALF_DOWN);
+        }
+        if (gamepad1.dpad_down && !lastGamepad1.dpad_down){
+            raz.runMacro(INTAKE_ARM_DOWN);
+        }
 
         //p1: transfer macro
         if (gamepad1.x  && !lastGamepad1.x) {
-            raz.runMacro(NEW_TRANSFER);
+            raz.crunchLimelight();
 
         }
-
+        if (gamepad2.guide && !lastGamepad2.guide) {
+            raz.slidesController.setRezero(true);
+        }
+        if (!gamepad2.guide && lastGamepad2.guide) {
+            raz.slidesController.setRezero(false);
+        }
 
 
         //p2 transfer macro
@@ -125,6 +138,9 @@ public class RazTele extends OpMode{
         //p2 deposits
         if (gamepad2.a && !lastGamepad2.a) {
             raz.crunchLimelight();
+        }
+        if (gamepad1.y && !lastGamepad1.y) {
+            raz.runMacro(EXTENDO_OUT_PICKUP_TWIST);
         }
         if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
             if (!gamepad2.right_bumper){

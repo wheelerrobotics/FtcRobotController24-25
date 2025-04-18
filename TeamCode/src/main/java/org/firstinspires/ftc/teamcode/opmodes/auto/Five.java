@@ -2,10 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.AUTO_START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.COLLAPSE;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.DROP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.FIRST_MACRO;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.INTAKE_PICKUP;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.PRE_DROP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFORE_PICKUP;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED_AUTO;
@@ -24,15 +21,13 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
 
-@Autonomous
-@Disabled
-public class seven extends LinearOpMode {
+@Autonomous (name = "Five Spec")
+public class Five extends LinearOpMode {
     // 1+3 specimen, some vals need to be adjusted.
     Razzmatazz raz = null;
     PinpointDrive drive;
@@ -58,42 +53,28 @@ public class seven extends LinearOpMode {
                 .lineToX(34,
                         null, new ProfileAccelConstraint(-80, 80));
 
-        TrajectoryActionBuilder a1_5 = a1.endTrajectory().fresh().setTangent(0)
-                // .splineToConstantHeading(new Vector2d(-30, -10), 0)
-                //.splineToConstantHeading(new Vector2d(-15, 29), 0)
-                //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
-                .setReversed(false)
-                .setTangent(PI/4+PI/25)
-                .lineToX(3, null, new ProfileAccelConstraint(-80, 80));
-
-        TrajectoryActionBuilder a1_6 = a1_5.endTrajectory().fresh()
-                //         .setTangent(PI)
-                //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
-                //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
-                        null, new ProfileAccelConstraint(-80, 80));
 
 
         //first sweep
-        TrajectoryActionBuilder a2 = a1_6.endTrajectory().fresh().setTangent(0)
+        TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
                 .setReversed(false)
                 .setTangent(PI+PI/4)
-                .splineToSplineHeading(new Pose2d(23, -10, -PI/3), -PI/3)
-                .splineToLinearHeading(new Pose2d(30,-11, -PI/3),-PI/3)
+                .splineToSplineHeading(new Pose2d(23, -14, -PI/3), -PI/3,
+                        null, new ProfileAccelConstraint(-40, 40))
+                .splineToLinearHeading(new Pose2d(30,-12, -PI/3),-PI/3,
+                        null, new ProfileAccelConstraint(-80, 30))
                 //  .splineToConstantHeading(new Vector2d(25, -10), 0)
                 ;
 
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
                 .setTangent(PI).splineToLinearHeading(new Pose2d(21, -7, -PI/2+-PI/5.5),
-                        0, null, new ProfileAccelConstraint(-40, 40));
+                        0, null, new ProfileAccelConstraint(-80, 30));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
                 .setTangent(0)
                 .splineToLinearHeading(new Pose2d(28, -25, -PI/3), -PI * 5 / 6,
-                        null, new ProfileAccelConstraint(-40, 60));
+                        null, new ProfileAccelConstraint(-80, 30));
 
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
                 .setTangent(PI).splineToLinearHeading(new Pose2d(24, -19, -PI/2+-PI/6),
@@ -102,35 +83,34 @@ public class seven extends LinearOpMode {
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(35, -31, -PI/3),
-                        -PI * 4 / 6,  null, new ProfileAccelConstraint(-40, 60));
+                .splineToLinearHeading(new Pose2d(29, -31, -PI/3), -PI * 4 / 6,  null, new ProfileAccelConstraint(-40, 30));
 
         TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                .setTangent(-PI/4).splineToLinearHeading(new Pose2d(30, -22, -PI/2+-PI/4),
+                .setTangent(-PI/4).splineToLinearHeading(new Pose2d(24, -22, -PI/2+-PI/4),
                         PI,  null, new ProfileAccelConstraint(-50, 50));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
                 .splineToLinearHeading(new Pose2d(-1, -31, 0), PI,
-                        null, new ProfileAccelConstraint(-80, 80));
+                        null, new ProfileAccelConstraint(-30, 80));
 
 
         TrajectoryActionBuilder a5 = s4_5_5.endTrajectory().fresh()
                 //  .setTangent(PI)
                 //  .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
-                .setReversed(true)
+                .setReversed(false)
                 .setTangent(PI/4 + PI/50)
-                .lineToX(35,
+                .lineToX(37,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
         // wall specimen 2
         TrajectoryActionBuilder a6 = a5.endTrajectory().fresh()
 
-                .setReversed(false)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(1.5,
-                        null, new ProfileAccelConstraint(-60, 80));
+                .setReversed(true)
+                .splineTo(new Vector2d(-1,-31),PI,
+                        null, new ProfileAccelConstraint(-30, 80))
+                ;
 
 
 
@@ -139,26 +119,26 @@ public class seven extends LinearOpMode {
                 //         .setTangent(PI)
                 //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setReversed(false)
+                .setTangent(PI/4 + PI/50)
+                .lineToX(36,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
         // wall specimen 3
         TrajectoryActionBuilder a8 = a7.endTrajectory().fresh()
-                .setReversed(false)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(1.5,
-                        null, new ProfileAccelConstraint(-80, 80));
+                .setReversed(true)
+                .splineTo(new Vector2d(-1,-31),PI,
+                        null, new ProfileAccelConstraint(-30, 80))
+                ;
 
         TrajectoryActionBuilder a9 = a8.endTrajectory().fresh()
                 // .setTangent(PI)
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setReversed(false)
+                .setTangent(PI/4 + PI/50)
+                .lineToX(36,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
@@ -166,50 +146,45 @@ public class seven extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-30, -10), 0)
                 //.splineToConstantHeading(new Vector2d(-15, 29), 0)
                 //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
-                .setReversed(false)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(1.5,
-                        null, new ProfileAccelConstraint(-80, 80));
+                .setReversed(true)
+                .splineTo(new Vector2d(-1,-31),PI,
+                        null, new ProfileAccelConstraint(-30, 80))
+                ;
 
         TrajectoryActionBuilder a11 = a10.endTrajectory().fresh()
                 //  .setTangent(PI)
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setReversed(false)
+                .setTangent(PI/4 + PI/50)
+                .lineToX(36,
                         null, new ProfileAccelConstraint(-80, 80));
 
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
-                // .splineToConstantHeading(new Vector2d(-30, -10), 0)
-                //.splineToConstantHeading(new Vector2d(-15, 29), 0)
-                //.lineToX(0,null, new ProfileAccelConstraint(-10, 10));
-                .setReversed(false)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(1.5,
-                        null, new ProfileAccelConstraint(-80, 80));
+                .setReversed(true)
+                .splineTo(new Vector2d(-1,-31),PI,
+                        null, new ProfileAccelConstraint(-30, 80))
+                ;
 
         TrajectoryActionBuilder a13 = a12.endTrajectory().fresh()
                 //  .setTangent(PI)
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
-                .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setReversed(false)
+                .setTangent(PI/4 + PI/50)
+                .lineToX(36,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
         // park
         TrajectoryActionBuilder a14 = a13.endTrajectory().fresh()
-                .setReversed(false)
-                .setTangent(PI/4+PI/12)
-                .lineToX(0,
-                        null, new ProfileAccelConstraint(-80, 80));
+                .setReversed(true)
+                .splineTo(new Vector2d(-1,-31),PI,
+                        null, new ProfileAccelConstraint(-80, 80))
+                ;
 
         // preload
         Action specimen1 = a1.build();
-        Action drop = a1_5.build();
-        Action spec2_1 = a1_6.build();
         // sweeps
         Action beforeSweep1 = a2.build();
         Action sweep1 = a3.build();
@@ -226,8 +201,6 @@ public class seven extends LinearOpMode {
         Action specimen4 = a9.build();
         Action wall4 = a10.build();
         Action specimen5 = a11.build();
-        Action wall5 = a12.build();
-        Action specimen6 = a13.build();
         Action park = a14.build();
 
         raz.runMacro(AUTO_START);
@@ -243,49 +216,30 @@ public class seven extends LinearOpMode {
                                 raz.actionMacro(FIRST_MACRO),
                                 raz.actionWait(50),
                                 new ParallelAction(
-                                        raz.actionMacroTimeout(SPEC_DEPOSITED, 800),
+                                        raz.actionMacroTimeout(SPEC_DEPOSITED, 1000),
                                         specimen1
                                 ),
-                                raz.actionLimelight(300),
-                                raz.actionMacro(INTAKE_PICKUP),
-                                raz.actionWait(400),
-                                raz.actionMacro(PRE_DROP),
-                                raz.actionWait(400),
-                                // place preload specimen
-                                new ParallelAction(
-                                        raz.actionMacroTimeout(DROP,1100),
-                                        drop
-                                ),
-                                raz.actionMacro(SPEC_BEFORE_PICKUP),
-                                raz.actionWait(100),
-                                raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(100),
-                                new ParallelAction(
-                                        raz.actionMacroTimeout(SPEC_TO_DEPOSIT, 300),
-                                        spec2_1 // get in position to deposit wall specimen 1
-                                ),
-                                raz.actionWait(1),
-                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
-
 
                                 new ParallelAction(
                                         raz.actionMacroTimeout(SWEEP_DOWN,1100),
                                         beforeSweep1
                                 ),
 
+                                raz.actionWait(500),
                                 sweep1,
                                 raz.actionMacro(SWEEP_UPISH),
                                 beforeSweep2,
                                 raz.actionMacro(SWEEP_DOWN),
-                                raz.actionWait(100),
+                                raz.actionWait(500),
                                 sweep2,
                                 raz.actionMacro(SWEEP_UPISH),
                                 beforeSweep3,
                                 raz.actionMacro(SWEEP_DOWN),
-                                raz.actionWait(100),
+                                raz.actionWait(500),
                                 sweep3,
                                 raz.actionMacro(COLLAPSE),
                                 sweep3Align,
+
                                 raz.actionMacro(SPEC_BEFORE_PICKUP),
                                 raz.actionWait(100),
                                 raz.actionMacro(SPEC_PICKUP),
@@ -299,52 +253,36 @@ public class seven extends LinearOpMode {
 
 
                                 wall2, // get into position to pick up wall specimen 2
-                                raz.actionWait(200),
+                                //   raz.actionWait(400),
                                 raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(300),
+                                raz.actionWait(150),
 
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
                                 specimen3, // get into position to deposit wall specimen 2
-                                raz.actionWait(200),
+                                raz.actionWait(150),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
 
                                 //   hob.actionWait(200),
                                 wall3,
-                                raz.actionWait(200),
+                                //    raz.actionWait(300),
                                 // get into position to pick up wall specimen 3
                                 raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(300),
+                                raz.actionWait(150),
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
                                 specimen4,
-                                raz.actionWait(200),
+                                raz.actionWait(150),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
                                 wall4,
-                                raz.actionWait(200),
+                                //    raz.actionWait(300),
                                 // get into position to pick up wall specimen 2
 
                                 raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(300),
+                                raz.actionWait(150),
                                 raz.actionMacro(SPEC_TO_DEPOSIT),
 
                                 specimen5,
-                                raz.actionWait(200),
+                                //  raz.actionWait(300),
                                 raz.actionMacro(SPEC_DEPOSITED_AUTO),
-
-
-                                raz.actionWait(300),
-                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
-                                wall5,
-                                raz.actionWait(200),
-                                // get into position to pick up wall specimen 2
-
-                                raz.actionMacro(SPEC_PICKUP),
-                                raz.actionWait(300),
-                                raz.actionMacro(SPEC_TO_DEPOSIT),
-
-                                specimen6,
-                                raz.actionWait(1),
-                                raz.actionMacro(SPEC_DEPOSITED_AUTO),
-
 
 
                                 park

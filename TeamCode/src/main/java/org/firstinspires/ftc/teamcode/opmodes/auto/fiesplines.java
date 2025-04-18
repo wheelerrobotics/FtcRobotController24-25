@@ -2,11 +2,14 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.AUTO_START;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.COLLAPSE;
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.COLLAPSE_align;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.FIRST_MACRO;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFORE_PICKUP;
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_BEFORE_PICKUP_align;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_DEPOSITED_AUTO;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_PICKUP;
+import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_PICKUP_align;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SPEC_TO_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SWEEP_DOWN;
 import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.SWEEP_UPISH;
@@ -57,37 +60,45 @@ public class fiesplines extends LinearOpMode {
 
         //first sweep
         TrajectoryActionBuilder a2 = a1.endTrajectory().fresh().setTangent(0)
-                .setReversed(false)
+                .setReversed(true)
                 .setTangent(PI+PI/4)
-                .splineToSplineHeading(new Pose2d(23, -14, -PI/3), -PI/3,
-                        null, new ProfileAccelConstraint(-40, 40))
-                .splineToLinearHeading(new Pose2d(30,-12, -PI/3),-PI/3,
-                        null, new ProfileAccelConstraint(-80, 30))
+                .splineToSplineHeading(new Pose2d(22, -10, -PI/4), -PI/4
+                        , null, new ProfileAccelConstraint(-80, 80))
+                .splineToLinearHeading(new Pose2d(28,-11, -PI/4),-PI/4
+                        , null, new ProfileAccelConstraint(-80, 80))
                 //  .splineToConstantHeading(new Vector2d(25, -10), 0)
                 ;
 
         TrajectoryActionBuilder a3 = a2.endTrajectory().fresh()
-                .setTangent(PI).splineToLinearHeading(new Pose2d(21, -7, -PI/2+-PI/5.5),
-                        0, null, new ProfileAccelConstraint(-80, 30));
+                .setTangent(PI)
+
+                .splineToLinearHeading(new Pose2d(23, -8, -PI/2-PI/4),
+                        -PI/2-PI/4-PI/2, null, new ProfileAccelConstraint(-40, 40));
 
         //second sweep
         TrajectoryActionBuilder s2 = a3.endTrajectory().fresh()
-                .setTangent(0)
-                .splineToLinearHeading(new Pose2d(28, -25, -PI/3), -PI * 5 / 6,
-                        null, new ProfileAccelConstraint(-80, 30));
+                .setTangent(-PI/4)
+                .splineToLinearHeading(new Pose2d(26, -20, -PI/3.5), -PI/3.5,
+                        null,
+                        new ProfileAccelConstraint(-40, 60));
 
         TrajectoryActionBuilder s3 = s2.endTrajectory().fresh()
-                .setTangent(PI).splineToLinearHeading(new Pose2d(24, -19, -PI/2+-PI/6),
-                        0,  null, new ProfileAccelConstraint(-40, 60));
+                .setTangent(PI)
+
+                .splineToLinearHeading(new Pose2d(21, -17, -PI/2-PI/4),
+                        -PI/2-PI/4-PI/2,  null, new ProfileAccelConstraint(-40, 60));
 
         //third sweep
         TrajectoryActionBuilder s4 = s3.endTrajectory().fresh()
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(29, -31, -PI/3), -PI * 4 / 6,  null, new ProfileAccelConstraint(-40, 30));
+                .splineToLinearHeading(new Pose2d(25, -34.5, -PI/3.5), -PI/3.5,
+                        null, new ProfileAccelConstraint(-40, 60));
 
         TrajectoryActionBuilder s4_5 = s4.endTrajectory().fresh()
-                .setTangent(-PI/4).splineToLinearHeading(new Pose2d(24, -22, -PI/2+-PI/4),
-                        PI,  null, new ProfileAccelConstraint(-50, 50));
+                .setTangent(-PI/2-PI/4-PI/2)
+
+                .splineToLinearHeading(new Pose2d(20, -26, -PI/2-PI/4),
+                        -PI/2-PI/4-PI/2,  null, new ProfileAccelConstraint(-50, 50));
 
         TrajectoryActionBuilder s4_5_5 = s4_5.endTrajectory().fresh()
                 .splineToLinearHeading(new Pose2d(-1, -31, 0), PI,
@@ -99,8 +110,8 @@ public class fiesplines extends LinearOpMode {
                 //  .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //  .splineToConstantHeading(new Vector2d(-44, -10), PI);
                 .setReversed(true)
-                .setTangent(PI/4 + PI/50)
-                .lineToX(36,
+                .setTangent(PI/4 + PI/55)
+                .lineToX(39,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
@@ -120,8 +131,8 @@ public class fiesplines extends LinearOpMode {
                 //         .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 //         .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setTangent(PI/4 + PI/50)
+                .lineToX(38,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
@@ -137,8 +148,8 @@ public class fiesplines extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setTangent(PI/4 + PI/50)
+                .lineToX(38,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
@@ -156,8 +167,8 @@ public class fiesplines extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setTangent(PI/4 + PI/50)
+                .lineToX(38,
                         null, new ProfileAccelConstraint(-80, 80));
 
         TrajectoryActionBuilder a12 = a11.endTrajectory().fresh().setTangent(0)
@@ -171,18 +182,17 @@ public class fiesplines extends LinearOpMode {
                 // .splineToConstantHeading(new Vector2d(-15, -10), PI)
                 // .splineToConstantHeading(new Vector2d(-41, -10), PI);
                 .setReversed(true)
-                .setTangent(PI/4 + PI/25)
-                .lineToX(35,
+                .setTangent(PI/4 + PI/50)
+                .lineToX(38,
                         null, new ProfileAccelConstraint(-80, 80));
 
 
         // park
         TrajectoryActionBuilder a14 = a13.endTrajectory().fresh()
-                .setReversed(false)
-                .setTangent(PI/4+PI/12)
-                .lineToX(0,
-                        null, new ProfileAccelConstraint(-80, 80));
-
+                .setReversed(true)
+                .splineTo(new Vector2d(3,-31),PI,
+                        null, new ProfileAccelConstraint(-80, 80))
+                ;
         // preload
         Action specimen1 = a1.build();
         // sweeps

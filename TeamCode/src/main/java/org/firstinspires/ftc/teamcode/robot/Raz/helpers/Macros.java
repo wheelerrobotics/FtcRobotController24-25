@@ -17,7 +17,7 @@ public class Macros {
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, new LinkedState(START2, 1000));
 
 
-    public static RazState AUTO_START3 = new RazState(DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT-0.06,
+    public static RazState AUTO_START3 = new RazState(DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT-0.15,
             DEPOSIT_CLAW_CLOSED, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, EXTENDO_START, TURRET_NEUTRAL,
             INTAKE_ARM_NEUTRAL, SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, SWEEP_IN,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);
@@ -45,9 +45,9 @@ public class Macros {
 
     public static RazState INTAKE_ABOVE_PICKUP = new RazState(null, null, null, null, null,TURRET_MIDDLE,null,null, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, new LinkedState(INTAKE_ABOVE_PICKUP2,200));
     // arm up ⤵ (after this, check for sample)
-    public static RazState INTAKE_PICKUP3 = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP+.04,null, null, null, null, null, null, null, null);
+    public static RazState INTAKE_PICKUP3 = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP,null, null, null, null, null, null, null, null);
     // claw closed ⤵
-    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 150));
+    public static RazState INTAKE_PICKUP2 = new RazState(null, null, null, null, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, null, null, new LinkedState(INTAKE_PICKUP3, 200));
     // arm down ⤵
     public static RazState INTAKE_PICKUP = new RazState(null, null, null, null, null,null,INTAKE_ARM_PICKUP,null, INTAKE_CLAW_OPEN, null, null, null, null, null, new LinkedState(INTAKE_PICKUP2, 250));
     // keep sample somewhere before dropping at oz ⤵
@@ -55,8 +55,12 @@ public class Macros {
     // drop sample (at oz) ⤵
     public static RazState INTAKE_OPEN = new RazState(null, null, null, null, null,null,null,null, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
 
+    public static RazState INTAKE_ARM_DOWN = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP,null, null, null, null, null, null, null, null);
+    public static RazState INTAKE_ARM_HALF_DOWN = new RazState(null, null, null, null, null,null,INTAKE_ARM_ABOVE_PICKUP+0.04,null, null, null, null, null, null, null, null);
+
 
     public static RazState FIRST_MACRO = new RazState(DEPOSIT_SWIVEL_SPEC_BEFORE_DEPOSIT, DEPOSIT_ARM_SPEC_BEFORE_DEPOSIT, null, DEPOSIT_WRIST_SPEC_BEFORE_DEPOSIT, null,null,null,null, INTAKE_CLAW_CLOSED, null, null, null, DEPOSIT_SLIDES_SPEC_BEFORE_DEPOSIT+20, null, null);
+    public static RazState SPEC_BEFORE_PICKUP_align = new RazState(DEPOSIT_SWIVEL_SPEC_PICKUP, DEPOSIT_ARM_SPEC_PICKUP, RazConstants.DEPOSIT_CLAW_OPEN, DEPOSIT_WRIST_SPEC_PICKUP, .7,TURRET_NEUTRAL,INTAKE_ARM_NEUTRAL,SWIVEL_NEUTRAL, INTAKE_CLAW_CLOSED, null, null, null, 0, null, null);
 
     // SPEC DEPOSIT
     // claw open, deposit arm at wall height ⤵
@@ -66,6 +70,7 @@ public class Macros {
     // pickup sample, check that the claw actually closed around a spec ⤵
 
     public static RazState SPEC_CLOSE_CLAW2 = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, 140, null, null);
+    public static RazState SPEC_PICKUP_align = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, EXTENDO_IN,null,null,null, null, null, null, null, 0, null, new LinkedState(SPEC_CLOSE_CLAW2, 200));
 
     // pickup sample, check that the claw actually closed around a spec ⤵
     public static RazState SPEC_PICKUP = new RazState(null, null, DEPOSIT_CLAW_CLOSED, null, null,null,null,null, null, null, null, null, 0, null, new LinkedState(SPEC_CLOSE_CLAW2, 200));
@@ -81,7 +86,9 @@ public class Macros {
 
     // SAMPLE STUFF
     // intake to before transfer position ⤵
-    public static RazState EXTENDO_OUT_PICKUP = new RazState(null, null, null, null, 0.7,TURRET_MIDDLE,INTAKE_ARM_ABOVE_PICKUP,INTAKE_SWIVEL_HORIZONTAL, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
+    public static RazState EXTENDO_OUT_PICKUP = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,INTAKE_ARM_ABOVE_PICKUP,INTAKE_SWIVEL_HORIZONTAL, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
+
+    public static RazState EXTENDO_OUT_PICKUP_TWIST = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,INTAKE_ARM_ABOVE_PICKUP,INTAKE_SWIVEL_VERTICAL, RazConstants.INTAKE_CLAW_OPEN, null, null, null, null, null, null);
 
     // intake to before transfer position ⤵
     public static RazState INTAKE_BEFORE_TRANSFER = new RazState(null, null, null, null, EXTENDO_TRANSFER,TURRET_TRANSFER,INTAKE_ARM_TRANSFER,INTAKE_SWIVEL_TRANSFER, INTAKE_CLAW_CLOSED, null, null, null, null, null, null);
@@ -99,28 +106,28 @@ public class Macros {
 
 
 
-    public static RazState NEW_SAMP_DEPOSIT3 = new RazState(null, .6,
+    public static RazState NEW_SAMP_DEPOSIT3 = new RazState(null, .52,
             RazConstants.DEPOSIT_CLAW_CLOSED, .4, EXTENDO_IN, TURRET_NEUTRAL,
             INTAKE_ARM_NEUTRAL, SWIVEL_NEUTRAL, INTAKE_CLAW_OPEN, RazConstants.SWEEP_IN,
-            PTO_START, PUSHUP_START,DEPOSIT_SLIDES_SAMPLE_DEPOSIT , ASCENT_MIN, null);
+            PTO_START, PUSHUP_START,DEPOSIT_SLIDES_SAMPLE_DEPOSIT+300 , ASCENT_MIN, null);
 
     public static RazState NEW_SAMP_DEPOSIT2 = new RazState(null, .45,
             RazConstants.DEPOSIT_CLAW_CLOSED, .8, EXTENDO_IN, .999,
     .53, .13, INTAKE_CLAW_OPEN, RazConstants.SWEEP_IN,
-            PTO_START, PUSHUP_START,DEPOSIT_SLIDES_SAMPLE_DEPOSIT , ASCENT_MIN, new LinkedState(NEW_SAMP_DEPOSIT3,1000));
+            PTO_START, PUSHUP_START,DEPOSIT_SLIDES_SAMPLE_DEPOSIT+300 , ASCENT_MIN, new LinkedState(NEW_SAMP_DEPOSIT3,1000));
     public static RazState NEW_SAMP_DEPOSIT = new RazState(null, .21,
             RazConstants.DEPOSIT_CLAW_CLOSED, .8, EXTENDO_IN, .9999,
-            .51, .13, INTAKE_CLAW_OPEN, RazConstants.SWEEP_IN,
+            .52, .13, INTAKE_CLAW_OPEN, RazConstants.SWEEP_IN,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, new LinkedState(NEW_SAMP_DEPOSIT2,200));
 
 
     public static RazState NEW_TRANSFER4 = new RazState(null, .21,
             RazConstants.DEPOSIT_CLAW_OPEN, .8, EXTENDO_IN, .9999,
-            .51, .13, INTAKE_CLAW_CLOSED, RazConstants.SWEEP_IN,
+            .52, .13, INTAKE_CLAW_CLOSED, RazConstants.SWEEP_IN,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, null);
     public static RazState NEW_TRANSFER3 = new RazState(null, .3,
             RazConstants.DEPOSIT_CLAW_OPEN, .8, EXTENDO_IN, .9999,
-            .51, .13, INTAKE_CLAW_CLOSED, RazConstants.SWEEP_IN,
+            .52, .13, INTAKE_CLAW_CLOSED, RazConstants.SWEEP_IN,
             PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, new LinkedState(NEW_TRANSFER4,250));
     public static RazState NEW_TRANSFER2 = new RazState(null, .3,
             RazConstants.DEPOSIT_CLAW_OPEN, .8, EXTENDO_IN, .9999,
@@ -192,8 +199,14 @@ public class Macros {
     public static RazState SWEEP_UPISH = new RazState(null, null, null, null, EXTENDO_HALF,TURRET_MIDDLE,INTAKE_ARM_UP,null, null, SWEEP_PART_UP, null, null, null, null, null);
     // sweep in resting position ⤵
     public static RazState SWEEP_UP = new RazState(null, null, null, null, EXTENDO_OUT,TURRET_MIDDLE,null,null, null, SWEEP_IN, null, null, null, null, null);
+    public static RazState COLLAPSE_align = new RazState(null, null, null, null, .7,null,null,null, null, SWEEP_IN, null, null, null, null, null);
 
     public static RazState COLLAPSE = new RazState(null, null, null, null, EXTENDO_IN,null,null,null, null, SWEEP_IN, null, null, null, null, null);
+
+    public static RazState TELE_START = new RazState(DEPOSIT_ARM_START, DEPOSIT_ARM_START,
+            DEPOSIT_CLAW_START, DEPOSIT_WRIST_START, EXTENDO_START, TURRET_MIDDLE,
+            INTAKE_ARM_START, INTAKE_SWIVEL_START, INTAKE_CLAW_START, SWEEP_START,
+            PTO_START, PUSHUP_START,SLIDES_MIN , ASCENT_MIN, new LinkedState(new RazState(null, null, null, null, null, TURRET_NEUTRAL, null, null, null, null, null, null, null, null, null), 300));
 
     /*
     public static RazState START = new RazState(DEPOSIT_ARM_START, DEPOSIT_SWIVEL_START,

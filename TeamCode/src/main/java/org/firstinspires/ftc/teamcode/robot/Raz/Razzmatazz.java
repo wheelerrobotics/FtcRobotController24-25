@@ -44,6 +44,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.helpers.PID;
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
+import org.firstinspires.ftc.teamcode.robot.Raz.helpers.LinkedState;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazState;
 import org.firstinspires.ftc.teamcode.robot.Raz.helpers.Link;
 import org.firstinspires.ftc.teamcode.robot.Meccanum.Meccanum;
@@ -94,7 +95,8 @@ public class Razzmatazz extends Meccanum implements Robot {
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         tele.setMsTransmissionInterval(11);
-        limelight.pipelineSwitch(1);
+        limelight.pipelineSwitch(4);
+        // originally 1
         limelight.start();
 
 
@@ -316,6 +318,11 @@ public class Razzmatazz extends Meccanum implements Robot {
             return null;
         }
     }
+    public void crunchLimelightSwitch(int pipelineNum) {
+        limelight.pipelineSwitch(pipelineNum);
+
+    }
+
     public void crunchLimelight() {
         Double[] swivTurExt;
         double[] outputs;
@@ -333,9 +340,14 @@ public class Razzmatazz extends Meccanum implements Robot {
                 runMacro(new RazState(null, null,
                         null, null,
                         swivTurExt[2], swivTurExt[1],
-                        INTAKE_ARM_ABOVE_PICKUP, swivTurExt[0], INTAKE_CLAW_OPEN,
+                        INTAKE_ARM_ABOVE_PICKUP+0.05, swivTurExt[0], INTAKE_CLAW_OPEN,
                         SWEEP_IN, null, null, null,
-                        null, null));
+                        null, new LinkedState(new RazState(null, null,
+                        null, null,
+                        null, null,
+                        INTAKE_ARM_ABOVE_PICKUP, null, null,
+                        null, null, null, null,
+                        null, null), 200)));
             }
         }
 
@@ -704,6 +716,7 @@ public class Razzmatazz extends Meccanum implements Robot {
 
             }
         }
+        public boolean rezeroing = false;
         public boolean PTOed = false;
 
         public double slideTar = 0;
@@ -727,7 +740,18 @@ public class Razzmatazz extends Meccanum implements Robot {
         public void setConsts(double kp, double ki, double kd) {
             slidePID.setConsts(kp, ki, kd);
         }
+        public void setRezero(boolean on) {
+            rezeroing = on;
+            if (!on) {
+                basePos = motorFrontLeft.getCurrentPosition();
+            }
+        }
         public void slidesTick() {
+            if (rezeroing) {
+                slidesRight.setPower(-1);
+                slidesLeft.setPower(-1);
+                return;
+            }
             slidePID.setConsts(SLIDES_KP, SLIDES_KI, SLIDES_KD);
             slidePID.setTarget(slideTar);
             pos = (motorFrontLeft.getCurrentPosition() - basePos);
