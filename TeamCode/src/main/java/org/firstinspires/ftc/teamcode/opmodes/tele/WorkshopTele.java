@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.opmodes.tele;
 
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants.*;
-import static org.firstinspires.ftc.teamcode.robot.Raz.helpers.Macros.*;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;
@@ -20,10 +18,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
-import org.firstinspires.ftc.teamcode.robot.Raz.Razzmatazz;
-import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazConstants;
-import org.firstinspires.ftc.teamcode.robot.Raz.helpers.RazState;
-import org.firstinspires.ftc.teamcode.robot.Raz.helpers.LinkedState;
 
 import java.util.Deque;
 import java.util.LinkedList;
