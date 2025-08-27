@@ -29,11 +29,16 @@ public class WorkshopTele extends OpMode{
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
     boolean toggle = true;
-    double close = .77;
-    double open = .9;
 
-    Servo twist;
+    double armDown = 0;
+    double armUp = 0;
+    double clawOpen = 0;
+    double clawClosed = 0;
+    double wristValue = 0;
+
+    Servo arm;
     Servo claw;
+    Servo wrist;
 
     @Override
     // runs on init press
@@ -46,7 +51,8 @@ public class WorkshopTele extends OpMode{
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         claw = hardwareMap.servo.get("claw");
-        twist = hardwareMap.servo.get("twist");
+        arm = hardwareMap.servo.get("arm");
+        wrist = hardwareMap.servo.get("wrist");
 
     }
 
@@ -68,16 +74,21 @@ public class WorkshopTele extends OpMode{
         motorFrontRight.setPower(y - x - rx);
         motorBackRight.setPower(y + x - rx);
 
-        if (gamepad1.dpad_right){
-            twist.setPosition(twist.getPosition()+.01);
+
+        if (gamepad2.a)
+            claw.setPosition(clawClosed);
+        if (gamepad2.b)
+            claw.setPosition(clawOpen);
+
+        if (gamepad2.dpad_down){
+            wrist.setPosition(wristValue);
+            arm.setPosition(armDown);
         }
-        if (gamepad1.dpad_left){
-            twist.setPosition(twist.getPosition()-.01);
+        if (gamepad2.dpad_up){
+            wrist.setPosition(wristValue);
+            arm.setPosition(armUp);
         }
-        if (gamepad1.a)
-            claw.setPosition(close);
-        if (gamepad1.b)
-            claw.setPosition(open);
+
 
     }
 
