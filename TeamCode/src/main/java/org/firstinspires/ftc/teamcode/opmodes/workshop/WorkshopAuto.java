@@ -93,14 +93,16 @@ public class WorkshopAuto extends LinearOpMode {
 
 
         driveFunction(.5,1000,1000,1000,1000);
-        sleep(10000);
+        sleep(2000);
+        driveFunction(.5,0,0,0,0);
+        sleep(2000);
     }
     public void driveFunction(double speed, int leftBack, int leftFront, int rightFront, int rightBack) {
 
-        leftBackTarget  = motorFrontLeft.getCurrentPosition() + leftBack;
-        leftFrontTarget   = motorBackLeft.getCurrentPosition() + leftFront;
-        rightBackTarget = motorFrontRight.getCurrentPosition() + rightBack;
-        rightFrontTarget  = motorBackRight.getCurrentPosition()  + rightFront;
+        leftBackTarget  = motorBackLeft.getCurrentPosition() + leftBack;
+        leftFrontTarget   = motorFrontLeft.getCurrentPosition() + leftFront;
+        rightBackTarget = motorBackRight.getCurrentPosition() + rightBack;
+        rightFrontTarget  = motorFrontRight.getCurrentPosition()  + rightFront;
 
         motorFrontLeft.setTargetPosition( leftFrontTarget);
         motorFrontRight.setTargetPosition(rightFrontTarget);
