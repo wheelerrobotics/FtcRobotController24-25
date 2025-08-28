@@ -17,6 +17,7 @@ import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_DOWN;
 import static org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.Macros.SLIDES_DOWN_AND_EXTENDO_SAMPLE;
 import static java.lang.Math.PI;
+import static java.lang.Math.exp;
 import static java.lang.Math.toRadians;
 
 import com.acmerobotics.roadrunner.Action;
@@ -29,31 +30,93 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.roadrunner.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 @Autonomous
 public class WorkshopAuto extends LinearOpMode {
+    DcMotor motorFrontLeft;
+    DcMotor motorBackLeft;
+     DcMotor motorFrontRight;
+     DcMotor motorBackRight;
 
+     double COUNTS_PER_INCH = 3895 / (4 * 3.1415);
+    final double armDown = 0.05;
+    final double armUp = 0.35;
+    final double clawOpen = 0.15;
+    final double clawClosed = 0;
+    final double wristValue = 0.82;
+    int leftBackTarget = 0;
+    int rightFrontTarget = 0;
+    int leftFrontTarget = 0;
+    int rightBackTarget = 0;
+
+    Servo arm;
+    Servo claw;
+    Servo wrist;
     @Override
     public void runOpMode() throws InterruptedException {
-        // Pass the starting pose to the drive constructor
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
-
-        // Build a trajectory action
-        TrajectoryActionBuilder first = drive.actionBuilder(new Pose2d(0, 0, 0))
-                .splineTo(new Vector2d(15,15),0);
 
 
-        Action first1 = first.build();
+        motorBackRight = (DcMotorEx) hardwareMap.dcMotor.get("leftFront");
+        motorFrontRight = (DcMotorEx) hardwareMap.dcMotor.get("leftBack");
+        motorBackLeft= (DcMotorEx) hardwareMap.dcMotor.get("rightFront");
+        motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("rightBack");
+
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        claw = hardwareMap.servo.get("claw");
+        arm = hardwareMap.servo.get("arm");
+        wrist = hardwareMap.servo.get("wrist");
+
+        wrist.setPosition(wristValue);
+        arm.setPosition(armUp);
+        claw.setPosition(clawClosed);
+
         waitForStart();
         if (isStopRequested()) return;
 
-        // Run it
-        Actions.runBlocking(
-                new SequentialAction(
-                        first1
-                )
-        );
+
+        driveFunction(.5,1000,1000,1000,1000);
+        sleep(10000);
     }
+    public void driveFunction(double speed, int leftBack, int leftFront, int rightFront, int rightBack) {
+
+        leftBackTarget  = motorFrontLeft.getCurrentPosition() + leftBack;
+        leftFrontTarget   = motorBackLeft.getCurrentPosition() + leftFront;
+        rightBackTarget = motorFrontRight.getCurrentPosition() + rightBack;
+        rightFrontTarget  = motorBackRight.getCurrentPosition()  + rightFront;
+
+        motorFrontLeft.setTargetPosition( leftFrontTarget);
+        motorFrontRight.setTargetPosition(rightFrontTarget);
+        motorBackLeft.setTargetPosition(leftBackTarget);
+        motorBackRight.setTargetPosition(rightBackTarget);
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motorFrontLeft.setPower(speed);
+        motorFrontRight.setPower(speed);
+        motorBackLeft.setPower(speed);
+        motorBackRight.setPower(speed);
+
+    }
+
 }

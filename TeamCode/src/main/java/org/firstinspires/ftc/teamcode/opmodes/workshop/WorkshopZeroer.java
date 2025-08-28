@@ -17,9 +17,9 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.Hobbes;
 @TeleOp
 public class WorkshopZeroer extends OpMode {
 
-    public static double armValue;
-    public static double wristValue;
-    public static double clawValue;
+    public static double armValue = .5;
+    public static double wristValue = .5;
+    public static double clawValue = .5;
     Telemetry tele;
     DcMotor motorFrontLeft;
     DcMotor motorBackLeft;
@@ -47,12 +47,17 @@ public class WorkshopZeroer extends OpMode {
         claw = hardwareMap.servo.get("claw");
         arm = hardwareMap.servo.get("arm");
         wrist = hardwareMap.servo.get("wrist");
+        claw.setPosition(clawValue);
+        arm.setPosition(armValue);
+        wrist.setPosition(wristValue);
     }
 
     @Override
     public void loop() {
+
         claw.setPosition(clawValue);
         arm.setPosition(armValue);
         wrist.setPosition(wristValue);
+
     }
 }
