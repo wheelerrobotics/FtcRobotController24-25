@@ -85,16 +85,21 @@ public class RobotIn30Hrs extends OpMode {
             motorBackRight.setPower(0.3 * (y + x - rx));
         }
 
-        if (gamepad2.right_bumper) {
+        if (gamepad2.dpad_up) {
             intake.setPower(1);
+        }
+        else if (gamepad2.dpad_down) {
+            intake.setPower(-1);
+        }
+        else {
+            intake.setPower(0);
         }
 
         if (gamepad2.left_bumper) {
-            intake.setPower(-1);
-        }
-
-        if (gamepad2.right_bumper) {
             launcher.setPower(1);
+        }
+        else {
+            launcher.setPower(0);
         }
 
 
