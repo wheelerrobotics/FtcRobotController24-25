@@ -13,8 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
 public class RobotIn30Hrs extends LinearOpMode {
 
-    Servo intakeRight;
-    Servo intakeLeft;
+
 
 
 
@@ -26,16 +25,20 @@ public class RobotIn30Hrs extends LinearOpMode {
         DcMotor rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         DcMotor leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         DcMotor Launcher = hardwareMap.get(DcMotor.class, "launcher");
+        DcMotor Intake = hardwareMap.get(DcMotor.class, "intake");
 
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 }
+
 
 
