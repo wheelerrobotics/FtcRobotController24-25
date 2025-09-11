@@ -70,14 +70,14 @@ public class RobotIn30Hrs extends OpMode {
     public void loop() {
         if (gamepad2.start || gamepad1.start) return;
         double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x;
-        double rx = -gamepad1.right_stick_x;
+        double x = -gamepad1.left_stick_x;
+        double rx = gamepad1.right_stick_x;
 
         if (!gamepad1.right_bumper) {
-            motorFrontLeft.setPower(y + x + rx);
-            motorBackLeft.setPower(y - x + rx);
-            motorFrontRight.setPower(y - x - rx);
-            motorBackRight.setPower(y + x - rx);
+            motorFrontLeft.setPower(-(y + x + rx));
+            motorBackLeft.setPower(-(y - x + rx));
+            motorFrontRight.setPower(-(y - x - rx));
+            motorBackRight.setPower(-(y + x - rx));
         } else {
             motorFrontLeft.setPower(0.3 * (y + x + rx));
             motorBackLeft.setPower(0.3 * (y - x + rx));
