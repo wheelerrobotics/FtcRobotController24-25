@@ -80,6 +80,7 @@ public class WorkshopAuto extends LinearOpMode {
         motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+
         claw = hardwareMap.servo.get("claw");
         arm = hardwareMap.servo.get("arm");
         wrist = hardwareMap.servo.get("wrist");
