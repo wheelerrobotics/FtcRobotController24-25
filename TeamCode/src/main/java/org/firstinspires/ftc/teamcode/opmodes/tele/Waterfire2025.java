@@ -76,11 +76,12 @@ public class Waterfire2025 {
                 double rotation = gamepad1.right_stick_x;  // Turning
 
 
+
                 // Calculate motor powers for Mecanum drive
-                double frontLeftPower = -(x - y - rotation);
+                double frontLeftPower = -(x - y + rotation);
                 double frontRightPower = -(x + y + rotation);
                 double backLeftPower = -(x + y - rotation);
-                double backRightPower = -(x - y + rotation);
+                double backRightPower = -(x - y -  rotation);
 
                 // Set motor powers for mecanum drive
                 frontLeftMotor.setPower(frontLeftPower);
@@ -129,6 +130,21 @@ public class Waterfire2025 {
 
                     //Set position as variable
                     armMotor.setPosition(armPower);
+
+                boolean closed = false;
+                boolean open = false;
+
+                if (gamepad2.x /*&& !closed*/) {
+                    clawServo.setPosition(1);
+                    /*closed = true;*/
+                }
+                /*else if (gamepad2.x && !open) {
+                    clawServo.setPosition(0.3);
+                    open = true;
+                }
+                else {
+                    clawServo.setPosition(0);
+                }*/
 
 
 
