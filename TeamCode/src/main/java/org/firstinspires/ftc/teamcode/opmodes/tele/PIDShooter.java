@@ -52,25 +52,25 @@ public class PIDShooter extends OpMode {
     @Override
     public void init() {
         tele = FtcDashboard.getInstance().getTelemetry();
-        motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("leftFront");
+        /*motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("leftFront");
         motorBackLeft = (DcMotorEx) hardwareMap.dcMotor.get("leftBack");
         motorFrontRight = (DcMotorEx) hardwareMap.dcMotor.get("rightFront");
         motorBackRight = (DcMotorEx) hardwareMap.dcMotor.get("rightBack");
-        intake = (DcMotorEx) hardwareMap.dcMotor.get("intake");
+        intake = (DcMotorEx) hardwareMap.dcMotor.get("intake");*/
 
         launcher = (DcMotorEx) hardwareMap.dcMotor.get("launcher");
 
 
-        motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        /*motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
 
         launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        /*motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);*/
 
         launcher.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
