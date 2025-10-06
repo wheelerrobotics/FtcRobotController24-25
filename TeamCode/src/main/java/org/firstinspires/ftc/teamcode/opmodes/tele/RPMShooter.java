@@ -14,11 +14,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class RPMShooter extends OpMode {
 
     public static int RPM;
-    private int power;
+    double velocity;
     Telemetry telemetry;
 
     private static final double TICKS_PER_REV = 537.6;
-    DcMotor launcher;
+    DcMotorEx launcher;
 
 
     @Override
@@ -32,10 +32,10 @@ public class RPMShooter extends OpMode {
 
     @Override
     public void loop() {
-        power = goToRPM(RPM);
-        launcher.setPower(power);
+        velocity = RPMtoVelocity(RPM);
+        launcher.setVelocity(velocity);
 
-        double currentRPM = (launcher.getPower()/TICKS_PER_REV)*60.0;
+        double currentRPM = (launcher.getVelocity()/TICKS_PER_REV)*60.0;
         double targetRPM = RPM;
 
         telemetry.addData("Target RPM", targetRPM);
@@ -43,8 +43,8 @@ public class RPMShooter extends OpMode {
         telemetry.update();
     }
 
-    public int goToRPM (int targetRPM) {
+    public double RPMtoVelocity (int targetRPM) {
 
-        return (int) (targetRPM * TICKS_PER_REV)/60;
+        return (targetRPM * TICKS_PER_REV)/60;
     }
 }
