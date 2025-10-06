@@ -35,7 +35,7 @@ public class RPMShooter extends OpMode {
         power = goToRPM(RPM);
         launcher.setPower(power);
 
-        double currentRPM = launcher.getPower();
+        double currentRPM = (launcher.getPower()/TICKS_PER_REV)*60.0;
         double targetRPM = RPM;
 
         telemetry.addData("Target RPM", targetRPM);
