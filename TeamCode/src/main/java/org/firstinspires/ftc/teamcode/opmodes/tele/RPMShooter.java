@@ -17,7 +17,7 @@ public class RPMShooter extends OpMode {
     double velocity;
     Telemetry telemetry;
 
-    private static final double TICKS_PER_REV = 537.6;
+    public static double TICKS_PER_REV = 28;
     DcMotorEx launcher;
 
 
