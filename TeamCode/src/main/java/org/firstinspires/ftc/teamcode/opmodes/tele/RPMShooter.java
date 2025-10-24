@@ -18,28 +18,39 @@ public class RPMShooter extends OpMode {
     Telemetry telemetry;
 
     public static double TICKS_PER_REV = 28;
-    DcMotorEx launcher;
+    DcMotorEx launcher1;
+    DcMotorEx launcher2;
 
 
     @Override
     public void init() {
         telemetry = FtcDashboard.getInstance().getTelemetry();
-        launcher = (DcMotorEx) hardwareMap.dcMotor.get("launcher");
-        launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        launcher.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launcher1 = (DcMotorEx) hardwareMap.dcMotor.get("launcher");
+        launcher2 = (DcMotorEx) hardwareMap.dcMotor.get("launcher");
+
+        launcher1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        launcher1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        launcher1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        launcher2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        launcher2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        launcher2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
     public void loop() {
         velocity = RPMtoVelocity(RPM);
-        launcher.setVelocity(velocity);
+        launcher1.setVelocity(velocity);
+        launcher2.setVelocity(velocity);
 
-        double currentRPM = (launcher.getVelocity()/TICKS_PER_REV)*60.0;
+        double currentRPM1 = (launcher1.getVelocity()/TICKS_PER_REV)*60.0;
+        double currentRPM2 = (launcher1.getVelocity()/TICKS_PER_REV)*60.0;
         double targetRPM = RPM;
 
-        telemetry.addData("Target RPM", targetRPM);
-        telemetry.addData("Current RPM", currentRPM);
+        telemetry.addData("Launcher Target RPM", targetRPM);
+
+        telemetry.addData("Launcher 1 Current RPM", currentRPM1);
+        telemetry.addData("Launcher 2 Current RPM", currentRPM2);
         telemetry.update();
     }
 
