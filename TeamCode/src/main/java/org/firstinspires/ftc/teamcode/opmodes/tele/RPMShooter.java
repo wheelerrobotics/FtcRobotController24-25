@@ -29,9 +29,11 @@ public class RPMShooter extends OpMode {
         launcher2 = (DcMotorEx) hardwareMap.dcMotor.get("launcher");
 
         launcher1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        launcher1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcher1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         launcher2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        launcher2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcher2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
