@@ -27,12 +27,9 @@ public class RPMShooter extends OpMode {
     public void init() {
         telemetry = FtcDashboard.getInstance().getTelemetry();
 
-<<<<<<< Updated upstream
-=======
         launcher1 = (DcMotorEx) hardwareMap.dcMotor.get("launcher1");
         launcher2 = (DcMotorEx) hardwareMap.dcMotor.get("launcher2");
 
->>>>>>> Stashed changes
         //launcher1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         launcher1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         launcher1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -41,16 +38,14 @@ public class RPMShooter extends OpMode {
         //launcher2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         launcher2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         launcher2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-<<<<<<< Updated upstream
+
         launcher2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-=======
-<<<<<<< HEAD
+
         launcher2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         launcher2.setDirection(DcMotorSimple.Direction.REVERSE);
-=======
+
         launcher2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
->>>>>>> 6aeaae727e3932cb2630e8b42f679ec88d2f7596
->>>>>>> Stashed changes
+
     }
 
     @Override
