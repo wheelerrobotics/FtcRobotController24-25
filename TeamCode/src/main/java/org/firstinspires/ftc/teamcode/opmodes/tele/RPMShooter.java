@@ -34,13 +34,14 @@ public class RPMShooter extends OpMode {
         launcher1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         launcher1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcher1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        launcher1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //launcher2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         launcher2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         launcher2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcher2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //launcher2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        launcher2.setDirection(DcMotorSimple.Direction.REVERSE);
+//        launcher2.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
@@ -62,7 +63,6 @@ public class RPMShooter extends OpMode {
     }
 
     public double RPMtoVelocity (int targetRPM) {
-
         return (targetRPM * TICKS_PER_REV)/60;
     }
 }
