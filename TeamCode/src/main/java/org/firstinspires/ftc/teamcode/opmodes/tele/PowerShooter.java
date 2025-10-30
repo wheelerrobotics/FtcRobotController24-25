@@ -24,7 +24,6 @@ public class PowerShooter extends OpMode {
     public static double power1 = 0;
     public static double power2 = 0;
 
-
     @Override
     public void init() {
         tele = FtcDashboard.getInstance().getTelemetry();
