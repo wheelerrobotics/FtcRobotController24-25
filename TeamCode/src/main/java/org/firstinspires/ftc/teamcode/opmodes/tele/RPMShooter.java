@@ -42,7 +42,6 @@ public class RPMShooter extends OpMode {
         launcher2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //launcher2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        launcher2.setDirection(DcMotorSimple.Direction.REVERSE);
-
     }
 
     @Override
