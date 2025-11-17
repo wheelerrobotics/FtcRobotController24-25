@@ -9,6 +9,7 @@ import static java.lang.Math.atan2;
 import static java.lang.Math.pow;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -23,15 +24,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.Deque;
 import java.util.LinkedList;
+@Config
 @TeleOp
 public class Scrimmage25Tele extends OpMode {
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
 
-    public static int RPM;
+    private int RPM;
     double velocity;
     Telemetry telemetry;
 
+    private int Zone1 = 2650;
+    private int Zone2 = 3000;
     public static double TICKS_PER_REV = 28;
 
 
@@ -47,6 +51,7 @@ public class Scrimmage25Tele extends OpMode {
 
     private double transferUnder = 0.1;
     private double transferUp = 0.3;
+
 
     boolean toggleState = false;
     boolean wasButtonPressed = false;
@@ -98,7 +103,7 @@ public class Scrimmage25Tele extends OpMode {
         if (gamepad2.start || gamepad1.start) return;
         double y = gamepad1.left_stick_y;
         double x = -gamepad1.left_stick_x;
-        double rx = gamepad1.right_stick_x;
+        double rx = -gamepad1.right_stick_x;
 
         if (!gamepad1.right_bumper) {
             motorFrontLeft.setPower(y + x + rx);
@@ -134,30 +139,39 @@ public class Scrimmage25Tele extends OpMode {
 
 
         if (gamepad2.dpad_left) {
-            spindexer.setPower(-.5);
+            spindexer.setPower(.5);
         }
         else if (gamepad2.dpad_right) {
-            spindexer.setPower(.5);
+            spindexer.setPower(-.5);
         }
         else {
             spindexer.setPower(0);
         }
 
         // the shit
+        if (gamepad1.x){
+            RPM = Zone1;
+        }
+        if (gamepad1.y){
+            RPM = Zone2;
+        }
+        if (gamepad1.b){
+            RPM = 0;
+        }
 
         velocity = RPMtoVelocity(RPM);
         shooterLeft.setVelocity(velocity);
         shooterRight.setVelocity(velocity);
 
-        double currentRPM1 = (shooterLeft.getVelocity()/TICKS_PER_REV)*60.0;
-        double currentRPM2 = (shooterRight.getVelocity()/TICKS_PER_REV)*60.0;
-        double targetRPM = RPM;
+//        double currentRPM1 = (shooterLeft.getVelocity()/TICKS_PER_REV)*60.0;
+//        double currentRPM2 = (shooterRight.getVelocity()/TICKS_PER_REV)*60.0;
+//        double targetRPM = RPM;
 
-        telemetry.addData("Launcher Target RPM", targetRPM);
-
-        telemetry.addData("Launcher 1 Current RPM", currentRPM1);
-        telemetry.addData("Launcher 2 Current RPM", currentRPM2);
-        telemetry.update();
+//        telemetry.addData("Launcher Target RPM", targetRPM);
+//
+//        telemetry.addData("Launcher 1 Current RPM", currentRPM1);
+//        telemetry.addData("Launcher 2 Current RPM", currentRPM2);
+//        telemetry.update();
 
 
 
