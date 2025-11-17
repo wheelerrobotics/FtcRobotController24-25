@@ -9,8 +9,15 @@ import static java.lang.Math.atan2;
 import static java.lang.Math.pow;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+<<<<<<< Updated upstream
+=======
+
+import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriver;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
+>>>>>>> Stashed changes
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -47,12 +54,22 @@ public class Scrimmage25Tele extends OpMode {
     DcMotorEx shooterLeft;
     Servo transfer;
     CRServo spindexer;
+<<<<<<< Updated upstream
+=======
+    Limelight3A limelight;
+    GoBildaPinpointDriver pinpoint;
+    AnalogInput spincoder;
+
+    double offset = 0;
+//    Follower follower;
+>>>>>>> Stashed changes
 
     private double transferUnder = 0.1;
     private double transferUp = 0.3;
 
     boolean toggleState = false;
     boolean wasButtonPressed = false;
+
 
     @Override
     // runs on init press
@@ -65,6 +82,8 @@ public class Scrimmage25Tele extends OpMode {
         intake = (DcMotorEx) hardwareMap.dcMotor.get("intake");
         shooterRight = (DcMotorEx) hardwareMap.dcMotor.get("sr");
         shooterLeft = (DcMotorEx) hardwareMap.dcMotor.get("sl");
+
+        spincoder = hardwareMap.get(AnalogInput.class, "encoder");
 
         transfer = (Servo) hardwareMap.servo.get("transfer");
         spindexer = hardwareMap.get(CRServo.class, "spindexer");
@@ -88,6 +107,31 @@ public class Scrimmage25Tele extends OpMode {
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
+<<<<<<< Updated upstream
+=======
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+        pinpoint.resetPosAndIMU();
+        pinpoint.recalibrateIMU();
+
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight.setPollRateHz(100); // This sets how often we ask Limelight for data (100 times per second)
+        limelight.pipelineSwitch(0); // Switch to pipeline number 0
+
+//        follower = Constants.createFollower(hardwareMap);
+//        follower.setStartingPose(startPose);
+//        follower.update();
+//
+//        // 2) Keep Pinpoint aligned to the same field pose
+//        pinpoint.setPosition(new Pose2D(
+//                DistanceUnit.INCH,
+//                startPose.getX(),
+//                startPose.getY(),
+//                AngleUnit.DEGREES,
+//                Math.toDegrees(startPose.getHeading())));
+
+
+
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -102,6 +146,9 @@ public class Scrimmage25Tele extends OpMode {
         double y = gamepad1.left_stick_y;
         double x = -gamepad1.left_stick_x;
         double rx = -gamepad1.right_stick_x;
+
+        double angle = AngleUnit.normalizeDegrees((spincoder.getVoltage()-0.043)/3.1*360 + offset);
+
 
         if (!gamepad1.right_bumper) {
             motorFrontLeft.setPower(y + x + rx);
@@ -146,7 +193,7 @@ public class Scrimmage25Tele extends OpMode {
         else {
             spindexer.setPower(0);
         }
-
+        telemetry.addData("Spincoder Angle: ", angle);
         // the shit
 
         velocity = RPMtoVelocity(RPM);
@@ -154,6 +201,12 @@ public class Scrimmage25Tele extends OpMode {
         shooterRight.setVelocity(velocity);
 
 
+<<<<<<< Updated upstream
+=======
+        }
+
+        telemetry.update();
+>>>>>>> Stashed changes
 
 
 
