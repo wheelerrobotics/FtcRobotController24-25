@@ -11,6 +11,7 @@ import static java.lang.Math.pow;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -18,6 +19,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -26,18 +28,25 @@ public class Scrimmage25Tele extends OpMode {
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
 
+    public static int RPM;
+    double velocity;
+    Telemetry telemetry;
+
+    public static double TICKS_PER_REV = 28;
+
+
     DcMotor motorFrontLeft;
     DcMotor motorBackLeft;
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
     DcMotor intake;
-    DcMotor shooterRight;
-    DcMotor shooterLeft;
+    DcMotorEx shooterRight;
+    DcMotorEx shooterLeft;
     Servo transfer;
-    Servo spindexer;
+    CRServo spindexer;
 
-    private double transferUnder = 0;
-    private double transferUp;
+    private double transferUnder = 0.1;
+    private double transferUp = 0.3;
 
     boolean toggleState = false;
     boolean wasButtonPressed = false;
@@ -46,29 +55,36 @@ public class Scrimmage25Tele extends OpMode {
     // runs on init press
     public void init() {
         // define and init robot
-        motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("lf");
-        motorBackLeft = (DcMotorEx) hardwareMap.dcMotor.get("lb");
-        motorFrontRight = (DcMotorEx) hardwareMap.dcMotor.get("rf");
-        motorBackRight = (DcMotorEx) hardwareMap.dcMotor.get("rb");
+        motorFrontLeft = (DcMotorEx) hardwareMap.dcMotor.get("fl");
+        motorBackLeft = (DcMotorEx) hardwareMap.dcMotor.get("bl");
+        motorFrontRight = (DcMotorEx) hardwareMap.dcMotor.get("fr");
+        motorBackRight = (DcMotorEx) hardwareMap.dcMotor.get("br");
         intake = (DcMotorEx) hardwareMap.dcMotor.get("intake");
         shooterRight = (DcMotorEx) hardwareMap.dcMotor.get("sr");
         shooterLeft = (DcMotorEx) hardwareMap.dcMotor.get("sl");
 
         transfer = (Servo) hardwareMap.servo.get("transfer");
-        spindexer = (Servo) hardwareMap.crservo.get("spindexer");
+        spindexer = hardwareMap.get(CRServo.class, "spindexer");
+
+        shooterLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooterLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooterLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        shooterRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooterRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shooterRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooterLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        shooterLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
@@ -80,9 +96,9 @@ public class Scrimmage25Tele extends OpMode {
     // loops after start press
     public void loop() {
         if (gamepad2.start || gamepad1.start) return;
-        double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x;
-        double rx = -gamepad1.right_stick_x;
+        double y = gamepad1.left_stick_y;
+        double x = -gamepad1.left_stick_x;
+        double rx = gamepad1.right_stick_x;
 
         if (!gamepad1.right_bumper) {
             motorFrontLeft.setPower(y + x + rx);
@@ -106,21 +122,50 @@ public class Scrimmage25Tele extends OpMode {
         }
 
         if (gamepad2.a) {
-            intake.setPower(1);
+            intake.setPower(-.5);
         }
         else if (gamepad2.b) {
-            intake.setPower(-1);
+            intake.setPower(.5);
         }
         else {
             intake.setPower(0);
         }
+
+
+
+        if (gamepad2.dpad_left) {
+            spindexer.setPower(-.5);
+        }
+        else if (gamepad2.dpad_right) {
+            spindexer.setPower(.5);
+        }
+        else {
+            spindexer.setPower(0);
+        }
+
+        // the shit
+
+        velocity = RPMtoVelocity(RPM);
+        shooterLeft.setVelocity(velocity);
+        shooterRight.setVelocity(velocity);
+
+        double currentRPM1 = (shooterLeft.getVelocity()/TICKS_PER_REV)*60.0;
+        double currentRPM2 = (shooterRight.getVelocity()/TICKS_PER_REV)*60.0;
+        double targetRPM = RPM;
+
+        telemetry.addData("Launcher Target RPM", targetRPM);
+
+        telemetry.addData("Launcher 1 Current RPM", currentRPM1);
+        telemetry.addData("Launcher 2 Current RPM", currentRPM2);
+        telemetry.update();
+
+
 
         // bombaclat toggle transfer
 
         if (gamepad1.a) {
             if (!wasButtonPressed) {
                 toggleState = !toggleState;
-
                 wasButtonPressed = true;
             }
         } else {
@@ -134,5 +179,8 @@ public class Scrimmage25Tele extends OpMode {
         }
 
 
+    }
+    public double RPMtoVelocity (int targetRPM) {
+        return (targetRPM * TICKS_PER_REV)/60;
     }
 }
