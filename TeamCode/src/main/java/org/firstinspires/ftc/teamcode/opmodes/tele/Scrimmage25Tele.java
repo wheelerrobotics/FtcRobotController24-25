@@ -28,11 +28,14 @@ public class Scrimmage25Tele extends OpMode {
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
 
-    public static int RPM;
+    private int RPM = 0;
     double velocity;
     Telemetry telemetry;
 
     public static double TICKS_PER_REV = 28;
+
+    private int zone1 = 2650;
+    private int zone2 = 3000;
 
 
     DcMotor motorFrontLeft;
@@ -98,7 +101,7 @@ public class Scrimmage25Tele extends OpMode {
         if (gamepad2.start || gamepad1.start) return;
         double y = gamepad1.left_stick_y;
         double x = -gamepad1.left_stick_x;
-        double rx = gamepad1.right_stick_x;
+        double rx = -gamepad1.right_stick_x;
 
         if (!gamepad1.right_bumper) {
             motorFrontLeft.setPower(y + x + rx);
@@ -113,12 +116,13 @@ public class Scrimmage25Tele extends OpMode {
         }
 
         if (gamepad2.y){
-            shooterLeft.setPower(1);
-            shooterRight.setPower(1);
+            RPM = zone2;
         }
         else if (gamepad2.x){
-            shooterLeft.setPower(0);
-            shooterRight.setPower(0);
+            RPM = zone1;
+        }
+        else if (gamepad2.b){
+            RPM = 0;
         }
 
         if (gamepad2.a) {
@@ -134,10 +138,10 @@ public class Scrimmage25Tele extends OpMode {
 
 
         if (gamepad2.dpad_left) {
-            spindexer.setPower(-.5);
+            spindexer.setPower(.5);
         }
         else if (gamepad2.dpad_right) {
-            spindexer.setPower(.5);
+            spindexer.setPower(-.5);
         }
         else {
             spindexer.setPower(0);
@@ -149,15 +153,7 @@ public class Scrimmage25Tele extends OpMode {
         shooterLeft.setVelocity(velocity);
         shooterRight.setVelocity(velocity);
 
-        double currentRPM1 = (shooterLeft.getVelocity()/TICKS_PER_REV)*60.0;
-        double currentRPM2 = (shooterRight.getVelocity()/TICKS_PER_REV)*60.0;
-        double targetRPM = RPM;
 
-        telemetry.addData("Launcher Target RPM", targetRPM);
-
-        telemetry.addData("Launcher 1 Current RPM", currentRPM1);
-        telemetry.addData("Launcher 2 Current RPM", currentRPM2);
-        telemetry.update();
 
 
 
