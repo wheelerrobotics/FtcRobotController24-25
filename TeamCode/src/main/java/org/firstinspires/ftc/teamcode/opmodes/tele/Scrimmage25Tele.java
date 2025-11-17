@@ -90,7 +90,6 @@ public class Scrimmage25Tele extends OpMode {
 
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
     }
 
     @Override
@@ -139,7 +138,6 @@ public class Scrimmage25Tele extends OpMode {
         else {
             intake.setPower(0);
         }
-
 
 
         if (gamepad2.dpad_left) {
