@@ -9,6 +9,8 @@ import static java.lang.Math.atan2;
 import static java.lang.Math.pow;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriver;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -20,14 +22,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import java.util.Deque;
 import java.util.LinkedList;
 @TeleOp
 public class Scrimmage25Tele extends OpMode {
-    Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
-    Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
-
     public static int RPM;
     double velocity;
     Telemetry telemetry;
@@ -44,12 +46,17 @@ public class Scrimmage25Tele extends OpMode {
     DcMotorEx shooterLeft;
     Servo transfer;
     CRServo spindexer;
+    Limelight3A limelight;
+    GoBildaPinpointDriver pinpoint;
+
+//    Follower follower;
 
     private double transferUnder = 0.1;
     private double transferUp = 0.3;
 
     boolean toggleState = false;
     boolean wasButtonPressed = false;
+    boolean startShooting = false;
 
     @Override
     // runs on init press
@@ -85,6 +92,25 @@ public class Scrimmage25Tele extends OpMode {
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+        pinpoint.resetPosAndIMU();
+        pinpoint.recalibrateIMU();
+
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight.setPollRateHz(100); // This sets how often we ask Limelight for data (100 times per second)
+        limelight.pipelineSwitch(0); // Switch to pipeline number 0
+
+//        follower = Constants.createFollower(hardwareMap);
+//        follower.setStartingPose(startPose);
+//        follower.update();
+//
+//        // 2) Keep Pinpoint aligned to the same field pose
+//        pinpoint.setPosition(new Pose2D(
+//                DistanceUnit.INCH,
+//                startPose.getX(),
+//                startPose.getY(),
+//                AngleUnit.DEGREES,
+//                Math.toDegrees(startPose.getHeading())));
     }
 
     @Override
@@ -113,12 +139,10 @@ public class Scrimmage25Tele extends OpMode {
         }
 
         if (gamepad2.y){
-            shooterLeft.setPower(1);
-            shooterRight.setPower(1);
+            startShooting = true;
         }
         else if (gamepad2.x){
-            shooterLeft.setPower(0);
-            shooterRight.setPower(0);
+            startShooting = false;
         }
 
         if (gamepad2.a) {
@@ -130,9 +154,6 @@ public class Scrimmage25Tele extends OpMode {
         else {
             intake.setPower(0);
         }
-
-
-
         if (gamepad2.dpad_left) {
             spindexer.setPower(-.5);
         }
@@ -145,18 +166,21 @@ public class Scrimmage25Tele extends OpMode {
 
         // the shit
 
-        velocity = RPMtoVelocity(RPM);
-        shooterLeft.setVelocity(velocity);
-        shooterRight.setVelocity(velocity);
+        if (startShooting) {
+            velocity = RPMtoVelocity(RPM);
+            shooterLeft.setVelocity(velocity);
+            shooterRight.setVelocity(velocity);
 
-        double currentRPM1 = (shooterLeft.getVelocity()/TICKS_PER_REV)*60.0;
-        double currentRPM2 = (shooterRight.getVelocity()/TICKS_PER_REV)*60.0;
-        double targetRPM = RPM;
+            double currentRPM1 = (shooterLeft.getVelocity()/TICKS_PER_REV)*60.0;
+            double currentRPM2 = (shooterRight.getVelocity()/TICKS_PER_REV)*60.0;
+            double targetRPM = RPM;
 
-        telemetry.addData("Launcher Target RPM", targetRPM);
+            telemetry.addData("Launcher Target RPM", targetRPM);
 
-        telemetry.addData("Launcher 1 Current RPM", currentRPM1);
-        telemetry.addData("Launcher 2 Current RPM", currentRPM2);
+            telemetry.addData("Launcher 1 Current RPM", currentRPM1);
+            telemetry.addData("Launcher 2 Current RPM", currentRPM2);
+        }
+
         telemetry.update();
 
 
