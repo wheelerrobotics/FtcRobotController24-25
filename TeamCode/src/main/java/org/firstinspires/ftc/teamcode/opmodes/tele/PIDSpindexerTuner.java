@@ -20,7 +20,7 @@ public class PIDSpindexerTuner extends OpMode {
     private CRServo spindexer;
     AnalogInput spincoder;
 
-    double offset = 0;
+    public static double offset = 0;
 
     public static double kP = 0.01, kI = 0.0, kD = 0.0005;
     PIDSpindexer spinPID = new PIDSpindexer(kP, kI, kD);
@@ -28,7 +28,6 @@ public class PIDSpindexerTuner extends OpMode {
     @Override
     public void init() {
         tele = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
 
         spindexer = hardwareMap.get(CRServo.class, "spindexer");
         spincoder = hardwareMap.get(AnalogInput.class, "spincoder");
