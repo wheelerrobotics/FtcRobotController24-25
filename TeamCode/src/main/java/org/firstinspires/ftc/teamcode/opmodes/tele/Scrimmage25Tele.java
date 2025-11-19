@@ -55,7 +55,9 @@ public class Scrimmage25Tele extends OpMode {
     boolean toggleState = false;
     boolean wasButtonPressed = false;
 
-    PIDSpindexer spinPID = new PIDSpindexer(0.010, 0, 0.001); // defaults
+    //PIDSpindexer spinPID = new PIDSpindexer(0.010, 0, 0.001); // defaults
+
+    PIDSpindexer spinPID = new PIDSpindexer(); // defaults
 
     @Override
     // runs on init press
@@ -134,26 +136,35 @@ public class Scrimmage25Tele extends OpMode {
             RPM = 0;
         }
 
-        if (gamepad2.a) {
+        if (gamepad1.a) {
             intake.setPower(-.5);
         }
-        else if (gamepad2.b) {
+        else if (gamepad1.b) {
             intake.setPower(.5);
         }
         else {
             intake.setPower(0);
         }
 
+        if (transfer.getPosition() == transferUnder) {
+            if (gamepad2.dpad_left) {
+                spindexer.setPower(-1);
+            } else if (gamepad2.dpad_right) {
+                spindexer.setPower(1);
+            } else {
+                spindexer.setPower(0);
+            }
+        }
 
         double angle = AngleUnit.normalizeDegrees((spincoder.getVoltage()-0.043)/3.1*360 + offset);
 
-        if (gamepad2.dpad_up) spinPID.setTarget(0);
+        /*if (gamepad2.dpad_up) spinPID.setTarget(0);
         if (gamepad2.dpad_right) spinPID.setTarget(90);
         if (gamepad2.dpad_down) spinPID.setTarget(180);
         if (gamepad2.dpad_left) spinPID.setTarget(270);
 
         double power = spinPID.update(angle);
-        spindexer.setPower(power);
+        spindexer.setPower(power);*/
 
         // the shit
 
@@ -168,7 +179,7 @@ public class Scrimmage25Tele extends OpMode {
 
         // bombaclat toggle transfer
 
-        if (gamepad1.a) {
+        if (gamepad1.left_bumper) {
             if (!wasButtonPressed) {
                 toggleState = !toggleState;
                 wasButtonPressed = true;
