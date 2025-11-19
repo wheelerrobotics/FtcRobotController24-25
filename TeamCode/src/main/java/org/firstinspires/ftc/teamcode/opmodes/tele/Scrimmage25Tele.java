@@ -57,7 +57,7 @@ public class Scrimmage25Tele extends OpMode {
 
     //PIDSpindexer spinPID = new PIDSpindexer(0.010, 0, 0.001); // defaults
 
-    PIDSpindexer spinPID = new PIDSpindexer(); // defaults
+//    PIDSpindexer spinPID = new PIDSpindexer(); // defaults
 
     @Override
     // runs on init press
@@ -95,8 +95,8 @@ public class Scrimmage25Tele extends OpMode {
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        spinPID.reset();
-        spinPID.setTarget(0);
+//        spinPID.reset();
+//        spinPID.setTarget(0);
     }
 
     @Override
@@ -158,15 +158,15 @@ public class Scrimmage25Tele extends OpMode {
 
         double angle = AngleUnit.normalizeDegrees((spincoder.getVoltage()-0.043)/3.1*360 + offset);
 
-        if (gamepad2.dpad_up) spinPID.setTarget(0);
-        if (gamepad2.dpad_right) spinPID.setTarget(90);
-        if (gamepad2.dpad_down) spinPID.setTarget(180);
-        if (gamepad2.dpad_left) spinPID.setTarget(270);
+//        if (gamepad2.dpad_up) spinPID.setTarget(0);
+//        if (gamepad2.dpad_right) spinPID.setTarget(90);
+//        if (gamepad2.dpad_down) spinPID.setTarget(180);
+//        if (gamepad2.dpad_left) spinPID.setTarget(270);
 
-        double power = spinPID.update(angle);
+//        double power = spinPID.update(angle);
         telemetry.addData("angle",angle);
         telemetry.update();
-        spindexer.setPower(power);
+//        spindexer.setPower(power);
 
         // the shit
 
