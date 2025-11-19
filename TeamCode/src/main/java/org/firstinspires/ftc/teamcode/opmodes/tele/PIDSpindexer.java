@@ -16,9 +16,9 @@ public class PIDSpindexer {
     private final ElapsedTime timer = new ElapsedTime();
 
     // Default values
-    public static double DEFAULT_KP = 0.01;
+    public static double DEFAULT_KP = 0;
     public static double DEFAULT_KI = 0.0;
-    public static double DEFAULT_KD = 0.0005;
+    public static double DEFAULT_KD = 0;
 
     public PIDSpindexer() {
         // use defaults

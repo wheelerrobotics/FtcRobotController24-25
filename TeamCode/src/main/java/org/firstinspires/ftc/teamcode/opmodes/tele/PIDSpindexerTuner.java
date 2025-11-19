@@ -22,7 +22,7 @@ public class PIDSpindexerTuner extends OpMode {
 
     public static double offset = 0;
 
-    public static double kP = 0.01, kI = 0.0, kD = 0.0005;
+    public static double kP = 0, kI = 0.0, kD = 0;
     PIDSpindexer spinPID = new PIDSpindexer(kP, kI, kD);
 
     @Override
