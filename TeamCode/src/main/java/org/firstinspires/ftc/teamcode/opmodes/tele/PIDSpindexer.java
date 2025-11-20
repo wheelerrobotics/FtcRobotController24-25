@@ -18,7 +18,11 @@ public class PIDSpindexer {
     private double integralSum = 0;
     private double lastError = 0;
 
+    private Double lastAngleDeg = null;
+
     private final ElapsedTime timer = new ElapsedTime();
+
+    private static final double maxIntegral = 2000;
 
     // --- Constructors ---
 
@@ -43,12 +47,15 @@ public class PIDSpindexer {
     /**
      * Reset PID state and lock target to the current position.
      */
+ 
     public void reset(double currentTicks) {
         integralSum = 0;
         lastError = 0;
         targetTicks = currentTicks;
+        lastAngleDeg = null;
         timer.reset();
     }
+
 
     /**
      * Set the target using an angle in degrees (0–360 input).
@@ -62,12 +69,16 @@ public class PIDSpindexer {
      *     base=0, closest is 100 (k=+1), so targetTicks=100.
      */
     public void setTargetAngle(double angleDeg, double currentTicks) {
-        // convert angle to "base" ticks in [0, ticksPerRev)
-        double baseTicks = (angleDeg / 360.0) * ticksPerRev;
+        if (lastAngleDeg == null || Math.abs(angleDeg - lastAngleDeg) > 1e-3) {
+            lastAngleDeg = angleDeg;
 
-        // find integer k so that baseTicks + k*ticksPerRev is closest to currentTicks
-        double k = Math.rint((currentTicks - baseTicks) / ticksPerRev);
-        targetTicks = baseTicks + k * ticksPerRev;
+            // base position for this angle (same for every revolution)
+            double baseTicks = (angleDeg / 360.0) * ticksPerRev;
+
+            // choose k so that baseTicks + k*ticksPerRev is closest to currentTicks
+            double k = Math.rint((currentTicks - baseTicks) / ticksPerRev);
+            targetTicks = baseTicks + k * ticksPerRev;
+        }
     }
 
     /**
@@ -105,6 +116,8 @@ public class PIDSpindexer {
         double error = targetTicks - currentTicks; // **RAW** error in ticks
 
         integralSum += error * dt;
+        integralSum = Range.clip(integralSum, -maxIntegral, maxIntegral);
+
         double derivative = (error - lastError) / dt;
         lastError = error;
 

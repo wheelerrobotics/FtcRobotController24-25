@@ -17,7 +17,6 @@ public class PIDSpindexerTuner extends OpMode {
 
     // Dashboard-tunable things
     public static double targetAngle = 0;          // 0–360 input
-    private double prevTargetAngle = 0;
     public static double TICKS_PER_REV = 8192;     // your encoder
     public static double kP = 0.0, kI = 0.0, kD = 0.0;
 
@@ -52,11 +51,7 @@ public class PIDSpindexerTuner extends OpMode {
         double currentTicks = spincoder.getCurrentPosition();
 
         // Compute targetTicks from angle, using SHORTEST path decision
-        if (prevTargetAngle != targetAngle) {
-            spinPID.setTargetAngle(targetAngle, currentTicks);
-            prevTargetAngle = targetAngle;
-        }
-
+        spinPID.setTargetAngle(targetAngle, currentTicks);
 
         double power = -spinPID.update(currentTicks);
         spindexer.setPower(power);
