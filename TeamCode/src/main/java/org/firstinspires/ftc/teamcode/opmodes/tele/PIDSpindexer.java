@@ -69,6 +69,7 @@ public class PIDSpindexer {
      *     base=0, closest is 100 (k=+1), so targetTicks=100.
      */
     public void setTargetAngle(double angleDeg, double currentTicks) {
+
         if (lastAngleDeg == null || Math.abs(angleDeg - lastAngleDeg) > 1e-3) {
             lastAngleDeg = angleDeg;
 
