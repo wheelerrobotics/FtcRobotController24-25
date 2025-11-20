@@ -156,7 +156,7 @@ public class Scrimmage25Tele extends OpMode {
 //            }
 //        }
 
-        double angle = AngleUnit.normalizeDegrees((spincoder.getVoltage()-0.043)/3.1*360 + offset);
+        //double angle = AngleUnit.normalizeDegrees((spincoder.getVoltage()-0.043)/3.1*360 + offset);
 
 //        if (gamepad2.dpad_up) spinPID.setTarget(0);
 //        if (gamepad2.dpad_right) spinPID.setTarget(90);
@@ -164,8 +164,8 @@ public class Scrimmage25Tele extends OpMode {
 //        if (gamepad2.dpad_left) spinPID.setTarget(270);
 
 //        double power = spinPID.update(angle);
-        telemetry.addData("angle",angle);
-        telemetry.update();
+//        telemetry.addData("angle",angle);
+//        telemetry.update();
 //        spindexer.setPower(power);
 
         // the shit
