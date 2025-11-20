@@ -48,7 +48,7 @@ public class REALScrimTele extends OpMode {
     double velocity;
 
 
-    private int zone1 = 2650;
+    private int zone1 = 2650-50;
     private int zone2 = 3000;
 
 
