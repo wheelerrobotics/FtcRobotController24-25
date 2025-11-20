@@ -48,14 +48,14 @@ public class Scrimmage25Tele extends OpMode {
     DcMotorEx shooterLeft;
     Servo transfer;
     CRServo spindexer;
-    AnalogInput spincoder;
+    private DcMotorEx spincoder;
     private double transferUnder = 0.1;
     private double transferUp = 0.3;
     double offset = 0;
     boolean toggleState = false;
     boolean wasButtonPressed = false;
 
-    //PIDSpindexer spinPID = new PIDSpindexer(0.010, 0, 0.001); // defaults
+    PIDSpindexer spinPID = new PIDSpindexer(8192, -.00011, -.000001, -.001); // defaults
 
 //    PIDSpindexer spinPID = new PIDSpindexer(); // defaults
 
@@ -71,7 +71,9 @@ public class Scrimmage25Tele extends OpMode {
         shooterRight = (DcMotorEx) hardwareMap.dcMotor.get("sr");
         shooterLeft = (DcMotorEx) hardwareMap.dcMotor.get("sl");
 
-        spincoder = hardwareMap.get(AnalogInput.class, "spincoder");
+        spincoder = hardwareMap.get(DcMotorEx.class, "bl");
+        spincoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        spincoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         transfer = (Servo) hardwareMap.servo.get("transfer");
         spindexer = hardwareMap.get(CRServo.class, "spindexer");
@@ -95,8 +97,7 @@ public class Scrimmage25Tele extends OpMode {
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-//        spinPID.reset();
-//        spinPID.setTarget(0);
+        spinPID.reset(0);
     }
 
     @Override
@@ -111,8 +112,6 @@ public class Scrimmage25Tele extends OpMode {
         double y = gamepad1.left_stick_y;
         double x = -gamepad1.left_stick_x;
         double rx = -gamepad1.right_stick_x;
-        double spinAngle = AngleUnit.normalizeDegrees((spincoder.getVoltage()-0.043)/3.1*360 + offset);
-        double raw = AngleUnit.normalizeDegrees(spincoder.getVoltage());
 
         if (!gamepad1.right_bumper) {
             motorFrontLeft.setPower(y + x + rx);
@@ -156,14 +155,23 @@ public class Scrimmage25Tele extends OpMode {
 //            }
 //        }
 
-        //double angle = AngleUnit.normalizeDegrees((spincoder.getVoltage()-0.043)/3.1*360 + offset);
+        double angle =  spinPID.getTargetAngle();
 
-//        if (gamepad2.dpad_up) spinPID.setTarget(0);
-//        if (gamepad2.dpad_right) spinPID.setTarget(90);
-//        if (gamepad2.dpad_down) spinPID.setTarget(180);
-//        if (gamepad2.dpad_left) spinPID.setTarget(270);
+        double currentTicks = spincoder.getCurrentPosition();
 
-//        double power = spinPID.update(angle);
+//        if (transfer.getPosition() == transferUnder) {
+            if (gamepad2.dpad_right) {
+                spinPID.setTargetAngle(angle + 120, currentTicks);
+            double power = -spinPID.update(currentTicks);
+            telemetry.addData("angle",angle);
+            telemetry.update();
+            spindexer.setPower(power);
+        };
+            if (gamepad2.dpad_left) spinPID.setTargetAngle(angle - 120, currentTicks);
+            if (gamepad2.right_bumper) spinPID.setTargetAngle(angle + 60, currentTicks);
+     //   }
+
+//        double power = -spinPID.update(currentTicks);
 //        telemetry.addData("angle",angle);
 //        telemetry.update();
 //        spindexer.setPower(power);
@@ -176,29 +184,30 @@ public class Scrimmage25Tele extends OpMode {
 
 
 
-
-
-
-        // bombaclat toggle transfer
-
-        if (gamepad1.left_bumper) {
-            if (!wasButtonPressed) {
-                toggleState = !toggleState;
-                wasButtonPressed = true;
-            }
-        } else {
-            wasButtonPressed = false;
-        }
-
-        if (toggleState) {
+        if (gamepad2.dpad_up) {
             transfer.setPosition(transferUp);
-        } else {
+        }
+        if (gamepad2.dpad_down) {
             transfer.setPosition(transferUnder);
         }
 
+        // bombaclat toggle transfer
 
-        telemetry.addData("spindexterAngle", spinAngle);
-        telemetry.addData("Voltage",raw);
+//        if (gamepad2.dpad_up) {
+//            if (!wasButtonPressed) {
+//                toggleState = !toggleState;
+//                wasButtonPressed = true;
+//            }
+//        } else {
+//            wasButtonPressed = false;
+//        }
+//
+//        if (toggleState) {
+//            transfer.setPosition(transferUp);
+//        } else {
+//            transfer.setPosition(transferUnder);
+//        }
+
         telemetry.update();
 
 
