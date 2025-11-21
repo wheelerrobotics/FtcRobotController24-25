@@ -51,6 +51,9 @@ public class REALScrimTele extends OpMode {
     private int zone1 = 2650-50;
     private int zone2 = 3000;
 
+    long transferTimer = 0;
+    boolean transferPulse = false;
+
 
     DcMotor motorFrontLeft;
     DcMotor motorBackLeft;
@@ -164,7 +167,7 @@ public class REALScrimTele extends OpMode {
         shooterRight.setVelocity(velocity);
 
 
-        if (gamepad1.left_bumper) {
+        /*if (gamepad1.left_bumper) {
             if (!wasButtonPressed) {
                 toggleState = !toggleState;
                 wasButtonPressed = true;
@@ -173,14 +176,14 @@ public class REALScrimTele extends OpMode {
             wasButtonPressed = false;
         }
 
-        /*if (toggleState) {
+        if (toggleState) {
             transfer.setPosition(transferUp);
         } else {
             transfer.setPosition(transferUnder);
         }*/
 
-        long transferTimer = 0;
-        boolean transferPulse = false;
+
+
 
         if (gamepad1.left_bumper && !wasButtonPressed) {
             transferPulse = true;
@@ -219,7 +222,7 @@ public class REALScrimTele extends OpMode {
 
         double currentTicks = spincoder.getCurrentPosition();
 
-        if (transfer.getPosition() == transferUnder) {
+        //if (transfer.getPosition() == transferUnder) {
             if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
                 targetAngle += 120;
             }
@@ -229,7 +232,7 @@ public class REALScrimTele extends OpMode {
             if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
                 targetAngle += 60;
             }
-        }
+        //}
 
         spinPID.setTargetAngle(targetAngle, currentTicks);
 
