@@ -52,7 +52,7 @@ public class ScrimAuto extends LinearOpMode {
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
     Deque<Gamepad> gamepad1History = new LinkedList<>(), gamepad2History = new LinkedList<>();
     // Dashboard-tunable things
-    public static double targetAngle = 0;          // 0–360 input
+    public static double targetAngle = 60;          // 0–360 input
     public static double TICKS_PER_REV = 8192;     // your encoder
     public static double TICKS_PER_REV_S = 28;
     public static double kP = 0.001, kI = .000001, kD = .00011;
@@ -67,8 +67,6 @@ public class ScrimAuto extends LinearOpMode {
     private int RPM = 0;
     double velocity;
     long transferTimer = 0;
-    boolean transferPulse = false;
-    private Servo light;
 
 
     private int zone1 = 2500;
@@ -84,14 +82,10 @@ public class ScrimAuto extends LinearOpMode {
     DcMotorEx shooterLeft;
     Servo transfer;
 
-    private double transferUnder = 0.1;
-    private double transferUp = 0.3;
-    double offset = 0;
-    boolean toggleState = false;
-    boolean wasButtonPressed = false;
-    boolean toggleState2 = false;
-    boolean wasButtonPressed2 = false;
-    public static double pulseTime = 1000;
+    public static double transferUnder = 0.1;
+    public static double transferUp = 0.3;
+
+    public static double swichTime = 1000;
 
 
     @Override
@@ -130,7 +124,6 @@ public class ScrimAuto extends LinearOpMode {
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         spindexer = hardwareMap.get(CRServo.class, "spindexer");
-        light = hardwareMap.servo.get("light");
 
         // Using a drive motor as encoder in your example
         spincoder = hardwareMap.get(DcMotorEx.class, "bl");
@@ -140,6 +133,7 @@ public class ScrimAuto extends LinearOpMode {
         // Create PID with current TPR and starting gains
         spinPID = new PIDSpindexer(TICKS_PER_REV, kP, kI, kD);
         spinPID.reset(0); // encoder was just reset to 0
+        spinPID.setTargetAngle(targetAngle, 0);
 
         transfer.setPosition(transferUnder);
         spinPID.setConsts(kP, kI, kD);
@@ -154,17 +148,20 @@ public class ScrimAuto extends LinearOpMode {
         sleep(3000);
         transfer.setPosition(transferUp);
         sleep(500);
+        transfer.setPosition(transferUnder);
         double currentTicks = spincoder.getCurrentPosition();
         targetAngle += 120;
         spinPID.setTargetAngle(targetAngle, currentTicks);
-        double power = -spinPID.update(currentTicks);
+        transferTimer = System.currentTimeMillis();
 
         do {
-            transferTimer = System.currentTimeMillis();
-            power = -spinPID.update(currentTicks);
+            double power = -spinPID.update(currentTicks);
             spindexer.setPower(power * 0.6);
-        } while (!(System.currentTimeMillis() - transferTimer > pulseTime));
+        } while (!(System.currentTimeMillis() - transferTimer > swichTime));
+
         sleep(1000);
+
+
 
 
 
