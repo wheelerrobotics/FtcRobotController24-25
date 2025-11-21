@@ -46,6 +46,8 @@ public class REALScrimTele extends OpMode {
     private PIDSpindexer spinPID;
     private int RPM = 0;
     double velocity;
+    long transferTimer = 0;
+    boolean transferPulse = false;
 
 
     private int zone1 = 2650-50;
@@ -68,6 +70,7 @@ public class REALScrimTele extends OpMode {
     boolean wasButtonPressed = false;
     boolean toggleState2 = false;
     boolean wasButtonPressed2 = false;
+    public static double pulseTime = 300;
     @Override
     public void init() {
         tele = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -164,7 +167,7 @@ public class REALScrimTele extends OpMode {
         shooterRight.setVelocity(velocity);
 
 
-        if (gamepad1.left_bumper) {
+        /*if (gamepad1.left_bumper) {
             if (!wasButtonPressed) {
                 toggleState = !toggleState;
                 wasButtonPressed = true;
@@ -177,6 +180,24 @@ public class REALScrimTele extends OpMode {
             transfer.setPosition(transferUp);
         } else {
             transfer.setPosition(transferUnder);
+        }*/
+
+
+
+        if (gamepad1.left_bumper && !wasButtonPressed) {
+            transferPulse = true;
+            transferTimer = System.currentTimeMillis();
+            transfer.setPosition(transferUp);
+            wasButtonPressed = true;
+        } else if (!gamepad1.left_bumper) {
+            wasButtonPressed = false;
+        }
+
+        if (transferPulse) {
+            if (System.currentTimeMillis() - transferTimer > pulseTime) { // 150 ms pulse
+                transfer.setPosition(transferUnder);
+                transferPulse = false;
+            }
         }
 
         if (gamepad2.dpad_down) {
@@ -200,7 +221,7 @@ public class REALScrimTele extends OpMode {
 
         double currentTicks = spincoder.getCurrentPosition();
 
-        if (transfer.getPosition() == transferUnder) {
+        //if (transfer.getPosition() == transferUnder) {
             if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
                 targetAngle += 120;
             }
@@ -210,7 +231,7 @@ public class REALScrimTele extends OpMode {
             if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
                 targetAngle += 60;
             }
-        }
+       // }
 
         spinPID.setTargetAngle(targetAngle, currentTicks);
 
