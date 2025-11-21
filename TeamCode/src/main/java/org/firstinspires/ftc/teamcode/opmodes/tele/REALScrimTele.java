@@ -173,29 +173,10 @@ public class REALScrimTele extends OpMode {
             wasButtonPressed = false;
         }
 
-        /*if (toggleState) {
+        if (toggleState) {
             transfer.setPosition(transferUp);
         } else {
             transfer.setPosition(transferUnder);
-        }*/
-
-        long transferTimer = 0;
-        boolean transferPulse = false;
-
-        if (gamepad1.left_bumper && !wasButtonPressed) {
-            transferPulse = true;
-            transferTimer = System.currentTimeMillis();
-            transfer.setPosition(transferUp);
-            wasButtonPressed = true;
-        } else if (!gamepad1.left_bumper) {
-            wasButtonPressed = false;
-        }
-
-        if (transferPulse) {
-            if (System.currentTimeMillis() - transferTimer > 150) { // 150 ms pulse
-                transfer.setPosition(transferUnder);
-                transferPulse = false;
-            }
         }
 
         if (gamepad2.dpad_down) {
