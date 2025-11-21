@@ -53,7 +53,6 @@ public class REALScrimTele extends OpMode {
     private int zone1 = 2650-50;
     private int zone2 = 3000;
 
-
     DcMotor motorFrontLeft;
     DcMotor motorBackLeft;
     DcMotor motorFrontRight;
