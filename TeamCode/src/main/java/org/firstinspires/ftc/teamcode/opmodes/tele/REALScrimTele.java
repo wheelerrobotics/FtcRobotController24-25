@@ -48,9 +48,10 @@ public class REALScrimTele extends OpMode {
     double velocity;
     long transferTimer = 0;
     boolean transferPulse = false;
+    private Servo light;
 
 
-    private int zone1 = 2650-50;
+    private int zone1 = 2500;
     private int zone2 = 3000;
 
     DcMotor motorFrontLeft;
@@ -104,6 +105,7 @@ public class REALScrimTele extends OpMode {
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         spindexer = hardwareMap.get(CRServo.class, "spindexer");
+        light = hardwareMap.servo.get("light");
 
         // Using a drive motor as encoder in your example
         spincoder = hardwareMap.get(DcMotorEx.class, "bl");
@@ -119,6 +121,8 @@ public class REALScrimTele extends OpMode {
     @Override
     public void start(){
         transfer.setPosition(transferUnder);
+        if(targetAngle%120 == 0) light.setPosition(1);
+        else light.setPosition(0);
         spinPID.setConsts(kP, kI, kD);
     }
     @Override
@@ -228,6 +232,8 @@ public class REALScrimTele extends OpMode {
                 targetAngle -= 120;
             }
             if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
+                if(targetAngle%120 == 0) light.setPosition(1);
+                else light.setPosition(0);
                 targetAngle += 60;
             }
        // }
