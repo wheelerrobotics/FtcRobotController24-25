@@ -21,6 +21,7 @@ import static java.lang.Math.exp;
 import static java.lang.Math.toRadians;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
@@ -47,6 +48,7 @@ import org.firstinspires.ftc.teamcode.robot.Hobbes.helpers.HobbesState;
 import java.util.Deque;
 import java.util.LinkedList;
 
+@Config
 @Autonomous
 public class ScrimAuto extends LinearOpMode {
     Gamepad lastGamepad1 = new Gamepad(), lastGamepad2 = new Gamepad();
@@ -71,7 +73,7 @@ public class ScrimAuto extends LinearOpMode {
 
     private int zone1 = 2500;
     private int zone2 = 3000;
-    private int zone3 = 3200;
+    public static int zone3 = 3000;
 
     DcMotor motorFrontLeft;
     DcMotor motorBackLeft;
@@ -138,6 +140,15 @@ public class ScrimAuto extends LinearOpMode {
         transfer.setPosition(transferUnder);
         spinPID.setConsts(kP, kI, kD);
         RPM = zone3;
+
+        double currentTicks = spincoder.getCurrentPosition();
+        while (opModeInInit()) {
+            currentTicks = spincoder.getCurrentPosition();
+            double power = -spinPID.update(currentTicks);
+            spindexer.setPower(power * 0.6);
+        }
+        spindexer.setPower(0);
+
         waitForStart();
         if (isStopRequested()) return;
 
@@ -149,23 +160,41 @@ public class ScrimAuto extends LinearOpMode {
         transfer.setPosition(transferUp);
         sleep(500);
         transfer.setPosition(transferUnder);
-        double currentTicks = spincoder.getCurrentPosition();
+        currentTicks = spincoder.getCurrentPosition();
         targetAngle += 120;
         spinPID.setTargetAngle(targetAngle, currentTicks);
-        transferTimer = System.currentTimeMillis();
 
+        transferTimer = System.currentTimeMillis();
         do {
+            currentTicks = spincoder.getCurrentPosition();
             double power = -spinPID.update(currentTicks);
             spindexer.setPower(power * 0.6);
         } while (!(System.currentTimeMillis() - transferTimer > swichTime));
-
+        spindexer.setPower(0);
         sleep(1000);
 
+        transfer.setPosition(transferUp);
+        sleep(500);
+        transfer.setPosition(transferUnder);
+        currentTicks = spincoder.getCurrentPosition();
+        targetAngle += 120;
+        spinPID.setTargetAngle(targetAngle, currentTicks);
 
+        transferTimer = System.currentTimeMillis();
+        do {
+            currentTicks = spincoder.getCurrentPosition();
+            double power = -spinPID.update(currentTicks);
+            spindexer.setPower(power * 0.6);
+        } while (!(System.currentTimeMillis() - transferTimer > swichTime));
+        spindexer.setPower(0);
+        sleep(1000);
 
-
-
-
+        transfer.setPosition(transferUp);
+        sleep(500);
+        transfer.setPosition(transferUnder);
+        currentTicks = spincoder.getCurrentPosition();
+        targetAngle += 120;
+        spinPID.setTargetAngle(targetAngle, currentTicks);
     }
     public double RPMtoVelocity (int targetRPM) {
         return (targetRPM * TICKS_PER_REV_S)/60;
