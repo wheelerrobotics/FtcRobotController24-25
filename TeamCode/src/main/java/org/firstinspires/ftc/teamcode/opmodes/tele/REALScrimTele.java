@@ -1,18 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmodes.tele;
 
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-
-import static java.lang.Math.PI;
-import static java.lang.Math.abs;
-import static java.lang.Math.atan2;
-import static java.lang.Math.pow;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -20,9 +12,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -49,7 +40,7 @@ public class REALScrimTele extends OpMode {
     long transferTimer = 0;
     boolean transferPulse = false;
     private Servo light;
-
+    public static int lightTresh = 50;
 
     private int zone1 = 2500;
     private int zone2 = 3000;
@@ -71,6 +62,7 @@ public class REALScrimTele extends OpMode {
     boolean toggleState2 = false;
     boolean wasButtonPressed2 = false;
     public static double pulseTime = 300;
+
     @Override
     public void init() {
         tele = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -109,8 +101,8 @@ public class REALScrimTele extends OpMode {
 
         // Using a drive motor as encoder in your example
         spincoder = hardwareMap.get(DcMotorEx.class, "bl");
-        spincoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        spincoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        spincoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        spincoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Create PID with current TPR and starting gains
         spinPID = new PIDSpindexer(TICKS_PER_REV, kP, kI, kD);
@@ -119,12 +111,16 @@ public class REALScrimTele extends OpMode {
     }
 
     @Override
-    public void start(){
+    public void start() {
         transfer.setPosition(transferUnder);
-        if(targetAngle%120 == 0) light.setPosition(1);
-        else light.setPosition(0);
+        if (targetAngle % 120 == 0) {
+            light.setPosition(1);
+        } else {
+            light.setPosition(0);
+        }
         spinPID.setConsts(kP, kI, kD);
     }
+
     @Override
     public void loop() {
         // Update PID gains live from Dashboard
@@ -145,23 +141,19 @@ public class REALScrimTele extends OpMode {
             motorBackRight.setPower(0.3 * (y + x - rx));
         }
 
-        if (gamepad2.y){
+        if (gamepad2.y) {
             RPM = zone2;
-        }
-        else if (gamepad2.x){
+        } else if (gamepad2.x) {
             RPM = zone1;
-        }
-        else if (gamepad2.b){
+        } else if (gamepad2.b) {
             RPM = 0;
         }
 
         if (gamepad1.a) {
             intake.setPower(-.6);
-        }
-        else if (gamepad1.b) {
+        } else if (gamepad1.b) {
             intake.setPower(.6);
-        }
-        else {
+        } else {
             intake.setPower(0);
         }
 
@@ -169,6 +161,15 @@ public class REALScrimTele extends OpMode {
         shooterLeft.setVelocity(velocity);
         shooterRight.setVelocity(velocity);
 
+        double currentRPM1 = (shooterRight.getVelocity()/TICKS_PER_REV_S)*60.0;
+        double currentRPM2 = (shooterLeft.getVelocity()/TICKS_PER_REV_S)*60.0;
+
+        tele.addData("CurrRPM1", currentRPM1);
+        tele.addData("CurrRPM2", currentRPM1);
+
+        if (Math.abs(RPM-((currentRPM1+currentRPM2)/2)) < lightTresh) {
+            light.setPosition(.5);
+        } else if (targetAngle % 120 == 0) light.setPosition(1);
 
         /*if (gamepad1.left_bumper) {
             if (!wasButtonPressed) {
@@ -184,7 +185,6 @@ public class REALScrimTele extends OpMode {
         } else {
             transfer.setPosition(transferUnder);
         }*/
-
 
 
         if (gamepad1.left_bumper && !wasButtonPressed) {
@@ -225,29 +225,28 @@ public class REALScrimTele extends OpMode {
         double currentTicks = spincoder.getCurrentPosition();
 
         //if (transfer.getPosition() == transferUnder) {
-            if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
-                targetAngle += 120;
-            }
-            if (gamepad2.dpad_left && !lastGamepad2.dpad_left) {
-                targetAngle -= 120;
-            }
-            if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
-                if(targetAngle%120 == 0) light.setPosition(1);
-                else light.setPosition(0);
-                targetAngle += 60;
-            }
-       // }
+        if (gamepad2.dpad_right && !lastGamepad2.dpad_right) {
+            targetAngle += 120;
+        }
+        if (gamepad2.dpad_left && !lastGamepad2.dpad_left) {
+            targetAngle -= 120;
+        }
+        if (gamepad2.dpad_up && !lastGamepad2.dpad_up) {
+            if (targetAngle % 120 == 0) light.setPosition(1);
+            else light.setPosition(0);
+            targetAngle += 60;
+        }
+        // }
 
         spinPID.setTargetAngle(targetAngle, currentTicks);
 
         double power = -spinPID.update(currentTicks);
         if (power > 0.1 || power < -0.1 && toggleState2) {
-            spindexer.setPower(power*0.6);
-        }
-        else if (!toggleState2){
+            spindexer.setPower(power * 0.6);
+        } else if (!toggleState2) {
             spindexer.setPower(power);
         }
-       // spindexer.setPower(power);
+        // spindexer.setPower(power);
         // Compute a nice 0–360 angle from raw ticks for display
         double wrappedTicks = currentTicks % TICKS_PER_REV;
         if (wrappedTicks < 0) wrappedTicks += TICKS_PER_REV;
@@ -273,6 +272,8 @@ public class REALScrimTele extends OpMode {
         tele.addData("Current Ticks (raw)", currentTicks);
         tele.addData("Error Ticks", errorTicks);
 
+        tele.addData("CurrRPM", RPM);
+        tele.addData("thresh", Math.abs(RPM-(currentRPM1+currentRPM2)/2));
         tele.update();
         gamepad1History.add(gamepad1);
         gamepad2History.add(gamepad2);
@@ -286,7 +287,9 @@ public class REALScrimTele extends OpMode {
         lastGamepad1.copy(gamepad1);
         lastGamepad2.copy(gamepad2);
     }
-    public double RPMtoVelocity (int targetRPM) {
-        return (targetRPM * TICKS_PER_REV_S)/60;
+
+    public double RPMtoVelocity(int targetRPM) {
+        return (targetRPM * TICKS_PER_REV_S) / 60;
     }
 }
+

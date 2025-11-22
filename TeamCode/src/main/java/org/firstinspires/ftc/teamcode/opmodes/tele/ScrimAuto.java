@@ -70,10 +70,12 @@ public class ScrimAuto extends LinearOpMode {
     double velocity;
     long transferTimer = 0;
 
+    public static int driveTime = 750;
+    public static double drivePower = -.35;
 
     private int zone1 = 2500;
     private int zone2 = 3000;
-    public static int zone3 = 3000;
+    public static int zone3 = 3100;
 
     DcMotor motorFrontLeft;
     DcMotor motorBackLeft;
@@ -156,10 +158,11 @@ public class ScrimAuto extends LinearOpMode {
         shooterLeft.setVelocity(velocity);
         shooterRight.setVelocity(velocity);
 
-        sleep(3000);
+        sleep(6000);
         transfer.setPosition(transferUp);
         sleep(500);
         transfer.setPosition(transferUnder);
+        sleep(1000);
         currentTicks = spincoder.getCurrentPosition();
         targetAngle += 120;
         spinPID.setTargetAngle(targetAngle, currentTicks);
@@ -176,6 +179,7 @@ public class ScrimAuto extends LinearOpMode {
         transfer.setPosition(transferUp);
         sleep(500);
         transfer.setPosition(transferUnder);
+        sleep(1000);
         currentTicks = spincoder.getCurrentPosition();
         targetAngle += 120;
         spinPID.setTargetAngle(targetAngle, currentTicks);
@@ -192,9 +196,17 @@ public class ScrimAuto extends LinearOpMode {
         transfer.setPosition(transferUp);
         sleep(500);
         transfer.setPosition(transferUnder);
-        currentTicks = spincoder.getCurrentPosition();
-        targetAngle += 120;
-        spinPID.setTargetAngle(targetAngle, currentTicks);
+        sleep(1000);
+
+        motorFrontLeft.setPower(drivePower);
+        motorBackLeft.setPower(drivePower);
+        motorBackRight.setPower(drivePower);
+        motorFrontRight.setPower(drivePower);
+        sleep(driveTime);
+        motorFrontLeft.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+        motorFrontRight.setPower(0);
     }
     public double RPMtoVelocity (int targetRPM) {
         return (targetRPM * TICKS_PER_REV_S)/60;
